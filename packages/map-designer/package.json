@@ -1,0 +1,37 @@
+{
+  "name": "@codecharacter-2022/map-designer",
+  "description": "Webcomponent for CodeCharacter Map Designer 2022",
+  "license": "MIT",
+  "author": "Delta Force",
+  "version": "2022.0.0",
+  "main": "./dist/codecharacter-map-designer-2022.umd.js",
+  "module": "./dist/codecharacter-map-designer-2022.es.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/codecharacter-map-designer-2022.es.js",
+      "require": "./dist/codecharacter-map-designer-2022.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite --config vite.dev.config.ts",
+    "build": "vite build --config vite.prod.config.ts --emptyOutDir",
+    "prod": "vite build --watch --config vite.prod.config.ts --emptyOutDir",
+    "analyze": "cem analyze --litelement"
+  },
+  "dependencies": {
+    "lit": "^2.0.2",
+    "phaser": "^3.55.2"
+  },
+  "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.4.17",
+    "@rollup/plugin-replace": "^3.0.0",
+    "concurrently": "^5.3.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2",
+    "vite": "^2.7.4"
+  },
+  "customElements": "custom-elements.json"
+}

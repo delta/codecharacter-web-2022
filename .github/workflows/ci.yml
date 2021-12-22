@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Attempt to use cached dependencies
+        uses: actions/cache@v2
+        id: cache-yarn
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('./yarn.lock', 'patches/**') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-cache-
+      - name: Install dependencies
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Run lint
+        run: yarn lint
+
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Attempt to use cached dependencies
+        uses: actions/cache@v2
+        id: cache-yarn
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('./yarn.lock', 'patches/**') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-cache-
+      - name: Install dependencies
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Run build
+        run: yarn build
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Attempt to use cached dependencies
+        uses: actions/cache@v2
+        id: cache-yarn
+        with:
+          path: './node_modules'
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('./yarn.lock', 'patches/**') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-cache-
+      - name: Install dependencies
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        run: yarn install
+      - name: Run tests
+        run: yarn test
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

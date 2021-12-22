@@ -1,0 +1,115 @@
+{
+  "name": "@codecharacter-2022/web",
+  "description": "The web frontend of CodeCharacter 2022",
+  "license": "MIT",
+  "author": "Delta Force",
+  "version": "2022.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.{ts,js,json,yml,md}\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.{ts,js,json,yml,md}\" --write --ignore-path .gitignore",
+    "compile": "yarn workspace @codecharacter-2022/renderer run tsc && yarn workspace @codecharacter-2022/map-designer run tsc && tsc",
+    "test": "yarn compile && wtr --coverage",
+    "analyze": "cem analyze --litelement",
+    "dev": "vite --config vite.dev.config.ts",
+    "build": "yarn workspace @codecharacter-2022/renderer run build && yarn workspace @codecharacter-2022/map-designer run build && vite build --config vite.prod.config.ts --emptyOutDir",
+    "prod": "concurrently -k -r \"sleep 5 && vite build --watch --config vite.prod.config.ts --emptyOutDir\" \"sleep 10 && live-server dist/\" \"yarn workspace @codecharacter-2022/renderer run prod\" \"yarn workspace @codecharacter-2022/map-designer run prod\"",
+    "renderer:demo": "yarn workspace @codecharacter-2022/renderer run dev",
+    "map-designer:demo": "yarn workspace @codecharacter-2022/map-designer run dev",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook"
+  },
+  "dependencies": {
+    "@codecharacter-2022/map-designer": "workspace:packages/map-designer",
+    "@codecharacter-2022/renderer": "workspace:packages/renderer",
+    "lit": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@custom-elements-manifest/analyzer": "^0.4.17",
+    "@mdx-js/react": "^1.6.22",
+    "@open-wc/eslint-config": "^4.3.0",
+    "@open-wc/testing": "next",
+    "@rollup/plugin-replace": "^3.0.0",
+    "@storybook/addon-controls": "^6.5.0-alpha.4",
+    "@storybook/addon-viewport": "^6.5.0-alpha.4",
+    "@storybook/web-components": "^6.5.0-alpha.4",
+    "@trivago/prettier-plugin-sort-imports": "^3.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "@web/rollup-plugin-html": "^1.10.1",
+    "@web/test-runner": "next",
+    "@web/test-runner-puppeteer": "^0.10.4",
+    "babel-loader": "^8.2.3",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^10.5.4",
+    "live-server": "^1.2.1",
+    "prettier": "^2.4.1",
+    "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-workbox": "^6.2.0",
+    "storybook-builder-vite": "^0.1.11",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2",
+    "vite": "^2.7.4"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "@open-wc",
+      "prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error"
+      ],
+      "import/no-unresolved": "off",
+      "import/order": "off",
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          "ignorePackages": true
+        }
+      ]
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "printWidth": 80,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false,
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "importOrderParserPlugins": [
+      "typescript",
+      "classProperties",
+      "[\"decorators\", { \"decoratorsBeforeExport\": true }]"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,html}": [
+      "eslint --fix"
+    ],
+    "*.{ts,js,json,yml,md}": [
+      "prettier --write"
+    ]
+  },
+  "customElements": "custom-elements.json",
+  "packageManager": "yarn@3.1.1"
+}

@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    "**/.husky": true,
+    "**/.vscode": true,
+    "**/.yarn": true,
+    "**/coverage": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/storybook-static": true,
+    "**/out-tsc": true
+  }
+}
