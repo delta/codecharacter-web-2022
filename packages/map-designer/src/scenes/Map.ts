@@ -9,11 +9,6 @@ export class Map extends Phaser.Scene {
     });
   }
 
-  preload(): void{
-    this.load.image('tower_fire', 'assets/tower_fire.png');
-    this.load.image('tower_brick', 'assets/tower_brick.png');
-  }
-
   create(): void {
     const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 3;
