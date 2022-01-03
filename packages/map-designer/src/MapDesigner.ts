@@ -1,5 +1,5 @@
-import { TestScene } from './scenes/Test';
-import { LitElement, TemplateResult, css, html } from 'lit';
+import { Map } from './scenes/Map.js';
+import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import Phaser from 'phaser';
 
@@ -20,9 +20,8 @@ export class MapDesigner extends LitElement {
   firstUpdated(): void {
     this._game = new Phaser.Game({
       type: Phaser.AUTO,
-      parent:
-        this.shadowRoot?.querySelector<HTMLElement>('#renderer') ?? undefined,
-      scene: [TestScene],
+      parent: this.shadowRoot!.querySelector<HTMLElement>('#renderer')!,
+      scene: [Map],
       dom: {
         createContainer: false,
       },
