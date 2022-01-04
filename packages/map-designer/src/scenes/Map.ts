@@ -24,30 +24,19 @@ export class Map extends Phaser.Scene {
 
     // Draw a 5 by 8 grid of 75 width hexagons at 5,5 - They will be placed in the gridContainer so will be at 80,80
     this.drawHexGrid(8,8,55,5,5);
-    this.gridContainer.angle += 60;
+    this.gridContainer.angle += 55;
 
     let check = true;
-    const outerRect = this.add.rectangle(
-      0,
-      100,
-      this.game.renderer.width + this.game.renderer.width,
-      180,
-    );
-    outerRect.setStrokeStyle(2, 0xffffff);
-    const rect = this.add.rectangle(
-      this.game.renderer.width / 7,
-      100,
-      240,
-      120,
-    );
-    rect.setStrokeStyle(2, 0x1a65ac);
+
+    // Fire, Ice and Brick Towers Code Start
+
     const brick = this.add
       .image(this.game.renderer.width / 10, 100, 'towerBrick')
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        // console.log('hello phaser');
       });
     brick.setScale(0.5);
+
     const fire = this.add
       .image(
         this.game.renderer.width / 10 + this.game.renderer.width / 22,
@@ -56,7 +45,6 @@ export class Map extends Phaser.Scene {
       )
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        // console.log('hello phaser1');
       });
     fire.setScale(0.5);
 
@@ -70,9 +58,12 @@ export class Map extends Phaser.Scene {
       )
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        // console.log('hello phaser2');
+        console.log("ehllo");
       });
     ice.setScale(0.5);
+
+    // Fire, Ice and Brick Towers Code End
+
     const coins = this.add.text(
       this.game.renderer.width / 2.5,
       50,
@@ -81,11 +72,11 @@ export class Map extends Phaser.Scene {
     coins.setScale(2);
     const coinText = this.add.text(this.game.renderer.width / 2.3, 100, '0000');
     coinText.setScale(1.5);
+
     const save = this.add
       .image(this.game.renderer.width - 200, 100, 'save')
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        // console.log('hello phaser4');
       });
     save.setScale(0.8);
     this.add
