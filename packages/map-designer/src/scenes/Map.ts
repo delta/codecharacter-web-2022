@@ -18,8 +18,8 @@ export class Map extends Phaser.Scene {
   }
 
   create(): void {
-    const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-    const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 3;
+    const screenCenterX = this.game.renderer.width + this.game.renderer.width / 2;
+    const screenCenterY = this.game.renderer.height + this.game.renderer.height / 3;
     this.gridContainer = this.add.container(screenCenterX,screenCenterY);
 
     // Draw a 5 by 8 grid of 75 width hexagons at 5,5 - They will be placed in the gridContainer so will be at 80,80
@@ -30,67 +30,45 @@ export class Map extends Phaser.Scene {
 
     // Fire, Ice and Brick Towers Code Start
 
-    const brick = this.add
-      .image(this.game.renderer.width / 10, 100, 'towerBrick')
-      .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-      });
+    const towerX = this.game.renderer.width / 10;
+    const towerXGap = this.game.renderer.width / 22;
+
+    const brick = this.add.image(towerX, 100, 'towerBrick').setInteractive()
+          .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+          });
+    this.add.text(towerX - 20, 150, 'Brick');
     brick.setScale(0.5);
 
-    const fire = this.add
-      .image(
-        this.game.renderer.width / 10 + this.game.renderer.width / 22,
-        100,
-        'towerFire',
-      )
-      .setInteractive()
+    const fire = this.add.image(towerX + towerXGap*1, 100,'towerFire',).setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
       });
+    this.add.text(towerX + towerXGap*1 - 20, 150, 'Fire');
     fire.setScale(0.5);
 
-    const ice = this.add
-      .image(
-        this.game.renderer.width / 10 +
-          this.game.renderer.width / 22 +
-          this.game.renderer.width / 22,
-        100,
-        'towerIce',
-      )
-      .setInteractive()
+    const ice = this.add.image(towerX + towerXGap*2, 100, 'towerIce',).setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        console.log("ehllo");
       });
+    this.add.text(towerX + towerXGap*2 - 20, 150, 'Ice');
     ice.setScale(0.5);
 
     // Fire, Ice and Brick Towers Code End
 
-    const coins = this.add.text(
-      this.game.renderer.width / 2.5,
-      50,
-      'COINS LEFT',
-    );
+    const coins = this.add.text(this.game.renderer.width / 2.5, 50, 'COINS LEFT');
     coins.setScale(2);
     const coinText = this.add.text(this.game.renderer.width / 2.3, 100, '0000');
     coinText.setScale(1.5);
 
-    const save = this.add
-      .image(this.game.renderer.width - 200, 100, 'save')
-      .setInteractive()
+    const save = this.add.image(this.game.renderer.width - 200, 100, 'save').setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
       });
     save.setScale(0.8);
-    this.add
-      .text(this.game.renderer.width - 230, 90, 'Save', {
+    this.add.text(this.game.renderer.width - 230, 90, 'Save', {
         fontStyle: 'bold',
         fontSize: '20px',
       })
       .setColor('white')
       .setOrigin(0);
-    const drop = this.add.image(
-      this.game.renderer.width - 138,
-      100,
-      'buttonDrop',
-    );
+    const drop = this.add.image(this.game.renderer.width - 138,100,'buttonDrop',);
 
     drop
       .setInteractive()
@@ -136,7 +114,7 @@ drawHexGrid(width: number, height: number, hexHeight: number,startX:number = 0,s
             hex1.setStrokeStyle(1, 0xefc53f);
             hex1.setData('painted',false);
             hex1.setInteractive({ cursor: 'pointer' }).on('pointerdown', () => {
-                console.log('click x:'+x+' y:'+y);
+                console.log(`click x:${x} y:${y}`);
 
                 hex1.setStrokeStyle(2, 0xef15ff);
                 hex1.data.values.painted = !hex1.data.values.painted;
