@@ -24,7 +24,8 @@
   "dependencies": {
     "@codecharacter-2022/map-designer": "workspace:packages/map-designer",
     "@codecharacter-2022/renderer": "workspace:packages/renderer",
-    "lit": "^2.0.2"
+    "lit": "^2.0.2",
+    "phaser3-plugin-isometric": "^0.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",

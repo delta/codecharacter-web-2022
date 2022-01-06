@@ -1640,6 +1640,7 @@ __metadata:
     concurrently: ^5.3.0
     lit: ^2.0.2
     phaser: ^3.55.2
+    phaser3-plugin-isometric: ^0.0.7
     tslib: ^2.3.1
     typescript: ^4.5.2
     vite: ^2.7.4
@@ -1690,6 +1691,7 @@ __metadata:
     lint-staged: ^10.5.4
     lit: ^2.0.2
     live-server: ^1.2.1
+    phaser3-plugin-isometric: ^0.0.7
     prettier: ^2.4.1
     rollup-plugin-minify-html-literals: ^1.2.6
     rollup-plugin-workbox: ^6.2.0
@@ -12489,6 +12491,15 @@ __metadata:
   version: 1.2.0
   resolution: "pend@npm:1.2.0"
   checksum: 6c72f5243303d9c60bd98e6446ba7d30ae29e3d56fdb6fae8767e8ba6386f33ee284c97efe3230a0d0217e2b1723b8ab490b1bbf34fcbb2180dbc8a9de47850d
+  languageName: node
+  linkType: hard
+
+"phaser3-plugin-isometric@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "phaser3-plugin-isometric@npm:0.0.7"
+  peerDependencies:
+    phaser: 3.x
+  checksum: e95a59333db04849326b2de940f31cd316cea7d6639fec71c694bf2a2746900d16c980976dd82472fb3356de039b99dc0ec162e3433496277e2a3e13f1bbe703
   languageName: node
   linkType: hard
 
