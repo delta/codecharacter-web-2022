@@ -1,12 +1,21 @@
 import Phaser from 'phaser';
+import IsoPlugin from 'phaser3-plugin-isometric';
 
 export class Map extends Phaser.Scene {
-  private gridContainer: Phaser.GameObjects.Container;
+  iso: any;
+
+  static isoGroup: Phaser.GameObjects.Group;
+
+  static isoSprite: Phaser.GameObjects.GameObjectFactory;
+
+  position: Number;
 
   constructor() {
     super({
       key: 'Map',
+      mapAdd: { isoPlugin: 'iso' },
     });
+    this.position = 2;
   }
 
   preload(): void {
@@ -15,60 +24,73 @@ export class Map extends Phaser.Scene {
     this.load.image('towerIce', 'assets/tower_ice.png');
     this.load.image('save', 'assets/save.png');
     this.load.image('buttonDrop', 'assets/dropdown.png');
+    this.load.image('tile', 'assets/tiles.png');
+    this.load.scenePlugin({
+      key: 'IsoPlugin',
+      url: IsoPlugin,
+      sceneKey: 'iso',
+    });
   }
 
   create(): void {
-    const screenCenterX = this.cameras.main.worldView.x + this.cameras.main.width / 2;
-    const screenCenterY = this.cameras.main.worldView.y + this.cameras.main.height / 3;
-    this.gridContainer = this.add.container(screenCenterX,screenCenterY);
-
-    // Draw a 5 by 8 grid of 75 width hexagons at 5,5 - They will be placed in the gridContainer so will be at 80,80
-    this.drawHexGrid(8,8,55,5,5);
-    this.gridContainer.angle += 55;
-
     let check = true;
-
+    let tile;
     // Fire, Ice and Brick Towers Code Start
-
     const towerX = this.game.renderer.width / 10;
     const towerXGap = this.game.renderer.width / 22;
-
-    const brick = this.add.image(towerX, 100, 'towerBrick').setInteractive()
-          .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-          });
+    const brick = this.add
+      .image(towerX, 100, 'towerBrick')
+      .setInteractive()
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.position = -1;
+      });
     this.add.text(towerX - 20, 150, 'Brick');
     brick.setScale(0.5);
 
-    const fire = this.add.image(towerX + towerXGap*1, 100,'towerFire',).setInteractive()
+    const fire = this.add
+      .image(towerX + towerXGap * 1, 100, 'towerFire')
+      .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.position = 0;
       });
-    this.add.text(towerX + towerXGap*1 - 20, 150, 'Fire');
+    this.add.text(towerX + towerXGap * 1 - 20, 150, 'Fire');
     fire.setScale(0.5);
 
-    const ice = this.add.image(towerX + towerXGap*2, 100, 'towerIce',).setInteractive()
+    const ice = this.add
+      .image(towerX + towerXGap * 2, 100, 'towerIce')
+      .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.position = 1;
       });
-    this.add.text(towerX + towerXGap*2 - 20, 150, 'Ice');
+    this.add.text(towerX + towerXGap * 2 - 20, 150, 'Ice');
     ice.setScale(0.5);
-
     // Fire, Ice and Brick Towers Code End
-
-    const coins = this.add.text(this.game.renderer.width / 2.5, 50, 'COINS LEFT');
+    const coins = this.add.text(
+      this.game.renderer.width / 2.5,
+      50,
+      'COINS LEFT',
+    );
     coins.setScale(2);
     const coinText = this.add.text(this.game.renderer.width / 2.3, 100, '0000');
     coinText.setScale(1.5);
 
-    const save = this.add.image(this.game.renderer.width - 200, 100, 'save').setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-      });
+    const save = this.add
+      .image(this.game.renderer.width - 200, 100, 'save')
+      .setInteractive()
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {});
     save.setScale(0.8);
-    this.add.text(this.game.renderer.width - 230, 90, 'Save', {
+    this.add
+      .text(this.game.renderer.width - 230, 90, 'Save', {
         fontStyle: 'bold',
         fontSize: '20px',
       })
       .setColor('white')
       .setOrigin(0);
-    const drop = this.add.image(this.game.renderer.width - 138,100,'buttonDrop',);
+    const drop = this.add.image(
+      this.game.renderer.width - 138,
+      100,
+      'buttonDrop',
+    );
 
     drop
       .setInteractive()
@@ -98,45 +120,64 @@ export class Map extends Phaser.Scene {
         }
       });
     drop.setScale(0.8);
-}
 
-drawHexGrid(width: number, height: number, hexHeight: number,startX:number = 0,startY:number = 0): void {
-    const hexCoords: number[] = this.getHexCoords(hexHeight);
-    for (let x: number = 0; x <= width-1; x+=1) {
-        for (let y: number = 0; y <= height-1; y+=1) {
-            const hexX = x * hexHeight - (x*(hexHeight/9));
-            let hexY = y * hexHeight + (y*2);
-            if (x % 2 === 1) {
-                hexY+= hexHeight / 2;
+    // Map code starts
 
-            }
-            const hex1 = this.add.polygon(hexX+startX, hexY+startY, hexCoords, 0xffffff);
-            hex1.setStrokeStyle(1, 0xefc53f);
-            hex1.setData('painted',false);
-            hex1.setInteractive({ cursor: 'pointer' }).on('pointerdown', () => {
-                console.log(`click x:${x} y:${y}`);
+    Map.isoGroup = this.add.group();
 
-                hex1.setStrokeStyle(2, 0xef15ff);
-                hex1.data.values.painted = !hex1.data.values.painted;
-                if (hex1.data.values.painted)
-                {
-                    hex1.setFillStyle(0x3000ff)
-                }else{
-                    hex1.setFillStyle(0xffffff)
-                }
-            }).on('pointerup', () => {
-                hex1.setStrokeStyle(1, 0xefc53f);
-            });
-            this.gridContainer.add(hex1);
-        }
+    this.iso.projector.origin.setTo(
+      this.game.renderer.width / 2200,
+      this.game.renderer.height / 3000,
+    );
+    for (let xx = 0; xx < 512; xx += 16) {
+      for (let yy = 0; yy < 512; yy += 16) {
+        // @ts-expect-error
+
+        tile = this.add.isoSprite(xx, yy, 0, 'tile', Map.isoGroup);
+
+        tile.setInteractive();
+        // ts-except error is used because typescript is not able to detect the phaser-isometric plugin because it is in javascript
+        tile.on('pointerdown', () => {
+          if (this.position === -1) {
+            // @ts-expect-error
+            const insertTower = this.add.isoSprite(
+              xx,
+              yy,
+              2,
+              'towerBrick',
+              Map.isoGroup,
+            );
+
+            insertTower.setScale(0.15);
+            this.position = 2;
+          }
+          if (this.position === 0) {
+            // @ts-expect-error
+            const insertTower = this.add.isoSprite(
+              xx,
+              yy,
+              2,
+              'towerFire',
+              Map.isoGroup,
+            );
+            insertTower.setScale(0.15);
+            this.position = 2;
+          }
+          if (this.position === 1) {
+            // @ts-expect-error
+
+            const insertTower = this.add.isoSprite(
+              xx,
+              yy,
+              2,
+              'towerIce',
+              Map.isoGroup,
+            );
+            insertTower.setScale(0.15);
+            this.position = 2;
+          }
+        });
+      }
     }
-}
-
-  getHexCoords(height: number): number[] {
-      // http://csharphelper.com/blog/2015/10/draw-a-hexagonal-grid-in-c/
-      const width: number = (4 * (height / 2 / Math.sqrt(3)));
-      const y: number = height / 2;
-      const hexCoords: number[] = [0, y, width * 0.25, y - height / 2, width * 0.75, y - height / 2,  width, y,  width * 0.75, y + height / 2, width * 0.25, y + height / 2];
-      return hexCoords;
   }
 }
