@@ -10,12 +10,30 @@ export class Map extends Phaser.Scene {
 
   position: Number;
 
+  brickTower: string;
+
+  fireTower: string;
+
+  iceTower: string;
+
+  brickPositions: { x: number; y: number }[];
+
+  icePositions: { x: number; y: number }[];
+
+  firePositions: { x: number; y: number }[];
+
   constructor() {
     super({
       key: 'Map',
       mapAdd: { isoPlugin: 'iso' },
     });
     this.position = 2;
+    this.brickTower = 'brickTower';
+    this.iceTower = 'iceTower';
+    this.fireTower = 'fireTower';
+    this.brickPositions = [];
+    this.icePositions = [];
+    this.firePositions = [];
   }
 
   preload(): void {
@@ -34,7 +52,6 @@ export class Map extends Phaser.Scene {
 
   create(): void {
     let check = true;
-    let tile;
     // Fire, Ice and Brick Towers Code Start
     const towerX = this.game.renderer.width / 10;
     const towerXGap = this.game.renderer.width / 22;
@@ -121,24 +138,48 @@ export class Map extends Phaser.Scene {
       });
     drop.setScale(0.8);
 
-    // Map code starts
-
     Map.isoGroup = this.add.group();
 
     this.iso.projector.origin.setTo(
       this.game.renderer.width / 2200,
       this.game.renderer.height / 3000,
     );
-    for (let xx = 0; xx < 512; xx += 16) {
-      for (let yy = 0; yy < 512; yy += 16) {
+    this.settiles(512);
+  }
+
+  settiles(noOftiles: Number): void {
+    let tile;
+    let prevBricks;
+    let prevIce;
+    let prevFire;
+    if (localStorage.getItem(this.brickTower)) {
+      this.brickPositions = JSON.parse(
+        localStorage.getItem(this.brickTower) || '{}',
+      );
+    }
+    if (localStorage.getItem(this.iceTower)) {
+      this.icePositions = JSON.parse(
+        localStorage.getItem(this.iceTower) || '{}',
+      );
+    }
+    if (localStorage.getItem(this.fireTower)) {
+      this.firePositions = JSON.parse(
+        localStorage.getItem(this.fireTower) || '{}',
+      );
+    }
+    for (let xx = 0; xx < noOftiles; xx += 16) {
+      for (let yy = 0; yy < noOftiles; yy += 16) {
         // @ts-expect-error
-
         tile = this.add.isoSprite(xx, yy, 0, 'tile', Map.isoGroup);
-
         tile.setInteractive();
         // ts-except error is used because typescript is not able to detect the phaser-isometric plugin because it is in javascript
         tile.on('pointerdown', () => {
           if (this.position === -1) {
+            this.brickPositions.push({ x: xx, y: yy });
+            localStorage.setItem(
+              this.brickTower,
+              JSON.stringify(this.brickPositions),
+            );
             // @ts-expect-error
             const insertTower = this.add.isoSprite(
               xx,
@@ -152,6 +193,11 @@ export class Map extends Phaser.Scene {
             this.position = 2;
           }
           if (this.position === 0) {
+            this.firePositions.push({ x: xx, y: yy });
+            localStorage.setItem(
+              this.fireTower,
+              JSON.stringify(this.firePositions),
+            );
             // @ts-expect-error
             const insertTower = this.add.isoSprite(
               xx,
@@ -164,6 +210,11 @@ export class Map extends Phaser.Scene {
             this.position = 2;
           }
           if (this.position === 1) {
+            this.icePositions.push({ x: xx, y: yy });
+            localStorage.setItem(
+              this.iceTower,
+              JSON.stringify(this.icePositions),
+            );
             // @ts-expect-error
 
             const insertTower = this.add.isoSprite(
@@ -177,6 +228,48 @@ export class Map extends Phaser.Scene {
             this.position = 2;
           }
         });
+      }
+    }
+    if (localStorage.getItem(this.brickTower)) {
+      prevBricks = JSON.parse(localStorage.getItem(this.brickTower) || '{}');
+      for (let i = 0; i < prevBricks.length; i += 1) {
+        // @ts-expect-error
+        const insertTower = this.add.isoSprite(
+          prevBricks[i].x,
+          prevBricks[i].y,
+          2,
+          'towerBrick',
+          Map.isoGroup,
+        );
+        insertTower.setScale(0.15);
+      }
+    }
+    if (localStorage.getItem(this.iceTower)) {
+      prevIce = JSON.parse(localStorage.getItem(this.iceTower) || '{}');
+      for (let i = 0; i < prevIce.length; i += 1) {
+        // @ts-expect-error
+        const insertTower = this.add.isoSprite(
+          prevIce[i].x,
+          prevIce[i].y,
+          2,
+          'towerIce',
+          Map.isoGroup,
+        );
+        insertTower.setScale(0.15);
+      }
+    }
+    if (localStorage.getItem(this.fireTower)) {
+      prevFire = JSON.parse(localStorage.getItem(this.fireTower) || '{}');
+      for (let i = 0; i < prevFire.length; i += 1) {
+        // @ts-expect-error
+        const insertTower = this.add.isoSprite(
+          prevFire[i].x,
+          prevFire[i].y,
+          2,
+          'towerFire',
+          Map.isoGroup,
+        );
+        insertTower.setScale(0.15);
       }
     }
   }
