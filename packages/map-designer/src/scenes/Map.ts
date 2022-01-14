@@ -10,6 +10,10 @@ export class Map extends Phaser.Scene {
 
   position: Number;
 
+  totalTiles: number;
+
+  tileWidth: number;
+
   brickTower: string;
 
   fireTower: string;
@@ -21,6 +25,14 @@ export class Map extends Phaser.Scene {
   icePositions: { x: number; y: number }[];
 
   firePositions: { x: number; y: number }[];
+
+  tiles: { value: number; x: number; y: number }[];
+
+  tilesPositon: number[][];
+
+  towers: { key: number; name: string; url: string }[];
+
+  storageKey: string;
 
   constructor() {
     super({
@@ -34,12 +46,22 @@ export class Map extends Phaser.Scene {
     this.brickPositions = [];
     this.icePositions = [];
     this.firePositions = [];
+    this.tiles = [];
+    this.tilesPositon = [];
+    this.totalTiles = 512;
+    this.tileWidth = 8;
+    this.towers = [
+      { key: 1, name: 'tower1', url: 'assets/tower_brick.png' },
+      { key: 2, name: 'tower2', url: 'assets/tower_fire.png' },
+      { key: 3, name: 'tower3', url: 'assets/tower_ice.png' },
+    ];
+    this.storageKey = 'towers';
   }
 
   preload(): void {
-    this.load.image('towerBrick', 'assets/tower_brick.png');
-    this.load.image('towerFire', 'assets/tower_fire.png');
-    this.load.image('towerIce', 'assets/tower_ice.png');
+    this.towers.forEach(tower => {
+      this.load.image(tower.name, tower.url);
+    });
     this.load.image('save', 'assets/save.png');
     this.load.image('buttonDrop', 'assets/dropdown.png');
     this.load.image('tile', 'assets/tiles.png');
@@ -52,36 +74,18 @@ export class Map extends Phaser.Scene {
 
   create(): void {
     let check = true;
-    // Fire, Ice and Brick Towers Code Start
     const towerX = this.game.renderer.width / 10;
     const towerXGap = this.game.renderer.width / 22;
-    const brick = this.add
-      .image(towerX, 100, 'towerBrick')
-      .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        this.position = -1;
-      });
-    this.add.text(towerX - 20, 150, 'Brick');
-    brick.setScale(0.5);
-
-    const fire = this.add
-      .image(towerX + towerXGap * 1, 100, 'towerFire')
-      .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        this.position = 0;
-      });
-    this.add.text(towerX + towerXGap * 1 - 20, 150, 'Fire');
-    fire.setScale(0.5);
-
-    const ice = this.add
-      .image(towerX + towerXGap * 2, 100, 'towerIce')
-      .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        this.position = 1;
-      });
-    this.add.text(towerX + towerXGap * 2 - 20, 150, 'Ice');
-    ice.setScale(0.5);
-    // Fire, Ice and Brick Towers Code End
+    this.towers.forEach(tower => {
+      const towerButton = this.add
+        .image(towerX + towerXGap * (tower.key - 1), 100, tower.name)
+        .setInteractive()
+        .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+          this.position = tower.key;
+        });
+      this.add.text(towerX + towerXGap * (tower.key - 1) - 30, 150, tower.name);
+      towerButton.setScale(0.5);
+    });
     const coins = this.add.text(
       this.game.renderer.width / 2.5,
       50,
@@ -117,7 +121,7 @@ export class Map extends Phaser.Scene {
           const commit = this.add.image(
             this.game.renderer.width - 200,
             140,
-            'save',
+            'Save',
           );
           const commitText = this.add
             .text(this.game.renderer.width - 235, 130, 'Commit', {
@@ -144,133 +148,79 @@ export class Map extends Phaser.Scene {
       this.game.renderer.width / 2200,
       this.game.renderer.height / 3000,
     );
-    this.settiles(512);
+    this.setTiles(this.totalTiles, this.tileWidth);
   }
 
-  settiles(noOftiles: Number): void {
+  setTiles(noOftiles: number, increment: number): void {
+    if (!localStorage.getItem(this.storageKey)) {
+      for (let xx = 0; xx < noOftiles; xx += increment) {
+        this.tilesPositon.push([]);
+
+        for (let yy = 0; yy < noOftiles; yy += increment) {
+          this.tilesPositon[xx / increment][yy / increment] = 0;
+          localStorage.setItem(
+            this.storageKey,
+            JSON.stringify(this.tilesPositon),
+          );
+        }
+      }
+    } else {
+      this.tilesPositon = JSON.parse(
+        localStorage.getItem(this.storageKey) || '{}',
+      );
+    }
+    this.displayTiles();
+  }
+
+  displayTiles(): void {
     let tile;
-    let prevBricks;
-    let prevIce;
-    let prevFire;
-    if (localStorage.getItem(this.brickTower)) {
-      this.brickPositions = JSON.parse(
-        localStorage.getItem(this.brickTower) || '{}',
-      );
-    }
-    if (localStorage.getItem(this.iceTower)) {
-      this.icePositions = JSON.parse(
-        localStorage.getItem(this.iceTower) || '{}',
-      );
-    }
-    if (localStorage.getItem(this.fireTower)) {
-      this.firePositions = JSON.parse(
-        localStorage.getItem(this.fireTower) || '{}',
-      );
-    }
-    for (let xx = 0; xx < noOftiles; xx += 16) {
-      for (let yy = 0; yy < noOftiles; yy += 16) {
-        // @ts-expect-error
-        tile = this.add.isoSprite(xx, yy, 0, 'tile', Map.isoGroup);
-        tile.setInteractive();
+    for (let xx = 0; xx < this.tilesPositon.length; xx += 1)
+      for (let yy = 0; yy < this.tilesPositon[xx].length; yy += 1) {
         // ts-except error is used because typescript is not able to detect the phaser-isometric plugin because it is in javascript
-        tile.on('pointerdown', () => {
-          if (this.position === -1) {
-            this.brickPositions.push({ x: xx, y: yy });
-            localStorage.setItem(
-              this.brickTower,
-              JSON.stringify(this.brickPositions),
-            );
-            // @ts-expect-error
-            const insertTower = this.add.isoSprite(
-              xx,
-              yy,
-              2,
-              'towerBrick',
-              Map.isoGroup,
-            );
 
-            insertTower.setScale(0.15);
-            this.position = 2;
-          }
-          if (this.position === 0) {
-            this.firePositions.push({ x: xx, y: yy });
-            localStorage.setItem(
-              this.fireTower,
-              JSON.stringify(this.firePositions),
-            );
-            // @ts-expect-error
-            const insertTower = this.add.isoSprite(
-              xx,
-              yy,
-              2,
-              'towerFire',
-              Map.isoGroup,
-            );
-            insertTower.setScale(0.15);
-            this.position = 2;
-          }
-          if (this.position === 1) {
-            this.icePositions.push({ x: xx, y: yy });
-            localStorage.setItem(
-              this.iceTower,
-              JSON.stringify(this.icePositions),
-            );
-            // @ts-expect-error
+        // @ts-expect-error
 
+        tile = this.add.isoSprite(
+          xx * this.tileWidth,
+          yy * this.tileWidth,
+          0,
+          'tile',
+          Map.isoGroup,
+        );
+        tile.setInteractive();
+        this.towers.forEach(t => {
+          if (this.tilesPositon[xx][yy] === t.key) {
+            // @ts-expect-error
             const insertTower = this.add.isoSprite(
-              xx,
-              yy,
-              2,
-              'towerIce',
+              xx * this.tileWidth,
+              yy * this.tileWidth,
+              10,
+              t.name,
               Map.isoGroup,
             );
-            insertTower.setScale(0.15);
-            this.position = 2;
+            insertTower.setScale(0.09);
           }
         });
+        tile.on('pointerdown', () => {
+          this.towers.forEach(t => {
+            if (this.position === t.key) {
+              this.tilesPositon[xx][yy] = t.key;
+              localStorage.setItem(
+                this.storageKey,
+                JSON.stringify(this.tilesPositon),
+              );
+              // @ts-expect-error
+              const insertTower = this.add.isoSprite(
+                xx * this.tileWidth,
+                yy * this.tileWidth,
+                10,
+                t.name,
+                Map.isoGroup,
+              );
+              insertTower.setScale(0.09);
+            }
+          });
+        });
       }
-    }
-    if (localStorage.getItem(this.brickTower)) {
-      prevBricks = JSON.parse(localStorage.getItem(this.brickTower) || '{}');
-      for (let i = 0; i < prevBricks.length; i += 1) {
-        // @ts-expect-error
-        const insertTower = this.add.isoSprite(
-          prevBricks[i].x,
-          prevBricks[i].y,
-          2,
-          'towerBrick',
-          Map.isoGroup,
-        );
-        insertTower.setScale(0.15);
-      }
-    }
-    if (localStorage.getItem(this.iceTower)) {
-      prevIce = JSON.parse(localStorage.getItem(this.iceTower) || '{}');
-      for (let i = 0; i < prevIce.length; i += 1) {
-        // @ts-expect-error
-        const insertTower = this.add.isoSprite(
-          prevIce[i].x,
-          prevIce[i].y,
-          2,
-          'towerIce',
-          Map.isoGroup,
-        );
-        insertTower.setScale(0.15);
-      }
-    }
-    if (localStorage.getItem(this.fireTower)) {
-      prevFire = JSON.parse(localStorage.getItem(this.fireTower) || '{}');
-      for (let i = 0; i < prevFire.length; i += 1) {
-        // @ts-expect-error
-        const insertTower = this.add.isoSprite(
-          prevFire[i].x,
-          prevFire[i].y,
-          2,
-          'towerFire',
-          Map.isoGroup,
-        );
-        insertTower.setScale(0.15);
-      }
-    }
   }
 }
