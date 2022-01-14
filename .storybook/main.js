@@ -15,6 +15,11 @@ module.exports = {
     '../stories/*.stories.mdx',
     '../stories/*.stories.@(js|jsx|ts|tsx)',
   ],
-  addons: ['@storybook/addon-viewport', '@storybook/addon-controls'],
+  addons: [
+    '@storybook/addon-viewport',
+    '@storybook/addon-controls',
+    '@storybook/addon-knobs',
+  ],
   framework: '@storybook/react',
+  staticDirs: ['../public'],
 };

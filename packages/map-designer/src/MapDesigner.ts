@@ -1,7 +1,7 @@
-import { Map } from './scenes/Map.js';
-import { LitElement, css, html } from 'lit';
+import { css, html, LitElement, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import Phaser from 'phaser';
+import { TileMap } from './scenes/TileMap.js';
 
 @customElement('cc-map-designer')
 export class MapDesigner extends LitElement {
@@ -10,8 +10,6 @@ export class MapDesigner extends LitElement {
       display: block;
       width: 100%;
       height: 100%;
-      padding: 0.2em;
-      box-sizing: border-box;
     }
   `;
 
@@ -20,8 +18,10 @@ export class MapDesigner extends LitElement {
   firstUpdated(): void {
     this._game = new Phaser.Game({
       type: Phaser.AUTO,
-      parent: this.shadowRoot!.querySelector<HTMLElement>('#renderer')!,
-      scene: [Map],
+      parent:
+        this.shadowRoot?.querySelector<HTMLElement>('#map-designer') ??
+        undefined,
+      scene: [TileMap],
       dom: {
         createContainer: false,
       },
@@ -29,14 +29,20 @@ export class MapDesigner extends LitElement {
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
+      fps: {
+        min: 10,
+        target: 30,
+        smoothStep: true,
+      },
     });
   }
 
   disconnectedCallback(): void {
+    this._game.scene.getScene('TileMap').events.removeAllListeners();
     this._game.destroy(true);
   }
 
   render(): TemplateResult {
-    return html` <div id="renderer"></div> `;
+    return html` <div id="map-designer"></div> `;
   }
 }
