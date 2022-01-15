@@ -1,4 +1,4 @@
-import { TestScene } from './scenes/Test.js';
+import { Scene } from './scenes/Scene.js';
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import Phaser from 'phaser';
@@ -21,7 +21,7 @@ export class Renderer extends LitElement {
     this._game = new Phaser.Game({
       type: Phaser.AUTO,
       parent: this.shadowRoot!.querySelector<HTMLElement>('#renderer')!,
-      scene: [TestScene],
+      scene: [Scene],
       dom: {
         createContainer: false,
       },
