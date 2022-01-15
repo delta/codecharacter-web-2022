@@ -108,6 +108,16 @@ export class Scene extends Phaser.Scene {
       50,
       'COINS LEFT',
     );
+    this.add.text(
+      this.game.renderer.width * 8.3 / 10,
+      this.game.renderer.height * 8 / 10,
+      'Coins Used: 000',
+    );
+    this.add.text(
+      this.game.renderer.width * 7.9 / 10,
+      this.game.renderer.height * 8.3 / 10,
+      'Defense Destroyed: 0%',
+    );
     coins.setScale(2);
     const coinText = this.add.text(this.game.renderer.width / 2.3, 100, '0000');
     coinText.setScale(1.5);
