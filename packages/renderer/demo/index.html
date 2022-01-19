@@ -9,7 +9,16 @@
     </style>
   </head>
   <body>
-    <script type="module" src="/src/index.ts"></script>
-    <cc-renderer> </cc-renderer>
+    <div id="root"></div>
+    <script lang="ts" type="module">
+      import ReactDOM from 'react-dom';
+      import React from 'react';
+      import {RendererComponent} from '/src/index.ts';
+
+      ReactDOM.render(
+        React.createElement(RendererComponent),
+        document.getElementById('root')
+      );
+    </script>
   </body>
 </html>

@@ -1,7 +1,12 @@
 import replace from '@rollup/plugin-replace';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  server: {
+    open: '/#/dashboard',
+  },
+  plugins: [react()],
   build: {
     rollupOptions: {
       plugins: [
