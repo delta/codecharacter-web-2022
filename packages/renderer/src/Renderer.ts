@@ -1,5 +1,5 @@
-import { TestScene } from './scenes/Test.js';
-import { LitElement, css, html } from 'lit';
+import { TestScene } from './scenes/Test';
+import { LitElement, TemplateResult, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import Phaser from 'phaser';
 
@@ -17,10 +17,11 @@ export class Renderer extends LitElement {
 
   private _game!: Phaser.Game;
 
-  firstUpdated() {
+  firstUpdated(): void {
     this._game = new Phaser.Game({
       type: Phaser.AUTO,
-      parent: this.shadowRoot!.querySelector<HTMLElement>('#renderer')!,
+      parent:
+        this.shadowRoot?.querySelector<HTMLElement>('#renderer') ?? undefined,
       scene: [TestScene],
       dom: {
         createContainer: false,
@@ -32,11 +33,11 @@ export class Renderer extends LitElement {
     });
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     this._game.destroy(true);
   }
 
-  render() {
+  render(): TemplateResult {
     return html` <div id="renderer"></div> `;
   }
 }

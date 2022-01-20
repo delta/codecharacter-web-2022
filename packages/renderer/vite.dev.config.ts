@@ -3,6 +3,9 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  server: {
+    open: '/demo/',
+  },
   build: {
     lib: {
       name: 'codecharacter-renderer-2022',

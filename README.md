@@ -23,7 +23,7 @@
 - `build` builds the web app
 - `prod` builds the web app for production and starts the live static server
 - `storybook` starts the storybook server
-- `test` runs the test suite with Web Test Runner
+- `test` runs the test suite with Jest
 - `lint` runs the linter for the project
 - `format` runs the formatter for the project
 

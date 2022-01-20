@@ -9,7 +9,16 @@
     </style>
   </head>
   <body>
-    <script type="module" src="/src/index.ts"></script>
-    <cc-map-designer> </cc-map-designer>
+    <div id="root"></div>
+    <script lang="ts" type="module">
+      import ReactDOM from 'react-dom';
+      import React from 'react';
+      import {MapDesignerComponent} from '/src/index.ts';
+
+      ReactDOM.render(
+        React.createElement(MapDesignerComponent),
+        document.getElementById('root')
+      );
+    </script>
   </body>
 </html>

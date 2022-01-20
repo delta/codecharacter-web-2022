@@ -35,7 +35,6 @@ jobs:
           mv dist docs/deployment
           mv coverage/lcov-report docs/coverage
           mv storybook-static docs/storybook
-          cp -r assets docs/storybook
       - name: Push coverage report
         run: |
           git config --local user.email "github-actions@github.com"

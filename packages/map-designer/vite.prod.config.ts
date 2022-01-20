@@ -1,10 +1,13 @@
 import replace from '@rollup/plugin-replace';
 import path from 'path';
 import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
+  plugins: [dts()],
   build: {
     lib: {
+      formats: ['es'],
       name: 'codecharacter-map-designer-2022',
       entry: path.resolve(__dirname, 'src/index.ts'),
       fileName: 'codecharacter-map-designer-2022',
@@ -29,5 +32,6 @@ export default defineConfig({
         },
       },
     },
+    sourcemap: true,
   },
 });

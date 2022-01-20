@@ -6,6 +6,7 @@ module.exports = {
     config.plugins.push(
       replace({
         'process.platform': JSON.stringify('linux'),
+        preventAssignment: true,
       }),
     );
     return config;
@@ -15,8 +16,5 @@ module.exports = {
     '../stories/*.stories.@(js|jsx|ts|tsx)',
   ],
   addons: ['@storybook/addon-viewport', '@storybook/addon-controls'],
-  framework: '@storybook/web-components',
-  core: {
-    builder: 'storybook-builder-vite',
-  },
+  framework: '@storybook/react',
 };
