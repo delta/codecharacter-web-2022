@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import './NavBar.css';
+// import toast from 'react-hot-toast';
 
 const NavBar: React.FunctionComponent = () => {
   return (
@@ -9,6 +10,17 @@ const NavBar: React.FunctionComponent = () => {
         <h2 className="navLogo">Code Character</h2>
       </div>
       <div className="profileIcons">
+        {/* <button
+          className="toastTest"
+          onClick={() => {
+            toast.success('Toast Rendered!', {
+              position: 'bottom-right',
+              duration: 3000,
+            });
+          }}
+        >
+          Toast
+        </button> */}
         <div className="notifIcon">
           <FontAwesomeIcon icon={faBell} />
         </div>
