@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
+import SideBar from './components/SideBar/SideBar';
 import Toast from './components/Toast/Toast';
 import './main.css';
 const Home = lazy(() => import('./pages/Home'));
@@ -13,15 +14,18 @@ const History = lazy(
 ReactDOM.render(
   <React.StrictMode>
     <NavBar />
-    <HashRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/history" element={<History />} />
-        </Routes>
-      </Suspense>
-    </HashRouter>
+    <div className="mainWindow">
+      <SideBar />
+      <HashRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/history" element={<History />} />
+          </Routes>
+        </Suspense>
+      </HashRouter>
+    </div>
     <Toast />
   </React.StrictMode>,
   document.getElementById('root'),

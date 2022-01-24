@@ -3,3 +3,10 @@
     margin: 0px;
     padding: 0px;
 }
+.mainWindow{
+    display: flex;
+    flex-direction: row;
+}
+body {
+    background-color: #3b4d7c;
+}
