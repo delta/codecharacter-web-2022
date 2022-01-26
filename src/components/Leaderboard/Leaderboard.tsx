@@ -1,16 +1,10 @@
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.css';
 import styled from 'styled-components';
+import './styles.css';
 
-const Body = styled.body`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: #242a3c;
-`;
-
-const Title = styled.h1`
-  color: white;
+const TableStyle = styled.div`
+  margin: 75px;
   text-decoration: underline;
   text-align: center;
 `;
@@ -34,38 +28,55 @@ const rows = [
   createData(4, 'Akash4', 122, 3, 1, 1, 'fightakash'),
   createData(5, 'Akash5', 122, 2, 1, 1, 'fightakash'),
   createData(6, 'Akash6', 122, 1, 1, 1, 'fightakash'),
+  createData(7, 'Akash7', 122, 1, 1, 1, 'fightakash'),
+  createData(8, 'Akash8', 122, 1, 1, 1, 'fightakash'),
+  createData(9, 'Akash9', 122, 1, 1, 1, 'fightakash'),
+  createData(10, 'Akash10', 122, 1, 1, 1, 'fightakash'),
+  createData(11, 'Akash11', 122, 1, 1, 1, 'fightakash'),
+  createData(12, 'Akash12', 122, 1, 1, 1, 'fightakash'),
 ];
 
 export default function Leaderboard(): JSX.Element {
   return (
-    <Body>
-      <Title>Leaderboard</Title>
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Username</th>
-            <th>Rating</th>
-            <th>Won</th>
-            <th>Tied</th>
-            <th>Lost</th>
-            <th>Play Against</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(row => (
-            <tr key={row.username}>
-              <td align="center">{row.rank}</td>
-              <td align="center">{row.username}</td>
-              <td align="center">{row.rating}</td>
-              <td align="center">{row.won}</td>
-              <td align="center">{row.lost}</td>
-              <td align="center">{row.tied}</td>
-              <button>{row.fight}</button>
+    <div className="body">
+      <div className="header">
+        <img
+          className="header__icon"
+          src="https://user-images.githubusercontent.com/23297041/55285200-a24e9b00-538f-11e9-8990-d49a162824d1.png"
+        />
+        <h1 className="header__title">
+          <span>Leaderboard</span>
+        </h1>
+      </div>
+      <div className="Button" />
+      <TableStyle>
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Username</th>
+              <th>Rating</th>
+              <th>Won</th>
+              <th>Tied</th>
+              <th>Lost</th>
+              <th>Play Against</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-    </Body>
+          </thead>
+          <tbody>
+            {rows.map(row => (
+              <tr key={row.username}>
+                <td align="center">{row.rank}</td>
+                <td align="center">{row.username}</td>
+                <td align="center">{row.rating}</td>
+                <td align="center">{row.won}</td>
+                <td align="center">{row.lost}</td>
+                <td align="center">{row.tied}</td>
+                <td align="center">{row.fight}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableStyle>
+    </div>
   );
 }
