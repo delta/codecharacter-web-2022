@@ -1,0 +1,28 @@
+.title {
+  margin-top: 2.5rem;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  letter-spacing: 4.5px;
+  color: #e8ecfd;
+}
+
+.heading {
+  display: flex;
+  margin-top: 2.5rem;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.heading .column {
+  color: #FFFFFF;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: #242a3c;
+  color: #333;
+}
