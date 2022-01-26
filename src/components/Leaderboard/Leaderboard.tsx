@@ -19,7 +19,6 @@ const rows = [
   createData(6, 'Akash6', 122, 1, 1, 1, 'fightakash'),
   createData(7, 'Akash7', 122, 1, 1, 1, 'fightakash'),
   createData(8, 'Akash8', 122, 1, 1, 1, 'fightakash'),
-  createData(9, 'Akash9', 122, 1, 1, 1, 'fightakash'),
 ];
 
 export default function Leaderboard(): JSX.Element {
@@ -71,6 +70,20 @@ export default function Leaderboard(): JSX.Element {
           </div>
         </div>
         <div className="list">
+          <div className="item">
+            <div
+              className="pic"
+              style={{
+                backgroundImage: `url("https://randomuser.me/api/portraits/men/34.jpg")`,
+              }}
+            ></div>
+            <div className="pos">#</div>
+            <div className="name">Username</div>
+            <div className="score">Ratings</div>
+            <div className="score">Won</div>
+            <div className="score">Tied</div>
+            <div className="score">Lost</div>
+          </div>
           {rows.map(row => (
             <div className="item" key={row.username}>
               <div className="pos">{row.rank}</div>
@@ -81,10 +94,10 @@ export default function Leaderboard(): JSX.Element {
                 }}
               ></div>
               <div className="name">{row.username}</div>
-              <div className="score">{row.rating} rating</div>
+              <div className="score">{row.rating}</div>
               <div className="score">{row.won} win</div>
-              <div className="score">{row.lost} lost</div>
               <div className="score">{row.tied} tied</div>
+              <div className="score">{row.lost} lost</div>
             </div>
           ))}
         </div>

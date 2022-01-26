@@ -54,7 +54,7 @@ html {
 .top3 .item {
   box-sizing: border-box;
   position: relative;
-  background: white;
+  background: radial-gradient(circle, rgba(184,207,205,1) 0%, rgba(133,157,217,1) 100%);
   width: 9rem;
   height: 10rem;
   text-align: center;
@@ -129,10 +129,10 @@ html {
   height: 3rem;
   border-radius: 4rem;
   margin-bottom: 2rem;
-  background: white;
   transform-origin: left;
   cursor: pointer;
   transition: transform 200ms ease-in-out;
+  background: radial-gradient(circle, rgba(184,207,205,1) 0%, rgba(133,157,217,1) 100%);
   box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
 }
 
