@@ -1,13 +1,5 @@
-import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.css';
-import styled from 'styled-components';
 import './styles.css';
-
-const TableStyle = styled.div`
-  margin: 75px;
-  text-decoration: underline;
-  text-align: center;
-`;
 
 function createData(
   rank: number,
@@ -22,18 +14,12 @@ function createData(
 }
 
 const rows = [
-  createData(1, 'Akash1', 122, 6, 1, 1, 'fightakash'),
-  createData(2, 'Akash2', 122, 5, 1, 1, 'fightakash'),
-  createData(3, 'Akash3', 122, 4, 1, 1, 'fightakash'),
   createData(4, 'Akash4', 122, 3, 1, 1, 'fightakash'),
   createData(5, 'Akash5', 122, 2, 1, 1, 'fightakash'),
   createData(6, 'Akash6', 122, 1, 1, 1, 'fightakash'),
   createData(7, 'Akash7', 122, 1, 1, 1, 'fightakash'),
   createData(8, 'Akash8', 122, 1, 1, 1, 'fightakash'),
   createData(9, 'Akash9', 122, 1, 1, 1, 'fightakash'),
-  createData(10, 'Akash10', 122, 1, 1, 1, 'fightakash'),
-  createData(11, 'Akash11', 122, 1, 1, 1, 'fightakash'),
-  createData(12, 'Akash12', 122, 1, 1, 1, 'fightakash'),
 ];
 
 export default function Leaderboard(): JSX.Element {
@@ -48,35 +34,61 @@ export default function Leaderboard(): JSX.Element {
           <span>Leaderboard</span>
         </h1>
       </div>
-      <div className="Button" />
-      <TableStyle>
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Username</th>
-              <th>Rating</th>
-              <th>Won</th>
-              <th>Tied</th>
-              <th>Lost</th>
-              <th>Play Against</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(row => (
-              <tr key={row.username}>
-                <td align="center">{row.rank}</td>
-                <td align="center">{row.username}</td>
-                <td align="center">{row.rating}</td>
-                <td align="center">{row.won}</td>
-                <td align="center">{row.lost}</td>
-                <td align="center">{row.tied}</td>
-                <td align="center">{row.fight}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </TableStyle>
+      <div className="center">
+        <div className="top3">
+          <div className="two item">
+            <div className="pos">2</div>
+            <div
+              className="pic"
+              style={{
+                backgroundImage: `url("https://randomuser.me/api/portraits/men/34.jpg")`,
+              }}
+            ></div>
+            <div className="name">Edgar Soto</div>
+            <div className="score">6453 rating</div>
+          </div>
+          <div className="one item">
+            <div className="pos">1</div>
+            <div
+              className="pic"
+              style={{
+                backgroundImage: `url("https://randomuser.me/api/portraits/men/31.jpg")`,
+              }}
+            ></div>
+            <div className="name">Clifford James</div>
+            <div className="score">6794 rating</div>
+          </div>
+          <div className="three item">
+            <div className="pos">3</div>
+            <div
+              className="pic"
+              style={{
+                backgroundImage: `url("https://randomuser.me/api/portraits/women/91.jpg")`,
+              }}
+            ></div>
+            <div className="name">Nevaeh Silva</div>
+            <div className="score">6034 rating</div>
+          </div>
+        </div>
+        <div className="list">
+          {rows.map(row => (
+            <div className="item" key={row.username}>
+              <div className="pos">{row.rank}</div>
+              <div
+                className="pic"
+                style={{
+                  backgroundImage: `url("https://randomuser.me/api/portraits/women/81.jpg")`,
+                }}
+              ></div>
+              <div className="name">{row.username}</div>
+              <div className="score">{row.rating} rating</div>
+              <div className="score">{row.won} win</div>
+              <div className="score">{row.lost} lost</div>
+              <div className="score">{row.tied} tied</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
