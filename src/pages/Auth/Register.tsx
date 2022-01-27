@@ -189,7 +189,7 @@ export default function Register(): JSX.Element {
             <p> Register now and code your way through 👨‍💻️!! </p>
           </Container>
         </div>
-        <div>
+        <div style={{ margin: '0rem 0rem' }}>
           <div className={styles.progressBarContainer}>
             <div>
               <div>
@@ -208,6 +208,12 @@ export default function Register(): JSX.Element {
                       ? styles.levelCompleted
                       : styles.levelInitiated
                   }
+                  onClick={() => {
+                    if (formNumber > 1) {
+                      setFormnumber(1);
+                      inc = 1;
+                    }
+                  }}
                 >
                   <FontAwesomeIcon icon={faUser} />
                 </button>
@@ -220,6 +226,12 @@ export default function Register(): JSX.Element {
                       ? styles.levelCompleted
                       : styles.levelInitiated
                   }
+                  onClick={() => {
+                    if (formNumber > 2) {
+                      setFormnumber(2);
+                      inc = 2;
+                    }
+                  }}
                 >
                   <FontAwesomeIcon icon={faUserSecret} />
                 </button>
@@ -304,7 +316,7 @@ export default function Register(): JSX.Element {
                   {submitFirst && userNameError ? (
                     <AlertMessage
                       err={userNameError}
-                      content={'Username already exist'}
+                      content={'Username should be atleast 5 characters'}
                     />
                   ) : (
                     <></>
