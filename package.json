@@ -26,7 +26,7 @@
     "@codecharacter-2022/renderer": "workspace:packages/renderer",
     "@lit-labs/react": "^1.0.1",
     "@reduxjs/toolkit": "^1.7.1",
-    "bootstrap": "5.1.3",
+    "bootstrap": "^5.1.3",
     "lit": "^2.1.1",
     "phaser": "^3.55.2",
     "react": "^17.0.2",
