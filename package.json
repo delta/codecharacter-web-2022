@@ -1,133 +1,140 @@
 {
-  "name": "@codecharacter-2022/web",
-  "description": "The web frontend of CodeCharacter 2022",
-  "license": "MIT",
-  "author": "Delta Force",
-  "version": "2022.0.0",
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "lint": "eslint --ext .ts,.tsx . --ignore-path .gitignore && prettier \"**/*.{ts,tsx,js,json,yml,md}\" --check --ignore-path .gitignore",
-    "format": "eslint --ext .ts,.tsx . --fix --ignore-path .gitignore && prettier \"**/*.{ts,tsx,js,json,yml,md}\" --write --ignore-path .gitignore",
-    "compile": "yarn workspace @codecharacter-2022/renderer run tsc && yarn workspace @codecharacter-2022/map-designer run tsc && tsc",
-    "test": "jest --coverage",
-    "dev": "concurrently -k -r \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\" \"sleep 5 && vite --config vite.dev.config.ts\"",
-    "build": "yarn workspace @codecharacter-2022/renderer run build && yarn workspace @codecharacter-2022/map-designer run build && vite build --config vite.prod.config.ts --emptyOutDir",
-    "prod": "concurrently -k -r \"sleep 5 && vite build --watch --config vite.prod.config.ts --emptyOutDir\" \"sleep 10 && live-server --middleware=spa-ignore-assets dist/\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\"",
-    "renderer:demo": "yarn workspace @codecharacter-2022/renderer run dev",
-    "map-designer:demo": "yarn workspace @codecharacter-2022/map-designer run dev",
-    "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
-    "postinstall": "husky install"
-  },
-  "dependencies": {
-    "@codecharacter-2022/map-designer": "workspace:packages/map-designer",
-    "@codecharacter-2022/renderer": "workspace:packages/renderer",
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/react-fontawesome": "^0.1.16",
-    "@lit-labs/react": "^1.0.1",
-    "@reduxjs/toolkit": "^1.7.1",
-    "lit": "^2.1.1",
-    "phaser": "^3.55.2",
-    "react": "^17.0.2",
-    "react-bootstrap": "^2.1.1",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "6",
-    "react-vertical-timeline-component": "^3.5.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.16.5",
-    "@mdx-js/react": "^1.6.22",
-    "@rollup/plugin-replace": "^3.0.0",
-    "@storybook/addon-controls": "^6.5.0-alpha.19",
-    "@storybook/addon-viewport": "^6.5.0-alpha.19",
-    "@storybook/react": "^6.5.0-alpha.19",
-    "@types/jest": "^27.4.0",
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
-    "@types/react-test-renderer": "^17.0.1",
-    "@types/react-vertical-timeline-component": "^3.3.2",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "@vitejs/plugin-react": "^1.0.7",
-    "@web/rollup-plugin-html": "^1.10.1",
-    "babel-loader": "^8.2.3",
-    "concurrently": "^5.3.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
-    "husky": "^7.0.4",
-    "jest": "^27.4.7",
-    "lint-staged": "^10.5.4",
-    "live-server": "^1.2.1",
-    "postinstall-postinstall": "^2.1.0",
-    "prettier": "^2.4.1",
-    "react-test-renderer": "^17.0.2",
-    "rollup-plugin-minify-html-literals": "^1.2.6",
-    "rollup-plugin-workbox": "^6.2.0",
-    "storybook-builder-vite": "^0.1.11",
-    "ts-jest": "^27.1.3",
-    "tslib": "^2.3.1",
-    "typescript": "^4.5.2",
-    "vite": "^2.7.4"
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "plugin:react/recommended",
-      "plugin:react/jsx-runtime",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:prettier/recommended",
-      "plugin:import/recommended",
-      "plugin:import/typescript"
+    "name": "@codecharacter-2022/web",
+    "description": "The web frontend of CodeCharacter 2022",
+    "license": "MIT",
+    "author": "Delta Force",
+    "version": "2022.0.0",
+    "workspaces": [
+        "packages/*"
     ],
-    "parserOptions": {
-      "ecmaVersion": "latest",
-      "ecmaFeatures": {
-        "jsx": true
-      }
+    "scripts": {
+        "lint": "eslint --ext .ts,.tsx . --ignore-path .gitignore && prettier \"**/*.{ts,tsx,js,json,yml,md}\" --check --ignore-path .gitignore",
+        "format": "eslint --ext .ts,.tsx . --fix --ignore-path .gitignore && prettier \"**/*.{ts,tsx,js,json,yml,md}\" --write --ignore-path .gitignore",
+        "compile": "yarn workspace @codecharacter-2022/renderer run tsc && yarn workspace @codecharacter-2022/map-designer run tsc && tsc",
+        "test": "jest --coverage",
+        "dev": "concurrently -k -r \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\" \"sleep 5 && vite --config vite.dev.config.ts\"",
+        "build": "yarn workspace @codecharacter-2022/renderer run build && yarn workspace @codecharacter-2022/map-designer run build && vite build --config vite.prod.config.ts --emptyOutDir",
+        "prod": "concurrently -k -r \"sleep 5 && vite build --watch --config vite.prod.config.ts --emptyOutDir\" \"sleep 10 && live-server --middleware=spa-ignore-assets dist/\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\"",
+        "renderer:demo": "yarn workspace @codecharacter-2022/renderer run dev",
+        "map-designer:demo": "yarn workspace @codecharacter-2022/map-designer run dev",
+        "storybook": "start-storybook -p 6006",
+        "storybook:build": "build-storybook",
+        "postinstall": "husky install"
     },
-    "rules": {
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error"
-      ],
-      "import/no-unresolved": "off"
+    "dependencies": {
+        "@codecharacter-2022/map-designer": "workspace:packages/map-designer",
+        "@codecharacter-2022/renderer": "workspace:packages/renderer",
+        "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@fortawesome/free-brands-svg-icons": "^5.15.4",
+        "@fortawesome/free-solid-svg-icons": "^5.15.4",
+        "@fortawesome/react-fontawesome": "^0.1.16",
+        "@lit-labs/react": "^1.0.1",
+        "@reduxjs/toolkit": "^1.7.1",
+        "@types/grecaptcha": "^3.0.3",
+        "bootstrap": "5.1.3",
+        "lit": "^2.1.1",
+        "phaser": "^3.55.2",
+        "react": "^17.0.2",
+        "react-bootstrap": "^2.1.1",
+        "react-dom": "^17.0.2",
+        "react-router-dom": "6",
+        "react-vertical-timeline-component": "^3.5.2",
+        "react-flags-select": "^2.1.2",
+        "react-google-recaptcha": "^2.1.0",
+        "react-step-progress-bar": "^1.0.3"
     },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    }
-  },
-  "prettier": {
-    "singleQuote": true,
-    "arrowParens": "avoid",
-    "printWidth": 80,
-    "tabWidth": 2,
-    "trailingComma": "all",
-    "useTabs": false
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
-  "lint-staged": {
-    "*.{ts,.tsx}": [
-      "eslint --fix"
-    ],
-    "*.{ts,js,json,yml,md}": [
-      "prettier --write"
-    ]
-  },
-  "packageManager": "yarn@3.1.1"
+    "devDependencies": {
+        "@babel/core": "^7.16.5",
+        "@mdx-js/react": "^1.6.22",
+        "@rollup/plugin-replace": "^3.0.0",
+        "@storybook/addon-controls": "^6.5.0-alpha.19",
+        "@storybook/addon-viewport": "^6.5.0-alpha.19",
+        "@storybook/react": "^6.5.0-alpha.19",
+        "@types/jest": "^27.4.0",
+        "@types/react": "^17.0.33",
+        "@types/react-dom": "^17.0.10",
+        "@types/react-google-recaptcha": "^2.1.3",
+        "@types/react-test-renderer": "^17.0.1",
+        "@types/react-vertical-timeline-component": "^3.3.2",
+        "@typescript-eslint/eslint-plugin": "^4.33.0",
+        "@typescript-eslint/parser": "^4.33.0",
+        "@vitejs/plugin-react": "^1.0.7",
+        "@web/rollup-plugin-html": "^1.10.1",
+        "babel-loader": "^8.2.3",
+        "concurrently": "^5.3.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.28.0",
+        "husky": "^7.0.4",
+        "jest": "^27.4.7",
+        "lint-staged": "^10.5.4",
+        "live-server": "^1.2.1",
+        "postinstall-postinstall": "^2.1.0",
+        "prettier": "^2.4.1",
+        "react-test-renderer": "^17.0.2",
+        "rollup-plugin-minify-html-literals": "^1.2.6",
+        "rollup-plugin-workbox": "^6.2.0",
+        "storybook-builder-vite": "^0.1.11",
+        "ts-jest": "^27.1.3",
+        "tslib": "^2.3.1",
+        "typescript": "^4.5.2",
+        "vite": "^2.7.4"
+    },
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "extends": [
+            "plugin:react/recommended",
+            "plugin:react/jsx-runtime",
+            "plugin:@typescript-eslint/recommended",
+            "plugin:prettier/recommended",
+            "plugin:import/recommended",
+            "plugin:import/typescript"
+        ],
+        "parserOptions": {
+            "ecmaVersion": "latest",
+            "ecmaFeatures": {
+                "jsx": true
+            }
+        },
+        "rules": {
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": [
+                "error"
+            ],
+            "import/no-unresolved": "off"
+        },
+        "settings": {
+            "react": {
+                "version": "detect"
+            }
+        }
+    },
+    "prettier": {
+        "singleQuote": true,
+        "arrowParens": "avoid",
+        "printWidth": 80,
+        "tabWidth": 2,
+        "trailingComma": "all",
+        "useTabs": false
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node"
+    },
+    "lint-staged": {
+        "*.{ts,.tsx}": [
+            "eslint --fix"
+        ],
+        "*.{ts,js,json,yml,md}": [
+            "prettier --write"
+        ]
+    },
+    "packageManager": "yarn@3.1.1"
 }

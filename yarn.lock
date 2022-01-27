@@ -1540,7 +1540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.16, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.16, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.16.7, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.16.7
   resolution: "@babel/runtime@npm:7.16.7"
   dependencies:
@@ -1639,6 +1639,7 @@ __metadata:
     "@codecharacter-2022/map-designer": "workspace:packages/map-designer"
     "@codecharacter-2022/renderer": "workspace:packages/renderer"
     "@fortawesome/fontawesome-svg-core": ^1.2.36
+    "@fortawesome/free-brands-svg-icons": ^5.15.4
     "@fortawesome/free-solid-svg-icons": ^5.15.4
     "@fortawesome/react-fontawesome": ^0.1.16
     "@lit-labs/react": ^1.0.1
@@ -1648,9 +1649,11 @@ __metadata:
     "@storybook/addon-controls": ^6.5.0-alpha.19
     "@storybook/addon-viewport": ^6.5.0-alpha.19
     "@storybook/react": ^6.5.0-alpha.19
+    "@types/grecaptcha": ^3.0.3
     "@types/jest": ^27.4.0
     "@types/react": ^17.0.33
     "@types/react-dom": ^17.0.10
+    "@types/react-google-recaptcha": ^2.1.3
     "@types/react-test-renderer": ^17.0.1
     "@types/react-vertical-timeline-component": ^3.3.2
     "@typescript-eslint/eslint-plugin": ^4.33.0
@@ -1658,6 +1661,7 @@ __metadata:
     "@vitejs/plugin-react": ^1.0.7
     "@web/rollup-plugin-html": ^1.10.1
     babel-loader: ^8.2.3
+    bootstrap: 5.1.3
     concurrently: ^5.3.0
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
@@ -1675,7 +1679,10 @@ __metadata:
     react: ^17.0.2
     react-bootstrap: ^2.1.1
     react-dom: ^17.0.2
+    react-flags-select: ^2.1.2
+    react-google-recaptcha: ^2.1.0
     react-router-dom: 6
+    react-step-progress-bar: ^1.0.3
     react-test-renderer: ^17.0.2
     react-vertical-timeline-component: ^3.5.2
     rollup-plugin-minify-html-literals: ^1.2.6
@@ -1882,6 +1889,15 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-common-types": ^0.2.36
   checksum: 3011d8c1452b5df52a62eaee8b1ec925b9fdfabcc170fd6da5eaac7cfdef56258b9292ddd06c30f03a6a8ed6faa886565211f2e469fee3c9831c32f93e9383d8
+  languageName: node
+  linkType: hard
+
+"@fortawesome/free-brands-svg-icons@npm:^5.15.4":
+  version: 5.15.4
+  resolution: "@fortawesome/free-brands-svg-icons@npm:5.15.4"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": ^0.2.36
+  checksum: 06e38132fbdf04d8677cf6e47e73cd566f68256f542d68d354e26f5ca7536c714b56f5f3dc6c670065b888ee08bc913bb4f213ab08225faf955d893a6a86ed02
   languageName: node
   linkType: hard
 
@@ -3607,6 +3623,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/grecaptcha@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@types/grecaptcha@npm:3.0.3"
+  checksum: c2a6815360b0fee5cd1f4a427974054dcc61b2bbeee623505d13188dd3c76e79eef09751bc38c2a6e42bdb18b14f0892a65ce62f66eced48006d9793c984d6a5
+  languageName: node
+  linkType: hard
+
 "@types/hast@npm:^2.0.0":
   version: 2.3.4
   resolution: "@types/hast@npm:2.3.4"
@@ -3813,6 +3836,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 4d5730dffbef86c887cecad7e3cecda424ce6a64d0b5441c63b5b015d48219868660a2bb1aa15e897e565ad8867fa6b885d4358b04e1c4e589ba4c07c3fda55c
+  languageName: node
+  linkType: hard
+
+"@types/react-google-recaptcha@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "@types/react-google-recaptcha@npm:2.1.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: b322326e3614035392b760ebbf546a4a23abda7fe5e4c357512ff914bce8dac524fde3ce3f532602e09d215bd2352928c06328b4a817767f43dc0c762ecb5b86
   languageName: node
   linkType: hard
 
@@ -5470,6 +5502,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bootstrap@npm:5.1.3":
+  version: 5.1.3
+  resolution: "bootstrap@npm:5.1.3"
+  peerDependencies:
+    "@popperjs/core": ^2.10.2
+  checksum: 301b5ed872efba061104cf22ac93568e3837867fb5527ab9326a51510fb752bd4883e1d488225c8be72f86d9d3a55ef5b166aa7fa62c2fdd077c3f05b65752f8
+  languageName: node
+  linkType: hard
+
 "boxen@npm:^5.1.2":
   version: 5.1.2
   resolution: "boxen@npm:5.1.2"
@@ -5879,6 +5920,9 @@ __metadata:
   version: 1.0.30001302
   resolution: "caniuse-lite@npm:1.0.30001302"
   checksum: 612689059f6a9aeebad43afeabac655308ddbad8e0f345030edf7656564cf9d0d5af10e3cbf61b64b09b06a97f82ba3788f5621d6526c7a3e7e068cae88d6782
+  version: 1.0.30001301
+  resolution: "caniuse-lite@npm:1.0.30001301"
+  checksum: 0e359f2c682bed35521902ce7fc91136c485de4c1e1e33272d6fbb7cdf77178df7649960a9b69ce9da12022aadd7a0037b3c9b3594c41146d58216654dc9a236
   languageName: node
   linkType: hard
 
@@ -6885,9 +6929,15 @@ __metadata:
   linkType: hard
 
 "deep-object-diff@npm:^1.1.0":
+<<<<<<< HEAD
   version: 1.1.7
   resolution: "deep-object-diff@npm:1.1.7"
   checksum: 543fb1ae87b138ad260691e6949e72bf7dc144825084b7ad1886bb725d2ace1c19ed1ef1280f1116243e86bf2c6b942f45c670958b1468f644613f28c5dc97ea
+=======
+  version: 1.1.1
+  resolution: "deep-object-diff@npm:1.1.1"
+  checksum: 483b2d2e154985df8f187dc670f302c7bfba6d5c946659c61a8d3cc1d995780afd55c933e67f0b8c61e289ea8748242e2e4ab05ce02effa8aa50626c752f8cd2
+>>>>>>> necessary packages are added and modified config to add style module
   languageName: node
   linkType: hard
 
@@ -7099,6 +7149,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-helpers@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "dom-helpers@npm:3.4.0"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+  checksum: 58d9f1c4a96daf77eddc63ae1236b826e1cddd6db66bbf39b18d7e21896d99365b376593352d52a60969d67fa4a8dbef26adc1439fa2c1b355efa37cacbaf637
+  languageName: node
+  linkType: hard
+
 "dom-helpers@npm:^5.0.1, dom-helpers@npm:^5.2.0, dom-helpers@npm:^5.2.1":
   version: 5.2.1
   resolution: "dom-helpers@npm:5.2.1"
@@ -7250,6 +7309,9 @@ __metadata:
   version: 1.4.53
   resolution: "electron-to-chromium@npm:1.4.53"
   checksum: 8c221a85b1941763803836044a8d8eaacb6e9661302fcdd36601a74f7123236aa52b0007d54320a1550cbbcf9dfdd4cf52ca92e677df3f71be0ee2ed68c738d7
+  version: 1.4.52
+  resolution: "electron-to-chromium@npm:1.4.52"
+  checksum: 31e8e38f0a4dd45e86f3b9905f3b1f915ec2f3831226dc15542764b3a435dd8025fe1ab546ed0a8ed6c46d87ac49724e80cd074bdbaf926657568ee76105fcd3
   languageName: node
   linkType: hard
 
@@ -13627,6 +13689,7 @@ __metadata:
   linkType: hard
 
 "prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.5.0, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -13844,6 +13907,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-async-script@npm:^1.1.1":
+  version: 1.2.0
+  resolution: "react-async-script@npm:1.2.0"
+  dependencies:
+    hoist-non-react-statics: ^3.3.0
+    prop-types: ^15.5.0
+  peerDependencies:
+    react: ">=16.4.1"
+  checksum: 303890eeaf9e18d59fca77f9c891bf3b52d2ec9ea88f0af9d19c160a1f101b447c5104ca46e2dd84c19de756d4797f1f054d041b888a3d57204d9145f4b1b532
+  languageName: node
+  linkType: hard
+
 "react-bootstrap@npm:^2.1.1":
   version: 2.1.1
   resolution: "react-bootstrap@npm:2.1.1"
@@ -13940,6 +14015,30 @@ __metadata:
   version: 3.2.0
   resolution: "react-fast-compare@npm:3.2.0"
   checksum: 8ef272c825ae329f61633ce4ce7f15aa5b84e5214d88bc0823880236e03e985a13195befa2c7a4eda7db3b017dc7985729152d88445823f652403cf36c2b86aa
+  languageName: node
+  linkType: hard
+
+"react-flags-select@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "react-flags-select@npm:2.1.2"
+  dependencies:
+    classnames: ^2.2.6
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 255ce978325dac3bf42183a5d8bc057d28436c671928b9db834a1da40a816a2de923b64efa2c7e68592da7824d68ae55e13c4cb66b16d71404034dd217e1a79d
+  languageName: node
+  linkType: hard
+
+"react-google-recaptcha@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "react-google-recaptcha@npm:2.1.0"
+  dependencies:
+    prop-types: ^15.5.0
+    react-async-script: ^1.1.1
+  peerDependencies:
+    react: ">=16.4.1"
+  checksum: f4f4d248eb95ebfab8db73199e3ca402acf7abec873c616c12fd113c635657df6d844890ef7e7dfe4cb2563302e910dbce54d44404af93863336786dd29e8efa
   languageName: node
   linkType: hard
 
@@ -14095,6 +14194,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-step-progress-bar@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "react-step-progress-bar@npm:1.0.3"
+  dependencies:
+    classnames: ^2.2.6
+    invariant: ^2.2.4
+    react-transition-group: ^2.4.0
+  peerDependencies:
+    react: ">=15.0.0"
+  checksum: 5e4329d415fdefa96353cfb3bfd93e4f4e98dc138b7ea9cc26857998e98afd0d5ff8202c696f57b1cf42beccf740a942a75d39cf04c7e1b3210d1d994fe81324
+  languageName: node
+  linkType: hard
+
 "react-syntax-highlighter@npm:^15.4.5":
   version: 15.4.5
   resolution: "react-syntax-highlighter@npm:15.4.5"
@@ -14134,6 +14246,21 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0
   checksum: da3d0192825df3d9f27eef33e7eddf928359a7e3e2b01ae7f7f672ecf4e5c1f7a34f27bdde9ccc24e2e9fbe1d1b9dd2a39c7d47323c9bdf63e7b9bd05c325a71
+  languageName: node
+  linkType: hard
+
+"react-transition-group@npm:^2.4.0":
+  version: 2.9.0
+  resolution: "react-transition-group@npm:2.9.0"
+  dependencies:
+    dom-helpers: ^3.4.0
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.2
+    react-lifecycles-compat: ^3.0.4
+  peerDependencies:
+    react: ">=15.0.0"
+    react-dom: ">=15.0.0"
+  checksum: d8c9e50aabdc2cfc324e5cdb0ad1c6eecb02e1c0cd007b26d5b30ccf49015e900683dd489348c71fba4055858308d9ba7019e0d37d0e8d37bd46ed098788f670
   languageName: node
   linkType: hard
 
