@@ -14,8 +14,8 @@ import { ReCAPTCHA } from 'react-google-recaptcha';
 import styles from '../../styles/auth.module.css';
 let inc = 1;
 let check1 = 0;
-const SITE_KEY = '6LdYAzgeAAAAAFvfmHT_tvBg1sbcj7OG7epzxfOQ';
-const SECRET_KEY = '6LdYAzgeAAAAAOhjsWoAnmjRyB0JOiZCJRbYANOy';
+const SITE_KEY = 'your site key';
+const SECRET_KEY = 'your secret key';
 export default function Register(): JSX.Element {
   const [selected, setSelected] = useState('IN');
   const [formNumber, setFormnumber] = useState(1);
@@ -121,22 +121,17 @@ export default function Register(): JSX.Element {
     });
   };
   const submitData = async (token: string) => {
-    console.log(token);
-    const res = await fetch(
-      '  https://www.google.com/recaptcha/api/siteverify ',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:3000/#/register',
-        },
-        body: JSON.stringify({
-          secret: { SECRET_KEY },
-          response: token,
-        }),
+    await fetch('  https://www.google.com/recaptcha/api/siteverify ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000/#/register',
       },
-    );
-    console.log(await res.json());
+      body: JSON.stringify({
+        secret: { SECRET_KEY },
+        response: token,
+      }),
+    });
   };
   const avatar = [
     {
