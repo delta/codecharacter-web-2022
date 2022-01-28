@@ -1,0 +1,40 @@
+.completeTimeline {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.completeTimeline::-webkit-scrollbar {
+  display: none;
+}
+
+.vertical-timeline-element--work,
+.vertical-timeline-element {
+  height: fit-content;
+  width: 80%;
+}
+
+.vertical-timeline::before {
+  left: 13px;
+}
+
+.vertical-timeline-element-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.vertical-timeline-element-content {
+  box-shadow: 0 0 0;
+  padding: 0%;
+  padding-left: 1rem;
+  border-radius: 0%;
+}
+
+.vertical-timeline-element-content:hover{
+  cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: 2px 2px 2px #DFFF00;
+}
+
+.vertical-timeline-element--work:hover{
+  cursor: pointer;
+}
