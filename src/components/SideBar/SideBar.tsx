@@ -8,7 +8,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import './SideBar.css';
+import styles from './SideBar.module.css';
 
 const icons = [
   { icon: faCode, route: 'editor' },
@@ -21,13 +21,13 @@ const icons = [
 
 const SideBar: React.FunctionComponent = () => {
   return (
-    <div className="sideBar">
+    <div className={styles.sideBar}>
       {icons.map(icon => {
         return (
-          <div key={icons.indexOf(icon)} className="sideBarIcon">
+          <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
             <Link to={icon.route} key={icon.route}>
               <FontAwesomeIcon
-                className="sideBarIconComponent"
+                className={styles.sideBarIconComponent}
                 icon={icon.icon}
                 size="2x"
               />

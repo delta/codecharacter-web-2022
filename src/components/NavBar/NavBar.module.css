@@ -27,11 +27,12 @@
     height: 30px;
     background-color: #c4c4c4;
     border-radius: 50%;
-    margin-left: 0.5rem;
+    margin-left: 0.6rem;
 }
 .profileName{
     font-family: "Montserrat";
     color: #ffffff;
+    margin: auto;
     margin-left: 0.5rem;
     margin-right: 2rem;
     font-weight: 500;

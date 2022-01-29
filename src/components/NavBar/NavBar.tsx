@@ -1,18 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import './NavBar.css';
+import styles from './NavBar.module.css';
 // import toast from 'react-hot-toast';
 
 const NavBar: React.FunctionComponent = () => {
   return (
-    <div className="navBar">
-      <div className="branding">
-        <Link to="dashboard" className="logoLink">
-          <h2 className="navLogo">Code Character</h2>
+    <div className={styles.navBar}>
+      <div className={styles.branding}>
+        <Link to="dashboard" className={styles.logoLink}>
+          <h2 className={styles.navLogo}>Code Character</h2>
         </Link>
       </div>
-      <div className="profileIcons">
+      <div className={styles.profileIcons}>
         {/* <button
           className="toastTest"
           onClick={() => {
@@ -24,11 +24,11 @@ const NavBar: React.FunctionComponent = () => {
         >
           Toast
         </button> */}
-        <div className="notifIcon">
+        <div className={styles.notifIcon}>
           <FontAwesomeIcon icon={faBell} />
         </div>
-        <div className="fakeProfileIcon" />
-        <h3 className="profileName">blndlyblv</h3>
+        <div className={styles.fakeProfileIcon} />
+        <h3 className={styles.profileName}>blndlyblv</h3>
       </div>
     </div>
   );
