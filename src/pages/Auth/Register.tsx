@@ -12,10 +12,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ReCAPTCHA } from 'react-google-recaptcha';
 import styles from '../../styles/auth.module.css';
+import { accessUrl, SECRET_KEY, SITE_KEY } from '../../config/config';
 let inc = 1;
 let check1 = 0;
-const SITE_KEY = 'your site key';
-const SECRET_KEY = 'your secret key';
 export default function Register(): JSX.Element {
   const [selected, setSelected] = useState('IN');
   const [formNumber, setFormnumber] = useState(1);
@@ -46,7 +45,7 @@ export default function Register(): JSX.Element {
       }
     };
     loadScriptByURL(
-      '6LdYAzgeAAAAAFvfmHT_tvBg1sbcj7OG7epzxfOQ',
+      SITE_KEY,
       `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`,
     );
   }, []);
@@ -54,13 +53,17 @@ export default function Register(): JSX.Element {
     if (fullName.trim().length < 5) {
       isfullNameError(true);
       check1 += 1;
-    } else isfullNameError(false);
+    } else {
+      isfullNameError(false);
+    }
   };
   const handleUsername = () => {
     if (userName.trim().length < 5 || userName.length < 5) {
       check1 += 1;
       isuserNameError(true);
-    } else isuserNameError(false);
+    } else {
+      isuserNameError(false);
+    }
   };
   const handleEmail = () => {
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -76,13 +79,17 @@ export default function Register(): JSX.Element {
     if (password.trim().length < 5) {
       ispasswordError(true);
       check1 += 1;
-    } else ispasswordError(false);
+    } else {
+      ispasswordError(false);
+    }
   };
   const handleConfirmpassword = () => {
     if (!(password === confirmPassword) || password.length < 5) {
       isconfirmpasswordError(true);
       check1 += 1;
-    } else isconfirmpasswordError(false);
+    } else {
+      isconfirmpasswordError(false);
+    }
   };
   const handleStepSubmit = (step: number) => {
     switch (step) {
@@ -103,9 +110,13 @@ export default function Register(): JSX.Element {
   };
   const handleForm = (level: number) => {
     if (check1 == 0) {
-      if (level == 1) inc += 1;
+      if (level == 1) {
+        inc += 1;
+      }
 
-      if (level == -1) inc -= 1;
+      if (level == -1) {
+        inc -= 1;
+      }
     }
     setFormnumber(inc);
   };
@@ -121,11 +132,13 @@ export default function Register(): JSX.Element {
     });
   };
   const submitData = async (token: string) => {
+    console.log(token);
+
     await fetch('  https://www.google.com/recaptcha/api/siteverify ', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000/#/register',
+        'Access-Control-Allow-Origin': `${accessUrl}`,
       },
       body: JSON.stringify({
         secret: { SECRET_KEY },
@@ -266,9 +279,11 @@ export default function Register(): JSX.Element {
                         if (
                           e.target.value.trim().length < 5 ||
                           fullName.length < 4
-                        )
+                        ) {
                           isfullNameError(true);
-                        else isfullNameError(false);
+                        } else {
+                          isfullNameError(false);
+                        }
                       }
                     }}
                     style={
@@ -300,9 +315,11 @@ export default function Register(): JSX.Element {
                         if (
                           e.target.value.trim().length < 5 ||
                           userName.length < 4
-                        )
+                        ) {
                           isuserNameError(true);
-                        else isuserNameError(false);
+                        } else {
+                          isuserNameError(false);
+                        }
                       }
                     }}
                     style={
@@ -343,9 +360,11 @@ export default function Register(): JSX.Element {
                         if (
                           e.target.value.match(mailformat) ||
                           email.match(mailformat)
-                        )
+                        ) {
                           isemailError(false);
-                        else isemailError(true);
+                        } else {
+                          isemailError(true);
+                        }
                       }
                     }}
                   />
@@ -374,9 +393,11 @@ export default function Register(): JSX.Element {
                         if (
                           e.target.value.trim().length < 5 ||
                           password.length < 4
-                        )
+                        ) {
                           ispasswordError(true);
-                        else ispasswordError(false);
+                        } else {
+                          ispasswordError(false);
+                        }
                       }
                     }}
                     style={
@@ -411,9 +432,11 @@ export default function Register(): JSX.Element {
                         if (
                           !(e.target.value.trim() == password) ||
                           confirmPassword.length < 4
-                        )
+                        ) {
                           isconfirmpasswordError(true);
-                        else isconfirmpasswordError(false);
+                        } else {
+                          isconfirmpasswordError(false);
+                        }
                       }
                     }}
                     style={
@@ -467,10 +490,7 @@ export default function Register(): JSX.Element {
                   </div>
                 </Form.Group>
                 <div>
-                  <ReCAPTCHA
-                    sitekey="6LdYAzgeAAAAAFvfmHT_tvBg1sbcj7OG7epzxfOQ"
-                    theme="dark"
-                  />
+                  <ReCAPTCHA sitekey={SITE_KEY} theme="dark" />
                 </div>
                 <div className={styles.registerButton}>
                   <div className="d-grid gap-2">

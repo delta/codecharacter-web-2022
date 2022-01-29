@@ -1,5 +1,4 @@
 import { Form, Button, Container, Card } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
@@ -15,25 +14,37 @@ export default function Login(): JSX.Element {
   const handleLoginSubmit = () => {
     islogin(true);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
-    if (email.match(mailformat)) isemailError(false);
-    else isemailError(true);
-    if (password.length >= 5) ispasswordError(false);
-    else ispasswordError(true);
+    if (email.match(mailformat)) {
+      isemailError(false);
+    } else {
+      isemailError(true);
+    }
+    if (password.length >= 5) {
+      ispasswordError(false);
+    } else {
+      ispasswordError(true);
+    }
   };
 
   const handlePasswordSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value != null) {
       setPassword(event.target.value);
     }
-    if (event.target.value.toString().length >= 5) ispasswordError(false);
-    else ispasswordError(true);
+    if (event.target.value.toString().length >= 5) {
+      ispasswordError(false);
+    } else {
+      ispasswordError(true);
+    }
   };
 
   const handleEmailSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (event.target.value.match(mailformat)) isemailError(false);
-    else isemailError(true);
+    if (event.target.value.match(mailformat)) {
+      isemailError(false);
+    } else {
+      isemailError(true);
+    }
   };
   return (
     <div className={styles.mainContainer}>

@@ -29,3 +29,6 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# config for secret keys
+/src/config/config.ts
