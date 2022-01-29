@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import './NavBar.css';
 // import toast from 'react-hot-toast';
 
@@ -7,7 +8,9 @@ const NavBar: React.FunctionComponent = () => {
   return (
     <div className="navBar">
       <div className="branding">
-        <h2 className="navLogo">Code Character</h2>
+        <Link to="dashboard" className="logoLink">
+          <h2 className="navLogo">Code Character</h2>
+        </Link>
       </div>
       <div className="profileIcons">
         {/* <button

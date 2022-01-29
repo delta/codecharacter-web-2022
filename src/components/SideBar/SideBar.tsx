@@ -7,9 +7,17 @@ import {
   faTv,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import './SideBar.css';
 
-const icons = [faCode, faGlobeAsia, faTrophy, faCodeBranch, faTv, faSignOutAlt];
+const icons = [
+  { icon: faCode, route: 'editor' },
+  { icon: faGlobeAsia, route: 'mapdesginer' },
+  { icon: faTrophy, route: 'leaderboard' },
+  { icon: faCodeBranch, route: 'commits' },
+  { icon: faTv, route: 'battletv' },
+  { icon: faSignOutAlt, route: 'logout' },
+];
 
 const SideBar: React.FunctionComponent = () => {
   return (
@@ -17,11 +25,13 @@ const SideBar: React.FunctionComponent = () => {
       {icons.map(icon => {
         return (
           <div key={icons.indexOf(icon)} className="sideBarIcon">
-            <FontAwesomeIcon
-              className="sideBarIconComponent"
-              icon={icon}
-              size="2x"
-            />
+            <Link to={icon.route} key={icon.route}>
+              <FontAwesomeIcon
+                className="sideBarIconComponent"
+                icon={icon.icon}
+                size="2x"
+              />
+            </Link>
           </div>
         );
       })}

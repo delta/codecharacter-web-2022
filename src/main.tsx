@@ -13,10 +13,10 @@ const History = lazy(
 
 ReactDOM.render(
   <React.StrictMode>
-    <NavBar />
-    <div className="mainWindow">
-      <SideBar />
-      <HashRouter>
+    <HashRouter>
+      <NavBar />
+      <div className="mainWindow">
+        <SideBar />
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -24,8 +24,8 @@ ReactDOM.render(
             <Route path="/history" element={<History />} />
           </Routes>
         </Suspense>
-      </HashRouter>
-    </div>
+      </div>
+    </HashRouter>
     <Toast />
   </React.StrictMode>,
   document.getElementById('root'),
