@@ -48,9 +48,9 @@
 .SmallButton:hover {
   opacity: 0.7;
   transform: scale(1.03);
-  transition-duration: 0.5s;
   cursor: pointer;
 }
+
 
 .CodeBox {
   background-color: black;
@@ -81,7 +81,7 @@
   font-style: normal;
   background-color: #48c6d8;
   border: 0px;
-  border-radius: 50px;
+  border-radius: 2px;
 }
 
 .SelectButton:hover {
@@ -97,7 +97,7 @@
 .timeline {
   height: 100vh;
   display: grid;
-  grid-template-rows: 10% 78% 12%;
+  grid-template-rows: 15% 70% 15%;
 }
 
 .completeTimeline {
