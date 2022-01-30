@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+
+.editorSettingsHeader{
+  background: #002244;
+  color: white;
+  height: 10vh;
+}
+
+.editorSettingsHeader button{
+  background-color: white;
+}
+
+
+.editorSettingsBody{
+  background: white;
+}
+
+.settingLabel{
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  font-size: large;
+  height: 3vh;
+  margin-bottom: 1.5vh;
+}
+
+.settingDropdown{
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  height: 5.5vh;
+  margin-bottom: 2.8vh;
+  padding-left: 1%;
+  border: 1.5px solid grey;
+  border-radius: 5px;
+}
+
+.settingDropdown:hover, .settingDropdown:focus{
+  border: 2px solid #002244;
+}
+
+
+

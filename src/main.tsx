@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 const Home = lazy(() => import('./pages/Home'));
