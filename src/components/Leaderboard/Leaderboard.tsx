@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
 function createData(
@@ -25,10 +24,7 @@ export default function Leaderboard(): JSX.Element {
   return (
     <div className="body">
       <div className="header">
-        <img
-          className="header__icon"
-          src="https://user-images.githubusercontent.com/23297041/55285200-a24e9b00-538f-11e9-8990-d49a162824d1.png"
-        />
+        <img className="header__icon" src="src/assets/trophy.png" />
         <h1 className="header__title">
           <span>Leaderboard</span>
         </h1>
