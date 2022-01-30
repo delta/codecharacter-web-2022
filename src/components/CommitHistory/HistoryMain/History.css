@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 .HistoryMain {
   overflow: hidden;
   height: 100%;
@@ -11,7 +13,7 @@
   grid-template-rows: 15% 70% 15%;
 }
 
-.Code-Match {
+.CodeMapButton {
   background-color: #242a3c;
   text-align: left;
   padding-top: 34px;
@@ -24,11 +26,13 @@
   width: 241px;
   height: 48px;
   font-weight: 600;
+  font-family: Montserrat;
   font-size: 24px;
   font-style: normal;
   background-color: #3894b1;
   border: 0px;
   border-radius: 2px;
+  transition: 0.5s;
 }
 
 .SmallButton {
@@ -37,22 +41,26 @@
   width: 80px;
   height: 48px;
   background: #1a3051;
+  font-family: Montserrat;
   font-weight: 600;
   font-size: 24px;
   font-style: normal;
   border: 0px;
   border-radius: 2px;
+  transition: 0.5s;
 }
 
 .LargeButton:hover,
 .SmallButton:hover {
   opacity: 0.7;
   transform: scale(1.03);
+  transition: 0.5s ease-in-out !important;
   cursor: pointer;
 }
 
-
-.CodeBox {
+.CodeMapBox {
+  font-family: Montserrat;
+  font-style: normal;
   background-color: black;
 }
 
@@ -66,7 +74,7 @@
   font-family: Montserrat;
   font-weight: 600;
   font-style: normal;
-  size: 22px;
+  size: 24px;
   color: #ffffff;
   padding-top: 12px;
 }
@@ -97,7 +105,7 @@
 .timeline {
   height: 100vh;
   display: grid;
-  grid-template-rows: 15% 70% 15%;
+  grid-template-rows: 13% 72% 15%;
 }
 
 .completeTimeline {

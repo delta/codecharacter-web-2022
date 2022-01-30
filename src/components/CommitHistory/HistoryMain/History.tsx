@@ -18,7 +18,7 @@ export default function History(): JSX.Element {
           <div></div>
         </div>
         <div className="codeview">
-          <div className="Code-Match">
+          <div className="CodeMapButton">
             <ButtonGroup>
               <Button
                 className={BigButton == 'Code' ? 'LargeButton' : 'SmallButton'}
@@ -38,8 +38,12 @@ export default function History(): JSX.Element {
               </Button>
             </ButtonGroup>
           </div>
-          <div className="CodeBox">
-            <h1 style={{ color: 'white' }}>Hello World</h1>
+          <div className="CodeMapBox">
+            {BigButton == 'Code' ? (
+              <h1 style={{ color: 'white' }}>Hello Code-Box</h1>
+            ) : (
+              <h1 style={{ color: 'white' }}>Hello Map-Box</h1>
+            )}
           </div>
           <div className="Select">
             <Button className="SelectButton" variant="primary" size="lg">

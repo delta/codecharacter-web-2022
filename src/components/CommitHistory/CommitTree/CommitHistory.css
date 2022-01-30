@@ -29,19 +29,19 @@
   border-radius: 0%;
 }
 
-.vertical-timeline-element-content:hover{
+.vertical-timeline-element-content:hover {
   cursor: pointer;
   transform: scale(1.1);
-  box-shadow: 2px 2px 2px #DFFF00;
+  box-shadow: 2px 2px 2px #dfff00;
 }
 
-.vertical-timeline-element--work:hover{
+.vertical-timeline-element--work:hover {
   cursor: pointer;
 }
 
 .vertical-timeline-element-title {
   font-family: Montserrat;
-  font-weight: 450;
-  font-size: 22px;
   font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
 }
