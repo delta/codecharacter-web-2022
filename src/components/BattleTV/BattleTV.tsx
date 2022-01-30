@@ -55,12 +55,10 @@ export default function BattleTV(): JSX.Element {
                   : '#BC1700',
             }}
           >
-            <div
+            <img
               className={styles.pic}
-              style={{
-                backgroundImage: `url("https://randomuser.me/api/portraits/women/81.jpg")`,
-              }}
-            ></div>
+              src="https://randomuser.me/api/portraits/women/81.jpg"
+            ></img>
             <div className={styles.username}>{row.myusername}</div>
             <div className={styles.coinused}>{row.mycoinused}</div>
             <div className={styles.destruction}>{row.mydestruction}</div>
@@ -68,12 +66,10 @@ export default function BattleTV(): JSX.Element {
             <div className={styles.destruction}>{row.enemydestruction}</div>
             <div className={styles.coinused}>{row.enemycoinused}</div>
             <div className={styles.username}>{row.enemyusername}</div>
-            <div
+            <img
               className={styles.pic}
-              style={{
-                backgroundImage: `url("https://randomuser.me/api/portraits/women/81.jpg")`,
-              }}
-            ></div>
+              src="https://randomuser.me/api/portraits/women/81.jpg"
+            ></img>
           </div>
         </div>
       ))}

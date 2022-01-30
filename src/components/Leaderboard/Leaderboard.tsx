@@ -33,46 +33,38 @@ export default function Leaderboard(): JSX.Element {
         <div className={styles.top3}>
           <div className={styles.item}>
             <div className={styles.pos}>2</div>
-            <div
+            <img
               className={styles.pic}
-              style={{
-                backgroundImage: `url("https://randomuser.me/api/portraits/men/34.jpg")`,
-              }}
-            ></div>
+              src="https://randomuser.me/api/portraits/men/34.jpg"
+            ></img>
             <div className={styles.name}>Edgar Soto</div>
             <div className={styles.score}>6453 rating</div>
           </div>
           <div className={styles.item}>
             <div className={styles.pos}>1</div>
-            <div
+            <img
               className={styles.pic}
-              style={{
-                backgroundImage: `url("https://randomuser.me/api/portraits/men/31.jpg")`,
-              }}
-            ></div>
+              src="https://randomuser.me/api/portraits/men/31.jpg"
+            ></img>
             <div className={styles.name}>Clifford James</div>
             <div className={styles.score}>6794 rating</div>
           </div>
           <div className={styles.item}>
             <div className={styles.pos}>3</div>
-            <div
+            <img
               className={styles.pic}
-              style={{
-                backgroundImage: `url("https://randomuser.me/api/portraits/women/91.jpg")`,
-              }}
-            ></div>
+              src="https://randomuser.me/api/portraits/women/91.jpg"
+            ></img>
             <div className={styles.name}>Nevaeh Silva</div>
             <div className={styles.score}>6034 rating</div>
           </div>
         </div>
         <div className={styles.list}>
           <div className={styles.item}>
-            <div
+            <img
               className={styles.pic}
-              style={{
-                backgroundImage: `url("https://randomuser.me/api/portraits/men/34.jpg")`,
-              }}
-            ></div>
+              src="https://randomuser.me/api/portraits/men/34.jpg"
+            ></img>
             <div className={styles.pos}>#</div>
             <div className={styles.name}>Username</div>
             <div className={styles.score}>Ratings</div>
@@ -83,12 +75,10 @@ export default function Leaderboard(): JSX.Element {
           {rows.map(row => (
             <div className={styles.item} key={row.username}>
               <div className={styles.pos}>{row.rank}</div>
-              <div
+              <img
                 className={styles.pic}
-                style={{
-                  backgroundImage: `url("https://randomuser.me/api/portraits/women/81.jpg")`,
-                }}
-              ></div>
+                src="https://randomuser.me/api/portraits/women/81.jpg"
+              ></img>
               <div className={styles.name}>{row.username}</div>
               <div className={styles.score}>{row.rating}</div>
               <div className={styles.score}>{row.won} win</div>
