@@ -1,4 +1,4 @@
-import './styles.css';
+import styles from './BattleTV.module.css';
 
 function createData(
   myusername: string,
@@ -29,25 +29,25 @@ const rows = [
 
 export default function BattleTV(): JSX.Element {
   return (
-    <div className="body">
-      <div className="title">Battle TV</div>
-      <div className="heading">
-        <div className="column" />
-        <div className="column" />
-        <div className="column" />
-        <div className="column">Destruction %</div>
-        <div className="column">Coin Lost</div>
-        <div className="column"></div>
-        <div className="column">Coin Lost</div>
-        <div className="column">Destruction %</div>
-        <div className="column" />
-        <div className="column" />
-        <div className="column" />
+    <div className={styles.body}>
+      <div className={styles.title}>Battle TV</div>
+      <div className={styles.heading}>
+        <div className={styles.column} />
+        <div className={styles.column} />
+        <div className={styles.column} />
+        <div className={styles.column}>Destruction %</div>
+        <div className={styles.column}>Coin Lost</div>
+        <div className={styles.column}></div>
+        <div className={styles.column}>Coin Lost</div>
+        <div className={styles.column}>Destruction %</div>
+        <div className={styles.column} />
+        <div className={styles.column} />
+        <div className={styles.column} />
       </div>
       {rows.map(row => (
-        <div className="item" key={row.myusername}>
+        <div className={styles.item} key={row.myusername}>
           <div
-            className="battlecard"
+            className={styles.battlecard}
             style={{
               backgroundColor:
                 row.mydestruction < row.enemydestruction
@@ -56,20 +56,20 @@ export default function BattleTV(): JSX.Element {
             }}
           >
             <div
-              className="pic"
+              className={styles.pic}
               style={{
                 backgroundImage: `url("https://randomuser.me/api/portraits/women/81.jpg")`,
               }}
             ></div>
-            <div className="username">{row.myusername}</div>
-            <div className="coinused">{row.mycoinused}</div>
-            <div className="destruction">{row.mydestruction}</div>
-            <div className="vs">VS</div>
-            <div className="destruction">{row.enemydestruction}</div>
-            <div className="coinused">{row.enemycoinused}</div>
-            <div className="username">{row.enemyusername}</div>
+            <div className={styles.username}>{row.myusername}</div>
+            <div className={styles.coinused}>{row.mycoinused}</div>
+            <div className={styles.destruction}>{row.mydestruction}</div>
+            <div className={styles.vs}>VS</div>
+            <div className={styles.destruction}>{row.enemydestruction}</div>
+            <div className={styles.coinused}>{row.enemycoinused}</div>
+            <div className={styles.username}>{row.enemyusername}</div>
             <div
-              className="pic"
+              className={styles.pic}
               style={{
                 backgroundImage: `url("https://randomuser.me/api/portraits/women/81.jpg")`,
               }}

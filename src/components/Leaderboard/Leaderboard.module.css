@@ -99,13 +99,13 @@ html {
   opacity: 0.5;
 }
 
-.top3 .item.one {
+.top3 .itemone {
   width: 10rem;
   height: 11rem;
   padding-top: 3.5rem;
 }
 
-.top3 .item.one .pic {
+.top3 .itemone .pic {
   width: 5rem;
   height: 5rem;
   left: 2.5rem;
