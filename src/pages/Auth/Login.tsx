@@ -5,6 +5,7 @@ import { useState } from 'react';
 import AlertMessage from '../../components/Alert/Alert';
 import styles from './auth.module.css';
 import { NavLink } from 'react-router-dom';
+import classnames from 'classnames';
 
 export default function Login(): JSX.Element {
   const [emailError, isemailError] = useState(false);
@@ -39,7 +40,6 @@ export default function Login(): JSX.Element {
   };
 
   const handleEmailSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(login, emailError)
     setEmail(event.target.value);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (event.target.value.match(mailformat)) {
@@ -52,9 +52,7 @@ export default function Login(): JSX.Element {
     <div className={styles.mainContainer}>
       <Card className={styles.cardContainer}>
         <div className={styles.titleContainer}>
-          <h1 style={{ color: 'white' }} className={styles.name}>
-            Welcome!! To CodeCharatcer
-          </h1>
+          <h1 className={styles.name}>Welcome!! To CodeCharatcer</h1>
           <Container className={styles.subTitle}>
             Log in to access your dashboard and profile 👏️🎊️{' '}
           </Container>
@@ -94,12 +92,12 @@ export default function Login(): JSX.Element {
               placeholder="Password"
               value={password}
               onChange={handlePasswordSubmit}
-              style={
+              className={
                 login
                   ? passwordError
-                    ? { background: '#ffdddd' }
-                    : { background: '#c9ffad' }
-                  : { background: 'white' }
+                    ? styles.error
+                    : styles.correct
+                  : styles.normal
               }
             />
             {passwordError && login ? (
@@ -113,18 +111,10 @@ export default function Login(): JSX.Element {
               <></>
             )}
           </Form.Group>
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: '10%',
-              background: 'white',
-              borderRadius: '5px',
-            }}
-            className="d-grid gap-2"
-          >
+          <div className={classnames('d-grid gap-2', styles.submitContainer)}>
             <Button
               variant="outline-primary"
-              type="submit"
+              // type="submit"
               onClick={handleLoginSubmit}
             >
               Login
@@ -132,17 +122,17 @@ export default function Login(): JSX.Element {
           </div>
         </form>
         <br />
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.googleButton}>
           <Button variant="primary">
             <div>
-              <FontAwesomeIcon icon={faGoogle} style={{ marginRight: '8px' }} />
+              <FontAwesomeIcon icon={faGoogle} />
               Login with Google
             </div>
           </Button>
         </div>
-        <div style={{ textAlign: 'center', marginTop: '5%' }}>
+        <div className={styles.linkContainer}>
           Do not have an account ?{' '}
-          <span style={{ color: 'blue' }}>
+          <span>
             {' '}
             <NavLink to={'/register'} className={styles.link}>
               {' '}

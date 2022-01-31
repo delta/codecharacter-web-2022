@@ -267,7 +267,7 @@ export default function Register(): JSX.Element {
             <p> Register now and code your way through 👨‍💻️!! </p>
           </Container>
         </div>
-        <div style={{ margin: '0rem 0rem' }}>
+        <div>
           <div className={styles.progressBarContainer}>
             <div>
               <div>
@@ -278,7 +278,7 @@ export default function Register(): JSX.Element {
               </div>
             </div>
             <div className={styles.levelContainer}>
-              <div style={{ float: 'left' }}>
+              <div>
                 {' '}
                 <button
                   className={
@@ -314,7 +314,7 @@ export default function Register(): JSX.Element {
                   <FontAwesomeIcon icon={faUserSecret} />
                 </button>
               </div>
-              <div style={{ float: 'right' }}>
+              <div>
                 {' '}
                 <button
                   className={
@@ -339,12 +339,12 @@ export default function Register(): JSX.Element {
                     placeholder="Fullname"
                     value={fullName}
                     onChange={handleFullNameChange}
-                    style={
+                    className={
                       submitFirst
                         ? fullNameError
-                          ? { background: '#ffdddd' }
-                          : { background: '#c9ffad' }
-                        : { background: 'white' }
+                          ? styles.error
+                          : styles.correct
+                        : styles.normal
                     }
                   />
                   {submitFirst && fullNameError ? (
@@ -363,12 +363,12 @@ export default function Register(): JSX.Element {
                     placeholder="Username"
                     value={userName}
                     onChange={handleUserNameChange}
-                    style={
+                    className={
                       submitFirst
                         ? userNameError
-                          ? { background: '#ffdddd' }
-                          : { background: '#c9ffad' }
-                        : { background: 'white' }
+                          ? styles.error
+                          : styles.correct
+                        : styles.normal
                     }
                   />
                   {submitFirst && userNameError ? (
@@ -386,12 +386,12 @@ export default function Register(): JSX.Element {
                     type="text"
                     placeholder="Email"
                     value={email}
-                    style={
+                    className={
                       submitFirst
                         ? emailError
-                          ? { background: '#ffdddd' }
-                          : { background: '#c9ffad' }
-                        : { background: 'white' }
+                          ? styles.error
+                          : styles.correct
+                        : styles.normal
                     }
                     onChange={handleEmailChange}
                   />
@@ -415,12 +415,12 @@ export default function Register(): JSX.Element {
                     placeholder="Password"
                     value={password}
                     onChange={handlePasswordChange}
-                    style={
+                    className={
                       submitSecond
                         ? passwordError
-                          ? { background: '#ffdddd' }
-                          : { background: '#c9ffad' }
-                        : { background: 'white' }
+                          ? styles.error
+                          : styles.correct
+                        : styles.normal
                     }
                   />
                   {submitSecond && passwordError ? (
@@ -442,12 +442,12 @@ export default function Register(): JSX.Element {
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    style={
+                    className={
                       submitSecond
                         ? confirmpasswordError
-                          ? { background: '#ffdddd' }
-                          : { background: '#c9ffad' }
-                        : { background: 'white' }
+                          ? styles.error
+                          : styles.correct
+                        : styles.normal
                     }
                   />
                   {submitSecond && confirmpasswordError ? (
@@ -484,7 +484,7 @@ export default function Register(): JSX.Element {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicAvatar">
                   <Form.Label>Avatar</Form.Label>
-                  <div style={{ maxWidth: '30rem' }}>
+                  <div className={styles.avatarBox}>
                     <div className={styles.avatarContainer}>
                       {avatar.map((avatar, index: number) => (
                         <div key={index} className={styles.avatar}></div>
@@ -510,9 +510,9 @@ export default function Register(): JSX.Element {
               <></>
             )}
           </Form>
-          <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+          <div className={styles.linkContainer}>
             Already have an account ?{' '}
-            <span style={{ color: 'blue' }}>
+            <span>
               {' '}
               <b>
                 <NavLink to="/login" className={styles.link}>

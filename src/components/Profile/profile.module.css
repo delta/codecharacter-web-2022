@@ -2,6 +2,10 @@
     width: 0rem;
 }
 
+.Container {
+    width: 30rem;
+}
+
 .header {
     background-color: #242A3C;
     color: white;
@@ -43,8 +47,16 @@
     border-radius: 50%;
 }
 
+.profileName {
+    margin-top: 1rem;
+}
+
 .formContainer {
     margin: 2rem 2rem 0rem 2rem;
+}
+
+.formField {
+    margin-top: 2rem;
 }
 
 .flagContainer {
@@ -58,4 +70,23 @@
     text-align: center;
     margin: 1rem 0rem 0rem 0rem;
     color: blue;
+}
+
+.error {
+    background: #ffdddd !important;
+}
+
+.correct {
+    background: #c9ffad !important;
+}
+
+.normal {
+    background: #ffffff !important;
+}
+
+.submitContainer {
+    text-align: center;
+    background: white;
+    border-radius: 5px;
+    margin: 2rem 1rem 1rem 1rem;
 }

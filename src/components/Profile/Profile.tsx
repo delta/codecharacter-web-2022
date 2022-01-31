@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AlertMessage from '../Alert/Alert';
 import ReactFlagsSelect from 'react-flags-select';
 import styles from './profile.module.css';
+import classnames from 'classnames';
 
 const Profile = (): JSX.Element => {
   const [show, isShow] = useState(true);
@@ -73,9 +74,7 @@ const Profile = (): JSX.Element => {
         <Offcanvas
           show={show}
           placement="end"
-          style={{
-            width: '30rem',
-          }}
+          className={styles.Container}
           backdropClassName={styles.canvas}
         >
           <Offcanvas.Header className={styles.header}>
@@ -91,7 +90,7 @@ const Profile = (): JSX.Element => {
                 <div className={styles.imageContainer}>
                   <img src="src/assets/user.jpg" alt="image here" />
                 </div>
-                <div style={{ marginTop: '1rem' }}>
+                <div className={styles.profileName}>
                   {' '}
                   <b>User name</b>
                 </div>
@@ -109,14 +108,14 @@ const Profile = (): JSX.Element => {
                         type="text"
                         placeholder="Fullname"
                         value={fullName}
-                        onChange={handleFullNameChange}
-                        style={
+                        className={
                           submitFullname
                             ? fullNameError
-                              ? { background: '#ffdddd' }
-                              : { background: '#c9ffad' }
-                            : { background: 'white' }
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
                         }
+                        onChange={handleFullNameChange}
                       />
                       {fullNameError ? (
                         <AlertMessage
@@ -128,23 +127,22 @@ const Profile = (): JSX.Element => {
                       )}
                     </Form.Group>
                     <Form.Group
-                      className="mb-3"
+                      className={classnames('mb-3', styles.formField)}
                       controlId="formBasicUserName"
-                      style={{ marginTop: '2rem' }}
                     >
                       <Form.Label>Username</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Username"
                         value={userName}
-                        onChange={handleUserNameChange}
-                        style={
+                        className={
                           submitUsername
                             ? userNameError
-                              ? { background: '#ffdddd' }
-                              : { background: '#c9ffad' }
-                            : { background: 'white' }
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
                         }
+                        onChange={handleUserNameChange}
                       />
                       {submitUsername && userNameError ? (
                         <AlertMessage
@@ -156,9 +154,8 @@ const Profile = (): JSX.Element => {
                       )}
                     </Form.Group>
                     <Form.Group
-                      className="mb-3"
+                      className={classnames('mb-3', styles.formField)}
                       controlId="formBasicEmail"
-                      style={{ marginTop: '1.7rem' }}
                     >
                       <Form.Label>Country</Form.Label>
                       <div className={styles.flagContainer}>
@@ -179,13 +176,10 @@ const Profile = (): JSX.Element => {
                       </div>{' '}
                     </Form.Group>
                     <div
-                      style={{
-                        textAlign: 'center',
-                        marginTop: '10%',
-                        background: 'white',
-                        borderRadius: '5px',
-                      }}
-                      className="d-grid gap-2"
+                      className={classnames(
+                        'd-grid gap-2',
+                        styles.submitContainer,
+                      )}
                     >
                       <Button variant="light" type="submit">
                         Save Changes
@@ -204,12 +198,12 @@ const Profile = (): JSX.Element => {
                         placeholder="Old Password"
                         value={oldPassword}
                         onChange={hanldeOldPasswordChange}
-                        style={
+                        className={
                           submitoldPassword
                             ? oldpasswordError
-                              ? { background: '#ffdddd' }
-                              : { background: '#c9ffad' }
-                            : { background: 'white' }
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
                         }
                       />
                       {oldpasswordError ? (
@@ -222,9 +216,8 @@ const Profile = (): JSX.Element => {
                       )}
                     </Form.Group>
                     <Form.Group
-                      className="mb-3"
+                      className={classnames('mb-3', styles.formField)}
                       controlId="formBasicPassword"
-                      style={{ marginTop: '2rem' }}
                     >
                       <Form.Label>Password</Form.Label>
                       <Form.Control
@@ -232,12 +225,12 @@ const Profile = (): JSX.Element => {
                         placeholder="Password"
                         value={password}
                         onChange={handlePasswordChange}
-                        style={
+                        className={
                           submitPassword
                             ? passwordError
-                              ? { background: '#ffdddd' }
-                              : { background: '#c9ffad' }
-                            : { background: 'white' }
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
                         }
                       />
                       {passwordError ? (
@@ -250,23 +243,22 @@ const Profile = (): JSX.Element => {
                       )}
                     </Form.Group>
                     <Form.Group
-                      className="mb-3"
+                      className={classnames('mb-3', styles.formField)}
                       controlId="formBasicConfirmPassword"
-                      style={{ marginTop: '2rem' }}
                     >
                       <Form.Label>Confirm password</Form.Label>
                       <Form.Control
                         type="password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                        style={
+                        className={
                           submitconfirmPassword
                             ? confirmpasswordError
-                              ? { background: '#ffdddd' }
-                              : { background: '#c9ffad' }
-                            : { background: 'white' }
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
                         }
+                        onChange={handleConfirmPasswordChange}
                       />
                       {confirmpasswordError ? (
                         <AlertMessage
@@ -278,13 +270,10 @@ const Profile = (): JSX.Element => {
                       )}
                     </Form.Group>
                     <div
-                      style={{
-                        textAlign: 'center',
-                        background: 'white',
-                        borderRadius: '5px',
-                        margin: '2rem 1rem 1rem 1rem',
-                      }}
-                      className="d-grid gap-2"
+                      className={classnames(
+                        'd-grid gap-2',
+                        styles.submitContainer,
+                      )}
                     >
                       <Button variant="light" type="submit">
                         Submit

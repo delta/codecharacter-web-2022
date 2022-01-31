@@ -53,6 +53,14 @@
     z-index: 100;
 }
 
+.levelContainer>div:first-child {
+    float: left;
+}
+
+.levelContainer>div:last-child {
+    float: right;
+}
+
 .levelInitiated {
     background-color: gainsboro;
     width: 3rem;
@@ -116,6 +124,10 @@
     border-radius: 5px;
 }
 
+.avatarBox {
+    max-width: 30rem;
+}
+
 .avatarContainer {
     display: flex;
     flex-direction: row;
@@ -154,6 +166,13 @@
 .avatar:hover {
     background-color: violet;
     cursor: pointer;
+}
+
+.submitContainer {
+    text-align: center;
+    background: white;
+    border-radius: 5px;
+    margin: 2rem 1rem 1rem 1rem;
 }
 
 .registerButton {
@@ -201,6 +220,19 @@
     100% {
         transform: scale(1);
     }
+}
+
+.googleButton {
+    text-align: center;
+}
+
+.linkContainer {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.linkContainer span {
+    color: blue;
 }
 
 .error {
