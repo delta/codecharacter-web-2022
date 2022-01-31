@@ -204,13 +204,13 @@
 }
 
 .error {
-    background: #ffdddd;
+    background: #ffdddd !important;
 }
 
 .correct {
-    background: #c9ffad;
+    background: #c9ffad !important;
 }
 
 .normal {
-    background: #ffffff;
+    background: #ffffff !important;
 }

@@ -39,6 +39,7 @@ export default function Login(): JSX.Element {
   };
 
   const handleEmailSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(login, emailError)
     setEmail(event.target.value);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (event.target.value.match(mailformat)) {
@@ -66,7 +67,6 @@ export default function Login(): JSX.Element {
                 type="name"
                 placeholder="Email"
                 value={email}
-                onChange={handleEmailSubmit}
                 className={
                   login
                     ? emailError
@@ -74,6 +74,7 @@ export default function Login(): JSX.Element {
                       : styles.correct
                     : styles.normal
                 }
+                onChange={handleEmailSubmit}
               />
               {emailError && login ? (
                 <AlertMessage
