@@ -14,7 +14,7 @@ const icons = [
   { icon: faCode, route: 'editor', tooltip: 'Code Editor' },
   { icon: faGlobeAsia, route: 'mapdesginer', tooltip: 'Map Designer' },
   { icon: faTrophy, route: 'leaderboard', tooltip: 'Leaderboard' },
-  { icon: faCodeBranch, route: 'commits', tooltip: 'Commits' },
+  { icon: faCodeBranch, route: 'history', tooltip: 'Commits' },
   { icon: faTv, route: 'battletv', tooltip: 'Battle TV' },
   { icon: faSignOutAlt, route: 'logout', tooltip: 'Logout' },
 ];

@@ -13969,15 +13969,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-intersection-observer@npm:^8.26.2":
-  version: 8.33.1
-  resolution: "react-intersection-observer@npm:8.33.1"
-  peerDependencies:
-    react: ^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0
-  checksum: 5feb0df01dd64f1fa0b8300fb4fc12db95350c1ae2514f66f0652371f65e5501758a662746000dc2584d24dcce07139590e5375d6c9920a60b282af83468d0c4
-  languageName: node
-  linkType: hard
-  
 "react-hot-toast@npm:^2.2.0":
   version: 2.2.0
   resolution: "react-hot-toast@npm:2.2.0"
@@ -13987,6 +13978,15 @@ __metadata:
     react: ">=16"
     react-dom: ">=16"
   checksum: bb34ddc8ada14cbd75a37f14d2563412174e23276eb05e9fb23a031b6d8374ca190cefa1940692f4371529ddafeb2d4b8d3e5023187c2851ec8cb247461553ee
+  languageName: node
+  linkType: hard
+
+"react-intersection-observer@npm:^8.26.2":
+  version: 8.33.1
+  resolution: "react-intersection-observer@npm:8.33.1"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0
+  checksum: 5feb0df01dd64f1fa0b8300fb4fc12db95350c1ae2514f66f0652371f65e5501758a662746000dc2584d24dcce07139590e5375d6c9920a60b282af83468d0c4
   languageName: node
   linkType: hard
 
