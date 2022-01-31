@@ -1595,6 +1595,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codecharacter-2022/client@workspace:packages/client":
+  version: 0.0.0-use.local
+  resolution: "@codecharacter-2022/client@workspace:packages/client"
+  dependencies:
+    typescript: "*"
+  languageName: unknown
+  linkType: soft
+
 "@codecharacter-2022/map-designer@workspace:packages/map-designer":
   version: 0.0.0-use.local
   resolution: "@codecharacter-2022/map-designer@workspace:packages/map-designer"
@@ -1636,6 +1644,7 @@ __metadata:
   resolution: "@codecharacter-2022/web@workspace:."
   dependencies:
     "@babel/core": ^7.16.5
+    "@codecharacter-2022/client": "workspace:packages/client"
     "@codecharacter-2022/map-designer": "workspace:packages/map-designer"
     "@codecharacter-2022/renderer": "workspace:packages/renderer"
     "@fortawesome/fontawesome-svg-core": ^1.2.36
@@ -16415,7 +16424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^2.9.2 || ^3.0.0 || ^4.0.0, typescript@npm:^4.3.2, typescript@npm:^4.5.2":
+"typescript@npm:*, typescript@npm:^2.9.2 || ^3.0.0 || ^4.0.0, typescript@npm:^4.3.2, typescript@npm:^4.5.2":
   version: 4.5.5
   resolution: "typescript@npm:4.5.5"
   bin:
@@ -16425,7 +16434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^2.9.2 || ^3.0.0 || ^4.0.0#~builtin<compat/typescript>, typescript@patch:typescript@^4.3.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.5.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@*#~builtin<compat/typescript>, typescript@patch:typescript@^2.9.2 || ^3.0.0 || ^4.0.0#~builtin<compat/typescript>, typescript@patch:typescript@^4.3.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.5.2#~builtin<compat/typescript>":
   version: 4.5.5
   resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"
   bin:

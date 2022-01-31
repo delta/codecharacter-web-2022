@@ -3,3 +3,5 @@ typescriptThreePlus: true
 useSingleRequestParameter: false
 withInterfaces: true
 withoutRuntimeChecks: true
+npmName: '@codecharacter-2022/client'
+npmVersion: '2022.0.0'
