@@ -26,6 +26,47 @@ const Profile = (): JSX.Element => {
   const handleClose = () => {
     isShow(false);
   };
+  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setfullName(e.target.value);
+    issubmitFullname(true);
+    if (e.target.value.trim().length < 5 || fullName.length < 4)
+      isfullNameError(true);
+    else isfullNameError(false);
+  };
+
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+    issubmitUsername(true);
+    if (e.target.value.trim().length < 5 || userName.length < 4)
+      isuserNameError(true);
+    else isuserNameError(false);
+  };
+
+  const hanldeOldPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOldpassword(e.target.value);
+    issubmitoldPassword(true);
+    if (e.target.value.trim().length < 5 || oldPassword.length < 4)
+      isoldpasswordError(true);
+    else isoldpasswordError(false);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setpassword(e.target.value);
+    issubmitPassword(true);
+    if (e.target.value.trim().length < 5 || password.length < 4)
+      ispasswordError(true);
+    else ispasswordError(false);
+  };
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setConfirmpassword(e.target.value);
+    issubmitconfirmPassword(true);
+    if (!(e.target.value.trim() == password) || confirmPassword.length < 4)
+      isconfirmpasswordError(true);
+    else isconfirmpasswordError(false);
+  };
   return (
     <div>
       <div>
@@ -68,16 +109,7 @@ const Profile = (): JSX.Element => {
                         type="text"
                         placeholder="Fullname"
                         value={fullName}
-                        onChange={e => {
-                          setfullName(e.target.value);
-                          issubmitFullname(true);
-                          if (
-                            e.target.value.trim().length < 5 ||
-                            fullName.length < 4
-                          )
-                            isfullNameError(true);
-                          else isfullNameError(false);
-                        }}
+                        onChange={handleFullNameChange}
                         style={
                           submitFullname
                             ? fullNameError
@@ -105,16 +137,7 @@ const Profile = (): JSX.Element => {
                         type="text"
                         placeholder="Username"
                         value={userName}
-                        onChange={e => {
-                          setUsername(e.target.value);
-                          issubmitUsername(true);
-                          if (
-                            e.target.value.trim().length < 5 ||
-                            userName.length < 4
-                          )
-                            isuserNameError(true);
-                          else isuserNameError(false);
-                        }}
+                        onChange={handleUserNameChange}
                         style={
                           submitUsername
                             ? userNameError
@@ -180,16 +203,7 @@ const Profile = (): JSX.Element => {
                         type="password"
                         placeholder="Old Password"
                         value={oldPassword}
-                        onChange={e => {
-                          setOldpassword(e.target.value);
-                          issubmitoldPassword(true);
-                          if (
-                            e.target.value.trim().length < 5 ||
-                            oldPassword.length < 4
-                          )
-                            isoldpasswordError(true);
-                          else isoldpasswordError(false);
-                        }}
+                        onChange={hanldeOldPasswordChange}
                         style={
                           submitoldPassword
                             ? oldpasswordError
@@ -217,16 +231,7 @@ const Profile = (): JSX.Element => {
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={e => {
-                          setpassword(e.target.value);
-                          issubmitPassword(true);
-                          if (
-                            e.target.value.trim().length < 5 ||
-                            password.length < 4
-                          )
-                            ispasswordError(true);
-                          else ispasswordError(false);
-                        }}
+                        onChange={handlePasswordChange}
                         style={
                           submitPassword
                             ? passwordError
@@ -254,16 +259,7 @@ const Profile = (): JSX.Element => {
                         type="password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        onChange={e => {
-                          setConfirmpassword(e.target.value);
-                          issubmitconfirmPassword(true);
-                          if (
-                            !(e.target.value.trim() == password) ||
-                            confirmPassword.length < 4
-                          )
-                            isconfirmpasswordError(true);
-                          else isconfirmpasswordError(false);
-                        }}
+                        onChange={handleConfirmPasswordChange}
                         style={
                           submitconfirmPassword
                             ? confirmpasswordError

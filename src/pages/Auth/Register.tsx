@@ -121,7 +121,73 @@ export default function Register(): JSX.Element {
     }
     setFormnumber(inc);
   };
+  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setfullName(e.target.value);
+    if (submitFirst) {
+      if (e.target.value.trim().length < 5 || fullName.length < 4) {
+        isfullNameError(true);
+      } else {
+        isfullNameError(false);
+      }
+    }
+  };
 
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+    if (submitFirst) {
+      if (e.target.value.trim().length < 5 || userName.length < 4) {
+        isuserNameError(true);
+      } else {
+        isuserNameError(false);
+      }
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (submitFirst) {
+      const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (e.target.value.match(mailformat) || email.match(mailformat)) {
+        isemailError(false);
+      } else {
+        isemailError(true);
+      }
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setpassword(e.target.value);
+    if (submitSecond) {
+      if (e.target.value.trim().length < 5 || password.length < 4) {
+        ispasswordError(true);
+      } else {
+        ispasswordError(false);
+      }
+    }
+  };
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setConfirmpassword(e.target.value);
+    if (submitSecond) {
+      if (!(e.target.value.trim() == password) || confirmPassword.length < 4) {
+        isconfirmpasswordError(true);
+      } else {
+        isconfirmpasswordError(false);
+      }
+    }
+  };
+  const handleNext = () => {
+    handleStepSubmit(formNumber);
+    handleForm(1);
+  };
+
+  const handlePrevious = () => {
+    handleStepSubmit(formNumber - 1);
+    handleForm(-1);
+    isCompleted(false);
+  };
   const handleRegistration = () => {
     isCompleted(true);
     grecaptcha.ready(() => {
@@ -133,8 +199,6 @@ export default function Register(): JSX.Element {
     });
   };
   const submitData = async (token: string) => {
-    console.log(token);
-
     await fetch('  https://www.google.com/recaptcha/api/siteverify ', {
       method: 'POST',
       headers: {
@@ -274,19 +338,7 @@ export default function Register(): JSX.Element {
                     type="text"
                     placeholder="Fullname"
                     value={fullName}
-                    onChange={e => {
-                      setfullName(e.target.value);
-                      if (submitFirst) {
-                        if (
-                          e.target.value.trim().length < 5 ||
-                          fullName.length < 4
-                        ) {
-                          isfullNameError(true);
-                        } else {
-                          isfullNameError(false);
-                        }
-                      }
-                    }}
+                    onChange={handleFullNameChange}
                     style={
                       submitFirst
                         ? fullNameError
@@ -310,19 +362,7 @@ export default function Register(): JSX.Element {
                     type="text"
                     placeholder="Username"
                     value={userName}
-                    onChange={e => {
-                      setUsername(e.target.value);
-                      if (submitFirst) {
-                        if (
-                          e.target.value.trim().length < 5 ||
-                          userName.length < 4
-                        ) {
-                          isuserNameError(true);
-                        } else {
-                          isuserNameError(false);
-                        }
-                      }
-                    }}
+                    onChange={handleUserNameChange}
                     style={
                       submitFirst
                         ? userNameError
@@ -353,21 +393,7 @@ export default function Register(): JSX.Element {
                           : { background: '#c9ffad' }
                         : { background: 'white' }
                     }
-                    onChange={e => {
-                      setEmail(e.target.value);
-                      if (submitFirst) {
-                        const mailformat =
-                          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                        if (
-                          e.target.value.match(mailformat) ||
-                          email.match(mailformat)
-                        ) {
-                          isemailError(false);
-                        } else {
-                          isemailError(true);
-                        }
-                      }
-                    }}
+                    onChange={handleEmailChange}
                   />
                   {submitFirst && emailError ? (
                     <AlertMessage
@@ -388,19 +414,7 @@ export default function Register(): JSX.Element {
                     type="password"
                     placeholder="Password"
                     value={password}
-                    onChange={e => {
-                      setpassword(e.target.value);
-                      if (submitSecond) {
-                        if (
-                          e.target.value.trim().length < 5 ||
-                          password.length < 4
-                        ) {
-                          ispasswordError(true);
-                        } else {
-                          ispasswordError(false);
-                        }
-                      }
-                    }}
+                    onChange={handlePasswordChange}
                     style={
                       submitSecond
                         ? passwordError
@@ -427,19 +441,7 @@ export default function Register(): JSX.Element {
                     type="password"
                     placeholder="Confirm Password"
                     value={confirmPassword}
-                    onChange={e => {
-                      setConfirmpassword(e.target.value);
-                      if (submitSecond) {
-                        if (
-                          !(e.target.value.trim() == password) ||
-                          confirmPassword.length < 4
-                        ) {
-                          isconfirmpasswordError(true);
-                        } else {
-                          isconfirmpasswordError(false);
-                        }
-                      }
-                    }}
+                    onChange={handleConfirmPasswordChange}
                     style={
                       submitSecond
                         ? confirmpasswordError
@@ -526,11 +528,7 @@ export default function Register(): JSX.Element {
             {formNumber > 1 ? (
               <Button
                 variant="primary"
-                onClick={() => {
-                  handleStepSubmit(formNumber - 1);
-                  handleForm(-1);
-                  isCompleted(false);
-                }}
+                onClick={handlePrevious}
                 type="submit"
                 className={styles.previous}
               >
@@ -545,10 +543,7 @@ export default function Register(): JSX.Element {
             {formNumber < 3 ? (
               <Button
                 variant="primary"
-                onClick={() => {
-                  handleStepSubmit(formNumber);
-                  handleForm(1);
-                }}
+                onClick={handleNext}
                 className={styles.next}
               >
                 <FontAwesomeIcon icon={faChevronRight} />
