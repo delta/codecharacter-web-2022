@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.HistoryMain {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30% 60% 10%;
+}
+
+.codeview {
+  display: grid;
+  grid-template-rows: 15% 70% 15%;
+}
+
+.CodeMapButton {
+  background-color: #242a3c;
+  text-align: left;
+  padding-top: 34px;
+  padding-left: 10px;
+}
+
+.LargeButton {
+  align-content: right;
+  color: #ffffff;
+  width: 241px;
+  height: 48px;
+  font-weight: 600;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  background-color: #3894b1;
+  border: 0px;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.SmallButton {
+  align-content: right;
+  color: #ffffff;
+  width: 80px;
+  height: 48px;
+  background: #1a3051;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-size: 24px;
+  font-style: normal;
+  border: 0px;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.LargeButton:hover,
+.SmallButton:hover {
+  opacity: 0.7;
+  transform: scale(1.03);
+  transition: 0.5s ease-in-out !important;
+  cursor: pointer;
+}
+
+.CodeMapBox {
+  font-family: Montserrat;
+  font-style: normal;
+  background-color: black;
+}
+
+.timeline {
+  background-color: #242a3c;
+}
+
+.Select {
+  text-align: right;
+  background-color: #242a3c;
+  font-family: Montserrat;
+  font-weight: 600;
+  font-style: normal;
+  size: 24px;
+  color: #ffffff;
+  padding-top: 12px;
+}
+
+.SelectButton {
+  align-content: right;
+  color: #ffffff;
+  width: 158px;
+  height: 45px;
+  font-weight: 600;
+  font-size: 22px;
+  font-style: normal;
+  background-color: #48c6d8;
+  border: 0px;
+  border-radius: 2px;
+}
+
+.SelectButton:hover {
+  transform: scale(1.1);
+  transition-duration: 0.5s;
+  cursor: pointer;
+}
+
+.dummy {
+  background-color: #242a3c;
+}
+
+.timeline {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 13% 72% 15%;
+}
+
+.completeTimeline {
+  padding: 2rem 10px 2rem 6rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

@@ -7,6 +7,9 @@ const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
 const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
+const History = lazy(
+  () => import('./components/CommitHistory/HistoryMain/History'),
+);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,6 +20,7 @@ ReactDOM.render(
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/battletv" element={<BattleTV />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </Suspense>
     </HashRouter>
