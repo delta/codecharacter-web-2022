@@ -8,7 +8,7 @@
   grid-template-columns: 30% 60% 10%;
 }
 
-.codeview {
+.CodeView {
   display: grid;
   grid-template-rows: 15% 70% 15%;
 }
@@ -64,8 +64,11 @@
   background-color: black;
 }
 
-.timeline {
+.Timeline {
   background-color: #242a3c;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 13% 72% 15%;
 }
 
 .Select {
@@ -98,20 +101,18 @@
   cursor: pointer;
 }
 
-.dummy {
+.Dummy {
   background-color: #242a3c;
 }
 
-.timeline {
-  height: 100vh;
-  display: grid;
-  grid-template-rows: 13% 72% 15%;
-}
-
-.completeTimeline {
+.CompleteTimeline {
   padding: 2rem 10px 2rem 6rem;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.CompleteTimeline::-webkit-scrollbar {
+  display: none;
 }

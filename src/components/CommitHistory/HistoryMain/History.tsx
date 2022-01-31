@@ -2,26 +2,28 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CommitHistory from '../CommitTree/CommitHistroy';
-import './History.css';
+import styles from './History.module.css';
 
 export default function History(): JSX.Element {
   const [BigButton, setBigButton] = useState('Code');
 
   return (
     <div>
-      <div className="HistoryMain">
-        <div className="timeline">
+      <div className={styles.HistoryMain}>
+        <div className={styles.Timeline}>
           <div></div>
-          <div className="completeTimeline">
+          <div className={styles.CompleteTimeline}>
             <CommitHistory />
           </div>
           <div></div>
         </div>
-        <div className="codeview">
-          <div className="CodeMapButton">
+        <div className={styles.CodeView}>
+          <div className={styles.CodeMapButton}>
             <ButtonGroup>
               <Button
-                className={BigButton == 'Code' ? 'LargeButton' : 'SmallButton'}
+                className={
+                  BigButton == 'Code' ? styles.LargeButton : styles.SmallButton
+                }
                 onClick={() => {
                   setBigButton('Code');
                 }}
@@ -29,7 +31,9 @@ export default function History(): JSX.Element {
                 Code
               </Button>
               <Button
-                className={BigButton == 'Map' ? 'LargeButton' : 'SmallButton'}
+                className={
+                  BigButton == 'Map' ? styles.LargeButton : styles.SmallButton
+                }
                 onClick={() => {
                   setBigButton('Map');
                 }}
@@ -38,20 +42,20 @@ export default function History(): JSX.Element {
               </Button>
             </ButtonGroup>
           </div>
-          <div className="CodeMapBox">
+          <div className={styles.CodeMapBox}>
             {BigButton == 'Code' ? (
               <h1 style={{ color: 'white' }}>Hello Code-Box</h1>
             ) : (
               <h1 style={{ color: 'white' }}>Hello Map-Box</h1>
             )}
           </div>
-          <div className="Select">
-            <Button className="SelectButton" variant="primary" size="lg">
+          <div className={styles.Select}>
+            <Button className={styles.SelectButton} variant="primary" size="lg">
               Select
             </Button>
           </div>
         </div>
-        <div className="dummy"></div>
+        <div className={styles.Dummy}></div>
       </div>
     </div>
   );
