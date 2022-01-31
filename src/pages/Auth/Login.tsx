@@ -4,6 +4,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import AlertMessage from '../../components/Alert';
 import styles from '../../styles/auth.module.css';
+import { NavLink } from 'react-router-dom';
 
 export default function Login(): JSX.Element {
   const [emailError, isemailError] = useState(false);
@@ -139,12 +140,13 @@ export default function Login(): JSX.Element {
           </Button>
         </div>
         <div style={{ textAlign: 'center', marginTop: '5%' }}>
-          Do not have one ?{' '}
+          Do not have an account ?{' '}
           <span style={{ color: 'blue' }}>
             {' '}
-            <a href="/#/register" className={styles.link}>
+            <NavLink to={'/register'} className={styles.link}>
+              {' '}
               <b>register</b>
-            </a>
+            </NavLink>
           </span>
         </div>
       </Card>

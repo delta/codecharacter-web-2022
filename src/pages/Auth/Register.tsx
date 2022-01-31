@@ -13,6 +13,7 @@ import {
 import { ReCAPTCHA } from 'react-google-recaptcha';
 import styles from '../../styles/auth.module.css';
 import { accessUrl, SECRET_KEY, SITE_KEY } from '../../config/config';
+import { NavLink } from 'react-router-dom';
 let inc = 1;
 let check1 = 0;
 export default function Register(): JSX.Element {
@@ -512,10 +513,10 @@ export default function Register(): JSX.Element {
             <span style={{ color: 'blue' }}>
               {' '}
               <b>
-                <a href="/#/login" className={styles.link}>
+                <NavLink to="/login" className={styles.link}>
                   {' '}
                   Login now{' '}
-                </a>
+                </NavLink>
               </b>
             </span>
           </div>
