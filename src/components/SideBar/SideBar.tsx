@@ -11,12 +11,12 @@ import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
 
 const icons = [
-  { icon: faCode, route: 'editor' },
-  { icon: faGlobeAsia, route: 'mapdesginer' },
-  { icon: faTrophy, route: 'leaderboard' },
-  { icon: faCodeBranch, route: 'commits' },
-  { icon: faTv, route: 'battletv' },
-  { icon: faSignOutAlt, route: 'logout' },
+  { icon: faCode, route: 'editor', tooltip: 'Code Editor' },
+  { icon: faGlobeAsia, route: 'mapdesginer', tooltip: 'Map Designer' },
+  { icon: faTrophy, route: 'leaderboard', tooltip: 'Leaderboard' },
+  { icon: faCodeBranch, route: 'commits', tooltip: 'Commits' },
+  { icon: faTv, route: 'battletv', tooltip: 'Battle TV' },
+  { icon: faSignOutAlt, route: 'logout', tooltip: 'Logout' },
 ];
 
 const SideBar: React.FunctionComponent = () => {
@@ -28,6 +28,7 @@ const SideBar: React.FunctionComponent = () => {
             <Link to={icon.route} key={icon.route}>
               <FontAwesomeIcon
                 className={styles.sideBarIconComponent}
+                title={icon.tooltip}
                 icon={icon.icon}
                 size="2x"
               />
