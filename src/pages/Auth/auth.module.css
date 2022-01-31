@@ -5,13 +5,17 @@
     left: 0;
     background-color: #242A3C;
     color: white;
+    font-family: Montserrat;
     margin: 0px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    letter-spacing: 0.03rem;
 }
 
 .cardContainer {
+    width: 36rem;
     margin-top: 4%;
     padding: 2%;
     margin: 5%;
@@ -24,9 +28,18 @@
     margin-top: 15px;
 }
 
+.titleContainer h1 {
+    font-weight: 510;
+}
+
 .subTitle {
     margin-top: 1rem;
-    font-weight: 250;
+    font-weight: lighter;
+}
+
+.subTitle p {
+    font-weight: 200;
+    font-size: 16px;
 }
 
 .formContainer {
