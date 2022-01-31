@@ -203,14 +203,14 @@
     }
 }
 
-.color1 {
+.error {
     background: #ffdddd;
 }
 
-.color2 {
+.correct {
     background: #c9ffad;
 }
 
-.color3 {
+.normal {
     background: #ffffff;
 }
