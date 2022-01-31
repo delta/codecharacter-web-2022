@@ -1,7 +1,7 @@
 import { Form, Container, Card, Button, ProgressBar } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
-import AlertMessage from '../../components/Alert';
+import AlertMessage from '../../components/Alert/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
@@ -11,7 +11,7 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { ReCAPTCHA } from 'react-google-recaptcha';
-import styles from '../../styles/auth.module.css';
+import styles from './auth.module.css';
 import { accessUrl, SECRET_KEY, SITE_KEY } from '../../config/config';
 import { NavLink } from 'react-router-dom';
 let inc = 1;

@@ -2,8 +2,8 @@ import { Form, Button, Container, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
-import AlertMessage from '../../components/Alert';
-import styles from '../../styles/auth.module.css';
+import AlertMessage from '../../components/Alert/Alert';
+import styles from './auth.module.css';
 import { NavLink } from 'react-router-dom';
 
 export default function Login(): JSX.Element {
@@ -67,12 +67,12 @@ export default function Login(): JSX.Element {
                 placeholder="Email"
                 value={email}
                 onChange={handleEmailSubmit}
-                style={
+                className={
                   login
                     ? emailError
-                      ? { background: '#ffdddd' }
-                      : { background: '#c9ffad' }
-                    : { background: 'white' }
+                      ? styles.error
+                      : styles.correct
+                    : styles.normal
                 }
               />
               {emailError && login ? (

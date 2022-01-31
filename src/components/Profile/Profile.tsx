@@ -1,8 +1,8 @@
 import { Form, Button, Offcanvas, CloseButton } from 'react-bootstrap';
 import { useState } from 'react';
-import AlertMessage from './Alert';
+import AlertMessage from '../Alert/Alert';
 import ReactFlagsSelect from 'react-flags-select';
-import styles from './styles/profile.module.css';
+import styles from './profile.module.css';
 
 const Profile = (): JSX.Element => {
   const [show, isShow] = useState(true);

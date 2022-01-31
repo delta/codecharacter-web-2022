@@ -202,3 +202,15 @@
         transform: scale(1);
     }
 }
+
+.color1 {
+    background: #ffdddd;
+}
+
+.color2 {
+    background: #c9ffad;
+}
+
+.color3 {
+    background: #ffffff;
+}
