@@ -1,6 +1,6 @@
 import { Form, Button, Offcanvas, CloseButton } from 'react-bootstrap';
 import { useState } from 'react';
-import AlertMessage from '../Alert/Alert';
+import AlertMessage from '../Auth/Auth/Alert/Alert';
 import ReactFlagsSelect from 'react-flags-select';
 import styles from './profile.module.css';
 import classnames from 'classnames';
@@ -166,11 +166,6 @@ const Profile = (): JSX.Element => {
                           placeholder="Search your country"
                           onSelect={code => {
                             setSelected(code);
-                            // const countryNames = new Intl.DisplayNames(['en'], {
-                            //   type: 'region',
-                            // });
-                            // setSelected(countryNames.of(code));
-                            // console.log(countryNames.of(code));
                           }}
                         />
                       </div>{' '}

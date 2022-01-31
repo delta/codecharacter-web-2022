@@ -2,7 +2,7 @@ import { Form, Button, Container, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
-import AlertMessage from '../../components/Alert/Alert';
+import AlertMessage from '../../components/Auth/Auth/Alert/Alert';
 import styles from './auth.module.css';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';

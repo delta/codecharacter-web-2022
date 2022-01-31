@@ -1,4 +1,5 @@
 import { Alert } from 'react-bootstrap';
+import styles from './alert.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface alert {
@@ -9,15 +10,7 @@ const AlertMessage = (props: alert): JSX.Element => {
   return (
     <>
       {props.err ? (
-        <Alert
-          variant="danger"
-          style={{
-            minHeight: '30px',
-            marginTop: '5px',
-            padding: '0px',
-            paddingLeft: '5px',
-          }}
-        >
+        <Alert variant="danger" className={styles.alert}>
           {props.content}
         </Alert>
       ) : (
