@@ -1,0 +1,14 @@
+.openapi-generator-ignore
+apis/AuthApi.ts
+apis/CodeApi.ts
+apis/CurrentUserApi.ts
+apis/GameApi.ts
+apis/LeaderboardApi.ts
+apis/MapApi.ts
+apis/MatchApi.ts
+apis/NotificationApi.ts
+apis/UserApi.ts
+apis/index.ts
+index.ts
+models/index.ts
+runtime.ts
