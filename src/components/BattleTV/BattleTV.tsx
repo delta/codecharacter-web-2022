@@ -1,20 +1,20 @@
 import styles from './BattleTV.module.css';
 
 function createData(
-  myusername: string,
-  mycoinused: number,
-  mydestruction: number,
-  enemydestruction: number,
-  enemycoinused: number,
-  enemyusername: string,
+  myUsername: string,
+  myCoinused: number,
+  myDestruction: number,
+  enemyDestruction: number,
+  enemyCoinused: number,
+  enemyUsername: string,
 ) {
   return {
-    myusername,
-    mycoinused,
-    mydestruction,
-    enemydestruction,
-    enemycoinused,
-    enemyusername,
+    myUsername,
+    myCoinused,
+    myDestruction,
+    enemyDestruction,
+    enemyCoinused,
+    enemyUsername,
   };
 }
 
@@ -45,12 +45,12 @@ export default function BattleTV(): JSX.Element {
         <div className={styles.column} />
       </div>
       {rows.map(row => (
-        <div className={styles.item} key={row.myusername}>
+        <div className={styles.item} key={row.myUsername}>
           <div
             className={styles.battlecard}
             style={{
               backgroundColor:
-                row.mydestruction < row.enemydestruction
+                row.myDestruction < row.enemyDestruction
                   ? '#00bc62'
                   : '#BC1700',
             }}
@@ -59,13 +59,13 @@ export default function BattleTV(): JSX.Element {
               className={styles.pic}
               src="https://randomuser.me/api/portraits/women/81.jpg"
             ></img>
-            <div className={styles.username}>{row.myusername}</div>
-            <div className={styles.coinused}>{row.mycoinused}</div>
-            <div className={styles.destruction}>{row.mydestruction}</div>
+            <div className={styles.Username}>{row.myUsername}</div>
+            <div className={styles.Coinused}>{row.myCoinused}</div>
+            <div className={styles.Destruction}>{row.myDestruction}</div>
             <div className={styles.vs}>VS</div>
-            <div className={styles.destruction}>{row.enemydestruction}</div>
-            <div className={styles.coinused}>{row.enemycoinused}</div>
-            <div className={styles.username}>{row.enemyusername}</div>
+            <div className={styles.Destruction}>{row.enemyDestruction}</div>
+            <div className={styles.Coinused}>{row.enemyCoinused}</div>
+            <div className={styles.Username}>{row.enemyUsername}</div>
             <img
               className={styles.pic}
               src="https://randomuser.me/api/portraits/women/81.jpg"
