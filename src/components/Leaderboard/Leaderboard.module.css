@@ -9,7 +9,11 @@
   align-items: center;
   padding: 10px 25px;
   color: #e8ecfd;
-  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(48, 67, 124, 1) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(48, 67, 124, 1) 100%
+  );
 }
 
 .header__icon {
@@ -36,8 +40,8 @@ html {
 
 .center {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  padding-top: 40rem;
+  left: 51%;
   transform: translate(-50%, -50%);
   z-index: 10;
   font-family: 'Red Hat Display', sans-serif;
@@ -53,7 +57,11 @@ html {
 .top3 .item {
   box-sizing: border-box;
   position: relative;
-  background: radial-gradient(circle, rgba(184,207,205,1) 0%, rgba(133,157,217,1) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(184, 207, 205, 1) 0%,
+    rgba(133, 157, 217, 1) 100%
+  );
   width: 9rem;
   height: 10rem;
   text-align: center;
@@ -63,7 +71,8 @@ html {
   transform-origin: bottom;
   cursor: pointer;
   transition: transform 200ms ease-in-out;
-  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1),
+    0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
 }
 
 .top3 .item .pic {
@@ -76,7 +85,8 @@ html {
   background-size: cover;
   background-position: center;
   margin-right: 1rem;
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
+    0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
 }
 
 .top3 .item .pos {
@@ -131,8 +141,13 @@ html {
   transform-origin: left;
   cursor: pointer;
   transition: transform 200ms ease-in-out;
-  background: radial-gradient(circle, rgba(184,207,205,1) 0%, rgba(133,157,217,1) 100%);
-  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1), 0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+  background: radial-gradient(
+    circle,
+    rgba(184, 207, 205, 1) 0%,
+    rgba(133, 157, 217, 1) 100%
+  );
+  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1),
+    0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
 }
 
 .list .item .pos {
@@ -154,7 +169,8 @@ html {
   background-size: cover;
   background-position: center;
   margin-right: 1rem;
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
+    0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
 }
 
 .list .item .name {

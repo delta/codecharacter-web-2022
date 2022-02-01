@@ -1,0 +1,17 @@
+.gitignore
+.npmignore
+package.json
+src/apis/AuthApi.ts
+src/apis/CodeApi.ts
+src/apis/CurrentUserApi.ts
+src/apis/GameApi.ts
+src/apis/LeaderboardApi.ts
+src/apis/MapApi.ts
+src/apis/MatchApi.ts
+src/apis/NotificationApi.ts
+src/apis/UserApi.ts
+src/apis/index.ts
+src/index.ts
+src/models/index.ts
+src/runtime.ts
+tsconfig.json
