@@ -1,12 +1,3 @@
-.completeTimeline {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.completeTimeline::-webkit-scrollbar {
-  display: none;
-}
-
 .vertical-timeline-element--work,
 .vertical-timeline-element {
   height: fit-content;
