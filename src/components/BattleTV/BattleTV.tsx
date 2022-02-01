@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
+
 import styles from './BattleTV.module.css';
 
 function createData(
@@ -25,7 +29,92 @@ const rows = [
   createData('Akash4', 39, 40, 35, 14, 'Enemyakash'),
   createData('Akash5', 29, 45, 50, 32, 'Enemyakash'),
   createData('Akash6', 19, 60, 55, 32, 'Enemyakash'),
+  createData('Akash7', 69, 5, 10, 34, 'Enemyakash'),
+  createData('Akash8', 49, 20, 15, 4, 'Enemyakash'),
+  createData('Akash9', 39, 25, 30, 43, 'Enemyakash'),
+  createData('Akash10', 39, 40, 35, 14, 'Enemyakash'),
 ];
+
+function Items({ currentItems }) {
+  return (
+    <>
+      {currentItems &&
+        currentItems.map(row => (
+          <div className={styles.item} key={row.myUsername}>
+            <div
+              className={styles.battlecard}
+              style={{
+                backgroundColor:
+                  row.myDestruction < row.enemyDestruction
+                    ? '#00bc62'
+                    : '#BC1700',
+              }}
+            >
+              <img
+                className={styles.pic}
+                src="https://randomuser.me/api/portraits/women/81.jpg"
+              ></img>
+              <div className={styles.Username}>{row.myUsername}</div>
+              <div className={styles.Coinused}>{row.myCoinused}</div>
+              <div className={styles.Destruction}>{row.myDestruction}</div>
+              <div className={styles.vs}>VS</div>
+              <div className={styles.Destruction}>{row.enemyDestruction}</div>
+              <div className={styles.Coinused}>{row.enemyCoinused}</div>
+              <div className={styles.Username}>{row.enemyUsername}</div>
+              <img
+                className={styles.pic}
+                src="https://randomuser.me/api/portraits/women/81.jpg"
+              ></img>
+            </div>
+          </div>
+        ))}
+    </>
+  );
+}
+
+function PaginatedItems({ itemsPerPage }) {
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(rows.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(rows.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage]);
+
+  const handlePageClick = event => {
+    const newOffset = (event.selected * itemsPerPage) % rows.length;
+    setItemOffset(newOffset);
+  };
+
+  return (
+    <>
+      <Items currentItems={currentItems} />
+      <nav className={styles.paginationouter}>
+        <ReactPaginate
+          previousLabel="Previous"
+          nextLabel="Next"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={styles.pagination}
+          activeClassName="active"
+        />
+      </nav>
+    </>
+  );
+}
 
 export default function BattleTV(): JSX.Element {
   return (
@@ -44,35 +133,15 @@ export default function BattleTV(): JSX.Element {
         <div className={styles.column} />
         <div className={styles.column} />
       </div>
-      {rows.map(row => (
-        <div className={styles.item} key={row.myUsername}>
-          <div
-            className={styles.battlecard}
-            style={{
-              backgroundColor:
-                row.myDestruction < row.enemyDestruction
-                  ? '#00bc62'
-                  : '#BC1700',
-            }}
-          >
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/women/81.jpg"
-            ></img>
-            <div className={styles.Username}>{row.myUsername}</div>
-            <div className={styles.Coinused}>{row.myCoinused}</div>
-            <div className={styles.Destruction}>{row.myDestruction}</div>
-            <div className={styles.vs}>VS</div>
-            <div className={styles.Destruction}>{row.enemyDestruction}</div>
-            <div className={styles.Coinused}>{row.enemyCoinused}</div>
-            <div className={styles.Username}>{row.enemyUsername}</div>
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/women/81.jpg"
-            ></img>
-          </div>
-        </div>
-      ))}
+      <PaginatedItems itemsPerPage={6} />
     </div>
   );
 }
+
+Items.propTypes = {
+  currentItems: PropTypes.array.isRequired,
+  map: PropTypes.func.isRequired,
+};
+PaginatedItems.propTypes = {
+  itemsPerPage: PropTypes.number.isRequired,
+};

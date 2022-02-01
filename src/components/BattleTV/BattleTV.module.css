@@ -1,3 +1,11 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: #242a3c;
+  color: #333;
+}
+
 .title {
   margin-top: 2.5rem;
   font-family: Montserrat;
@@ -65,13 +73,16 @@
   background-size: cover;
   background-position: center;
   margin-right: 1rem;
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
+    0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
 }
 
-body,
-html {
-  height: 100%;
-  width: 100%;
-  background: #242a3c;
-  color: #333;
+.paginationouter {
+  text-align: center;
+}
+.pagination {
+  font-family: 'Quicksand', sans-serif;
+  display: inline-flex;
+  margin-top: 20px;
+  position: relative;
 }

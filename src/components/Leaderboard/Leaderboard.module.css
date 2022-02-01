@@ -36,7 +36,7 @@ html {
 
 .center {
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -179,4 +179,15 @@ html {
 
 .list .item:hover .pos {
   opacity: 0.8;
+}
+
+.paginationouter {
+  text-align: center;
+}
+
+.pagination {
+  font-family: 'Quicksand', sans-serif;
+  display: inline-flex;
+  margin-top: 20px;
+  position: relative;
 }
