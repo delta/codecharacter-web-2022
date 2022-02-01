@@ -31,4 +31,4 @@
 !.yarn/versions
 
 # config for secret keys
-/src/config/config.ts
+src/config/config.ts
