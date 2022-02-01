@@ -1,0 +1,15 @@
+{
+  "name": "@codecharacter-2022/client",
+  "version": "2022.0.0",
+  "description": "OpenAPI client for CodeCharacter 2022",
+  "author": "Delta Force",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "*"
+  }
+}

@@ -30,5 +30,7 @@
 !.yarn/sdks
 !.yarn/versions
 
+openapitools.json
+
 # config for secret keys
 src/config/config.ts
