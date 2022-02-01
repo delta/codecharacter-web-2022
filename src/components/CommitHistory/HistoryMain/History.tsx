@@ -9,20 +9,20 @@ export default function History(): JSX.Element {
 
   return (
     <div>
-      <div className={styles.HistoryMain}>
-        <div className={styles.Timeline}>
+      <div className={styles.historyMain}>
+        <div className={styles.timeline}>
           <div></div>
-          <div className={styles.CompleteTimeline}>
+          <div className={styles.completeTimeline}>
             <CommitHistory />
           </div>
           <div></div>
         </div>
-        <div className={styles.CodeView}>
-          <div className={styles.CodeMapButton}>
+        <div className={styles.codeView}>
+          <div className={styles.codeMapButton}>
             <ButtonGroup>
               <Button
                 className={
-                  BigButton == 'Code' ? styles.LargeButton : styles.SmallButton
+                  BigButton == 'Code' ? styles.largeButton : styles.smallButton
                 }
                 onClick={() => {
                   setBigButton('Code');
@@ -32,7 +32,7 @@ export default function History(): JSX.Element {
               </Button>
               <Button
                 className={
-                  BigButton == 'Map' ? styles.LargeButton : styles.SmallButton
+                  BigButton == 'Map' ? styles.largeButton : styles.smallButton
                 }
                 onClick={() => {
                   setBigButton('Map');
@@ -42,20 +42,20 @@ export default function History(): JSX.Element {
               </Button>
             </ButtonGroup>
           </div>
-          <div className={styles.CodeMapBox}>
+          <div className={styles.codeMapBox}>
             {BigButton == 'Code' ? (
               <h1 style={{ color: 'white' }}>Hello Code-Box</h1>
             ) : (
               <h1 style={{ color: 'white' }}>Hello Map-Box</h1>
             )}
           </div>
-          <div className={styles.Select}>
-            <Button className={styles.SelectButton} variant="primary" size="lg">
+          <div className={styles.select}>
+            <Button className={styles.selectButton} variant="primary" size="lg">
               Select
             </Button>
           </div>
         </div>
-        <div className={styles.Dummy}></div>
+        <div className={styles.dummy}></div>
       </div>
     </div>
   );
