@@ -49,6 +49,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache-yarn.outputs.cache-hit != 'true'
         run: yarn install
+      - name: Copy config
+        run: cp ./src/config/config.example.ts ./src/config/config.ts
       - name: Run build
         run: yarn build
 
@@ -72,6 +74,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache-yarn.outputs.cache-hit != 'true'
         run: yarn install
+      - name: Copy config
+        run: cp ./src/config/config.example.ts ./src/config/config.ts
       - name: Run tests
         run: yarn test
       - name: Upload coverage
