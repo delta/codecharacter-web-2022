@@ -1,8 +1,21 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import PropTypes from 'prop-types';
 
 import styles from './Leaderboard.module.css';
+
+type curentItems = {
+  rank: number;
+  username: string;
+  rating: number;
+  won: number;
+  lost: number;
+  tied: number;
+  fight: string;
+};
+interface Props {
+  itemsPerPage: number;
+  currentItems: Array<curentItems>;
+}
 
 function createData(
   rank: number,
@@ -33,7 +46,7 @@ const rows = [
   createData(17, 'Akash17', 122, 1, 1, 1, 'fightakash'),
 ];
 
-function Items({ currentItems }) {
+function Items({ currentItems }: Props) {
   return (
     <>
       {currentItems &&
@@ -55,7 +68,7 @@ function Items({ currentItems }) {
   );
 }
 
-function PaginatedItems({ itemsPerPage }) {
+function PaginatedItems({ itemsPerPage }: Props) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -73,7 +86,7 @@ function PaginatedItems({ itemsPerPage }) {
 
   return (
     <>
-      <Items currentItems={currentItems} />
+      <Items currentItems={currentItems} itemsPerPage={0} />
       <nav className={styles.paginationouter}>
         <ReactPaginate
           previousLabel="Previous"
@@ -150,17 +163,9 @@ export default function Leaderboard(): JSX.Element {
             <div className={styles.score}>Tied</div>
             <div className={styles.score}>Lost</div>
           </div>
-          <PaginatedItems itemsPerPage={4} />
+          <PaginatedItems itemsPerPage={4} currentItems={[]} />
         </div>
       </div>
     </div>
   );
 }
-
-Items.propTypes = {
-  currentItems: PropTypes.array.isRequired,
-  map: PropTypes.func.isRequired,
-};
-PaginatedItems.propTypes = {
-  itemsPerPage: PropTypes.number.isRequired,
-};

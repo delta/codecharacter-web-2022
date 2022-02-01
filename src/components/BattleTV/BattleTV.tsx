@@ -1,8 +1,20 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import PropTypes from 'prop-types';
 
 import styles from './BattleTV.module.css';
+
+type curentItems = {
+  myUsername: string;
+  myCoinused: number;
+  myDestruction: number;
+  enemyDestruction: number;
+  enemyCoinused: number;
+  enemyUsername: string;
+};
+interface Props {
+  itemsPerPage: number;
+  currentItems: Array<curentItems>;
+}
 
 function createData(
   myUsername: string,
@@ -35,7 +47,7 @@ const rows = [
   createData('Akash10', 39, 40, 35, 14, 'Enemyakash'),
 ];
 
-function Items({ currentItems }) {
+function Items({ currentItems }: Props) {
   return (
     <>
       {currentItems &&
@@ -72,7 +84,7 @@ function Items({ currentItems }) {
   );
 }
 
-function PaginatedItems({ itemsPerPage }) {
+function PaginatedItems({ itemsPerPage }: Props) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -90,7 +102,7 @@ function PaginatedItems({ itemsPerPage }) {
 
   return (
     <>
-      <Items currentItems={currentItems} />
+      <Items currentItems={currentItems} itemsPerPage={0} />
       <nav className={styles.paginationouter}>
         <ReactPaginate
           previousLabel="Previous"
@@ -133,15 +145,7 @@ export default function BattleTV(): JSX.Element {
         <div className={styles.column} />
         <div className={styles.column} />
       </div>
-      <PaginatedItems itemsPerPage={6} />
+      <PaginatedItems itemsPerPage={6} currentItems={[]} />
     </div>
   );
 }
-
-Items.propTypes = {
-  currentItems: PropTypes.array.isRequired,
-  map: PropTypes.func.isRequired,
-};
-PaginatedItems.propTypes = {
-  itemsPerPage: PropTypes.number.isRequired,
-};
