@@ -1,0 +1,93 @@
+.canvas {
+    width: 0rem;
+}
+
+.Container {
+    width: 30rem;
+    font-family: Montserrat;
+}
+
+.header {
+    background-color: #242A3C;
+    color: white;
+}
+
+.close {
+    background-color: white;
+    border-radius: 50%;
+}
+
+.divider {
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+}
+
+.body {
+    background-color: #242A3C;
+    color: white;
+}
+
+.profileContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.imageContainer {
+    width: 10rem;
+    height: 10rem;
+    text-align: center;
+    margin: auto;
+}
+
+.imageContainer img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.profileName {
+    margin-top: 1rem;
+}
+
+.formContainer {
+    margin: 2rem 2rem 0rem 2rem;
+}
+
+.formField {
+    margin-top: 2rem;
+}
+
+.flagContainer {
+    background-color: white;
+    border-radius: 5px;
+    height: 40px;
+    color: black;
+}
+
+.footer {
+    text-align: center;
+    margin: 1rem 0rem 0rem 0rem;
+    color: blue;
+}
+
+.error {
+    background: #ffdddd !important;
+}
+
+.correct {
+    background: #c9ffad !important;
+}
+
+.normal {
+    background: #ffffff !important;
+}
+
+.submitContainer {
+    text-align: center;
+    background: white;
+    border-radius: 5px;
+    margin: 2rem 1rem 1rem 1rem;
+}
