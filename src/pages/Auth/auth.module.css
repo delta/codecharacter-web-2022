@@ -1,0 +1,114 @@
+.mainContainer {
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    left: 0;
+    background-color: #242A3C;
+    color: white;
+    font-family: Montserrat;
+    margin: 0px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03rem;
+}
+
+.cardContainer {
+    width: 36rem;
+    margin-top: 4%;
+    padding: 2%;
+    margin: 5%;
+    padding-top: 0%;
+    background-color: #2D3342;
+}
+
+.titleContainer {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.titleContainer h1 {
+    font-weight: 510;
+}
+
+.subTitle {
+    margin-top: 1rem;
+    font-weight: lighter;
+}
+
+.subTitle p {
+    font-weight: 200;
+    font-size: 16px;
+}
+
+.formContainer {
+    margin: 1.5rem 1rem 1rem 1rem;
+}
+
+.submitContainer {
+    text-align: center;
+    background: white;
+    border-radius: 5px;
+    margin: 2rem 1rem 1rem 1rem;
+}
+
+.registerButton {
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.footerContainer {
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.previous,
+.next {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.previous {
+    float: left;
+}
+
+.next {
+    width: 2.5rem;
+    height: 2.5rem;
+    float: right;
+    border-radius: 50%;
+}
+
+.googleButton {
+    text-align: center;
+}
+
+.linkContainer {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.linkContainer span {
+    color: blue;
+}
+
+.error {
+    background: #ffdddd !important;
+}
+
+.correct {
+    background: #c9ffad !important;
+}
+
+.normal {
+    background: #ffffff !important;
+}
