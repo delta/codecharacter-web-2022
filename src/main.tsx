@@ -27,8 +27,8 @@ ReactDOM.render(
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/history" element={<History />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </Suspense>
         </div>
