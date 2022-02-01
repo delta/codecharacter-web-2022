@@ -6,6 +6,7 @@ import {
   faCodeBranch,
   faTv,
   faSignOutAlt,
+  faTools,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
@@ -16,6 +17,7 @@ const icons = [
   { icon: faTrophy, route: 'leaderboard', tooltip: 'Leaderboard' },
   { icon: faCodeBranch, route: 'history', tooltip: 'Commits' },
   { icon: faTv, route: 'battletv', tooltip: 'Battle TV' },
+  { icon: faTools, route: 'settings', tooltip: 'Editor Settings' },
   { icon: faSignOutAlt, route: 'logout', tooltip: 'Logout' },
 ];
 
