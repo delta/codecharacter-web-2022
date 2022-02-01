@@ -59,21 +59,19 @@ export default function Dashboard(): JSX.Element {
             </select>
           </Col>
 
-          <Col xs={3}>
+          <Col xs={6} className={classnames(styles.btnsParent)}>
             <Button className={classnames(styles.btnBarMembers, '')}>
               <FontAwesomeIcon icon={faCodeBranch} />
-              {` Commit`}
+              {`   Commit`}
             </Button>
-          </Col>
 
-          <Col xs={3}>
             <Button className={classnames(styles.btnBarMembers)}>
               <FontAwesomeIcon icon={faUpRightFromSquare} />
-              {` Submit`}
+              {`   Submit`}
             </Button>
           </Col>
-        </Row>
 
+        </Row>
         <Row className="m-0 p-0">
           <Editor editorWidth={editorWidth} language={language}></Editor>
         </Row>

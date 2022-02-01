@@ -28,7 +28,7 @@ const EditorSettings = (): JSX.Element => {
 
   const keyboardHandlers = ['default', 'emacs', 'vim'];
 
-  const [fontSize, setFontSize] = useState(fontSizeOptions[5].toString());
+  const [fontSize, setFontSize] = useState(fontSizeOptions[4].toString());
   const [theme, setTheme] = useState(editorThemes[0]);
   const [keyboardHandler, setKeyboardHandler] = useState(keyboardHandlers[0]);
   const [enableBasicAutoComplete, setBasicAutoComplete] = useState('true');
@@ -48,6 +48,7 @@ const EditorSettings = (): JSX.Element => {
     <Modal
       show={isSettingsOpen === 'true' ? true : false}
       centered
+      className={classnames(styles.editorSettingsModal)}
       onHide={() => setSettingsOpen('false')}
     >
       <Modal.Header

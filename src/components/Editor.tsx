@@ -55,7 +55,7 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       theme={theme}
       name="codeEditor"
       fontSize={Number(fontSize)}
-      wrapEnabled={false}
+      wrapEnabled={true}
       showPrintMargin={false}
       showGutter={true}
       highlightActiveLine={true}
@@ -67,7 +67,7 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       keyboardHandler={keyboardHandler !== 'default' ? keyboardHandler : ''}
       editorProps={{ $blockScrolling: true }}
       width={editorWidth.toString() + 'px'}
-      height={'90vh'} // button panel above editor is 10vh
+      height={'93.5vh'} // button panel above editor is 6vh
       //value={code}
       //onChange={updateCode}
       // commands={[

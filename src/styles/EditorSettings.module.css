@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
 
+.editorSettingsModal{
+  width: 30vw;
+  margin-left: 35vw;
+}
+
 .editorSettingsHeader{
-  background: #002244;
+  background: #2B3760;
   color: white;
   height: 10vh;
 }
