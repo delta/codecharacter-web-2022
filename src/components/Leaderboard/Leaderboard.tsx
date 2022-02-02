@@ -121,49 +121,51 @@ export default function Leaderboard(): JSX.Element {
         </h1>
       </div>
       <div className={styles.center}>
-        <div className={styles.top3}>
-          <div className={styles.item}>
-            <div className={styles.pos}>2</div>
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/men/34.jpg"
-            ></img>
-            <div className={styles.name}>Edgar Soto</div>
-            <div className={styles.score}>6453 rating</div>
+        <div className={styles.ranklist}>
+          <div className={styles.top3}>
+            <div className={styles.item}>
+              <div className={styles.pos}>2</div>
+              <img
+                className={styles.pic}
+                src="https://randomuser.me/api/portraits/men/34.jpg"
+              ></img>
+              <div className={styles.name}>Edgar Soto</div>
+              <div className={styles.score}>6453 rating</div>
+            </div>
+            <div className={styles.item}>
+              <div className={styles.pos}>1</div>
+              <img
+                className={styles.pic}
+                src="https://randomuser.me/api/portraits/men/31.jpg"
+              ></img>
+              <div className={styles.name}>Clifford James</div>
+              <div className={styles.score}>6794 rating</div>
+            </div>
+            <div className={styles.item}>
+              <div className={styles.pos}>3</div>
+              <img
+                className={styles.pic}
+                src="https://randomuser.me/api/portraits/women/91.jpg"
+              ></img>
+              <div className={styles.name}>Nevaeh Silva</div>
+              <div className={styles.score}>6034 rating</div>
+            </div>
           </div>
-          <div className={styles.item}>
-            <div className={styles.pos}>1</div>
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/men/31.jpg"
-            ></img>
-            <div className={styles.name}>Clifford James</div>
-            <div className={styles.score}>6794 rating</div>
+          <div className={styles.list}>
+            <div className={styles.item}>
+              <img
+                className={styles.pic}
+                src="https://randomuser.me/api/portraits/men/34.jpg"
+              ></img>
+              <div className={styles.pos}>#</div>
+              <div className={styles.name}>Username</div>
+              <div className={styles.score}>Ratings</div>
+              <div className={styles.score}>Won</div>
+              <div className={styles.score}>Tied</div>
+              <div className={styles.score}>Lost</div>
+            </div>
+            <PaginatedItems itemsPerPage={4} currentItems={[]} />
           </div>
-          <div className={styles.item}>
-            <div className={styles.pos}>3</div>
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/women/91.jpg"
-            ></img>
-            <div className={styles.name}>Nevaeh Silva</div>
-            <div className={styles.score}>6034 rating</div>
-          </div>
-        </div>
-        <div className={styles.list}>
-          <div className={styles.item}>
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/men/34.jpg"
-            ></img>
-            <div className={styles.pos}>#</div>
-            <div className={styles.name}>Username</div>
-            <div className={styles.score}>Ratings</div>
-            <div className={styles.score}>Won</div>
-            <div className={styles.score}>Tied</div>
-            <div className={styles.score}>Lost</div>
-          </div>
-          <PaginatedItems itemsPerPage={4} currentItems={[]} />
         </div>
       </div>
     </div>

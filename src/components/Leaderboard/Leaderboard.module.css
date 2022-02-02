@@ -1,12 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:400,900&display=swap');
 
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: #242a3c;
+  color: #333;
+}
+
 .header {
-  position: relative;
   max-width: 500px;
   margin: 50px auto;
   border-radius: 12px;
   display: flex;
   align-items: center;
+  margin-left: 35%;
   padding: 10px 25px;
   color: #e8ecfd;
   background: radial-gradient(
@@ -30,28 +38,25 @@
   letter-spacing: 4.5px;
 }
 
-body,
-html {
-  height: 100%;
-  width: 100%;
-  background: #242a3c;
-  color: #333;
+.center {
+  display: flex;
+  margin-left: 35%;
 }
 
-.center {
-  position: absolute;
-  padding-top: 40rem;
-  left: 51%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+.ranklist {
+  max-width: 500px;
+  display: block;
+  align-items: center;
+  padding-top: 10px;
   font-family: 'Red Hat Display', sans-serif;
 }
 
 .top3 {
+  position: relative;
+  max-width: 500px;
+  padding-top: 10px;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  color: #4b4168;
+  align-items: center;
 }
 
 .top3 .item {
