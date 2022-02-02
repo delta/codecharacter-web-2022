@@ -18,15 +18,35 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Dashboard(): JSX.Element {
-  const languages = ['c_cpp', 'python'];
+  const languages: string[] = ['C++', 'Python'];
 
   const sideBar = useRef(null);
   const slideInOutBtn = useRef(null);
 
   const [editorWidth, setEditorWidth] = useState(window.innerWidth / 2);
-  const [language, setLanguage] = useState(languages[0]);
+
+  const localStoreLanguage = localStorage.getItem('language');
+  const [language, setLanguage] = useState(
+    localStoreLanguage === null ? 'c_cpp' : localStoreLanguage,
+  );
+
   const [isCodeEditorOpen, setCodeEditorOpen] = useState(true);
   const [pane1Width, setpane1Width] = useState(window.innerWidth / 2 + 70); // 70 is the width of sideBar + slideInOutBtn
+
+  function languageChange(language) {
+    switch (language) {
+      case 'C++':
+        setLanguage('c_cpp');
+        localStorage.setItem('language', 'c_cpp');
+        break;
+      case 'Python':
+        setLanguage('python');
+        localStorage.setItem('language', 'python');
+        break;
+      default:
+        setLanguage('c_cpp');
+    }
+  }
 
   let codeEditorComponent;
   if (isCodeEditorOpen === true) {
@@ -49,7 +69,7 @@ export default function Dashboard(): JSX.Element {
           <Col className="text-center">
             <select
               className={classnames(styles.languageDropdown, 'w-75 pt-1 pb-1')}
-              onChange={e => setLanguage(e.target.value)}
+              onChange={e => languageChange(e.target.value)}
             >
               {languages.map(language => (
                 <option value={language} key={language}>
@@ -80,7 +100,7 @@ export default function Dashboard(): JSX.Element {
   } else {
     codeEditorComponent = null;
   }
-  console.log('injs');
+
   return (
     <SplitPane
       split="vertical"

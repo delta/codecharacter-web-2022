@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useDebugValue, useState } from 'react';
 import * as Editor from '../types/Editor';
 import AceEditor from 'react-ace';
 
@@ -24,20 +24,43 @@ import 'brace/keybinding/emacs';
 import 'brace/keybinding/vim';
 
 export default function CodeEditor(props: Editor.Props): JSX.Element {
-  const [fontSize, setFontSize] = useState(localStorage.getItem('fontSize'));
-  const [theme, setTheme] = useState(localStorage.getItem('theme'));
+  const localStoreFontSize = localStorage.getItem('fontSize');
+  const [fontSize, setFontSize] = useState(
+    localStoreFontSize === null ? '16' : localStorage.getItem('fontSize'),
+  );
 
+  const localStoreTheme = localStorage.getItem('theme');
+  const [theme, setTheme] = useState(
+    localStoreTheme === null ? 'monokai' : localStorage.getItem('theme'),
+  );
+
+  const localStoreKeyboardHandler = localStorage.getItem('keyboardHandler')
   const [keyboardHandler, setKeyboardHandler] = useState(
-    localStorage.getItem('keyboardHandler'),
+    localStoreKeyboardHandler === null
+      ? 'default'
+      : localStorage.getItem('keyboardHandler'),
   );
 
+  const localStoreBasicAutoComplete = localStorage.getItem(
+    'enableBasicAutoComplete',
+  );
   const [enableBasicAutoComplete, setBasicAutoComplete] = useState(
-    localStorage.getItem('enableBasicAutoComplete'),
+    localStoreBasicAutoComplete === null
+      ? 'true'
+      : localStorage.getItem('enableBasicAutoComplete'),
   );
 
+  const localStoreEnableSnippets = localStorage.getItem('enableSnippets');
   const [enableSnippets, setSnippets] = useState(
-    localStorage.getItem('enableSnippets'),
+    localStoreEnableSnippets === null
+      ? 'true'
+      : localStorage.getItem('enableSnippets'),
   );
+
+  const localStoreCode = localStorage.getItem('codeWritten');
+  console.log(localStoreCode);
+  const codeWritten =
+    localStoreCode === null ? '//Welcome to Code Character!' : localStoreCode;
 
   window.addEventListener('storage', () => {
     setFontSize(localStorage.getItem('fontSize'));
@@ -68,8 +91,10 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       editorProps={{ $blockScrolling: true }}
       width={editorWidth.toString() + 'px'}
       height={'93.5vh'} // button panel above editor is 6vh
-      //value={code}
-      //onChange={updateCode}
+      value={codeWritten}
+      onChange={value => {
+        localStorage.setItem('codeWritten', value);
+      }}
       // commands={[
       //   {
       //     bindKey: { win: 'Ctrl-S', mac: 'Command-S' },

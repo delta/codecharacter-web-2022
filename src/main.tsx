@@ -8,6 +8,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const History = lazy(
   () => import('./components/CommitHistory/HistoryMain/History'),
 );
+const EditorSettings = lazy(() => import('./components/EditorSettings'))
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.render(
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/history" element={<History />} />
+          <Route path='/settings' element={<EditorSettings/>} />
         </Routes>
       </Suspense>
     </HashRouter>

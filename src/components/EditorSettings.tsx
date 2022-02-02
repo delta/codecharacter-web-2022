@@ -58,21 +58,23 @@ const EditorSettings = (): JSX.Element => {
         <Modal.Title className="fw-bold fs-3">Settings</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className={classnames(styles.editorSettingsBody, 'rounded')}>
-        <Container>
+      <Modal.Body className={classnames(styles.editorSettingsBody)}>
+        <Container fluid>
           <Row>
-            <Col xs={12}>
+            <Col xs={12} className={classnames(styles.settingFormGroup)}>
               <FormGroup controlId="fontSize">
-                <div className={classnames(styles.settingLabel)}>
-                  <b>Font Size</b>
-                </div>
+                <div className={classnames(styles.settingLabel)}>Font Size</div>
                 <select
                   className={classnames(styles.settingDropdown)}
                   value={fontSize}
                   onChange={e => setFontSize(e.target.value)}
                 >
                   {fontSizeOptions.map((font: number) => (
-                    <option value={font} key={font}>
+                    <option
+                      value={font}
+                      key={font}
+                      className={classnames(styles.optionsDropdown)}
+                    >
                       {font}
                     </option>
                   ))}
@@ -80,10 +82,10 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} className={classnames(styles.settingFormGroup)}>
               <FormGroup controlId="editorTheme">
                 <div className={classnames(styles.settingLabel)}>
-                  <b>Editor Theme</b>
+                  Editor Theme
                 </div>
                 <select
                   className={classnames(styles.settingDropdown)}
@@ -91,7 +93,11 @@ const EditorSettings = (): JSX.Element => {
                   onChange={e => setTheme(e.target.value)}
                 >
                   {editorThemes.map((themeValue: string) => (
-                    <option value={themeValue} key={themeValue}>
+                    <option
+                      value={themeValue}
+                      key={themeValue}
+                      className={classnames(styles.optionsDropdown)}
+                    >
                       {themeValue}
                     </option>
                   ))}
@@ -99,10 +105,10 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} className={classnames(styles.settingFormGroup)}>
               <FormGroup controlId="editorKeybinding">
                 <div className={classnames(styles.settingLabel)}>
-                  <b>Editor Keybinding</b>
+                  Editor Keybinding
                 </div>
                 <select
                   className={classnames(styles.settingDropdown)}
@@ -113,6 +119,7 @@ const EditorSettings = (): JSX.Element => {
                     <option
                       value={keyboardHandlerValue}
                       key={keyboardHandlerValue}
+                      className={classnames(styles.optionsDropdown)}
                     >
                       {keyboardHandlerValue}
                     </option>
@@ -121,40 +128,54 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} className={classnames(styles.settingFormGroup)}>
               <FormGroup controlId="basicAutoCompletion">
                 <div className={classnames(styles.settingLabel)}>
-                  <b>Basic Auto Completion</b>
+                  Basic Auto Completion
                 </div>
                 <select
                   className={classnames(styles.settingDropdown)}
                   value={enableBasicAutoComplete ? 'enable' : 'disable'}
                   onChange={e => setBasicAutoComplete(e.target.value)}
                 >
-                  <option value={'enable'} key={'enable'}>
+                  <option
+                    value={'enable'}
+                    key={'enable'}
+                    className={classnames(styles.optionsDropdown)}
+                  >
                     enable
                   </option>
-                  <option value={'disable'} key={'disable'}>
+                  <option
+                    value={'disable'}
+                    key={'disable'}
+                    className={classnames(styles.optionsDropdown)}
+                  >
                     disable
                   </option>
                 </select>
               </FormGroup>
             </Col>
 
-            <Col xs={12}>
+            <Col xs={12} className={classnames(styles.settingFormGroup)}>
               <FormGroup controlId="snippets">
-                <div className={classnames(styles.settingLabel)}>
-                  <b>Snippets</b>
-                </div>
+                <div className={classnames(styles.settingLabel)}>Snippets</div>
                 <select
                   className={classnames(styles.settingDropdown)}
                   value={enableSnippets ? 'enable' : 'disable'}
                   onChange={e => setSnippets(e.target.value)}
                 >
-                  <option value={'enable'} key={'enable'}>
+                  <option
+                    value={'enable'}
+                    key={'enable'}
+                    className={classnames(styles.optionsDropdown)}
+                  >
                     enable
                   </option>
-                  <option value={'disable'} key={'disable'}>
+                  <option
+                    value={'disable'}
+                    key={'disable'}
+                    className={classnames(styles.optionsDropdown)}
+                  >
                     disable
                   </option>
                 </select>
