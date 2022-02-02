@@ -1,4 +1,4 @@
-import { useDebugValue, useState } from 'react';
+import { useState } from 'react';
 import * as Editor from '../types/Editor';
 import AceEditor from 'react-ace';
 
@@ -34,7 +34,7 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
     localStoreTheme === null ? 'monokai' : localStorage.getItem('theme'),
   );
 
-  const localStoreKeyboardHandler = localStorage.getItem('keyboardHandler')
+  const localStoreKeyboardHandler = localStorage.getItem('keyboardHandler');
   const [keyboardHandler, setKeyboardHandler] = useState(
     localStoreKeyboardHandler === null
       ? 'default'

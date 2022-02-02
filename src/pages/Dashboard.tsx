@@ -90,7 +90,6 @@ export default function Dashboard(): JSX.Element {
               {`   Submit`}
             </Button>
           </Col>
-
         </Row>
         <Row className="m-0 p-0">
           <Editor editorWidth={editorWidth} language={language}></Editor>

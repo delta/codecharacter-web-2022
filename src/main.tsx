@@ -14,7 +14,7 @@ const History = lazy(
 );
 const Login = lazy(() => import('./pages/Auth/Login'));
 const Register = lazy(() => import('./pages/Auth/Register'));
-const EditorSettings = lazy(() => import('./components/EditorSettings'))
+const EditorSettings = lazy(() => import('./components/EditorSettings'));
 
 ReactDOM.render(
   <React.StrictMode>
