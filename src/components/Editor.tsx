@@ -90,7 +90,7 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       keyboardHandler={keyboardHandler !== 'default' ? keyboardHandler : ''}
       editorProps={{ $blockScrolling: true }}
       width={editorWidth.toString() + 'px'}
-      height={'93.5vh'} // button panel above editor is 6vh
+      height={'84.5vh'} // button panel above editor is 6.5vh + 9vh NavBar
       value={codeWritten}
       onChange={value => {
         localStorage.setItem('codeWritten', value);

@@ -1649,9 +1649,9 @@ __metadata:
     "@codecharacter-2022/renderer": "workspace:packages/renderer"
     "@fortawesome/fontawesome-svg-core": ^1.2.36
     "@fortawesome/free-brands-svg-icons": ^5.15.4
-    "@fortawesome/free-regular-svg-icons": next
+    "@fortawesome/free-regular-svg-icons": ^5.15.4
     "@fortawesome/free-solid-svg-icons": ^5.15.4
-    "@fortawesome/react-fontawesome": ^0.1.16
+    "@fortawesome/react-fontawesome": ^0.1.17
     "@lit-labs/react": ^1.0.1
     "@mdx-js/react": ^1.6.22
     "@reduxjs/toolkit": ^1.7.1
@@ -1692,7 +1692,7 @@ __metadata:
     prettier: ^2.4.1
     react: ^17.0.2
     react-ace: ^9.5.0
-    react-bootstrap: ^2.1.1
+    react-bootstrap: ^2.1.2
     react-dom: ^17.0.2
     react-flags-select: ^2.1.2
     react-google-recaptcha: ^2.1.0
@@ -1904,13 +1904,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-common-types@npm:^0.3.0-beta3":
-  version: 0.3.0-beta3
-  resolution: "@fortawesome/fontawesome-common-types@npm:0.3.0-beta3"
-  checksum: 916f292d5f8ef2d49af9bfbed04da4fd74db3ef0361282e4bcedb017f2ceab4f67c1249d247b05ccd9f989ce248eb17f144d6b9008f7cc0a37cce5ab06f2abc1
-  languageName: node
-  linkType: hard
-
 "@fortawesome/fontawesome-svg-core@npm:^1.2.36":
   version: 1.2.36
   resolution: "@fortawesome/fontawesome-svg-core@npm:1.2.36"
@@ -1929,12 +1922,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/free-regular-svg-icons@npm:next":
-  version: 6.0.0-beta3
-  resolution: "@fortawesome/free-regular-svg-icons@npm:6.0.0-beta3"
+"@fortawesome/free-regular-svg-icons@npm:^5.15.4":
+  version: 5.15.4
+  resolution: "@fortawesome/free-regular-svg-icons@npm:5.15.4"
   dependencies:
-    "@fortawesome/fontawesome-common-types": ^0.3.0-beta3
-  checksum: 6b2a413bf481c333addb19092770a96c1135b1a7deee5d9122f753cac16f076fed6fbeb7b75b37c6fd4ffe525ffaa1e8fb8fcb3bc7981fc1029985a725ed0bee
+    "@fortawesome/fontawesome-common-types": ^0.2.36
+  checksum: 2e6039e3bb2125940ed2cb5738b6562b082755c1e45b73571ee92d976773ab81118c9efb9a7b57453b664a025613e81e1dafd2235aafeaadd8f0d75f8e1fe25e
   languageName: node
   linkType: hard
 
@@ -1947,7 +1940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/react-fontawesome@npm:^0.1.16":
+"@fortawesome/react-fontawesome@npm:^0.1.17":
   version: 0.1.17
   resolution: "@fortawesome/react-fontawesome@npm:0.1.17"
   dependencies:
@@ -14012,7 +14005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-bootstrap@npm:^2.1.1":
+"react-bootstrap@npm:^2.1.2":
   version: 2.1.2
   resolution: "react-bootstrap@npm:2.1.2"
   dependencies:

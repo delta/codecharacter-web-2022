@@ -2,6 +2,12 @@
 
 .sideBar{
     width: 50px !important;
+    padding: 0;
+    margin: 0;
+}
+
+.splitPane{
+    height: 91vh;
 }
 
 .btnBarAboveEditor{
@@ -55,6 +61,16 @@
     background: #232323;
     padding-left: 2px;
     padding-right: 2px;
-    border-left: 2px solid white;
     width: 20px !important;
+}
+
+@media (max-width: 1000px){
+    .btnBarMembers{
+        font-size: 11px;
+        margin-right: 20px;
+        width: 9vw;
+    }
+    .btnsParent{
+        justify-content: center;
+    }
 }
