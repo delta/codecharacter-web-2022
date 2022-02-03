@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 
 import styles from './BattleTV.module.css';
 
-type curentItems = {
+type Item = {
   myUsername: string;
   myCoinused: number;
   myDestruction: number;
@@ -13,7 +13,7 @@ type curentItems = {
 };
 interface Props {
   itemsPerPage: number;
-  currentItems: Array<curentItems>;
+  currentItems: Array<Item>;
 }
 
 function createData(
@@ -34,17 +34,17 @@ function createData(
   };
 }
 
-const rows = [
-  createData('Akash1', 69, 5, 10, 34, 'Enemyakash'),
-  createData('Akash2', 49, 20, 15, 4, 'Enemyakash'),
-  createData('Akash3', 39, 25, 30, 43, 'Enemyakash'),
-  createData('Akash4', 39, 40, 35, 14, 'Enemyakash'),
-  createData('Akash5', 29, 45, 50, 32, 'Enemyakash'),
-  createData('Akash6', 19, 60, 55, 32, 'Enemyakash'),
-  createData('Akash7', 69, 5, 10, 34, 'Enemyakash'),
-  createData('Akash8', 49, 20, 15, 4, 'Enemyakash'),
-  createData('Akash9', 39, 25, 30, 43, 'Enemyakash'),
-  createData('Akash10', 39, 40, 35, 14, 'Enemyakash'),
+const rows: Array<Item> = [
+  createData('Akash1', 6921, 5, 10, 3413, 'Enemyakash'),
+  createData('Akash2', 49212, 20, 15, 4634, 'Enemyakash'),
+  createData('Akash3', 393, 25, 30, 4334, 'Enemyakash'),
+  createData('Akash4', 39322, 40, 35, 1447, 'Enemyakash'),
+  createData('Akash5', 2923, 45, 50, 3238, 'Enemyakash'),
+  createData('Akash6', 1915, 60, 55, 3223, 'Enemyakash'),
+  createData('Akash7', 69164, 5, 10, 3462, 'Enemyakash'),
+  createData('Akash8afgd', 49641, 20, 15, 4257, 'Enemyakash'),
+  createData('Akash9', 3649, 25, 30, 4325, 'Enemyakash'),
+  createData('Akash10', 39864, 40, 35, 14257, 'Enemyakash'),
 ];
 
 function Items({ currentItems }: Props) {
@@ -57,26 +57,28 @@ function Items({ currentItems }: Props) {
               className={styles.battlecard}
               style={{
                 backgroundColor:
-                  row.myDestruction < row.enemyDestruction
-                    ? '#00bc62'
-                    : '#BC1700',
+                  row.myDestruction > row.enemyDestruction
+                    ? '#00bc6244'
+                    : '#BC170044',
               }}
             >
-              <img
-                className={styles.pic}
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              ></img>
-              <div className={styles.username}>{row.myUsername}</div>
-              <div className={styles.destruction}>{row.myDestruction}</div>
+              <div className={styles.pic}>
+                <img src="https://randomuser.me/api/portraits/women/81.jpg"></img>
+              </div>
+              <div className={[styles.username, styles.left].join(' ')}>
+                {row.myUsername}
+              </div>
               <div className={styles.coinused}>{row.myCoinused}</div>
+              <div className={styles.destruction}>{row.myDestruction}</div>
               <div className={styles.vs}>VS</div>
-              <div className={styles.coinused}>{row.enemyCoinused}</div>
               <div className={styles.destruction}>{row.enemyDestruction}</div>
-              <div className={styles.username}>{row.enemyUsername}</div>
-              <img
-                className={styles.pic}
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-              ></img>
+              <div className={styles.coinused}>{row.enemyCoinused}</div>
+              <div className={[styles.username, styles.right].join(' ')}>
+                {row.enemyUsername}
+              </div>
+              <div className={styles.pic}>
+                <img src="https://randomuser.me/api/portraits/women/81.jpg"></img>
+              </div>
             </div>
           </div>
         ))}
@@ -85,7 +87,7 @@ function Items({ currentItems }: Props) {
 }
 
 function PaginatedItems({ itemsPerPage }: Props) {
-  const [currentItems, setCurrentItems] = useState(null);
+  const [currentItems, setCurrentItems] = useState<Array<Item>>([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -95,7 +97,7 @@ function PaginatedItems({ itemsPerPage }: Props) {
     setPageCount(Math.ceil(rows.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
 
-  const handlePageClick = event => {
+  const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % rows.length;
     setItemOffset(newOffset);
   };
@@ -134,20 +136,20 @@ export default function BattleTV(): JSX.Element {
       <div className={styles.title}>Battle TV</div>
       <div className={styles.item}>
         <div
-          className={styles.battlecard}
+          className={styles.battlecardHeader}
           style={{
             backgroundColor: '#',
           }}
         >
-          <img className={styles.pic} src="src/assets/fakeprofile.png"></img>
-          <div className={styles.headingusername}>Username</div>
-          <div className={styles.headingdestruction}>Destruction %</div>
-          <div className={styles.headingcoinused}>Coinused</div>
-          <div className={styles.heading}>VS</div>
-          <div className={styles.headingcoinused}>Coinused</div>
-          <div className={styles.headingdestruction}>Destruction %</div>
-          <div className={styles.headingusername}>Username</div>
-          <img className={styles.pic} src="src/assets/fakeprofile.png"></img>
+          <div className={styles.pic}></div>
+          <div className={styles.username}></div>
+          <div className={styles.coinused}>Coinused</div>
+          <div className={styles.destruction}>Destruction %</div>
+          <div className={styles.vs}>VS</div>
+          <div className={styles.destruction}>Destruction %</div>
+          <div className={styles.coinused}>Coinused</div>
+          <div className={styles.username}></div>
+          <div className={styles.pic}></div>
         </div>
       </div>
       <PaginatedItems itemsPerPage={6} currentItems={[]} />

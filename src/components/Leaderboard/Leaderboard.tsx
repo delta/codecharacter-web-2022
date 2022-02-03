@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
 
-type curentItems = {
+type Item = {
   rank: number;
   username: string;
   rating: number;
@@ -14,7 +14,7 @@ type curentItems = {
 };
 interface Props {
   itemsPerPage: number;
-  currentItems: Array<curentItems>;
+  currentItems: Array<Item>;
 }
 
 function createData(
@@ -69,7 +69,7 @@ function Items({ currentItems }: Props) {
 }
 
 function PaginatedItems({ itemsPerPage }: Props) {
-  const [currentItems, setCurrentItems] = useState(null);
+  const [currentItems, setCurrentItems] = useState<Array<Item>>([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -79,7 +79,7 @@ function PaginatedItems({ itemsPerPage }: Props) {
     setPageCount(Math.ceil(rows.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
 
-  const handlePageClick = event => {
+  const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % rows.length;
     setItemOffset(newOffset);
   };

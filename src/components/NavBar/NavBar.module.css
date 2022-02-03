@@ -8,6 +8,7 @@
 }
 .navLogo {
   font-family: 'Montserrat';
+  font-weight: 600;
   color: #ffffff;
   font-size: 24px;
   margin: 1rem;
@@ -36,9 +37,10 @@
   margin-left: 0.5rem;
   margin-right: 2rem;
   font-weight: 500;
+  font-size: larger;
 }
 .notifIcon {
-  margin: auto;
+  margin: auto 10px;
 }
 @media screen and (max-width: 500px) {
   .navLogo {
