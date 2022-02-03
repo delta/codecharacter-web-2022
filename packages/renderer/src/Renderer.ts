@@ -2,6 +2,7 @@ import { TileMap } from './scenes/TileMap.js';
 import { LitElement, html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import Phaser from 'phaser';
+import { events, RendererEvents } from './events/EventEmitter.js';
 
 @customElement('cc-renderer')
 export class Renderer extends LitElement {
@@ -24,6 +25,9 @@ export class Renderer extends LitElement {
   }
 
   disconnectedCallback(): void {
+    events.emit(RendererEvents.SHUTDOWN);
+    events.removeAllListeners();
+    this._game.scene.getScene('TileMap').events.removeAllListeners();
     this._game.destroy(true);
   }
 

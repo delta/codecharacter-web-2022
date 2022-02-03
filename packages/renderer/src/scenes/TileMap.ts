@@ -281,12 +281,12 @@ export class TileMap extends Phaser.Scene {
         const troop = this.troops[id];
         troop.dead();
         this.tweens.add({
-          targets: [troop, troop.hp.bar],
+          targets: [troop, troop.healthBar.bar],
           alpha: 0,
           delay: Parameters.timePerTurn,
           duration: Parameters.timePerTurn,
           onComplete: () => {
-            troop.hp.destroy();
+            troop.healthBar.destroy();
           },
         });
       } else if (actorType === 'D') {
@@ -410,6 +410,10 @@ export class TileMap extends Phaser.Scene {
       readTurn(currentTurn);
     });
 
+    events.on(RendererEvents.SHUTDOWN, () => {
+      this._reset();
+    });
+
     readTurn(0);
   }
 
@@ -417,7 +421,7 @@ export class TileMap extends Phaser.Scene {
     clearTimeout(this.nextTurnTimeout);
     this.troops.forEach(troop => {
       troop.removeAllListeners();
-      troop.hp.destroy();
+      troop.healthBar.destroy();
       troop.destroy();
     });
     this.towers.forEach(tower => {

@@ -80,7 +80,7 @@ export class Troop extends Phaser.GameObjects.Image {
 
   f: number;
 
-  hp: HealthBar;
+  healthBar: HealthBar;
 
   idleTimer: Phaser.Time.TimerEvent;
 
@@ -114,7 +114,7 @@ export class Troop extends Phaser.GameObjects.Image {
     this.angle = 0;
     this.f = this.animation.startFrame;
 
-    this.hp = new HealthBar(scene, x - 30, y - 30);
+    this.healthBar = new HealthBar(scene, x - 30, y - 30);
 
     this.depth = 50;
 
@@ -182,7 +182,7 @@ export class Troop extends Phaser.GameObjects.Image {
       x: { value: x, duration: Parameters.timePerTurn },
       y: { value: y, duration: Parameters.timePerTurn },
       onUpdate: () => {
-        this.hp.setPosition(this.x - 30, this.y - 30);
+        this.healthBar.setPosition(this.x - 30, this.y - 30);
       },
     });
     this.x = this.destinationX;
@@ -201,7 +201,7 @@ export class Troop extends Phaser.GameObjects.Image {
     this.f = this.animation.startFrame;
     this.x = this.destinationX;
     this.y = this.destinationY;
-    this.hp.setPosition(this.x - 40, this.y - 50);
+    this.healthBar.setPosition(this.x - 40, this.y - 50);
     const dx = x - this.x;
     const dy = y - this.y;
     this._setDirectionFromDelta(dx, -dy);
@@ -215,11 +215,11 @@ export class Troop extends Phaser.GameObjects.Image {
   }
 
   setHp(hpValue: number): void {
-    this.hp.setHp((hpValue / this.troopType.hp) * 100);
+    this.healthBar.setHp((hpValue / this.troopType.hp) * 100);
   }
 
   destroy(fromScene?: boolean): void {
-    this.hp.destroy();
+    this.healthBar.destroy();
     this.frameTimer.destroy();
     this.idleTimer.destroy();
     super.destroy(fromScene);

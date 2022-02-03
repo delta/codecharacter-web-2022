@@ -23,26 +23,32 @@ const StatsText = () => {
   const [coins, setCoins] = React.useState(0);
   const [destruction, setDestruction] = React.useState(0);
 
-  const onCoinsUpdated = (coins: number) => {
-    setCoins(coins);
-    events.removeAllListeners(RendererEvents.CHANGE_COINS);
+  React.useEffect(() => {
+    const onCoinsUpdated = (coins: number) => {
+      setCoins(coins);
+      events.removeAllListeners(RendererEvents.CHANGE_COINS);
+      events.once(RendererEvents.CHANGE_COINS, onCoinsUpdated);
+    };
     events.once(RendererEvents.CHANGE_COINS, onCoinsUpdated);
-  };
-  events.once(RendererEvents.CHANGE_COINS, onCoinsUpdated);
+  }, [coins]);
 
-  const onTurnsUpdated = (turns: number) => {
-    setTurns(turns);
-    events.removeAllListeners(RendererEvents.NEXT_TURN);
+  React.useEffect(() => {
+    const onTurnsUpdated = (turns: number) => {
+      setTurns(turns);
+      events.removeAllListeners(RendererEvents.NEXT_TURN);
+      events.once(RendererEvents.NEXT_TURN, onTurnsUpdated);
+    };
     events.once(RendererEvents.NEXT_TURN, onTurnsUpdated);
-  };
-  events.once(RendererEvents.NEXT_TURN, onTurnsUpdated);
+  }, [turns]);
 
-  const onDestructionUpdated = (destruction: number) => {
-    setDestruction(destruction);
-    events.removeAllListeners(RendererEvents.CHANGE_DESTRUCTION);
+  React.useEffect(() => {
+    const onDestructionUpdated = (destruction: number) => {
+      setDestruction(destruction);
+      events.removeAllListeners(RendererEvents.CHANGE_DESTRUCTION);
+      events.once(RendererEvents.CHANGE_DESTRUCTION, onDestructionUpdated);
+    };
     events.once(RendererEvents.CHANGE_DESTRUCTION, onDestructionUpdated);
-  };
-  events.once(RendererEvents.CHANGE_DESTRUCTION, onDestructionUpdated);
+  }, [destruction]);
 
   return (
     <p
