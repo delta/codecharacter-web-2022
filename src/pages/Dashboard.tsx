@@ -23,8 +23,11 @@ export default function Dashboard(): JSX.Element {
   const slideInOutBtn = useRef(null);
 
   const [editorWidth, setEditorWidth] = useState(window.innerWidth / 2);
-
   const localStoreLanguage = localStorage.getItem('language');
+  const localStoreLanguageChose = localStorage.getItem('languageChose');
+  const [languageChose, setLanguageChose] = useState(
+    localStoreLanguageChose === null ? 'C++' : localStoreLanguageChose,
+  );
   const [language, setLanguage] = useState(
     localStoreLanguage === null ? 'c_cpp' : localStoreLanguage,
   );
@@ -37,10 +40,14 @@ export default function Dashboard(): JSX.Element {
       case 'C++':
         setLanguage('c_cpp');
         localStorage.setItem('language', 'c_cpp');
+        setLanguageChose('C++');
+        localStorage.setItem('languageChose', 'C++');
         break;
       case 'Python':
         setLanguage('python');
         localStorage.setItem('language', 'python');
+        setLanguageChose('Python');
+        localStorage.setItem('languageChose', 'Python');
         break;
       default:
         setLanguage('c_cpp');
@@ -67,6 +74,7 @@ export default function Dashboard(): JSX.Element {
         >
           <Col className="text-center">
             <select
+              value={languageChose}
               className={classnames(styles.languageDropdown, 'w-75 pt-1 pb-1')}
               onChange={e => languageChange(e.target.value)}
             >
