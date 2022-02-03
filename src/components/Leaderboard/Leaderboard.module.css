@@ -13,6 +13,7 @@ html {
   margin: 50px auto;
   border-radius: 12px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-left: 35%;
   padding: 10px 25px;
@@ -109,25 +110,8 @@ html {
   opacity: 0.5;
 }
 
-.top3 .item .score:after {
-  display: block;
-  opacity: 0.5;
-}
-
-.top3 .itemone {
-  width: 10rem;
-  height: 11rem;
-  padding-top: 3.5rem;
-}
-
-.top3 .itemone .pic {
-  width: 5rem;
-  height: 5rem;
-  left: 2.5rem;
-}
-
 .top3 .item:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .list {
@@ -211,4 +195,22 @@ html {
   display: inline-flex;
   margin-top: 20px;
   position: relative;
+}
+
+@media screen and (max-width: 1080px) {
+  .header {
+    margin-left: 20%;
+  }
+  .center {
+    margin-left: 20%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .header {
+    margin-left: 5%;
+  }
+  .center {
+    margin-left: 5%;
+  }
 }

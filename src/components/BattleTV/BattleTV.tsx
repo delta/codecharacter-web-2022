@@ -66,13 +66,13 @@ function Items({ currentItems }: Props) {
                 className={styles.pic}
                 src="https://randomuser.me/api/portraits/women/81.jpg"
               ></img>
-              <div className={styles.Username}>{row.myUsername}</div>
-              <div className={styles.Coinused}>{row.myCoinused}</div>
-              <div className={styles.Destruction}>{row.myDestruction}</div>
+              <div className={styles.username}>{row.myUsername}</div>
+              <div className={styles.destruction}>{row.myDestruction}</div>
+              <div className={styles.coinused}>{row.myCoinused}</div>
               <div className={styles.vs}>VS</div>
-              <div className={styles.Destruction}>{row.enemyDestruction}</div>
-              <div className={styles.Coinused}>{row.enemyCoinused}</div>
-              <div className={styles.Username}>{row.enemyUsername}</div>
+              <div className={styles.coinused}>{row.enemyCoinused}</div>
+              <div className={styles.destruction}>{row.enemyDestruction}</div>
+              <div className={styles.username}>{row.enemyUsername}</div>
               <img
                 className={styles.pic}
                 src="https://randomuser.me/api/portraits/women/81.jpg"
@@ -132,18 +132,23 @@ export default function BattleTV(): JSX.Element {
   return (
     <div className={styles.body}>
       <div className={styles.title}>Battle TV</div>
-      <div className={styles.heading}>
-        <div className={styles.column} />
-        <div className={styles.column} />
-        <div className={styles.column} />
-        <div className={styles.column}>Destruction %</div>
-        <div className={styles.column}>Coin Lost</div>
-        <div className={styles.column}></div>
-        <div className={styles.column}>Coin Lost</div>
-        <div className={styles.column}>Destruction %</div>
-        <div className={styles.column} />
-        <div className={styles.column} />
-        <div className={styles.column} />
+      <div className={styles.item}>
+        <div
+          className={styles.battlecard}
+          style={{
+            backgroundColor: '#',
+          }}
+        >
+          <img className={styles.pic} src="src/assets/fakeprofile.png"></img>
+          <div className={styles.headingusername}>Username</div>
+          <div className={styles.headingdestruction}>Destruction %</div>
+          <div className={styles.headingcoinused}>Coinused</div>
+          <div className={styles.heading}>VS</div>
+          <div className={styles.headingcoinused}>Coinused</div>
+          <div className={styles.headingdestruction}>Destruction %</div>
+          <div className={styles.headingusername}>Username</div>
+          <img className={styles.pic} src="src/assets/fakeprofile.png"></img>
+        </div>
       </div>
       <PaginatedItems itemsPerPage={6} currentItems={[]} />
     </div>

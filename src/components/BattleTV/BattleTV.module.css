@@ -12,58 +12,28 @@ html {
   font-weight: bold;
   font-size: 25px;
   text-align: center;
+  left: 50%;
   letter-spacing: 4.5px;
   color: #e8ecfd;
 }
 
-.heading {
-  display: flex;
-  margin-top: 2.5rem;
-  margin-left: 6rem;
-  margin-right: 6rem;
-  justify-content: space-between;
-  text-align: center;
-}
-
-.heading .column {
-  color: #ffffff;
-}
-
 .battlecard {
   display: flex;
+  flex-wrap: wrap;
+  min-width: 720px;
   margin-top: 1rem;
-  margin-left: 6rem;
-  margin-right: 6rem;
+  margin-left: 15vh;
+  margin-right: 15vh;
   border-radius: 0.5rem;
-  justify-content: space-around;
-  text-align: center;
+  justify-content: space-between;
   align-items: center;
   border: 2px solid #242a3c;
+  padding: 5px;
 
   font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
   color: #ffffff;
-}
-
-.battlecard .destruction {
-  font-size: 42px;
-  line-height: 51px;
-}
-
-.battlecard .vs {
-  font-size: 28px;
-  line-height: 34px;
-}
-
-.battlecard .coinused {
-  font-size: 18px;
-  line-height: 22px;
-}
-
-.battlecard .username {
-  font-size: 20px;
-  line-height: 24px;
 }
 
 .battlecard .pic {
@@ -72,9 +42,24 @@ html {
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  margin-right: 1rem;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
     0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+}
+.battlecard .username {
+  font-size: 24px;
+  line-height: 24px;
+}
+.battlecard .coinused {
+  font-size: 22px;
+  line-height: 22px;
+}
+.battlecard .destruction {
+  font-size: 22px;
+  line-height: 25px;
+}
+.battlecard .vs {
+  font-size: 25px;
+  line-height: 22px;
 }
 
 .paginationouter {
@@ -85,4 +70,25 @@ html {
   display: inline-flex;
   margin-top: 20px;
   position: relative;
+}
+
+@media screen and (max-width: 1080px) {
+  .battlecard {
+    margin-left: 5vh;
+    margin-right: 5vh;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .battlecard {
+    min-width: 400px;
+    margin-left: 5vh;
+    margin-right: 5vh;
+  }
+  .battlecard .headingcoinused,.coinused {
+    display: none;
+  }
+  .battlecard .pic {
+    display: none;
+  }
 }
