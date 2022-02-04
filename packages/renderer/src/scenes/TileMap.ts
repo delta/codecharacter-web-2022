@@ -319,7 +319,6 @@ export class TileMap extends Phaser.Scene {
   private _loadLog(log: string): void {
     this._reset();
 
-    let isPaused = false;
     let currentTurn = 0;
 
     const logLines = log.split('\n');
@@ -382,9 +381,7 @@ export class TileMap extends Phaser.Scene {
         } else if (instruction instanceof Instructions.Turn) {
           events.emit(RendererEvents.NEXT_TURN, instruction.turnNo);
           this.nextTurnTimeout = setTimeout(() => {
-            if (!isPaused) {
-              readTurn(currentTurn + 1);
-            }
+            readTurn(currentTurn + 1);
           }, Parameters.timePerTurn) as unknown as number;
           break;
         } else if (instruction instanceof Instructions.End) {
@@ -394,12 +391,11 @@ export class TileMap extends Phaser.Scene {
     };
 
     events.on(RendererEvents.PAUSE, () => {
-      isPaused = true;
+      clearTimeout(this.nextTurnTimeout);
       this.scene.pause();
     });
 
     events.on(RendererEvents.RESUME, () => {
-      isPaused = false;
       this.scene.resume();
       readTurn(currentTurn + 1);
     });
