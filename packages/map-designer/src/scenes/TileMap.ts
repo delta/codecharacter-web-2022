@@ -348,6 +348,7 @@ export class TileMap extends Phaser.Scene {
       }
     }
 
+    this.coinsUsed = coins;
     events.emit(MapDesignerEvents.COINS_CHANGED, Parameters.totalCoins - coins);
   }
 
