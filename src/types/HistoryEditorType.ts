@@ -1,0 +1,2 @@
+export const CHANGE_EDITOR_CODE = 'CHANGE_EDITOR_CODE';
+export const CHANGE_MAP = 'CHANGE_MAP';

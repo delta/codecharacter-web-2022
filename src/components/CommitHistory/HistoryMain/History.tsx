@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CommitHistory from '../CommitTree/CommitHistroy';
@@ -9,14 +10,20 @@ import {
   GameMapRevision,
   MapApi,
 } from '@codecharacter-2022/client';
+import {
+  changedEditorCode,
+  changedEditorMap,
+} from '../../../actions/HistoryEditorActions';
 import styles from './History.module.css';
 
 export default function History(): JSX.Element {
   const [BigButton, setBigButton] = useState('Code');
   const [completeCodeHistroy, setCodeHistory] = useState<CodeRevision[]>([]);
   const [completeMapHistory, setMapHistory] = useState<GameMapRevision[]>([]);
-  const [currentCode, setCurrentCode] = useState<CodeRevision>();
-  const [currentMap, setCurrentMap] = useState<GameMapRevision>();
+  const [currentCode, setCurrentCode] = useState('');
+  const [currentMap, setCurrentMap] = useState('');
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const codeApi = new CodeApi(apiConfig);
@@ -45,8 +52,21 @@ export default function History(): JSX.Element {
   }, []);
 
   const commitID = (id: string) => {
-    setCurrentCode(completeCodeHistroy.find(codeData => codeData.id === id));
-    setCurrentMap(completeMapHistory.find(mapData => mapData.id === id));
+    completeCodeHistroy.forEach(codeData => {
+      if (codeData.id == id) {
+        setCurrentCode(codeData.code);
+      }
+    });
+    completeMapHistory.forEach(mapData => {
+      if (mapData.id == id) {
+        setCurrentMap(mapData.map);
+      }
+    });
+  };
+
+  const changesEditorDetails = () => {
+    dispatch(changedEditorCode(currentCode));
+    dispatch(changedEditorMap(currentMap));
   };
 
   return (
@@ -97,13 +117,18 @@ export default function History(): JSX.Element {
           </div>
           <div className={styles.codeMapBox}>
             {BigButton == 'Code' ? (
-              <p style={{ color: 'white' }}>{currentCode?.code}</p>
+              <p style={{ color: 'white' }}>{currentCode}</p>
             ) : (
-              <p style={{ color: 'white' }}>{currentMap?.map}</p>
+              <p style={{ color: 'white' }}>{currentMap}</p>
             )}
           </div>
           <div className={styles.select}>
-            <Button className={styles.selectButton} variant="primary" size="lg">
+            <Button
+              className={styles.selectButton}
+              variant="primary"
+              size="lg"
+              onClick={changesEditorDetails}
+            >
               Select
             </Button>
           </div>
