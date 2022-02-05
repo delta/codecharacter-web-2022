@@ -116,3 +116,8 @@
 .completeTimeline::-webkit-scrollbar {
   display: none;
 }
+
+.noCommitDataHeader{
+  color: #ffffff;
+  
+}

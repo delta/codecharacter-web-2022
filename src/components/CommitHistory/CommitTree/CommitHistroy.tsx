@@ -1,3 +1,4 @@
+import { CodeRevision, GameMapRevision } from '@codecharacter-2022/client';
 import { useState } from 'react';
 import {
   VerticalTimeline,
@@ -6,13 +7,13 @@ import {
 import 'react-vertical-timeline-component/style.min.css';
 import './CommitHistory.css';
 
-export default function CommitHistory(): JSX.Element {
-  type CommitHistoryDetails = {
-    commitName: string;
-    commitDate: string;
-    commitCode: string;
-  };
+type PropsType = {
+  commitID: (commitID: string) => void;
+  codeHistory: CodeRevision[];
+  mapHistory: GameMapRevision[];
+};
 
+export default function CommitHistory(props: PropsType): JSX.Element {
   const CircleIcon = {
     background: '#DFFF00',
     color: '#fff',
@@ -20,68 +21,31 @@ export default function CommitHistory(): JSX.Element {
 
   const [commitNumber, setCommitNumber] = useState('0');
 
-  const commitData: CommitHistoryDetails[] = [
-    {
-      commitName: 'First Commit',
-      commitDate: '26-01-2022',
-      commitCode: 'Commit 1',
-    },
-    {
-      commitName: 'Second Commit',
-      commitDate: '27-01-2022',
-      commitCode: 'Commit 2',
-    },
-    {
-      commitName: 'Third Commit',
-      commitDate: '28-01-2022',
-      commitCode: 'Commit 2',
-    },
-    {
-      commitName: 'Fourth Commit',
-      commitDate: '29-01-2022',
-      commitCode: 'Commit 2',
-    },
-    {
-      commitName: 'Fifth Commit',
-      commitDate: '30-01-2022',
-      commitCode: 'Commit 2',
-    },
-    {
-      commitName: 'Sixth Commit',
-      commitDate: '31-01-2022',
-      commitCode: 'Commit 2',
-    },
-    {
-      commitName: 'Seventh Commit',
-      commitDate: '01-02-2022',
-      commitCode: 'Commit 2',
-    },
-  ];
-
   return (
     <VerticalTimeline layout={'1-column'} animate={false}>
-      {commitData && commitData.length > 0 ? (
-        commitData.map(eachData => {
+      {props.codeHistory && props.codeHistory.length > 0 ? (
+        props.codeHistory.map((eachCommit, index) => {
           return (
             <VerticalTimelineElement
-              key={eachData.commitDate}
+              key={eachCommit.createdAt.toString()}
               className="vertical-timeline-element--work"
               contentStyle={{ background: '#242a3c', color: '#fff' }}
               contentArrowStyle={{
                 borderRight: '7px solid  rgb(33, 150, 243)',
               }}
-              date={eachData.commitDate}
+              date={eachCommit.createdAt.toString()}
               iconStyle={
-                commitNumber == eachData.commitName
+                commitNumber == eachCommit.id
                   ? CircleIcon
                   : { background: 'rgb(33, 150, 243)', color: '#fff' }
               }
               onTimelineElementClick={() => {
-                setCommitNumber(eachData.commitName);
+                setCommitNumber(eachCommit.id);
+                props.commitID(eachCommit.id);
               }}
             >
               <h3 className="vertical-timeline-element-title">
-                {eachData.commitName}
+                {`Commit - ${index + 1}`}
               </h3>
             </VerticalTimelineElement>
           );
