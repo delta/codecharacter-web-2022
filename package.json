@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@codecharacter-2022/client": "workspace:packages/client",
+    "@codecharacter-2022/extension": "workspace:packages/extension",
     "@codecharacter-2022/map-designer": "workspace:packages/map-designer",
     "@codecharacter-2022/renderer": "workspace:packages/renderer",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -131,7 +132,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testRegex": "/__tests__/.*test.[jt]sx?$"
   },
   "lint-staged": {
     "*.{ts,.tsx}": [
