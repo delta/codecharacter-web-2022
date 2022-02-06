@@ -115,6 +115,7 @@ export class Troop extends Phaser.GameObjects.Image {
     this.f = this.animation.startFrame;
 
     this.healthBar = new HealthBar(scene, x - 30, y - 30);
+    this.healthBar.setDepth(this.y);
 
     this.depth = 50;
 
@@ -183,6 +184,8 @@ export class Troop extends Phaser.GameObjects.Image {
       y: { value: y, duration: Parameters.timePerTurn },
       onUpdate: () => {
         this.healthBar.setPosition(this.x - 30, this.y - 30);
+        this.setDepth(this.y);
+        this.healthBar.setDepth(this.y);
       },
     });
     this.x = this.destinationX;

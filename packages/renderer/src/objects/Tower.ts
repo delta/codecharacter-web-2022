@@ -1,21 +1,25 @@
-import Phaser from 'phaser';
-import TowerType from '../config/TowerType.js';
-import { HealthBar } from './HealthBar.js';
+import TowerType from '../config/TowerType';
+import { HealthBar } from './HealthBar';
 
-export class Tower {
+export class Tower extends Phaser.GameObjects.Image {
   readonly towerType: TowerType;
-
-  readonly tile: Phaser.Tilemaps.Tile;
 
   healthBar: HealthBar;
 
   constructor(
+    scene: Phaser.Scene,
     towerType: TowerType,
-    tile: Phaser.Tilemaps.Tile,
+    x: number,
+    y: number,
     healthBar: HealthBar,
   ) {
+    super(scene, x, y, `${towerType.name}-sprite`);
+
     this.towerType = towerType;
-    this.tile = tile;
     this.healthBar = healthBar;
+  }
+
+  setHp(hpValue: number): void {
+    this.healthBar.setHp((hpValue / this.towerType.hp) * 100);
   }
 }

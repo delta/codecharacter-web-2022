@@ -17,7 +17,7 @@ export class TileMap extends Phaser.Scene {
 
   towers: Tower[] = [];
 
-  towerLayer!: Phaser.Tilemaps.TilemapLayer;
+  spriteGroup!: Phaser.GameObjects.Group;
 
   groundLayer!: Phaser.Tilemaps.TilemapLayer;
 
@@ -32,7 +32,7 @@ export class TileMap extends Phaser.Scene {
   preload(): void {
     this.load.image('tile', '/assets/tile.png');
     TowerConfig.towers.forEach(tower => {
-      this.load.image(`${tower.name}tile`, `/assets/${tower.asset}`);
+      this.load.image(`${tower.name}-sprite`, `/assets/${tower.asset}`);
     });
     this.load.tilemapTiledJSON('map', '/assets/isometric-surface.json');
     this.load.spritesheet('skeleton', '/assets/skeleton8.png', {
@@ -48,15 +48,7 @@ export class TileMap extends Phaser.Scene {
     this.groundLayer = map.createLayer('Ground', landscapeTile, 0, 0);
     this.groundLayer.setDepth(0);
 
-    const towerTiles = TowerConfig.towers.map(tower =>
-      map.addTilesetImage(tower.asset, `${tower.name}tile`),
-    );
-
-    this.towerLayer = map.createLayer('Towers', towerTiles, 0, 0);
-    this.towerLayer.setDepth(100);
-
     this.groundLayer.setCullPadding(6, 6);
-    this.towerLayer.setCullPadding(6, 6);
 
     const cursors = this.input.keyboard.createCursorKeys();
 
@@ -142,15 +134,22 @@ export class TileMap extends Phaser.Scene {
       RendererEvents.PLACE_TOWER,
       (towerTypeId: number, x: number, y: number) => {
         const towerType = TowerConfig.towers[towerTypeId];
-        const tile = this.towerLayer.putTileAt(towerType.tileId, x, y);
-        tile.width = Parameters.mapTileWidth;
-        tile.height = Parameters.mapTileHeight;
+        const tile = this.groundLayer.getTileAt(x, y);
         const healthBar = new HealthBar(
           this,
           tile.pixelX + Parameters.mapTileHalfWidth - 30,
           tile.pixelY + Parameters.mapTileHalfHeight - 120,
         );
-        this.towers.push(new Tower(towerType, tile, healthBar));
+        const tower = new Tower(
+          this,
+          towerType,
+          tile.pixelX + Parameters.mapTileHalfWidth,
+          tile.pixelY + Parameters.mapTileHalfHeight,
+          healthBar,
+        );
+        tower.setDepth(tower.y);
+        healthBar.setDepth(tower.depth);
+        this.towers.push(this.add.existing(tower));
       },
     );
 
@@ -180,18 +179,16 @@ export class TileMap extends Phaser.Scene {
         } else if (x === Parameters.mapWidth - 1) {
           direction = 'northWest';
         }
-        this.troops.push(
-          this.add.existing(
-            new Troop(
-              this,
-              TroopConfig.troops[typeId],
-              tile.pixelX + Parameters.mapTileHalfWidth,
-              tile.pixelY + Parameters.mapTileHalfHeight,
-              'idle',
-              direction,
-            ),
-          ),
+        const troop = new Troop(
+          this,
+          TroopConfig.troops[typeId],
+          tile.pixelX + Parameters.mapTileHalfWidth,
+          tile.pixelY + Parameters.mapTileHalfHeight,
+          'idle',
+          direction,
         );
+        troop.setDepth(troop.y);
+        this.troops.push(this.add.existing(troop));
       },
     );
 
@@ -211,13 +208,13 @@ export class TileMap extends Phaser.Scene {
         const tower = this.towers[towerId];
         troop.setHp(newTroopHp);
 
-        const dx = troop.x - (tower.tile.pixelX + Parameters.mapTileHalfWidth);
-        const dy = troop.y - (tower.tile.pixelY + Parameters.mapTileHalfHeight);
+        const dx = troop.x - tower.x;
+        const dy = troop.y - tower.y;
         const angle = Phaser.Math.RadToDeg(Math.atan2(dy, dx / 2));
 
         const attackArc = this.add.arc(
-          tower.tile.pixelX + Parameters.mapTileHalfWidth,
-          tower.tile.pixelY + Parameters.mapTileHalfHeight + 10,
+          tower.x,
+          tower.y,
           Parameters.gridCellHeight / 2,
           angle - 20,
           angle + 20,
@@ -243,8 +240,8 @@ export class TileMap extends Phaser.Scene {
         const troop = this.troops[troopId];
         const tower = this.towers[towerId];
 
-        const dx = tower.tile.pixelX + Parameters.mapTileHalfWidth - troop.x;
-        const dy = tower.tile.pixelY + Parameters.mapTileHalfHeight - troop.y;
+        const dx = tower.x - troop.x;
+        const dy = tower.y - troop.y;
         const angle = Phaser.Math.RadToDeg(Math.atan2(dy, dx / 2));
 
         const attackArc = this.add.arc(
@@ -269,10 +266,7 @@ export class TileMap extends Phaser.Scene {
         });
 
         tower.healthBar.setHp(newTowerHp);
-        troop.attack(
-          tower.tile.pixelX + Parameters.mapTileHalfWidth,
-          tower.tile.pixelY + Parameters.mapTileHalfHeight,
-        );
+        troop.attack(tower.x, tower.y);
       },
     );
 
@@ -292,7 +286,7 @@ export class TileMap extends Phaser.Scene {
       } else if (actorType === 'D') {
         const tower = this.towers[id];
         this.tweens.add({
-          targets: [tower.tile, tower.healthBar],
+          targets: [tower, tower.healthBar],
           alpha: 0,
           delay: Parameters.timePerTurn,
           duration: Parameters.timePerTurn,
@@ -421,11 +415,9 @@ export class TileMap extends Phaser.Scene {
       troop.destroy();
     });
     this.towers.forEach(tower => {
+      tower.removeAllListeners();
       tower.healthBar.destroy();
-      const tile = tower.tile;
-      if (tile) {
-        this.towerLayer.removeTileAt(tile.x, tile.y);
-      }
+      tower.destroy();
     });
     this.troops = [];
     this.towers = [];

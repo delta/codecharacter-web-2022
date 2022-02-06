@@ -43,6 +43,10 @@ export class HealthBar {
     return this.value === 0;
   }
 
+  setDepth(depth: number): void {
+    this.bar.setDepth(depth);
+  }
+
   draw(): void {
     this.bar.clear();
 

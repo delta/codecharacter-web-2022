@@ -7,6 +7,8 @@ export default class TowerType {
 
   thumbnailAsset: string;
 
+  hp: number;
+
   range: number;
 
   price: number;
@@ -16,6 +18,7 @@ export default class TowerType {
     name: string,
     asset: string,
     thumbnailAsset: string,
+    hp: number,
     range: number,
     price: number,
   ) {
@@ -23,6 +26,7 @@ export default class TowerType {
     this.name = name;
     this.asset = asset;
     this.thumbnailAsset = thumbnailAsset;
+    this.hp = hp;
     this.range = range;
     this.price = price;
   }
