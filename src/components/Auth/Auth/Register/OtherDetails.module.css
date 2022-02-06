@@ -55,3 +55,15 @@
     background-color: violet;
     cursor: pointer;
 }
+
+.error {
+    background: #ffdddd !important;
+}
+
+.correct {
+    background: #c9ffad !important;
+}
+
+.normal {
+    background: #ffffff !important;
+}

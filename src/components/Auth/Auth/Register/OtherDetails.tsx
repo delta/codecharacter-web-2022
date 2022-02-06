@@ -1,5 +1,6 @@
 import { Form } from 'react-bootstrap';
 import ReactFlagsSelect from 'react-flags-select';
+import AlertMessage from '../Alert/Alert';
 import styles from './OtherDetails.module.css';
 
 const avatar = [
@@ -70,6 +71,30 @@ export default function OtherDetails(props: user): JSX.Element {
           />
         </div>
       </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCollegename">
+        <Form.Label>College</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="College"
+          value={props.college}
+          onChange={props.handleCollegeChange}
+          className={
+            props.formNumber === 3 && props.completed
+              ? props.collegeError
+                ? styles.error
+                : styles.correct
+              : styles.normal
+          }
+        />
+        {props.formNumber == 3 && props.collegeError ? (
+          <AlertMessage
+            err={props.collegeError}
+            content={'Please Enter your College Name'}
+          />
+        ) : (
+          <></>
+        )}
+      </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicAvatar">
         <Form.Label>Avatar</Form.Label>
         <div className={styles.avatarBox}>
@@ -87,4 +112,9 @@ export default function OtherDetails(props: user): JSX.Element {
 interface user {
   selectedCode?: string;
   handleFlagSelect?: (code: string) => void;
+  formNumber?: number;
+  handleCollegeChange?: React.ChangeEventHandler<HTMLInputElement>;
+  college?: string;
+  collegeError?: boolean;
+  completed?: boolean;
 }
