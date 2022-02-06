@@ -15,8 +15,9 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const History = lazy(
   () => import('./components/CommitHistory/HistoryMain/History'),
 );
-const Login = lazy(() => import('./pages/Auth/Login'));
-const Register = lazy(() => import('./pages/Auth/Register'));
+const Login = lazy(() => import('./pages/Auth/LoginForm'));
+const Register = lazy(() => import('./pages/Auth/RegisterForm'));
+// const Profile = lazy(() => import('./components/Profile/Profile'));
 
 ReactDOM.render(
   <React.StrictMode>

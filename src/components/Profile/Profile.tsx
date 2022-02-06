@@ -1,9 +1,17 @@
 import { Form, Button, Offcanvas, CloseButton } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AlertMessage from '../Auth/Auth/Alert/Alert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactFlagsSelect from 'react-flags-select';
 import styles from './profile.module.css';
 import classnames from 'classnames';
+import { CurrentUserApi } from '@codecharacter-2022/client';
+import { apiConfig, ApiError } from '../../api/ApiConfig';
+import { RootState } from '../../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { startChangeUserDetails } from './ProfileAction/ChangeUserProfileAction';
+import { startChangeCreditionals } from './ProfileAction/ChangeCreditionalsAction';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = (): JSX.Element => {
   const [show, isShow] = useState(true);
@@ -14,39 +22,70 @@ const Profile = (): JSX.Element => {
   const [submitPassword, issubmitPassword] = useState(false);
   const [submitconfirmPassword, issubmitconfirmPassword] = useState(false);
   const [submitoldPassword, issubmitoldPassword] = useState(false);
-  const [fullName, setfullName] = useState('');
+  const [collegeName, setCollegeName] = useState('');
   const [userName, setUsername] = useState('');
-  const [submitFullname, issubmitFullname] = useState(false);
+  const [submitCollege, issubmitCollege] = useState(false);
   const [submitUsername, issubmitUsername] = useState(false);
   const [formNumber, setFormNumber] = useState(1);
   const [userNameError, isuserNameError] = useState(false);
-  const [fullNameError, isfullNameError] = useState(false);
+  const [collegeError, isCollegeError] = useState(false);
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [oldpasswordError, isoldpasswordError] = useState(false);
+  const [change, isChange] = useState(false);
+  useEffect(() => {
+    const currentUserapi = new CurrentUserApi(apiConfig);
+    currentUserapi
+      .getCurrentUser()
+      .then(res => {
+        if (!change) {
+          setUsername(res.username);
+        }
+      })
+      .catch(error => {
+        if (error instanceof ApiError) console.log('Error:', error);
+      });
+  });
+  const dispatch = useDispatch();
+  const loadingStatus = useSelector<RootState>(
+    loading => loading.changeUserDetails.loading,
+  );
+  const loadingCreditionalStatus = useSelector<RootState>(
+    loading => loading.changeCreditionals.loading,
+  );
+  console.log(loadingStatus);
+  console.log('Creditionals', loadingCreditionalStatus);
+
   const handleClose = () => {
     isShow(false);
   };
-  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setfullName(e.target.value);
-    issubmitFullname(true);
-    if (e.target.value.trim().length < 5 || fullName.length < 4)
-      isfullNameError(true);
-    else isfullNameError(false);
+  const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCollegeName(e.target.value);
+    issubmitCollege(true);
+    if (e.target.value.trim().length == 0) isCollegeError(true);
+    else isCollegeError(false);
   };
 
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
     issubmitUsername(true);
-    if (e.target.value.trim().length < 5 || userName.length < 4)
+    isChange(true);
+    if (e.target.value.trim().length < 5) {
       isuserNameError(true);
-    else isuserNameError(false);
+    } else {
+      isuserNameError(false);
+    }
   };
 
   const hanldeOldPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOldpassword(e.target.value);
     issubmitoldPassword(true);
-    if (e.target.value.trim().length < 5 || oldPassword.length < 4)
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+    if (
+      !e.target.value.match(passwordFormat) ||
+      !oldPassword.match(passwordFormat)
+    )
       isoldpasswordError(true);
     else isoldpasswordError(false);
   };
@@ -54,7 +93,12 @@ const Profile = (): JSX.Element => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpassword(e.target.value);
     issubmitPassword(true);
-    if (e.target.value.trim().length < 5 || password.length < 4)
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+    if (
+      !e.target.value.match(passwordFormat) ||
+      !password.match(passwordFormat)
+    )
       ispasswordError(true);
     else ispasswordError(false);
   };
@@ -64,9 +108,34 @@ const Profile = (): JSX.Element => {
   ) => {
     setConfirmpassword(e.target.value);
     issubmitconfirmPassword(true);
-    if (!(e.target.value.trim() == password) || confirmPassword.length < 4)
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+    if (
+      !e.target.value.match(passwordFormat) ||
+      !confirmPassword.match(passwordFormat)
+    )
       isconfirmpasswordError(true);
     else isconfirmpasswordError(false);
+  };
+
+  const handleSubmit = () => {
+    dispatch(
+      startChangeUserDetails({
+        name: userName,
+        college: 'NITT',
+        country: 'INIDIA',
+      }),
+    );
+  };
+
+  const handleCreditionals = () => {
+    dispatch(
+      startChangeCreditionals({
+        OldPassword: oldPassword,
+        NewPassword: password,
+        ConfirmPassword: confirmPassword,
+      }),
+    );
   };
   return (
     <div>
@@ -79,7 +148,7 @@ const Profile = (): JSX.Element => {
         >
           <Offcanvas.Header className={styles.header}>
             <Offcanvas.Title>
-              <h3>FULL NAME</h3>
+              <h3>Hey! {userName}</h3>
             </Offcanvas.Title>
             <CloseButton className={styles.close} onClick={handleClose} />
           </Offcanvas.Header>
@@ -92,7 +161,7 @@ const Profile = (): JSX.Element => {
                 </div>
                 <div className={styles.profileName}>
                   {' '}
-                  <b>User name</b>
+                  <b>{userName}</b>
                 </div>
               </div>
             ) : (
@@ -102,30 +171,6 @@ const Profile = (): JSX.Element => {
               <Form className={styles.formContainer}>
                 {formNumber == 1 ? (
                   <div>
-                    <Form.Group className="mb-3" controlId="formBasicFullName">
-                      <Form.Label>Fullname</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Fullname"
-                        value={fullName}
-                        className={
-                          submitFullname
-                            ? fullNameError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                        onChange={handleFullNameChange}
-                      />
-                      {fullNameError ? (
-                        <AlertMessage
-                          err={fullNameError}
-                          content={'Name should be atleast 5 characters'}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </Form.Group>
                     <Form.Group
                       className={classnames('mb-3', styles.formField)}
                       controlId="formBasicUserName"
@@ -148,6 +193,30 @@ const Profile = (): JSX.Element => {
                         <AlertMessage
                           err={userNameError}
                           content={'Username already exist'}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicCollege">
+                      <Form.Label>College</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="College"
+                        value={collegeName}
+                        className={
+                          submitCollege
+                            ? collegeError
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
+                        }
+                        onChange={handleCollegeChange}
+                      />
+                      {collegeError ? (
+                        <AlertMessage
+                          err={collegeError}
+                          content={'Please Enter a valid College name'}
                         />
                       ) : (
                         <></>
@@ -176,8 +245,17 @@ const Profile = (): JSX.Element => {
                         styles.submitContainer,
                       )}
                     >
-                      <Button variant="light" type="submit">
-                        Save Changes
+                      <Button
+                        variant="light"
+                        type="submit"
+                        onClick={handleSubmit}
+                      >
+                        Save Changes{' '}
+                        {loadingStatus ? (
+                          <FontAwesomeIcon icon={faSpinner} />
+                        ) : (
+                          <></>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -270,8 +348,17 @@ const Profile = (): JSX.Element => {
                         styles.submitContainer,
                       )}
                     >
-                      <Button variant="light" type="submit">
-                        Submit
+                      <Button
+                        variant="light"
+                        type="submit"
+                        onClick={handleCreditionals}
+                      >
+                        Submit{' '}
+                        {loadingCreditionalStatus ? (
+                          <FontAwesomeIcon icon={faSpinner} />
+                        ) : (
+                          <></>
+                        )}
                       </Button>
                     </div>
                   </div>
