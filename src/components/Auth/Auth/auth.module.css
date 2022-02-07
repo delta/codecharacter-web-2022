@@ -3,7 +3,7 @@
     min-height: 100vh;
     position: absolute;
     left: 0;
-    background-color: #242A3C;
+    background-color: #242a3c;
     color: white;
     font-family: Montserrat;
     margin: 0px;
@@ -20,7 +20,7 @@
     padding: 2%;
     margin: 5%;
     padding-top: 0%;
-    background-color: #2D3342;
+    background-color: #2d3342;
 }
 
 .titleContainer {
@@ -50,7 +50,7 @@
     text-align: center;
     background: white;
     border-radius: 5px;
-    margin: 2rem 1rem 1rem 1rem;
+    margin: 2rem 0rem 0rem 0rem;
 }
 
 .registerButton {
@@ -88,7 +88,15 @@
     border-radius: 50%;
 }
 
-.googleButton {
+.externalAuthButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.googleButton,
+.githubButton {
     text-align: center;
 }
 

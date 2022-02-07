@@ -1,6 +1,6 @@
 import { Form, Button, Container, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AlertMessage from '../Alert/Alert';
@@ -21,6 +21,8 @@ function Login(): JSX.Element {
   const loadingStatus = useSelector<RootState>(
     loading => loading.login.loading,
   );
+  console.log(loadingStatus);
+
   const dispatch = useDispatch();
   const handleLoginSubmit = () => {
     islogin(true);
@@ -134,19 +136,33 @@ function Login(): JSX.Element {
           </div>
         </form>
         <br />
-        <div className={styles.googleButton}>
-          <a
-            href={`${BASE_PATH}/auth/login/external`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button variant="primary">
-              <div>
-                <FontAwesomeIcon icon={faGoogle} />
-                Login with Google
-              </div>
-            </Button>
-          </a>
+        <div className={styles.externalAuthButtons}>
+          <div className={styles.googleButton}>
+            <a
+              href={`${BASE_PATH}/auth/login/external`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button variant="primary">
+                <div>
+                  <FontAwesomeIcon icon={faGoogle} /> Login with Google
+                </div>
+              </Button>
+            </a>
+          </div>
+          <div className={styles.githubButton}>
+            <a
+              href={`${BASE_PATH}/auth/login/external`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button variant="dark">
+                <div>
+                  <FontAwesomeIcon icon={faGithub} /> Login with Github
+                </div>
+              </Button>
+            </a>
+          </div>
         </div>
         <div className={styles.linkContainer}>
           Do not have an account ?{' '}
