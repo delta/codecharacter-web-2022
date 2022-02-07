@@ -1,88 +1,88 @@
 .progressBarContainer {
-    position: relative;
-    margin-top: 1rem;
+  position: relative;
+  margin-top: 1rem;
 }
 
 .progressBar {
-    height: 5px;
-    width: 230px;
-    text-align: center;
-    margin: auto;
+  height: 5px;
+  width: 230px;
+  text-align: center;
+  margin: auto;
 }
 
 .levelContainer {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 60%;
-    justify-content: space-evenly;
-    text-align: center;
-    position: absolute;
-    left: 36%;
-    top: -18.5px;
-    z-index: 100;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 60%;
+  justify-content: space-evenly;
+  text-align: center;
+  position: absolute;
+  left: 36%;
+  top: -18.5px;
+  z-index: 100;
 }
 
-.levelContainer>div:first-child {
-    float: left;
+.levelContainer > div:first-child {
+  float: left;
 }
 
-.levelContainer>div:last-child {
-    float: right;
+.levelContainer > div:last-child {
+  float: right;
 }
 
 .levelInitiated {
-    background-color: gainsboro;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    text-decoration: none;
-    border: none;
+  background-color: gainsboro;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  text-decoration: none;
+  border: none;
 }
 
 .levelCompleted {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    text-decoration: none;
-    border: none;
-    border: 4px solid #4CAF50;
-    animation: popout 1.2s ease-in-out;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  text-decoration: none;
+  border: none;
+  border: 4px solid #4caf50;
+  animation: popout 1.2s ease-in-out;
 }
 
-@media screen and (max-width:1075px) {
-    .levelInitiated {
-        width: 2.5rem;
-        height: 2.5rem;
-        top: -15px;
-    }
-    .levelCompleted {
-        width: 2.5rem;
-        height: 2.5rem;
-        top: -15px;
-    }
+@media screen and (max-width: 1075px) {
+  .levelInitiated {
+    width: 2.5rem;
+    height: 2.5rem;
+    top: -15px;
+  }
+  .levelCompleted {
+    width: 2.5rem;
+    height: 2.5rem;
+    top: -15px;
+  }
 }
 
-@media screen and (max-width:350px) {
-    .levelContainer {
-        left: 30%;
-    }
+@media screen and (max-width: 350px) {
+  .levelContainer {
+    left: 30%;
+  }
 }
 
 .progressbar {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 @keyframes popout {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

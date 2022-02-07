@@ -21,8 +21,6 @@ function Login(): JSX.Element {
   const loadingStatus = useSelector<RootState>(
     loading => loading.login.loading,
   );
-  console.log(loadingStatus);
-
   const dispatch = useDispatch();
   const handleLoginSubmit = () => {
     islogin(true);

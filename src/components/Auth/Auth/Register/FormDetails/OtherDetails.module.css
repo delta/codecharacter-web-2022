@@ -1,69 +1,69 @@
 .levelTitle {
-    text-align: center;
-    margin: 0.5rem 0rem 0.5rem 0rem;
-    font-size: 25px;
-    color: whitesmoke;
+  text-align: center;
+  margin: 0.5rem 0rem 0.5rem 0rem;
+  font-size: 25px;
+  color: whitesmoke;
 }
 
 .flagContainer {
-    color: black;
-    background-color: white;
-    height: 44px;
-    border-radius: 5px;
+  color: black;
+  background-color: white;
+  height: 44px;
+  border-radius: 5px;
 }
 
 .avatarBox {
-    max-width: 30rem;
+  max-width: 30rem;
 }
 
 .avatarContainer {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    vertical-align: middle;
-    overflow-x: scroll;
-    background-color: whitesmoke;
-    border: 1px solid white;
-    border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  vertical-align: middle;
+  overflow-x: scroll;
+  background-color: whitesmoke;
+  border: 1px solid white;
+  border-radius: 4px;
 }
 
 .avatarContainer::-webkit-scrollbar {
-    height: 5px;
-    border-radius: 4px;
+  height: 5px;
+  border-radius: 4px;
 }
 
 .avatarContainer::-webkit-scrollbar-track {
-    background-color: lightblue;
-    border-radius: 4px;
+  background-color: lightblue;
+  border-radius: 4px;
 }
 
 .avatarContainer::-webkit-scrollbar-thumb {
-    background-color: blue;
-    border-radius: 4px;
+  background-color: blue;
+  border-radius: 4px;
 }
 
 .avatar {
-    min-width: 60px;
-    height: 40px;
-    text-align: center;
-    background-color: lightcoral;
-    border-radius: 5%;
-    margin: 2px;
+  min-width: 60px;
+  height: 40px;
+  text-align: center;
+  background-color: lightcoral;
+  border-radius: 5%;
+  margin: 2px;
 }
 
 .avatar:hover {
-    background-color: violet;
-    cursor: pointer;
+  background-color: violet;
+  cursor: pointer;
 }
 
 .error {
-    background: #ffdddd !important;
+  background: #ffdddd !important;
 }
 
 .correct {
-    background: #c9ffad !important;
+  background: #c9ffad !important;
 }
 
 .normal {
-    background: #ffffff !important;
+  background: #ffffff !important;
 }

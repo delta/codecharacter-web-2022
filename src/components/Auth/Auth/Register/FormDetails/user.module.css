@@ -1,18 +1,18 @@
 .levelTitle {
-    text-align: center;
-    margin: 0.5rem 0rem 0.5rem 0rem;
-    font-size: 25px;
-    color: whitesmoke;
+  text-align: center;
+  margin: 0.5rem 0rem 0.5rem 0rem;
+  font-size: 25px;
+  color: whitesmoke;
 }
 
 .error {
-    background: #ffdddd !important;
+  background: #ffdddd !important;
 }
 
 .correct {
-    background: #c9ffad !important;
+  background: #c9ffad !important;
 }
 
 .normal {
-    background: #ffffff !important;
+  background: #ffffff !important;
 }
