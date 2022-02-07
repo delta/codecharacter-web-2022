@@ -20,26 +20,26 @@ const Register = lazy(() => import('./pages/Auth/Register'));
 
 ReactDOM.render(
   <React.StrictMode>
-  <Provider store={store}>
-    <HashRouter>
-      <NavBar />
-      <div className={styles.mainWindow}>
-        <SideBar />
-        <div className={styles.gameArea}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/counter" element={<Counter />} />
-            </Routes>
-          </Suspense>
+    <Provider store={store}>
+      <HashRouter>
+        <NavBar />
+        <div className={styles.mainWindow}>
+          <SideBar />
+          <div className={styles.gameArea}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/counter" element={<Counter />} />
+              </Routes>
+            </Suspense>
+          </div>
         </div>
-      </div>
-    </HashRouter>
-    <Toast />
+      </HashRouter>
+      <Toast />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
