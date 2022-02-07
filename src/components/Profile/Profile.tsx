@@ -117,13 +117,19 @@ const Profile = (): JSX.Element => {
       isconfirmpasswordError(true);
     else isconfirmpasswordError(false);
   };
+  const getCountryName = (code: string) => {
+    const countryName = new Intl.DisplayNames(['en'], {
+      type: 'region',
+    }).of(code);
 
+    return countryName ? countryName : 'INDIA';
+  };
   const handleSubmit = () => {
     dispatch(
       startChangeUserDetails({
         name: userName,
-        college: 'NITT',
-        country: 'INIDIA',
+        college: collegeName,
+        country: getCountryName(selected),
       }),
     );
   };
@@ -249,6 +255,9 @@ const Profile = (): JSX.Element => {
                         variant="light"
                         type="submit"
                         onClick={handleSubmit}
+                        disabled={
+                          userName.length < 5 || collegeName.length == 0
+                        }
                       >
                         Save Changes{' '}
                         {loadingStatus ? (
@@ -352,6 +361,14 @@ const Profile = (): JSX.Element => {
                         variant="light"
                         type="submit"
                         onClick={handleCreditionals}
+                        disabled={
+                          oldpasswordError ||
+                          passwordError ||
+                          confirmpasswordError ||
+                          oldPassword.length == 0 ||
+                          password.length == 0 ||
+                          confirmPassword.length == 0
+                        }
                       >
                         Submit{' '}
                         {loadingCreditionalStatus ? (
