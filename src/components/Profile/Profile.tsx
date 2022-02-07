@@ -10,7 +10,6 @@ interface profile {
   handleClose?: () => void;
 }
 const Profile = (props: profile): JSX.Element => {
-  // const [show, isShow] = useState(true);
   const [selected, setSelected] = useState('IN');
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmpassword] = useState('');
@@ -28,9 +27,6 @@ const Profile = (props: profile): JSX.Element => {
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [oldpasswordError, isoldpasswordError] = useState(false);
-  // const handleClose = () => {
-  //   isShow(false);
-  // };
   const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setfullName(e.target.value);
     issubmitFullname(true);
