@@ -1626,9 +1626,15 @@ __metadata:
     vite: ^2.7.4
     vite-plugin-dts: ^0.9.9
   peerDependencies:
+    "@fortawesome/free-solid-svg-icons": "*"
+    "@fortawesome/react-fontawesome": "*"
     "@lit-labs/react": "*"
     lit: "*"
     phaser: "*"
+    phaser3-rex-plugins: "*"
+    react: "*"
+    react-bootstrap: "*"
+    react-dom: "*"
   languageName: unknown
   linkType: soft
 
