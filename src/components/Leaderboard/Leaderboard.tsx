@@ -3,90 +3,75 @@ import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
 
-type Item = {
-  rank: number;
-  username: string;
-  rating: number;
-  won: number;
-  lost: number;
-  tied: number;
-  fight: string;
-};
-interface Props {
-  itemsPerPage: number;
-  currentItems: Array<Item>;
-}
-
-function createData(
-  rank: number,
-  username: string,
-  rating: number,
-  won: number,
-  lost: number,
-  tied: number,
-  fight: string,
-) {
-  return { rank, username, rating, won, lost, tied, fight };
-}
-
-const rows = [
-  createData(4, 'Akash4', 122, 3, 1, 1, 'fightakash'),
-  createData(5, 'Akash5', 122, 2, 1, 1, 'fightakash'),
-  createData(6, 'Akash6', 122, 1, 1, 1, 'fightakash'),
-  createData(7, 'Akash7', 122, 1, 1, 1, 'fightakash'),
-  createData(8, 'Akash8', 122, 1, 1, 1, 'fightakash'),
-  createData(9, 'Akash9', 122, 1, 1, 1, 'fightakash'),
-  createData(10, 'Akash10', 122, 1, 1, 1, 'fightakash'),
-  createData(11, 'Akash11', 122, 1, 1, 1, 'fightakash'),
-  createData(12, 'Akash12', 122, 1, 1, 1, 'fightakash'),
-  createData(13, 'Akash13', 122, 1, 1, 1, 'fightakash'),
-  createData(14, 'Akash14', 122, 1, 1, 1, 'fightakash'),
-  createData(15, 'Akash15', 122, 1, 1, 1, 'fightakash'),
-  createData(16, 'Akash16', 122, 1, 1, 1, 'fightakash'),
-  createData(17, 'Akash17', 122, 1, 1, 1, 'fightakash'),
-];
-
-function Items({ currentItems }: Props) {
-  return (
-    <>
-      {currentItems &&
-        currentItems.map(row => (
-          <div className={styles.item} key={row.username}>
-            <div className={styles.pos}>{row.rank}</div>
-            <img
-              className={styles.pic}
-              src="https://randomuser.me/api/portraits/women/81.jpg"
-            ></img>
-            <div className={styles.name}>{row.username}</div>
-            <div className={styles.score}>{row.rating}</div>
-            <div className={styles.score}>{row.won} win</div>
-            <div className={styles.score}>{row.tied} tied</div>
-            <div className={styles.score}>{row.lost} lost</div>
-          </div>
-        ))}
-    </>
-  );
-}
-
-function PaginatedItems({ itemsPerPage }: Props) {
-  const [currentItems, setCurrentItems] = useState<Array<Item>>([]);
+function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const [items, setItems] = useState([]);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const itemsPerPage = 4;
+
+  useEffect(() => {
+    setIsLoaded(false);
+    fetch(
+      `https://stoplight.io/mocks/rinish-api-testbed/codecharacter/14036190/leaderboard`,
+    )
+      .then(res => res.json())
+      .then(data => {
+        data.sort(
+          (
+            a: { stats: { rating: string } },
+            b: { stats: { rating: string } },
+          ) => {
+            const parsedA = parseInt(a.stats.rating, 10);
+            const parsedB = parseInt(b.stats.rating, 10);
+            return parsedA > parsedB ? -1 : 1; // for descending sort inverse -1 and 1
+          },
+        );
+        setItems(data);
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      });
+  }, []);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(rows.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(rows.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+    setCurrentItems(items.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(items.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, items]);
 
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % rows.length;
+    console.log(event);
+    const newOffset = (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
   };
 
   return (
     <>
-      <Items currentItems={currentItems} itemsPerPage={0} />
+      <>
+        {!isLoaded ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            {currentItems &&
+              currentItems.map(row => (
+                <div className={styles.item} key={row.user.username}>
+                  <div className={styles.pos}>
+                    {itemOffset + 1 + currentItems.indexOf(row)}
+                  </div>
+                  <img className={styles.pic} src={row.user.avatarId}></img>
+                  <div className={styles.name}>{row.user.name}</div>
+                  <div className={styles.score}>{row.stats.rating}</div>
+                  <div className={styles.score}>{row.stats.wins} win</div>
+                  <div className={styles.score}>{row.stats.ties} tied</div>
+                  <div className={styles.score}>{row.stats.losses} lost</div>
+                </div>
+              ))}
+          </>
+        )}
+      </>
       <nav className={styles.paginationouter}>
         <ReactPaginate
           previousLabel="Previous"
@@ -164,7 +149,7 @@ export default function Leaderboard(): JSX.Element {
               <div className={styles.score}>Tied</div>
               <div className={styles.score}>Lost</div>
             </div>
-            <PaginatedItems itemsPerPage={4} currentItems={[]} />
+            <PaginatedItems />
           </div>
         </div>
       </div>
