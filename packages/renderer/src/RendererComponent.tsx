@@ -73,6 +73,15 @@ export default function RendererComponent(): JSX.Element {
   const [isPaused, setPaused] = React.useState(false);
   const [isFullscreen, setFullscreen] = React.useState(false);
 
+  React.useEffect(() => {
+    const onResetUi = () => {
+      setPaused(false);
+      events.removeAllListeners(RendererEvents.RESET_UI);
+      events.once(RendererEvents.RESET_UI, onResetUi);
+    };
+    events.once(RendererEvents.RESET_UI, onResetUi);
+  }, [isPaused]);
+
   return (
     <ReactFullscreen>
       {({ onRequest, onExit }) => (
@@ -129,6 +138,7 @@ export default function RendererComponent(): JSX.Element {
                 variant="outline-light"
                 onClick={() => {
                   events.emit(RendererEvents.RESET);
+                  setPaused(false);
                 }}
               >
                 <FontAwesomeIcon icon={faRedo} />

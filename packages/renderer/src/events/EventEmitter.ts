@@ -25,6 +25,8 @@ class RendererEvents {
 
   static readonly RESET = 'RESET';
 
+  static readonly RESET_UI = 'RESET_UI';
+
   static readonly SHUTDOWN = 'SHUTDOWN';
 
   static readonly LOAD_LOG = 'LOAD_LOG';

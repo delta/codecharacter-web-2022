@@ -133,7 +133,7 @@ export class TileMap extends Phaser.Scene {
     events.on(
       RendererEvents.PLACE_TOWER,
       (towerTypeId: number, x: number, y: number) => {
-        const towerType = TowerConfig.towers[towerTypeId];
+        const towerType = TowerConfig.towers[towerTypeId - 1];
         const tile = this.groundLayer.getTileAt(x, y);
         const healthBar = new HealthBar(
           this,
@@ -181,7 +181,7 @@ export class TileMap extends Phaser.Scene {
         }
         const troop = new Troop(
           this,
-          TroopConfig.troops[typeId],
+          TroopConfig.troops[typeId - 1],
           tile.pixelX + Parameters.mapTileHalfWidth,
           tile.pixelY + Parameters.mapTileHalfHeight,
           'idle',
@@ -312,6 +312,9 @@ export class TileMap extends Phaser.Scene {
 
   private _loadLog(log: string): void {
     this._reset();
+    if (this.scene.isPaused()) {
+      this.scene.resume();
+    }
 
     let currentTurn = 0;
 
@@ -396,6 +399,9 @@ export class TileMap extends Phaser.Scene {
 
     events.on(RendererEvents.RESET, () => {
       this._reset();
+      if (this.scene.isPaused()) {
+        this.scene.resume();
+      }
       currentTurn = 0;
       readTurn(currentTurn);
     });
