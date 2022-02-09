@@ -22,9 +22,15 @@
     "analyze": "cem analyze --litelement"
   },
   "peerDependencies": {
+    "@fortawesome/free-solid-svg-icons": "*",
+    "@fortawesome/react-fontawesome": "*",
     "@lit-labs/react": "*",
     "lit": "*",
-    "phaser": "*"
+    "phaser": "*",
+    "phaser3-rex-plugins": "*",
+    "react": "*",
+    "react-bootstrap": "*",
+    "react-dom": "*"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
