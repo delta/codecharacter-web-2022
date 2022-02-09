@@ -55,20 +55,55 @@ function PaginatedItems() {
           <div>Loading...</div>
         ) : (
           <>
-            {currentItems &&
-              currentItems.map(row => (
-                <div className={styles.item} key={row.user.username}>
-                  <div className={styles.pos}>
-                    {itemOffset + 1 + currentItems.indexOf(row)}
+            <div className={styles.top3}>
+              <div className={styles.item}>
+                <div className={styles.pos}>2</div>
+                <img className={styles.pic} src={items[1].user.avatarId}></img>
+                <div className={styles.name}>{items[1].user.name}</div>
+                <div className={styles.score}>{items[1].stats.rating}</div>
+              </div>
+              <div className={styles.item}>
+                <div className={styles.pos}>1</div>
+                <img className={styles.pic} src={items[0].user.avatarId}></img>
+                <div className={styles.name}>{items[0].user.name}</div>
+                <div className={styles.score}>{items[0].stats.rating}</div>
+              </div>
+              <div className={styles.item}>
+                <div className={styles.pos}>3</div>
+                <img className={styles.pic} src={items[2].user.avatarId}></img>
+                <div className={styles.name}>{items[2].user.name}</div>
+                <div className={styles.score}>{items[2].stats.rating}</div>
+              </div>
+            </div>
+
+            <div className={styles.list}>
+              <div className={styles.item}>
+                <img
+                  className={styles.pic}
+                  src="https://randomuser.me/api/portraits/men/34.jpg"
+                ></img>
+                <div className={styles.pos}>#</div>
+                <div className={styles.name}>Username</div>
+                <div className={styles.score}>Ratings</div>
+                <div className={styles.score}>Won</div>
+                <div className={styles.score}>Tied</div>
+                <div className={styles.score}>Lost</div>
+              </div>
+              {currentItems &&
+                currentItems.map(row => (
+                  <div className={styles.item} key={row.user.username}>
+                    <div className={styles.pos}>
+                      {itemOffset + 1 + currentItems.indexOf(row)}
+                    </div>
+                    <img className={styles.pic} src={row.user.avatarId}></img>
+                    <div className={styles.name}>{row.user.name}</div>
+                    <div className={styles.score}>{row.stats.rating}</div>
+                    <div className={styles.score}>{row.stats.wins} win</div>
+                    <div className={styles.score}>{row.stats.ties} tied</div>
+                    <div className={styles.score}>{row.stats.losses} lost</div>
                   </div>
-                  <img className={styles.pic} src={row.user.avatarId}></img>
-                  <div className={styles.name}>{row.user.name}</div>
-                  <div className={styles.score}>{row.stats.rating}</div>
-                  <div className={styles.score}>{row.stats.wins} win</div>
-                  <div className={styles.score}>{row.stats.ties} tied</div>
-                  <div className={styles.score}>{row.stats.losses} lost</div>
-                </div>
-              ))}
+                ))}
+            </div>
           </>
         )}
       </>
@@ -96,6 +131,7 @@ function PaginatedItems() {
     </>
   );
 }
+
 export default function Leaderboard(): JSX.Element {
   return (
     <div className={styles.body}>
@@ -107,50 +143,7 @@ export default function Leaderboard(): JSX.Element {
       </div>
       <div className={styles.center}>
         <div className={styles.ranklist}>
-          <div className={styles.top3}>
-            <div className={styles.item}>
-              <div className={styles.pos}>2</div>
-              <img
-                className={styles.pic}
-                src="https://randomuser.me/api/portraits/men/34.jpg"
-              ></img>
-              <div className={styles.name}>Edgar Soto</div>
-              <div className={styles.score}>6453 rating</div>
-            </div>
-            <div className={styles.item}>
-              <div className={styles.pos}>1</div>
-              <img
-                className={styles.pic}
-                src="https://randomuser.me/api/portraits/men/31.jpg"
-              ></img>
-              <div className={styles.name}>Clifford James</div>
-              <div className={styles.score}>6794 rating</div>
-            </div>
-            <div className={styles.item}>
-              <div className={styles.pos}>3</div>
-              <img
-                className={styles.pic}
-                src="https://randomuser.me/api/portraits/women/91.jpg"
-              ></img>
-              <div className={styles.name}>Nevaeh Silva</div>
-              <div className={styles.score}>6034 rating</div>
-            </div>
-          </div>
-          <div className={styles.list}>
-            <div className={styles.item}>
-              <img
-                className={styles.pic}
-                src="https://randomuser.me/api/portraits/men/34.jpg"
-              ></img>
-              <div className={styles.pos}>#</div>
-              <div className={styles.name}>Username</div>
-              <div className={styles.score}>Ratings</div>
-              <div className={styles.score}>Won</div>
-              <div className={styles.score}>Tied</div>
-              <div className={styles.score}>Lost</div>
-            </div>
-            <PaginatedItems />
-          </div>
+          <PaginatedItems />
         </div>
       </div>
     </div>
