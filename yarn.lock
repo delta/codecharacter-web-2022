@@ -1645,14 +1645,22 @@ __metadata:
     "@custom-elements-manifest/analyzer": ^0.4.17
     "@rollup/plugin-replace": ^3.0.0
     concurrently: ^5.3.0
+    react-easyfullscreen: ^1.1.1
     tslib: ^2.3.1
     typescript: ^4.5.2
     vite: ^2.7.4
     vite-plugin-dts: ^0.9.9
   peerDependencies:
+    "@fortawesome/fontawesome-svg-core": "*"
+    "@fortawesome/free-solid-svg-icons": "*"
+    "@fortawesome/react-fontawesome": "*"
     "@lit-labs/react": "*"
     lit: "*"
     phaser: "*"
+    phaser3-rex-plugins: "*"
+    react: "*"
+    react-bootstrap: "*"
+    react-dom: "*"
   languageName: unknown
   linkType: soft
 
@@ -13970,6 +13978,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-easyfullscreen@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "react-easyfullscreen@npm:1.1.1"
+  dependencies:
+    screenfull: ^5.0.2
+  checksum: a6b40955fdecef97998661627d9dfae9f3ff64f06a84d78ef39755f4f256017a44f332f1c665362d5161f30179e3b3867d365ce4f1cbb8bd2ebe2452511e0df8
+  languageName: node
+  linkType: hard
+
 "react-flags-select@npm:^2.1.2":
   version: 2.1.2
   resolution: "react-flags-select@npm:2.1.2"
@@ -14910,6 +14927,13 @@ __metadata:
     ajv: ^6.12.5
     ajv-keywords: ^3.5.2
   checksum: fb73f3d759d43ba033c877628fe9751620a26879f6301d3dbeeb48cf2a65baec5cdf99da65d1bf3b4ff5444b2e59cbe4f81c2456b5e0d2ba7d7fd4aed5da29ce
+  languageName: node
+  linkType: hard
+
+"screenfull@npm:^5.0.2":
+  version: 5.2.0
+  resolution: "screenfull@npm:5.2.0"
+  checksum: 21eae33b780eb4679ea0ea2d14734b11168cf35049c45a2bf24ddeb39c67a788e7a8fb46d8b61ca6d8367fd67ce9dd4fc8bfe476489249c7189c2a79cf83f51a
   languageName: node
   linkType: hard
 
