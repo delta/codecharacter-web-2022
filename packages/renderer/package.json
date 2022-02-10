@@ -22,9 +22,16 @@
     "analyze": "cem analyze --litelement"
   },
   "peerDependencies": {
+    "@fortawesome/fontawesome-svg-core": "*",
+    "@fortawesome/free-solid-svg-icons": "*",
+    "@fortawesome/react-fontawesome": "*",
     "@lit-labs/react": "*",
     "lit": "*",
-    "phaser": "*"
+    "phaser": "*",
+    "phaser3-rex-plugins": "*",
+    "react": "*",
+    "react-bootstrap": "*",
+    "react-dom": "*"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",
@@ -35,5 +42,8 @@
     "vite": "^2.7.4",
     "vite-plugin-dts": "^0.9.9"
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "dependencies": {
+    "react-easyfullscreen": "^1.1.1"
+  }
 }
