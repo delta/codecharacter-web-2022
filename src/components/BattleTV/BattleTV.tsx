@@ -65,15 +65,19 @@ function PaginatedItems() {
                     <div className={[styles.username, styles.left].join(' ')}>
                       {row.user1.name}
                     </div>
-                    <div className={styles.coinused}>{row.myCoinused}</div>
+                    <div className={styles.coinused}>
+                      {row.games[0].coinsUsed}
+                    </div>
                     <div className={styles.destruction}>
-                      {row.games[0].points1}
+                      {row.games[0].destruction}
                     </div>
                     <div className={styles.vs}>VS</div>
                     <div className={styles.destruction}>
-                      {row.games[0].points2}
+                      {row.games[0].destruction}
                     </div>
-                    <div className={styles.coinused}>{row.enemyCoinused}</div>
+                    <div className={styles.coinused}>
+                      {row.games[0].coinsUsed}
+                    </div>
                     <div className={[styles.username, styles.right].join(' ')}>
                       {row.user2.name}
                     </div>

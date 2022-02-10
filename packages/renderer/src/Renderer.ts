@@ -1,20 +1,11 @@
-import { TestScene } from './scenes/Test';
-import { LitElement, TemplateResult, css, html } from 'lit';
+import { TileMap } from './scenes/TileMap.js';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import Phaser from 'phaser';
+import { events, RendererEvents } from './events/EventEmitter.js';
 
 @customElement('cc-renderer')
 export class Renderer extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      width: 100%;
-      height: 100%;
-      padding: 0.2em;
-      box-sizing: border-box;
-    }
-  `;
-
   private _game!: Phaser.Game;
 
   firstUpdated(): void {
@@ -22,7 +13,7 @@ export class Renderer extends LitElement {
       type: Phaser.AUTO,
       parent:
         this.shadowRoot?.querySelector<HTMLElement>('#renderer') ?? undefined,
-      scene: [TestScene],
+      scene: [TileMap],
       dom: {
         createContainer: false,
       },
@@ -34,6 +25,9 @@ export class Renderer extends LitElement {
   }
 
   disconnectedCallback(): void {
+    events.emit(RendererEvents.SHUTDOWN);
+    events.removeAllListeners();
+    this._game.scene.getScene('TileMap').events.removeAllListeners();
     this._game.destroy(true);
   }
 

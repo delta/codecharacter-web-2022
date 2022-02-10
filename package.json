@@ -14,7 +14,7 @@
     "test": "jest --coverage",
     "dev": "concurrently -k -r \"yarn workspace @codecharacter-2022/client build:watch\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\" \"sleep 5 && vite --config vite.dev.config.ts\"",
     "build": "yarn workspace @codecharacter-2022/client run build && yarn workspace @codecharacter-2022/renderer run build && yarn workspace @codecharacter-2022/map-designer run build && vite build --config vite.prod.config.ts --emptyOutDir",
-    "prod": "concurrently -k -r \"sleep 5 && vite build --watch --config vite.prod.config.ts --emptyOutDir\" \"sleep 10 && live-server --middleware=spa-ignore-assets dist/\" \"yarn workspace @codecharacter-2022/client build:watch\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\"",
+    "prod": "concurrently -k -r \"sleep 5 && vite build --watch --config vite.prod.config.ts --emptyOutDir\" \"sleep 10 && live-server --host=0.0.0.0 --middleware=spa-ignore-assets dist/\" \"yarn workspace @codecharacter-2022/client build:watch\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\"",
     "renderer:demo": "yarn workspace @codecharacter-2022/renderer run dev",
     "map-designer:demo": "yarn workspace @codecharacter-2022/map-designer run dev",
     "storybook": "start-storybook -p 6006",
@@ -35,6 +35,7 @@
     "bootstrap": "5.1.3",
     "lit": "^2.1.1",
     "phaser": "^3.55.2",
+    "phaser3-rex-plugins": "^1.1.66",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.1",
     "react-dom": "^17.0.2",
@@ -52,6 +53,7 @@
     "@mdx-js/react": "^1.6.22",
     "@rollup/plugin-replace": "^3.0.0",
     "@storybook/addon-controls": "^6.5.0-alpha.19",
+    "@storybook/addon-knobs": "^6.4.0",
     "@storybook/addon-viewport": "^6.5.0-alpha.19",
     "@storybook/react": "^6.5.0-alpha.19",
     "@types/jest": "^27.4.0",
@@ -136,7 +138,7 @@
     "*.{ts,.tsx}": [
       "eslint --fix"
     ],
-    "*.{ts,js,json,yml,md}": [
+    "*.{ts,tsx,js,json,yml,md}": [
       "prettier --write"
     ]
   },

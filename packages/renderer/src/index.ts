@@ -1,7 +1,4 @@
-import { Renderer } from './Renderer';
-import { createComponent } from '@lit-labs/react';
-import * as React from 'react';
+import RendererComponent from './RendererComponent';
+import { RendererUtils } from './RendererUtils';
 
-const RendererComponent = createComponent(React, 'cc-renderer', Renderer);
-
-export { RendererComponent };
+export { RendererComponent, RendererUtils };
