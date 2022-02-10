@@ -3,108 +3,89 @@ import ReactPaginate from 'react-paginate';
 
 import styles from './BattleTV.module.css';
 
-type Item = {
-  myUsername: string;
-  myCoinused: number;
-  myDestruction: number;
-  enemyDestruction: number;
-  enemyCoinused: number;
-  enemyUsername: string;
-};
-interface Props {
-  itemsPerPage: number;
-  currentItems: Array<Item>;
-}
-
-function createData(
-  myUsername: string,
-  myCoinused: number,
-  myDestruction: number,
-  enemyDestruction: number,
-  enemyCoinused: number,
-  enemyUsername: string,
-) {
-  return {
-    myUsername,
-    myCoinused,
-    myDestruction,
-    enemyDestruction,
-    enemyCoinused,
-    enemyUsername,
-  };
-}
-
-const rows: Array<Item> = [
-  createData('Akash1', 6921, 5, 10, 3413, 'Enemyakash'),
-  createData('Akash2', 49212, 20, 15, 4634, 'Enemyakash'),
-  createData('Akash3', 393, 25, 30, 4334, 'Enemyakash'),
-  createData('Akash4', 39322, 40, 35, 1447, 'Enemyakash'),
-  createData('Akash5', 2923, 45, 50, 3238, 'Enemyakash'),
-  createData('Akash6', 1915, 60, 55, 3223, 'Enemyakash'),
-  createData('Akash7', 69164, 5, 10, 3462, 'Enemyakash'),
-  createData('Akash8afgd', 49641, 20, 15, 4257, 'Enemyakash'),
-  createData('Akash9', 3649, 25, 30, 4325, 'Enemyakash'),
-  createData('Akash10', 39864, 40, 35, 14257, 'Enemyakash'),
-];
-
-function Items({ currentItems }: Props) {
-  return (
-    <>
-      {currentItems &&
-        currentItems.map(row => (
-          <div className={styles.item} key={row.myUsername}>
-            <div
-              className={styles.battlecard}
-              style={{
-                backgroundColor:
-                  row.myDestruction > row.enemyDestruction
-                    ? '#00bc6244'
-                    : '#BC170044',
-              }}
-            >
-              <div className={styles.pic}>
-                <img src="https://randomuser.me/api/portraits/women/81.jpg"></img>
-              </div>
-              <div className={[styles.username, styles.left].join(' ')}>
-                {row.myUsername}
-              </div>
-              <div className={styles.coinused}>{row.myCoinused}</div>
-              <div className={styles.destruction}>{row.myDestruction}</div>
-              <div className={styles.vs}>VS</div>
-              <div className={styles.destruction}>{row.enemyDestruction}</div>
-              <div className={styles.coinused}>{row.enemyCoinused}</div>
-              <div className={[styles.username, styles.right].join(' ')}>
-                {row.enemyUsername}
-              </div>
-              <div className={styles.pic}>
-                <img src="https://randomuser.me/api/portraits/women/81.jpg"></img>
-              </div>
-            </div>
-          </div>
-        ))}
-    </>
-  );
-}
-
-function PaginatedItems({ itemsPerPage }: Props) {
-  const [currentItems, setCurrentItems] = useState<Array<Item>>([]);
+function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const [items, setItems] = useState([]);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const itemsPerPage = 4;
+
+  useEffect(() => {
+    setIsLoaded(false);
+    fetch(
+      `https://stoplight.io/mocks/rinish-api-testbed/codecharacter/14036190/user/matches`,
+    )
+      .then(res => res.json())
+      .then(data => {
+        setItems(data);
+      })
+      .finally(() => {
+        setIsLoaded(true);
+      });
+  }, []);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(rows.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(rows.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+    setCurrentItems(items.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(items.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, items]);
 
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % rows.length;
+    console.log(event);
+    const newOffset = (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
   };
 
   return (
     <>
-      <Items currentItems={currentItems} itemsPerPage={0} />
+      <>
+        {!isLoaded ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            {currentItems &&
+              currentItems.map(row => (
+                <div className={styles.item} key={row.id}>
+                  <div
+                    className={styles.battlecard}
+                    style={{
+                      backgroundColor:
+                        row.games[0].gameVerdict === 'PLAYER1'
+                          ? '#00bc6244'
+                          : row.games[0].gameVerdict === 'TIE'
+                          ? '#808080'
+                          : '#BC170044',
+                    }}
+                  >
+                    <div className={styles.pic}>
+                      <img src={row.user1.avatarId}></img>
+                    </div>
+                    <div className={[styles.username, styles.left].join(' ')}>
+                      {row.user1.name}
+                    </div>
+                    <div className={styles.coinused}>{row.myCoinused}</div>
+                    <div className={styles.destruction}>
+                      {row.games[0].points1}
+                    </div>
+                    <div className={styles.vs}>VS</div>
+                    <div className={styles.destruction}>
+                      {row.games[0].points2}
+                    </div>
+                    <div className={styles.coinused}>{row.enemyCoinused}</div>
+                    <div className={[styles.username, styles.right].join(' ')}>
+                      {row.user2.name}
+                    </div>
+                    <div className={styles.pic}>
+                      <img src={row.user2.avatarId}></img>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </>
+        )}
+      </>
       <nav className={styles.paginationouter}>
         <ReactPaginate
           previousLabel="Previous"
@@ -129,7 +110,6 @@ function PaginatedItems({ itemsPerPage }: Props) {
     </>
   );
 }
-
 export default function BattleTV(): JSX.Element {
   return (
     <div className={styles.body}>
@@ -152,7 +132,7 @@ export default function BattleTV(): JSX.Element {
           <div className={styles.pic}></div>
         </div>
       </div>
-      <PaginatedItems itemsPerPage={6} currentItems={[]} />
+      <PaginatedItems />
     </div>
   );
 }
