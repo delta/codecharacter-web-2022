@@ -1,27 +1,36 @@
 import { Form, Button, Container, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
 import AlertMessage from '../Alert/Alert';
 import styles from '../auth.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
-import { startLogin } from './LoginActiontypes';
-import { RootState } from '../../../../redux/store';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { BASE_PATH } from '../../../../config/config';
+import {
+  loginAction,
+  loading,
+  switchRegister,
+  isloggedIn,
+} from '../../../../store/User/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
 
 function Login(): JSX.Element {
+  const navigate = useNavigate();
   const [emailError, isemailError] = useState(false);
   const [passwordError, ispasswordError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, islogin] = useState(false);
-  const loadingStatus = useSelector<RootState>(
-    loading => loading.login.loading,
-  );
-  const dispatch = useDispatch();
+  const hookDispatch = useAppDispatch();
+  const loadingStatus = useAppSelector(loading);
+  const loggedInStatus = useAppSelector(isloggedIn);
+  useEffect(() => {
+    if (loggedInStatus) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [loggedInStatus]);
   const handleLoginSubmit = () => {
     islogin(true);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
@@ -37,8 +46,9 @@ function Login(): JSX.Element {
     } else {
       ispasswordError(true);
     }
-    if (!(emailError && passwordError))
-      dispatch(startLogin({ email: email, password: password }));
+    if (!(emailError && passwordError)) {
+      hookDispatch(loginAction({ email: email, password: password }));
+    }
   };
 
   const handlePasswordSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +72,10 @@ function Login(): JSX.Element {
     } else {
       isemailError(true);
     }
+  };
+
+  const switchRegisterAction = () => {
+    hookDispatch(switchRegister());
   };
   return (
     <div className={styles.mainContainer}>
@@ -166,7 +180,11 @@ function Login(): JSX.Element {
           Do not have an account ?{' '}
           <span>
             {' '}
-            <NavLink to={'/register'} className={styles.link}>
+            <NavLink
+              to={'/register'}
+              className={styles.link}
+              onClick={switchRegisterAction}
+            >
               {' '}
               <b>register</b>
             </NavLink>

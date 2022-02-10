@@ -9,14 +9,17 @@ import {
 import { ReCAPTCHA } from 'react-google-recaptcha';
 import styles from '../auth.module.css';
 import { accessUrl, SECRET_KEY, SITE_KEY } from '../../../../config/config';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import UserDetails from './FormDetails/UserDetails';
 import UserCreditionals from './FormDetails/UserCreditionals';
 import OtherDetails from './FormDetails/OtherDetails';
 import ProgressBar from '../ProgressBar/Progressbar';
-import { RootState } from '../../../../redux/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { startRegister } from './RegisterAction';
+import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
+import {
+  loading,
+  isRegistered,
+  registerAction,
+} from '../../../../store/User/UserSlice';
 let increment = 1;
 let passCondition = 0;
 export default function Register(): JSX.Element {
@@ -30,6 +33,7 @@ export default function Register(): JSX.Element {
   const [confirmPassword, setConfirmpassword] = useState('');
   const [submitFirst, issubmitFirst] = useState(false);
   const [submitSecond, issubmitSecond] = useState(false);
+  const [submitThird, isSubmitThird] = useState(false);
   const [userNameError, isuserNameError] = useState(false);
   const [fullNameError, isfullNameError] = useState(false);
   const [emailError, isemailError] = useState(false);
@@ -37,10 +41,10 @@ export default function Register(): JSX.Element {
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [completed, isCompleted] = useState(false);
   const [collegeError, iscollegeError] = useState(false);
-  const dispatch = useDispatch();
-  const loadingStatus = useSelector<RootState>(
-    loading => loading.register.loading,
-  );
+  const loadingStatus = useAppSelector(loading);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  let registeredStatus = false;
   // adding script tag for recaptcha verfication
   useEffect(() => {
     const loadScriptByURL = (id: string, url: string) => {
@@ -59,6 +63,15 @@ export default function Register(): JSX.Element {
       `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`,
     );
   }, []);
+  registeredStatus = useAppSelector(isRegistered);
+
+  useEffect(() => {
+    if (registeredStatus) {
+      setFormnumber(1);
+      increment = 1;
+      navigate('/login', { replace: true });
+    }
+  }, [registeredStatus]);
   const handleFullname = () => {
     if (fullName.trim().length < 5) {
       isfullNameError(true);
@@ -110,16 +123,18 @@ export default function Register(): JSX.Element {
   };
 
   const handleCollege = () => {
-    if (college.trim().length == 0 || college.length == 0) {
+    isSubmitThird(true);
+    if (college.trim().length == 0 || college.trim() == '') {
       passCondition += 1;
       iscollegeError(true);
     } else {
       iscollegeError(false);
+      handleRegistration();
     }
   };
   const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCollege(e.target.value);
-    if (completed) {
+    if (submitThird) {
       if (e.target.value.trim().length == 0) {
         iscollegeError(true);
       } else {
@@ -208,13 +223,10 @@ export default function Register(): JSX.Element {
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
     setpassword(e.target.value);
     if (submitSecond) {
-      if (
-        !e.target.value.trim().match(passwordFormat) ||
-        !password.match(passwordFormat)
-      ) {
-        ispasswordError(true);
-      } else {
+      if (e.target.value.match(passwordFormat)) {
         ispasswordError(false);
+      } else {
+        ispasswordError(true);
       }
     }
   };
@@ -223,13 +235,8 @@ export default function Register(): JSX.Element {
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setConfirmpassword(e.target.value);
-    const passwordFormat =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
     if (submitSecond) {
-      if (
-        !(e.target.value.trim() == password) ||
-        !confirmPassword.match(passwordFormat)
-      ) {
+      if (e.target.value != password) {
         isconfirmpasswordError(true);
       } else {
         isconfirmpasswordError(false);
@@ -254,29 +261,28 @@ export default function Register(): JSX.Element {
     return countryName ? countryName : 'INDIA';
   };
   const handleRegistration = async () => {
-    handleCollege();
-    if (!collegeError) {
-      isCompleted(true);
-      grecaptcha.ready(() => {
-        grecaptcha
-          .execute(SITE_KEY, { action: 'submit' })
-          .then((token: string) => {
-            submitData(token);
-          });
-      });
-      dispatch(
-        startRegister({
-          userName: userName,
-          name: fullName,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword,
-          country: getCountryName(selected),
-          college: college,
-          avatarId: 0,
-        }),
-      );
-    }
+    isCompleted(true);
+
+    grecaptcha.ready(() => {
+      grecaptcha
+        .execute(SITE_KEY, { action: 'submit' })
+        .then((token: string) => {
+          submitData(token);
+        });
+    });
+
+    await dispatch(
+      registerAction({
+        userName: userName,
+        name: fullName,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        country: getCountryName(selected),
+        college: college,
+        avatarId: 0,
+      }),
+    );
   };
   const submitData = async (token: string) => {
     await fetch('  https://www.google.com/recaptcha/api/siteverify ', {
@@ -348,17 +354,14 @@ export default function Register(): JSX.Element {
                     handleCollegeChange={handleCollegeChange}
                     college={college}
                     collegeError={collegeError}
-                    completed={completed}
+                    submitThird={submitThird}
                   />
                   <div>
                     <ReCAPTCHA sitekey={SITE_KEY} theme="dark" />
                   </div>
                   <div className={styles.registerButton}>
                     <div className="d-grid gap-2">
-                      <Button
-                        variant="outline-success"
-                        onClick={handleRegistration}
-                      >
+                      <Button variant="outline-success" onClick={handleCollege}>
                         Register{'  '}
                         {loadingStatus ? (
                           <FontAwesomeIcon icon={faSpinner} />

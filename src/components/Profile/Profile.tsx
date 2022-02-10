@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactFlagsSelect from 'react-flags-select';
 import styles from './profile.module.css';
 import classnames from 'classnames';
-import { CurrentUserApi } from '@codecharacter-2022/client';
-import { apiConfig, ApiError } from '../../api/ApiConfig';
-import { RootState } from '../../redux/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { startChangeUserDetails } from './ProfileAction/ChangeUserProfileAction';
-import { startChangeCreditionals } from './ProfileAction/ChangeCreditionalsAction';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  getUserDetailsAction,
+  user,
+  changeUserDetailsAction,
+  changeUserCreditionalsAction,
+  loading,
+} from '../../store/User/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
 const Profile = (): JSX.Element => {
   const [show, isShow] = useState(true);
   const [selected, setSelected] = useState('IN');
@@ -32,30 +34,12 @@ const Profile = (): JSX.Element => {
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [oldpasswordError, isoldpasswordError] = useState(false);
-  const [change, isChange] = useState(false);
+  const getUser = useAppSelector(user);
+  const dispatch = useAppDispatch();
+  const loadingStatus = useAppSelector(loading);
   useEffect(() => {
-    const currentUserapi = new CurrentUserApi(apiConfig);
-    currentUserapi
-      .getCurrentUser()
-      .then(res => {
-        if (!change) {
-          setUsername(res.username);
-        }
-      })
-      .catch(error => {
-        if (error instanceof ApiError) console.log('Error:', error);
-      });
-  });
-  const dispatch = useDispatch();
-  const loadingStatus = useSelector<RootState>(
-    loading => loading.changeUserDetails.loading,
-  );
-  const loadingCreditionalStatus = useSelector<RootState>(
-    loading => loading.changeCreditionals.loading,
-  );
-  console.log(loadingStatus);
-  console.log('Creditionals', loadingCreditionalStatus);
-
+    dispatch(getUserDetailsAction());
+  }, [getUser]);
   const handleClose = () => {
     isShow(false);
   };
@@ -69,7 +53,6 @@ const Profile = (): JSX.Element => {
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
     issubmitUsername(true);
-    isChange(true);
     if (e.target.value.trim().length < 5) {
       isuserNameError(true);
     } else {
@@ -80,11 +63,8 @@ const Profile = (): JSX.Element => {
   const hanldeOldPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOldpassword(e.target.value);
     issubmitoldPassword(true);
-    const passwordFormat =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
     if (
-      !e.target.value.match(passwordFormat) ||
-      !oldPassword.match(passwordFormat)
+      !(oldPassword === getUser.password || e.target.value === getUser.password)
     )
       isoldpasswordError(true);
     else isoldpasswordError(false);
@@ -95,12 +75,11 @@ const Profile = (): JSX.Element => {
     issubmitPassword(true);
     const passwordFormat =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
-    if (
-      !e.target.value.match(passwordFormat) ||
-      !password.match(passwordFormat)
-    )
+    if (e.target.value.match(passwordFormat)) {
+      ispasswordError(false);
+    } else {
       ispasswordError(true);
-    else ispasswordError(false);
+    }
   };
 
   const handleConfirmPasswordChange = (
@@ -108,14 +87,11 @@ const Profile = (): JSX.Element => {
   ) => {
     setConfirmpassword(e.target.value);
     issubmitconfirmPassword(true);
-    const passwordFormat =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
-    if (
-      !e.target.value.match(passwordFormat) ||
-      !confirmPassword.match(passwordFormat)
-    )
+    if (e.target.value != password) {
       isconfirmpasswordError(true);
-    else isconfirmpasswordError(false);
+    } else {
+      isconfirmpasswordError(false);
+    }
   };
   const getCountryName = (code: string) => {
     const countryName = new Intl.DisplayNames(['en'], {
@@ -126,8 +102,8 @@ const Profile = (): JSX.Element => {
   };
   const handleSubmit = () => {
     dispatch(
-      startChangeUserDetails({
-        name: userName,
+      changeUserDetailsAction({
+        userName: userName,
         college: collegeName,
         country: getCountryName(selected),
       }),
@@ -136,10 +112,10 @@ const Profile = (): JSX.Element => {
 
   const handleCreditionals = () => {
     dispatch(
-      startChangeCreditionals({
-        OldPassword: oldPassword,
-        NewPassword: password,
-        ConfirmPassword: confirmPassword,
+      changeUserCreditionalsAction({
+        oldPassword: oldPassword,
+        newPassword: password,
+        confirmPassword: confirmPassword,
       }),
     );
   };
@@ -154,7 +130,7 @@ const Profile = (): JSX.Element => {
         >
           <Offcanvas.Header className={styles.header}>
             <Offcanvas.Title>
-              <h3>Hey! {userName}</h3>
+              <h3>Hey! {getUser.userName}</h3>
             </Offcanvas.Title>
             <CloseButton className={styles.close} onClick={handleClose} />
           </Offcanvas.Header>
@@ -167,7 +143,7 @@ const Profile = (): JSX.Element => {
                 </div>
                 <div className={styles.profileName}>
                   {' '}
-                  <b>{userName}</b>
+                  <b>{getUser.userName}</b>
                 </div>
               </div>
             ) : (
@@ -184,7 +160,7 @@ const Profile = (): JSX.Element => {
                       <Form.Label>Username</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Username"
+                        placeholder={getUser.userName}
                         value={userName}
                         className={
                           submitUsername
@@ -208,7 +184,7 @@ const Profile = (): JSX.Element => {
                       <Form.Label>College</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="College"
+                        placeholder={getUser.college}
                         value={collegeName}
                         className={
                           submitCollege
@@ -253,7 +229,6 @@ const Profile = (): JSX.Element => {
                     >
                       <Button
                         variant="light"
-                        type="submit"
                         onClick={handleSubmit}
                         disabled={
                           userName.length < 5 || collegeName.length == 0
@@ -291,7 +266,7 @@ const Profile = (): JSX.Element => {
                       {oldpasswordError ? (
                         <AlertMessage
                           err={oldpasswordError}
-                          content={'Password should be atleast 5 characters'}
+                          content={'Incorrect Old Password'}
                         />
                       ) : (
                         <></>
@@ -315,14 +290,10 @@ const Profile = (): JSX.Element => {
                             : styles.normal
                         }
                       />
-                      {passwordError ? (
-                        <AlertMessage
-                          err={passwordError}
-                          content={'Password should be atleast 5 characters'}
-                        />
-                      ) : (
-                        <></>
-                      )}
+                      <PasswordAlertMessage
+                        err={submitPassword && passwordError}
+                        variantColor="danger"
+                      />
                     </Form.Group>
                     <Form.Group
                       className={classnames('mb-3', styles.formField)}
@@ -359,7 +330,6 @@ const Profile = (): JSX.Element => {
                     >
                       <Button
                         variant="light"
-                        type="submit"
                         onClick={handleCreditionals}
                         disabled={
                           oldpasswordError ||
@@ -371,7 +341,7 @@ const Profile = (): JSX.Element => {
                         }
                       >
                         Submit{' '}
-                        {loadingCreditionalStatus ? (
+                        {loadingStatus ? (
                           <FontAwesomeIcon icon={faSpinner} />
                         ) : (
                           <></>

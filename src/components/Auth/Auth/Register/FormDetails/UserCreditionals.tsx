@@ -1,13 +1,32 @@
 import { Form } from 'react-bootstrap';
 import AlertMessage from '../../Alert/Alert';
 import styles from './user.module.css';
+import { useState } from 'react';
+import PasswordAlertMessage from '../../Alert/PassworAlert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function UserCreditionals(props: creditionals): JSX.Element {
+  const [show, isShow] = useState(true);
+  const showAlert = () => {
+    isShow(!show);
+  };
   return (
     <div>
       <div className={styles.levelTitle}>User Creditionals</div>
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
+        <Form.Label>
+          Password{' '}
+          {show && props.password == '' ? (
+            <FontAwesomeIcon icon={faTimes} onClick={showAlert} />
+          ) : (
+            <FontAwesomeIcon icon={faLock} onClick={showAlert} />
+          )}
+        </Form.Label>
+        <PasswordAlertMessage
+          err={show && props.password == ''}
+          variantColor="info"
+        />
         <Form.Control
           type="password"
           placeholder="Password"
@@ -21,14 +40,10 @@ export default function UserCreditionals(props: creditionals): JSX.Element {
               : styles.normal
           }
         />
-        {props.submitSecond && props.passwordError ? (
-          <AlertMessage
-            err={props.passwordError}
-            content={'Password should be atleast 5 characters'}
-          />
-        ) : (
-          <></>
-        )}
+        <PasswordAlertMessage
+          err={props.submitSecond && props.passwordError}
+          variantColor="danger"
+        />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
         <Form.Label>Confirm password</Form.Label>

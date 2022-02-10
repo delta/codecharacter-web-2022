@@ -79,7 +79,7 @@ export default function OtherDetails(props: user): JSX.Element {
           value={props.college}
           onChange={props.handleCollegeChange}
           className={
-            props.formNumber === 3 && props.completed
+            props.formNumber === 3 && props.submitThird
               ? props.collegeError
                 ? styles.error
                 : styles.correct
@@ -116,5 +116,5 @@ interface user {
   handleCollegeChange?: React.ChangeEventHandler<HTMLInputElement>;
   college?: string;
   collegeError?: boolean;
-  completed?: boolean;
+  submitThird?: boolean;
 }
