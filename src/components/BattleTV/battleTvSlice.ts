@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../store/store';
 
 export const initialState = {
   loading: false,
@@ -29,7 +30,7 @@ export const { getBattleTv, getBattleTvSuccess, getBattleTvFailure } =
   battleTvSlice.actions;
 
 // A selector
-export const battleTvSelector = state => state.battletv;
+export const battleTvSelector = (state: RootState) => state.battletv;
 
 // The reducer
 export default battleTvSlice.reducer;

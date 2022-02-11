@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import styles from './BattleTV.module.css';
-import { battleTvSelector, fetchBattleTv } from './battleTvSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { battleTvSelector } from './battleTvSlice';
+import { useAppSelector } from '../../store/hooks';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -12,14 +12,7 @@ function PaginatedItems() {
 
   const itemsPerPage = 4;
 
-  // initialize the redux hook
-  const dispatch = useAppDispatch();
   const { battletv, loading, hasErrors } = useAppSelector(battleTvSelector);
-
-  // dispatch our thunk when component first mounts
-  useEffect(() => {
-    dispatch(fetchBattleTv());
-  }, [dispatch]);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
