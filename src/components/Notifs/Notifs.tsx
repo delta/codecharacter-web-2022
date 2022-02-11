@@ -13,7 +13,9 @@ import {
 const Notifs: React.FunctionComponent = () => {
   const notifModalRef = useRef<HTMLDivElement>(null);
   const notifIconRef = useRef<HTMLDivElement>(null);
-  const notifs = useAppSelector<Notification[]>(notifications);
+  const notifs = useAppSelector<Notification[]>(notifications)
+    .slice()
+    .reverse();
   const hookDispatch = useAppDispatch();
 
   useEffect(() => {
