@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
+.dashboardMainContainer{
+    margin: 0;
+    padding: 0;
+    height: 93.5vh;
+}
+
 .sideBar{
     width: 50px !important;
     padding: 0;
@@ -29,7 +35,7 @@
     border-radius: 0px;
 }
 
-.btnBarMembers:hover {
+.btnBarMembers:hover, .popOverBtn:hover {
     opacity: 0.7;
     box-shadow: none !important;
 }
@@ -51,7 +57,23 @@
     border: 0px;
     background: white;
     padding-left: 5px;
+}
 
+.popOverInput{
+    height: 35px;
+    width: 200px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
+
+.popOverBtn{
+    height: 35px;
+    width: 80px;
+    background: #4595CF;
+    color: white;
+    border: 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
 }
 
 .slideInOutBtn{
@@ -59,9 +81,11 @@
     justify-content: center;
     align-items: center;
     background: #232323;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding: auto;
     width: 20px !important;
+    border: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 @media (max-width: 1000px){

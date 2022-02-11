@@ -23,7 +23,21 @@ import 'brace/theme/dracula';
 import 'brace/keybinding/emacs';
 import 'brace/keybinding/vim';
 
+import { RootState } from '../redux/store';
+import { updateUserCode, CodeAndLanguage } from '../redux/code';
+import { useSelector, useDispatch } from 'react-redux';
+
 export default function CodeEditor(props: Editor.Props): JSX.Element {
+  // Retreiving only needed info from global store
+
+  const userCode = useSelector(
+    (state: RootState) => state.editorState.userCode,
+  );
+  const dispatch = useDispatch();
+
+  // All editor settings set at localStorage
+  // They are retrieved here and stored in variables
+
   const localStoreFontSize = localStorage.getItem('fontSize');
   const [fontSize, setFontSize] = useState(
     localStoreFontSize === null ? '16' : localStorage.getItem('fontSize'),
@@ -57,10 +71,8 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       : localStorage.getItem('enableSnippets'),
   );
 
-  const localStoreCode = localStorage.getItem('codeWritten');
-  console.log(localStoreCode);
-  const codeWritten =
-    localStoreCode === null ? '//Welcome to Code Character!' : localStoreCode;
+  // When editor settings are changed
+  // editor attributes are changed
 
   window.addEventListener('storage', () => {
     setFontSize(localStorage.getItem('fontSize'));
@@ -90,10 +102,14 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       keyboardHandler={keyboardHandler !== 'default' ? keyboardHandler : ''}
       editorProps={{ $blockScrolling: true }}
       width={editorWidth.toString() + 'px'}
-      height={'84.5vh'} // button panel above editor is 6.5vh + 9vh NavBar
-      value={codeWritten}
+      height={'87vh'} // button panel above editor is 6.5vh + 6.5vh NavBar
+      value={userCode}
       onChange={value => {
-        localStorage.setItem('codeWritten', value);
+        const codeNlanguage: CodeAndLanguage = {
+          currentUserCode: value,
+          currentUserLanguage: language,
+        };
+        dispatch(updateUserCode(codeNlanguage));
       }}
       // commands={[
       //   {

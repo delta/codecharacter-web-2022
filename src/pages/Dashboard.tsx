@@ -1,64 +1,140 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import classnames from 'classnames';
 import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import '../styles/DefaultSplitPane.css';
 import styles from '../styles/Dashboard.module.css';
-import SideBar from '../components/SideBar/SideBar';
-import NavBar from '../components/NavBar/NavBar';
-import { Container, Row, Col, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { RootState } from '../redux/store';
+import { changeLanguage, initializeEditorStates } from '../redux/code';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Popover,
+  OverlayTrigger,
+} from 'react-bootstrap';
 import {
   faCloudUploadAlt,
   faCodeBranch,
   faAngleRight,
   faAngleLeft,
 } from '@fortawesome/free-solid-svg-icons';
+import { CodeApi } from '@codecharacter-2022/client';
+import { apiConfig, ApiError } from '../api/ApiConfig';
 
 export default function Dashboard(): JSX.Element {
+  // Retreiving only needed info from global store
+  const userLanguage = useSelector(
+    (state: RootState) => state.editorState.language,
+  );
+  const dispatch = useDispatch();
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const codeAPI = new CodeApi(apiConfig);
+    codeAPI
+      .getLatestCode()
+      .then(response => {
+        console.log(response);
+        dispatch(initializeEditorStates(response));
+      })
+      .catch(err => {
+        if (err instanceof ApiError) console.log(err.message);
+      })
+      .finally(() => setIsLoaded(true));
+  }, []);
+
   const languages: string[] = ['C++', 'Python'];
 
-  const sideBar = useRef(null);
   const slideInOutBtn = useRef(null);
 
-  const [editorWidth, setEditorWidth] = useState(window.innerWidth / 2);
-  const localStoreLanguage = localStorage.getItem('language');
+  const [editorWidth, setEditorWidth] = useState(
+    (window.innerWidth - 45) / 2 - 20,
+  ); /* 45 is sidebar width and 20 is slidInOutBtn width */
+
   const localStoreLanguageChose = localStorage.getItem('languageChose');
   const [languageChose, setLanguageChose] = useState(
     localStoreLanguageChose === null ? 'C++' : localStoreLanguageChose,
   );
-  const [language, setLanguage] = useState(
-    localStoreLanguage === null ? 'c_cpp' : localStoreLanguage,
-  );
 
   const [isCodeEditorOpen, setCodeEditorOpen] = useState(true);
-  const [pane1Width, setpane1Width] = useState(window.innerWidth / 2 + 70); // 70 is the width of sideBar + slideInOutBtn
+  const [isRendererOpen, setRendererOpen] = useState(true);
+  // 45 is the width of sideBar + slideInOutBtn
+  const [pane1Width, setpane1Width] = useState((window.innerWidth - 45) / 2);
+  const [slideBtnDimensions, setSlideBtnDimensions] = useState('w-100 h-50');
 
-  function languageChange(language: string) {
+  function handleLanguageChange(language: string) {
     switch (language) {
       case 'C++':
-        setLanguage('c_cpp');
-        localStorage.setItem('language', 'c_cpp');
+        dispatch(changeLanguage('c_cpp'));
         setLanguageChose('C++');
         localStorage.setItem('languageChose', 'C++');
         break;
       case 'Python':
-        setLanguage('python');
-        localStorage.setItem('language', 'python');
+        dispatch(changeLanguage('python'));
         setLanguageChose('Python');
         localStorage.setItem('languageChose', 'Python');
         break;
       default:
-        setLanguage('c_cpp');
+        dispatch(changeLanguage('c_cpp'));
     }
   }
+
+  function handleUpperSlideInOutBtn() {
+    if (isRendererOpen === true) {
+      setSlideBtnDimensions('w-100 h-100');
+      setpane1Width(window.innerWidth - 45 - 1); // width of sidebar is 45
+      setEditorWidth(window.innerWidth - 45 - 21); // width of slideInOutBar is 20
+      setRendererOpen(false);
+    } else {
+      setSlideBtnDimensions('w-100 h-50');
+      setpane1Width((window.innerWidth - 45) / 2);
+      setEditorWidth((window.innerWidth - 45) / 2 - 20);
+      setRendererOpen(true);
+    }
+  }
+
+  function handleLowerSlideInOutBtn() {
+    if (isCodeEditorOpen === true) {
+      setSlideBtnDimensions('w-100 h-100');
+      setpane1Width(slideInOutBtn.current.clientWidth);
+      setCodeEditorOpen(false);
+    } else {
+      setSlideBtnDimensions('w-100 h-50');
+      setpane1Width(editorWidth + slideInOutBtn.current.clientWidth);
+      setCodeEditorOpen(true);
+    }
+  }
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Body>
+        <Container className="h-100 m-0 p-0" fluid>
+          <Row className="w-100 h-100 m-0 p-0 align-items-center">
+            <Col>
+              <input
+                className={classnames(styles.popOverInput)}
+                type={'text'}
+                placeholder={'Commit Name'}
+              ></input>
+            </Col>
+            <Col>
+              <button className={classnames(styles.popOverBtn)}> Done </button>
+            </Col>
+          </Row>
+        </Container>
+      </Popover.Body>
+    </Popover>
+  );
 
   let codeEditorComponent;
   if (isCodeEditorOpen === true) {
     codeEditorComponent = (
       <Col
-        className="p-0 m-0 vh-100"
+        className="p-0 m-0"
         xs="auto"
         sm="auto"
         md="auto"
@@ -76,7 +152,7 @@ export default function Dashboard(): JSX.Element {
             <select
               value={languageChose}
               className={classnames(styles.languageDropdown, 'w-75 pt-1 pb-1')}
-              onChange={e => languageChange(e.target.value)}
+              onChange={e => handleLanguageChange(e.target.value)}
             >
               {languages.map(language => (
                 <option value={language} key={language}>
@@ -87,10 +163,16 @@ export default function Dashboard(): JSX.Element {
           </Col>
 
           <Col xs={6} className={classnames(styles.btnsParent)}>
-            <Button className={classnames(styles.btnBarMembers, '')}>
-              <FontAwesomeIcon icon={faCodeBranch} />
-              {`   Commit`}
-            </Button>
+            <OverlayTrigger
+              trigger="click"
+              placement="bottom"
+              overlay={popover}
+            >
+              <Button className={classnames(styles.btnBarMembers)}>
+                <FontAwesomeIcon icon={faCodeBranch} />
+                {`   Commit`}
+              </Button>
+            </OverlayTrigger>
 
             <Button className={classnames(styles.btnBarMembers)}>
               <FontAwesomeIcon icon={faCloudUploadAlt} />
@@ -99,7 +181,7 @@ export default function Dashboard(): JSX.Element {
           </Col>
         </Row>
         <Row className="m-0 p-0">
-          <Editor editorWidth={editorWidth} language={language}></Editor>
+          <Editor editorWidth={editorWidth} language={userLanguage}></Editor>
         </Row>
       </Col>
     );
@@ -107,86 +189,92 @@ export default function Dashboard(): JSX.Element {
     codeEditorComponent = null;
   }
 
+  let rendererComponent;
+  if (isRendererOpen === true) {
+    rendererComponent = (
+      <SplitPane
+        split="horizontal"
+        defaultSize={(0.935 * window.innerHeight) / 2}
+      >
+        <div className="bg-primary w-100 m-0 p-0">UP</div>
+        <div className="bg-success h-100 m-0 p-0">DOWN</div>
+      </SplitPane>
+    );
+  } else {
+    rendererComponent = null;
+  }
+
   return (
     <>
-      <NavBar />
-      <SplitPane
-        split="vertical"
-        minSize={window.innerWidth / 2.4}
-        pane1Style={{ width: pane1Width }}
-        style={{ height: '91vh' }}
-        maxSize={window.innerWidth / 1.2}
-        onChange={width => {
-          if (isCodeEditorOpen === false) setCodeEditorOpen(true);
-          setEditorWidth(
-            width -
-              sideBar.current.clientWidth -
-              slideInOutBtn.current.clientWidth,
-          );
-          setpane1Width(width);
-        }}
-      >
-        <Container className="vh-100 m-0 p-0" fluid>
-          <Row className="h-100 w-100 m-0 p-0">
-            <Col
-              ref={sideBar}
-              className={classnames(styles.sideBar)}
-              xs="auto"
-              sm="auto"
-              md="auto"
-              lg="auto"
-              xl="auto"
-              xxl="auto"
-            >
-              <SideBar />
-            </Col>
-
-            {codeEditorComponent}
-
-            <Col
-              ref={slideInOutBtn}
-              className="m-0 p-0"
-              xs="auto"
-              sm="auto"
-              md="auto"
-              lg="auto"
-              xl="auto"
-              xxl="auto"
-              onClick={() => {
-                if (isCodeEditorOpen === true) {
-                  setpane1Width(
-                    sideBar.current.clientWidth +
-                      slideInOutBtn.current.clientWidth,
-                  );
-                  setCodeEditorOpen(false);
-                } else {
-                  setpane1Width(
-                    editorWidth +
-                      sideBar.current.clientWidth +
-                      slideInOutBtn.current.clientWidth,
-                  );
-                  setCodeEditorOpen(true);
-                }
-              }}
-            >
-              <div className={classnames(styles.slideInOutBtn, 'w-100 h-100')}>
-                <FontAwesomeIcon
-                  icon={isCodeEditorOpen === true ? faAngleLeft : faAngleRight}
-                  className="text-white fs-3"
-                />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-
+      {!isLoaded && <div>LOADING.......</div>}
+      {isLoaded && (
         <SplitPane
-          split="horizontal"
-          defaultSize={(0.91 * window.innerHeight) / 2}
+          split="vertical"
+          minSize={window.innerWidth / 3}
+          maxSize={window.innerWidth / 1.2}
+          pane1Style={{ width: pane1Width }}
+          style={{ height: '93.5vh', position: 'static' }}
+          onChange={width => {
+            if (isCodeEditorOpen === false) setCodeEditorOpen(true);
+            setEditorWidth(width - slideInOutBtn.current.clientWidth);
+            setpane1Width(width);
+          }}
         >
-          <div className="bg-primary w-100">UP</div>
-          <div className="bg-success h-100">DOWN</div>
+          <Container
+            className={classnames(styles.dashboardMainContainer)}
+            fluid
+          >
+            <Row className="h-100 w-100 m-0 p-0">
+              {codeEditorComponent}
+              <Col
+                ref={slideInOutBtn}
+                className="m-0 p-0 h-100"
+                xs="auto"
+                sm="auto"
+                md="auto"
+                lg="auto"
+                xl="auto"
+                xxl="auto"
+              >
+                {isCodeEditorOpen && (
+                  <div
+                    className={classnames(
+                      styles.slideInOutBtn,
+                      slideBtnDimensions,
+                    )}
+                    onClick={handleUpperSlideInOutBtn}
+                  >
+                    <FontAwesomeIcon
+                      icon={
+                        isRendererOpen === true ? faAngleRight : faAngleLeft
+                      }
+                      className="text-white fs-3"
+                    />
+                  </div>
+                )}
+
+                {isRendererOpen && (
+                  <div
+                    className={classnames(
+                      styles.slideInOutBtn,
+                      slideBtnDimensions,
+                    )}
+                    onClick={handleLowerSlideInOutBtn}
+                  >
+                    <FontAwesomeIcon
+                      icon={
+                        isCodeEditorOpen === true ? faAngleLeft : faAngleRight
+                      }
+                      className="text-white fs-3"
+                    />
+                  </div>
+                )}
+              </Col>
+            </Row>
+          </Container>
+          {rendererComponent}
         </SplitPane>
-      </SplitPane>
+      )}
     </>
   );
 }

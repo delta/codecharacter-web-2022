@@ -32,7 +32,6 @@ const SideBar: React.FunctionComponent = () => {
                 className={styles.sideBarIconComponent}
                 title={icon.tooltip}
                 icon={icon.icon}
-                size="2x"
               />
             </Link>
           </div>

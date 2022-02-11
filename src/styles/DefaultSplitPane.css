@@ -49,3 +49,19 @@
 .Resizer.disabled:hover {
   border-color: transparent;
 }
+
+.popover {
+  max-width: 500px;
+}
+
+.popover-body{
+  height: 55px;
+  margin: 0;
+  padding: 0;
+  background: #1c1c1c;
+  border: 2px solid #4595CF;
+}
+
+.popover-arrow{
+  display: none !important;
+}
