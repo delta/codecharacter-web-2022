@@ -25,9 +25,13 @@ import {
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-const Profile = (): JSX.Element => {
+
+interface profile {
+  open?: boolean;
+  handleClose?: () => void;
+}
+const Profile = (props: profile): JSX.Element => {
   const navigate = useNavigate();
-  const [show, isShow] = useState(true);
   const [selected, setSelected] = useState('IN');
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmpassword] = useState('');
@@ -119,9 +123,6 @@ const Profile = (): JSX.Element => {
   useEffect(() => {
     dispatch(getUserDetailsAction());
   }, [getUser]);
-  const handleClose = () => {
-    isShow(false);
-  };
   const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCollegeName(e.target.value);
     issubmitCollege(true);
@@ -201,7 +202,7 @@ const Profile = (): JSX.Element => {
     <div>
       <div>
         <Offcanvas
-          show={show}
+          show={props.open}
           placement="end"
           className={styles.Container}
           backdropClassName={styles.canvas}
@@ -210,7 +211,7 @@ const Profile = (): JSX.Element => {
             <Offcanvas.Title>
               <h3>Hey! {getUser.userName}</h3>
             </Offcanvas.Title>
-            <CloseButton className={styles.close} onClick={handleClose} />
+            <CloseButton className={styles.close} onClick={props.handleClose} />
           </Offcanvas.Header>
           <hr className={styles.divider} />
           <Offcanvas.Body className={styles.body}>
@@ -490,6 +491,7 @@ const Profile = (): JSX.Element => {
                       setFormNumber(2);
                       dispatch(creditionals());
                     }}
+                    className={styles.linkButton}
                   >
                     Want to Change Credentials
                   </Button>
@@ -499,6 +501,7 @@ const Profile = (): JSX.Element => {
                     onClick={() => {
                       setFormNumber(1);
                     }}
+                    className={styles.linkButton}
                   >
                     Go Back
                   </Button>
