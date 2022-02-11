@@ -32,8 +32,7 @@ export default function CommitHistory(props: PropsType): JSX.Element {
               contentArrowStyle={{
                 borderRight: '7px solid  rgb(33, 150, 243)',
               }}
-              // date={eachCommit.createdAt.toString()}
-              date="11-02-2022"
+              date={eachCommit.createdAt.toString()}
               iconStyle={
                 commitNumber == eachCommit.id
                   ? CircleIcon
