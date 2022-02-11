@@ -1,93 +1,97 @@
 .canvas {
-    width: 0rem;
+  width: 0rem;
 }
 
 .Container {
-    width: 30rem;
-    font-family: Montserrat;
+  width: 30rem;
+  font-family: Montserrat;
 }
 
 .header {
-    background-color: #242A3C;
-    color: white;
+  background-color: #242a3c;
+  color: white;
 }
 
 .close {
-    background-color: white;
-    border-radius: 50%;
+  background-color: white;
+  border-radius: 50%;
 }
 
 .divider {
-    margin: 0px;
-    padding: 0px;
-    background-color: white;
+  margin: 0px;
+  padding: 0px;
+  background-color: white;
 }
 
 .body {
-    background-color: #242A3C;
-    color: white;
+  background-color: #242a3c;
+  color: white;
 }
 
 .profileContainer {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 .imageContainer {
-    width: 10rem;
-    height: 10rem;
-    text-align: center;
-    margin: auto;
+  width: 10rem;
+  height: 10rem;
+  text-align: center;
+  margin: auto;
 }
 
 .imageContainer img {
-    width: 10rem;
-    height: 10rem;
-    border-radius: 50%;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
 }
 
 .profileName {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .formContainer {
-    margin: 2rem 2rem 0rem 2rem;
+  margin: 2rem 2rem 0rem 2rem;
 }
 
 .formField {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .flagContainer {
-    background-color: white;
-    border-radius: 5px;
-    height: 40px;
-    color: black;
+  background-color: white;
+  border-radius: 5px;
+  height: 40px;
+  color: black;
 }
 
 .footer {
-    text-align: center;
-    margin: 1rem 0rem 0rem 0rem;
-    color: blue;
+  text-align: center;
+  margin: 1rem 0rem 0rem 0rem;
+  color: blue;
 }
 
 .error {
-    background: #ffdddd !important;
+  background: #ffdddd !important;
 }
 
 .correct {
-    background: #c9ffad !important;
+  background: #c9ffad !important;
 }
 
 .normal {
-    background: #ffffff !important;
+  background: #ffffff !important;
 }
 
 .submitContainer {
-    text-align: center;
-    background: white;
-    border-radius: 5px;
-    margin: 2rem 1rem 1rem 1rem;
+  text-align: center;
+  background: white;
+  border-radius: 5px;
+  margin: 2rem 1rem 1rem 1rem;
+}
+
+.linkButton {
+  text-decoration: none;
 }
