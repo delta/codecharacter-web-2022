@@ -357,7 +357,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 47
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -381,7 +381,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 49
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -405,7 +405,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 55
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -429,7 +429,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 57
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -453,7 +453,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 35
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -477,7 +477,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 65
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -501,7 +501,7 @@ paths:
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                           coinsUsed: 100
-                          destruction: 15
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
@@ -856,6 +856,18 @@ paths:
                       parentRevision: 123e4567-e89b-12d3-a456-426614174113
                       createdAt: '2019-08-24T14:15:22Z'
                     - id: 123e4567-e89b-12d3-a456-426614174003
+                      map: 0000\n0010\n0100\n1000\n\n1003
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174114
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174004
+                      map: 0000\n0010\n0100\n1000\n\n1001
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174112
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174005
+                      map: 0000\n0010\n0100\n1000\n\n1002
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174113
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174006
                       map: 0000\n0010\n0100\n1000\n\n1003
                       parentRevision: 123e4567-e89b-12d3-a456-426614174114
                       createdAt: '2019-08-24T14:15:22Z'
