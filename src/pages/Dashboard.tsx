@@ -1,7 +1,6 @@
 import { MapDesignerComponent } from '@codecharacter-2022/map-designer';
 import { RendererComponent } from '@codecharacter-2022/renderer';
 import { useEffect } from 'react';
-import { fetchBattleTv } from '../components/BattleTV/battleTvSlice';
 import { useAppDispatch } from '../store/hooks';
 
 export default function Dashboard(): JSX.Element {

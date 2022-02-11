@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 
+export interface BattleTvInterFace {
+  loading: boolean;
+  hasErrors: boolean;
+  battletv: never[];
+}
+
 export const initialState = {
   loading: false,
   hasErrors: false,
@@ -30,15 +36,16 @@ export const { getBattleTv, getBattleTvSuccess, getBattleTvFailure } =
   battleTvSlice.actions;
 
 // A selector
-export const battleTvSelector = (state: RootState) => state.battletv;
+export const battleTvSelector = (state: RootState): BattleTvInterFace =>
+  state.battletv;
 
 // The reducer
 export default battleTvSlice.reducer;
 
 // Asynchronous thunk action
 export function fetchBattleTv() {
-  return async dispatch => {
-    dispatch(getBattleTv());
+  return async useAppDispatch => {
+    useAppDispatch(getBattleTv());
 
     try {
       const response = await fetch(
@@ -46,9 +53,9 @@ export function fetchBattleTv() {
       );
       const data = await response.json();
 
-      dispatch(getBattleTvSuccess(data));
+      useAppDispatch(getBattleTvSuccess(data));
     } catch (error) {
-      dispatch(getBattleTvFailure());
+      useAppDispatch(getBattleTvFailure());
     }
   };
 }

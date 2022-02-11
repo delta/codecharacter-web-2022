@@ -2,8 +2,27 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import styles from './BattleTV.module.css';
-import { battleTvSelector } from './battleTvSlice';
-import { useAppSelector } from '../../store/hooks';
+import { battleTvSelector, fetchBattleTv } from './BattleTvSlice';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+
+export interface rowInterface {
+  id: string;
+  games: [
+    {
+      gameVerdict: 'PLAYER1' | 'PLAYER2' | 'TIE';
+      coinsUsed: number;
+      destruction: number;
+    },
+  ];
+  user1: {
+    avatarId: string;
+    name: string;
+  };
+  user2: {
+    avatarId: string;
+    name: string;
+  };
+}
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -13,6 +32,13 @@ function PaginatedItems() {
   const itemsPerPage = 4;
 
   const { battletv, loading, hasErrors } = useAppSelector(battleTvSelector);
+
+  // initialize the redux hook
+  const dispatch = useAppDispatch();
+
+  if (battletv.length === 0) {
+    dispatch(fetchBattleTv());
+  }
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -34,7 +60,7 @@ function PaginatedItems() {
         ) : (
           <>
             {currentItems &&
-              currentItems.map(row => (
+              currentItems.map((row: rowInterface) => (
                 <div className={styles.item} key={row.id}>
                   <div
                     className={styles.battlecard}
