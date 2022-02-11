@@ -1,39 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Notification } from '@codecharacter-2022/client';
 import styles from './Notifs.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { getNotifAction } from '../../store/Notifs/NotifSlice';
 
 const Notifs: React.FunctionComponent = () => {
-  const [notifs, setNotifs] = useState([]);
   const notifModalRef = useRef<HTMLDivElement>(null);
   const notifIconRef = useRef<HTMLDivElement>(null);
-
-  interface Notif {
-    id: string;
-    title: string;
-    content: string;
-    createdAt: string;
-    read: boolean;
-  }
+  const notifs = useAppSelector(state => state.notifs.notifs);
+  const hookDispatch = useAppDispatch();
 
   useEffect(() => {
-    fetch(
-      'https://stoplight.io/mocks/rinish-api-testbed/codecharacter/14036190/user/notifications',
-    )
-      .then(res => res.json())
-      .then(data => {
-        setNotifs(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    hookDispatch(getNotifAction);
   }, []);
 
   const toggleNotifModal = () => {
     notifModalRef.current?.classList.toggle(styles.notifModalShow);
     notifIconRef.current?.classList.toggle(styles.notifIconShow);
   };
-
   return (
     <>
       <div
@@ -44,7 +30,7 @@ const Notifs: React.FunctionComponent = () => {
         <FontAwesomeIcon icon={faBell} />
       </div>
       <div className={styles.notifModal} ref={notifModalRef}>
-        {notifs.map((notif: Notif) => {
+        {notifs.map((notif: Notification) => {
           return (
             <div
               className={`${styles.notif} ${
