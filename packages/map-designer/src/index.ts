@@ -1,11 +1,4 @@
-import { MapDesigner } from './MapDesigner';
-import { createComponent } from '@lit-labs/react';
-import * as React from 'react';
+import MapDesignerComponent from './MapDesignerComponent';
+import { MapDesignerUtils } from './MapDesignerUtils';
 
-const MapDesignerComponent = createComponent(
-  React,
-  'cc-map-designer',
-  MapDesigner,
-);
-
-export { MapDesignerComponent };
+export { MapDesignerComponent, MapDesignerUtils };

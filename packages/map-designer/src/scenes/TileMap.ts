@@ -1,0 +1,358 @@
+import Phaser from 'phaser';
+import { Pan, Pinch } from 'phaser3-rex-plugins/plugins/gestures.js';
+import Tower from '../config/Tower.js';
+import TowerConfig from '../config/TowerConfig.js';
+import { events, MapDesignerEvents } from '../events/EventEmitter.js';
+import { Parameters } from '../Parameters.js';
+
+enum SelectedObjectType {
+  TOWER,
+  ERASER,
+  MOVE,
+}
+
+export class TileMap extends Phaser.Scene {
+  _selectedObjectType = SelectedObjectType.TOWER;
+
+  _selectedTower: Tower = TowerConfig.towers[0];
+
+  controls!: Phaser.Cameras.Controls.SmoothedKeyControl;
+
+  map!: Phaser.Tilemaps.Tilemap;
+
+  groundLayer!: Phaser.Tilemaps.TilemapLayer;
+
+  towerLayer!: Phaser.Tilemaps.TilemapLayer;
+
+  coinsUsed = 0;
+
+  constructor() {
+    super({
+      key: 'TileMap',
+    });
+  }
+
+  preload(): void {
+    this.load.image('tile', '/assets/tile.png');
+    TowerConfig.towers.forEach(tower => {
+      this.load.image(`${tower.name}tile`, `/assets/${tower.asset}`);
+    });
+    this.load.tilemapTiledJSON('map', '/assets/isometric-surface.json');
+  }
+
+  create(): void {
+    this.map = this.add.tilemap('map');
+
+    const landscapeTile = this.map.addTilesetImage('tile.png', 'tile');
+    this.groundLayer = this.map.createLayer('Ground', landscapeTile, 0, 0);
+
+    const towerTiles = TowerConfig.towers.map(tower =>
+      this.map.addTilesetImage(tower.asset, `${tower.name}tile`),
+    );
+
+    this.towerLayer = this.map.createLayer('Towers', towerTiles, 0, 0);
+
+    this.groundLayer.setCullPadding(6, 6);
+    this.towerLayer.setCullPadding(6, 6);
+
+    events.on(MapDesignerEvents.TOWER_SELECTED, (tower: Tower) => {
+      this._selectedObjectType = SelectedObjectType.TOWER;
+      this._selectedTower = tower;
+    });
+
+    events.on(MapDesignerEvents.ERASER_SELECTED, () => {
+      this._selectedObjectType = SelectedObjectType.ERASER;
+    });
+
+    events.on(MapDesignerEvents.MOVE_SELECTED, () => {
+      this._selectedObjectType = SelectedObjectType.MOVE;
+    });
+
+    events.on(MapDesignerEvents.LOAD_MAP, (mapData: Array<Array<number>>) => {
+      this._loadMap(mapData);
+    });
+
+    const cursors = this.input.keyboard.createCursorKeys();
+
+    const controlConfig = {
+      camera: this.cameras.main,
+      left: cursors.left,
+      right: cursors.right,
+      up: cursors.up,
+      down: cursors.down,
+      zoomIn: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
+      zoomOut: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
+      acceleration: 0.04,
+      drag: 0.0005,
+      maxSpeed: 0.7,
+    };
+
+    this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(
+      controlConfig,
+    );
+
+    const pinch = new Pinch(this);
+    const pan = new Pan(this);
+    const camera = this.cameras.main;
+    camera.zoom = 0.5;
+    pinch.on(
+      'pinch',
+      () => {
+        if (this._selectedObjectType === SelectedObjectType.MOVE) {
+          const {
+            scaleFactor,
+            centerX,
+            centerY,
+            movementCenterX,
+            movementCenterY,
+          } = pinch;
+          const oldZoom = camera.zoom;
+          const newZoom = oldZoom * scaleFactor;
+
+          const { width, height } = this.game.canvas;
+          const xFromCenter = centerX - width / 2;
+          const yFromCenter = centerY - height / 2;
+
+          camera.scrollX +=
+            xFromCenter / oldZoom -
+            xFromCenter / newZoom -
+            movementCenterX * newZoom;
+          camera.scrollY +=
+            yFromCenter / oldZoom -
+            yFromCenter / newZoom -
+            movementCenterY * newZoom;
+          camera.setZoom(newZoom);
+        }
+      },
+      this,
+    );
+
+    pan.on(
+      'pan',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (newPan: any) => {
+        const { dx, dy } = newPan;
+        if (
+          this.input.activePointer.middleButtonDown() ||
+          this._selectedObjectType === SelectedObjectType.MOVE
+        ) {
+          camera.scrollX -= dx / camera.zoom;
+          camera.scrollY -= dy / camera.zoom;
+        }
+      },
+      this,
+    );
+
+    this.input.on(
+      Phaser.Input.Events.POINTER_MOVE,
+      (pointer: Phaser.Input.Pointer) => {
+        const tile = this.map.getTileAtWorldXY(
+          pointer.worldX - Parameters.mapTileOffsetX,
+          pointer.worldY - Parameters.mapTileOffsetY,
+          false,
+          camera,
+          this.groundLayer,
+        );
+        if (tile && this.game.device.os.desktop) {
+          this.tweens.addCounter({
+            from: 200,
+            to: 255,
+            duration: 500,
+            onUpdate(tween) {
+              const value = Math.floor(tween.getValue());
+              tile.tint = Phaser.Display.Color.GetColor(value, value, value);
+            },
+          });
+        }
+        if (tile && this.input.activePointer.primaryDown) {
+          this._performActionAt(tile.x, tile.y);
+        }
+      },
+    );
+
+    this.input.on(
+      Phaser.Input.Events.POINTER_DOWN,
+      (pointer: Phaser.Input.Pointer) => {
+        const tile = this.map.getTileAtWorldXY(
+          pointer.worldX - Parameters.mapTileOffsetX,
+          pointer.worldY - Parameters.mapTileOffsetY,
+          false,
+          camera,
+          this.groundLayer,
+        );
+        if (
+          tile &&
+          (this.input.activePointer.leftButtonDown() ||
+            this.input.activePointer.wasTouch) &&
+          !pinch.isPinched &&
+          !pan.isPanned
+        ) {
+          this._performActionAt(tile.x, tile.y);
+        }
+      },
+    );
+
+    this.input.on(
+      Phaser.Input.Events.POINTER_WHEEL,
+      (pointer: Phaser.Input.Pointer) => {
+        const oldZoom = camera.zoom;
+        const newZoom = oldZoom * (pointer.deltaY > 0 ? 0.9 : 1.1);
+
+        const { width, height } = this.game.canvas;
+        const xFromCenter = pointer.x - width / 2;
+        const yFromCenter = pointer.y - height / 2;
+
+        camera.setZoom(newZoom);
+        camera.scrollX += xFromCenter / oldZoom - xFromCenter / newZoom;
+        camera.scrollY += yFromCenter / oldZoom - yFromCenter / newZoom;
+      },
+    );
+
+    events.emit(MapDesignerEvents.COINS_CHANGED, Parameters.totalCoins);
+
+    const storedMapData = localStorage.getItem(Parameters.mapLocalStorageKey);
+    if (storedMapData) {
+      this._loadMap(JSON.parse(storedMapData));
+    } else {
+      this._loadMap(this._getEmptyMap());
+    }
+
+    events.on(MapDesignerEvents.CLEAR_MAP, () => {
+      this._loadMap(this._getEmptyMap());
+    });
+
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.input.off(Phaser.Input.Events.POINTER_UP);
+      this.input.off(Phaser.Input.Events.POINTER_MOVE);
+      this.input.off(Phaser.Input.Events.POINTER_DOWN);
+      this.input.off(Phaser.Input.Events.POINTER_WHEEL);
+    });
+  }
+
+  private _performActionAt(x: number, y: number) {
+    if (this._selectedObjectType === SelectedObjectType.MOVE) {
+      return;
+    }
+    if (
+      this._selectedObjectType === SelectedObjectType.TOWER &&
+      this._selectedTower.price > Parameters.totalCoins - this.coinsUsed
+    ) {
+      return;
+    }
+    const existingTileIndex = this.map.getTileAt(
+      x,
+      y,
+      false,
+      this.towerLayer,
+    )?.index;
+    this.map.putTileAt(
+      this._selectedObjectType === SelectedObjectType.TOWER
+        ? this._selectedTower.tileId
+        : 0,
+      x,
+      y,
+      true,
+      this.towerLayer,
+    );
+    const addedTile = this.map.getTileAt(x, y, false, this.towerLayer);
+    addedTile.width = Parameters.mapTileWidth;
+    addedTile.height = Parameters.mapTileHeight;
+
+    if (existingTileIndex !== addedTile.index) {
+      this._updateMap();
+    }
+  }
+
+  private _updateMap() {
+    const mapData: Array<Array<number>> = [];
+    for (let y = 0; y < Parameters.mapHeight; y++) {
+      const row: Array<number> = [];
+      for (let x = 0; x < Parameters.mapWidth; x++) {
+        const tile = this.map.getTileAt(x, y, false, this.towerLayer);
+        row.push(
+          tile
+            ? TowerConfig.towers.findIndex(
+                tower => tower.tileId === tile.index,
+              ) + 1
+            : 0,
+        );
+      }
+      mapData.push(row);
+    }
+    events.emit(MapDesignerEvents.MAP_DATA_CHANGED, mapData);
+    localStorage.setItem(
+      Parameters.mapLocalStorageKey,
+      JSON.stringify(mapData),
+    );
+
+    let coins = 0;
+    for (let y = 0; y < Parameters.mapHeight; y++) {
+      for (let x = 0; x < Parameters.mapWidth; x++) {
+        const tile = this.map.getTileAt(x, y, false, this.towerLayer);
+        if (tile) {
+          const towerType = TowerConfig.towers.find(
+            (tower: Tower) => tower.tileId === tile.index,
+          );
+          coins += towerType?.price || 0;
+        }
+      }
+    }
+    this.coinsUsed = coins;
+    events.emit(MapDesignerEvents.COINS_CHANGED, Parameters.totalCoins - coins);
+  }
+
+  private _getEmptyMap() {
+    const mapData: Array<Array<number>> = [];
+    for (let y = 0; y < Parameters.mapHeight; y++) {
+      const row: Array<number> = [];
+      for (let x = 0; x < Parameters.mapWidth; x++) {
+        row.push(0);
+      }
+      mapData.push(row);
+    }
+    return mapData;
+  }
+
+  private _loadMap(mapData: Array<Array<number>>): void {
+    for (let y = 0; y < Parameters.mapHeight; y++) {
+      for (let x = 0; x < Parameters.mapWidth; x++) {
+        const tile = this.map.getTileAt(x, y, false, this.towerLayer);
+        if (tile) {
+          this.map.removeTileAt(x, y, true, true, this.towerLayer);
+        }
+      }
+    }
+    localStorage.setItem(
+      Parameters.mapLocalStorageKey,
+      JSON.stringify(mapData),
+    );
+
+    let coins = 0;
+    for (let y = 0; y < Parameters.mapHeight; y++) {
+      for (let x = 0; x < Parameters.mapWidth; x++) {
+        const tile = mapData[y][x];
+        if (tile >= 1) {
+          const tower = tile - 1;
+          this.map.putTileAt(
+            TowerConfig.towers[tower].tileId,
+            x,
+            y,
+            true,
+            this.towerLayer,
+          );
+          const addedTile = this.map.getTileAt(x, y, false, this.towerLayer);
+          addedTile.width = Parameters.mapTileWidth;
+          addedTile.height = Parameters.mapTileHeight;
+          coins += TowerConfig.towers[tower].price;
+        }
+      }
+    }
+
+    this.coinsUsed = coins;
+    events.emit(MapDesignerEvents.COINS_CHANGED, Parameters.totalCoins - coins);
+  }
+
+  update(_: number, delta: number): void {
+    this.controls.update(delta);
+  }
+}
