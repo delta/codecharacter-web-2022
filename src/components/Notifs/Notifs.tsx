@@ -4,16 +4,19 @@ import { Notification } from '@codecharacter-2022/client';
 import styles from './Notifs.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { getNotifAction } from '../../store/Notifs/NotifSlice';
+import {
+  getNotifAction,
+  notifs as notifications,
+} from '../../store/Notifs/NotifSlice';
 
 const Notifs: React.FunctionComponent = () => {
   const notifModalRef = useRef<HTMLDivElement>(null);
   const notifIconRef = useRef<HTMLDivElement>(null);
-  const notifs = useAppSelector(state => state.notifs.notifs);
+  const notifs = useAppSelector(notifications);
   const hookDispatch = useAppDispatch();
 
   useEffect(() => {
-    hookDispatch(getNotifAction);
+    hookDispatch(getNotifAction());
   }, []);
 
   const toggleNotifModal = () => {
