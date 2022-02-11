@@ -2,46 +2,41 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import styles from './BattleTV.module.css';
+import { battleTvSelector, fetchBattleTv } from './battleTvSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [items, setItems] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const itemsPerPage = 4;
 
+  // initialize the redux hook
+  const dispatch = useAppDispatch();
+  const { battletv, loading, hasErrors } = useAppSelector(battleTvSelector);
+
+  // dispatch our thunk when component first mounts
   useEffect(() => {
-    setIsLoaded(false);
-    fetch(
-      `https://stoplight.io/mocks/rinish-api-testbed/codecharacter/14036190/user/matches`,
-    )
-      .then(res => res.json())
-      .then(data => {
-        setItems(data);
-      })
-      .finally(() => {
-        setIsLoaded(true);
-      });
-  }, []);
+    dispatch(fetchBattleTv());
+  }, [dispatch]);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(items.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, items]);
+    setCurrentItems(battletv.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(battletv.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, battletv]);
 
   const handlePageClick = (event: { selected: number }) => {
     console.log(event);
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % battletv.length;
     setItemOffset(newOffset);
   };
 
   return (
     <>
       <>
-        {!isLoaded ? (
+        {loading || hasErrors ? (
           <div>Loading...</div>
         ) : (
           <>
