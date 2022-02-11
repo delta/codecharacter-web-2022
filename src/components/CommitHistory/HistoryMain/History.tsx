@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import CommitHistory from '../CommitTree/CommitHistroy';
@@ -11,9 +10,10 @@ import {
   MapApi,
 } from '@codecharacter-2022/client';
 import {
-  changedEditorCode,
-  changedEditorMap,
-} from '../../../actions/HistoryEditorActions';
+  changeHistoryEditorMap,
+  changeHistoryEditorCode,
+} from '../../../store/historyEditor/historyEditorSlice';
+import { useAppDispatch } from '../../../store/hooks';
 import styles from './History.module.css';
 
 export default function History(): JSX.Element {
@@ -23,7 +23,7 @@ export default function History(): JSX.Element {
   const [currentCode, setCurrentCode] = useState('');
   const [currentMap, setCurrentMap] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const codeApi = new CodeApi(apiConfig);
@@ -65,8 +65,11 @@ export default function History(): JSX.Element {
   };
 
   const changesEditorDetails = () => {
-    dispatch(changedEditorCode(currentCode));
-    dispatch(changedEditorMap(currentMap));
+    if (BigButton == 'Code' && currentCode != '') {
+      dispatch(changeHistoryEditorCode(currentCode));
+    } else if (BigButton == 'Map' && currentMap != '') {
+      dispatch(changeHistoryEditorMap(currentMap));
+    }
   };
 
   return (
@@ -81,8 +84,9 @@ export default function History(): JSX.Element {
             completeMapHistory.length > 0 ? (
               <CommitHistory
                 commitID={commitID}
-                codeHistory={completeCodeHistroy}
-                mapHistory={completeMapHistory}
+                commitHistoryDetails={
+                  BigButton == 'Code' ? completeCodeHistroy : completeMapHistory
+                }
               />
             ) : (
               <h1 className={styles.noCommitDataHeader}>Loading...</h1>

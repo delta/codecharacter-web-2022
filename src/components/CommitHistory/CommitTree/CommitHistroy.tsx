@@ -9,8 +9,7 @@ import './CommitHistory.css';
 
 type PropsType = {
   commitID: (commitID: string) => void;
-  codeHistory: CodeRevision[];
-  mapHistory: GameMapRevision[];
+  commitHistoryDetails: CodeRevision[] | GameMapRevision[];
 };
 
 export default function CommitHistory(props: PropsType): JSX.Element {
@@ -22,18 +21,19 @@ export default function CommitHistory(props: PropsType): JSX.Element {
   const [commitNumber, setCommitNumber] = useState('0');
 
   return (
-    <VerticalTimeline layout={'1-column'} animate={false}>
-      {props.codeHistory && props.codeHistory.length > 0 ? (
-        props.codeHistory.map((eachCommit, index) => {
+    <VerticalTimeline layout={'1-column'} animate={true}>
+      {props.commitHistoryDetails && props.commitHistoryDetails.length > 0 ? (
+        props.commitHistoryDetails.map((eachCommit, index) => {
           return (
             <VerticalTimelineElement
-              key={eachCommit.createdAt.toString()}
+              key={eachCommit.id.toString()}
               className="vertical-timeline-element--work"
               contentStyle={{ background: '#242a3c', color: '#fff' }}
               contentArrowStyle={{
                 borderRight: '7px solid  rgb(33, 150, 243)',
               }}
-              date={eachCommit.createdAt.toString()}
+              // date={eachCommit.createdAt.toString()}
+              date="11-02-2022"
               iconStyle={
                 commitNumber == eachCommit.id
                   ? CircleIcon
