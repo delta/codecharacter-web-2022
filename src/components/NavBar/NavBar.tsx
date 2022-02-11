@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
 // import toast from 'react-hot-toast';
@@ -12,7 +12,6 @@ import {
   user,
 } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { useEffect } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -25,10 +24,10 @@ const NavBar: React.FunctionComponent = () => {
   }, [getUser]);
   useEffect(() => {
     if (loggedInStatus == false && logoutStatus) {
+      handleClose();
       navigate('/login', { replace: true });
     }
   }, [loggedInStatus]);
-  // const bell = faBell as IconProp;
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
     isOpen(true);
