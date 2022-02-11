@@ -16,7 +16,7 @@ import * as runtime from '../runtime';
 import { CreateMatchRequest, GenericError, Match } from '../models';
 
 export interface CreateMatchOperationRequest {
-  createMatchRequest?: CreateMatchRequest;
+  createMatchRequest: CreateMatchRequest;
 }
 
 /**
@@ -29,7 +29,7 @@ export interface MatchApiInterface {
   /**
    * Initiate a match by current user
    * @summary Create match
-   * @param {CreateMatchRequest} [createMatchRequest]
+   * @param {CreateMatchRequest} createMatchRequest
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof MatchApiInterface
@@ -44,7 +44,7 @@ export interface MatchApiInterface {
    * Create match
    */
   createMatch(
-    createMatchRequest?: CreateMatchRequest,
+    createMatchRequest: CreateMatchRequest,
     initOverrides?: RequestInit,
   ): Promise<void>;
 
@@ -95,6 +95,16 @@ export class MatchApi extends runtime.BaseAPI implements MatchApiInterface {
     requestParameters: CreateMatchOperationRequest,
     initOverrides?: RequestInit,
   ): Promise<runtime.ApiResponse<void>> {
+    if (
+      requestParameters.createMatchRequest === null ||
+      requestParameters.createMatchRequest === undefined
+    ) {
+      throw new runtime.RequiredError(
+        'createMatchRequest',
+        'Required parameter requestParameters.createMatchRequest was null or undefined when calling createMatch.',
+      );
+    }
+
     const queryParameters: any = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
@@ -128,7 +138,7 @@ export class MatchApi extends runtime.BaseAPI implements MatchApiInterface {
    * Create match
    */
   async createMatch(
-    createMatchRequest?: CreateMatchRequest,
+    createMatchRequest: CreateMatchRequest,
     initOverrides?: RequestInit,
   ): Promise<void> {
     await this.createMatchRaw(
