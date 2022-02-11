@@ -1,0 +1,57 @@
+.notifIconContainer {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+.notifIconShow {
+  background-color: #3b4d7c;
+}
+.notifModal {
+  position: absolute;
+  display: none;
+  height: 100vh;
+  max-height: 400px;
+  max-width: 350px;
+  width: 70vw;
+  background-color: #3b4d7c;
+  top: 30px;
+  left: -20vw;
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px 6px rgba(0, 0, 0, 0.2);
+  overflow-y: scroll;
+}
+.notifModal::-webkit-scrollbar {
+  display: none;
+}
+.notifModalShow {
+  display: block;
+}
+.notif {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
+  padding-left: 0.7rem;
+  background-color: #2b3869;
+  border-radius: 4px;
+  box-sizing: content-box;
+}
+.notifUnRead {
+  border-left: 2.5px solid white;
+}
+.notifLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.notifHeader {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+.notifTime {
+  font-size: 0.8rem;
+}
