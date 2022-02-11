@@ -25,6 +25,9 @@ interface register {
   isRegistered: boolean;
   isloggedIn: boolean;
   isSuccess: boolean;
+  isSuccessCreditonals: boolean;
+  isLogout: boolean;
+  error: boolean;
 }
 
 const initialState: register = {
@@ -42,6 +45,9 @@ const initialState: register = {
   isRegistered: false,
   isloggedIn: false,
   isSuccess: false,
+  isSuccessCreditonals: false,
+  isLogout: false,
+  error: false,
 };
 
 export const registerAction = createAsyncThunk(
@@ -82,12 +88,15 @@ export const getUserDetailsAction = createAsyncThunk(
 
 export const changeUserDetailsAction = createAsyncThunk(
   'user/chnageUserDetails',
-  async (details: { userName: string; college: string; country: string }) => {
+  async (
+    details: { userName: string; college: string; country: string },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await ChangeUserDetails(details);
       return response;
     } catch (error) {
-      throw error;
+      throw rejectWithValue('error');
     }
   },
 );
@@ -114,6 +123,16 @@ export const UserSlice = createSlice({
     switchRegister: state => {
       state.isRegistered = false;
     },
+    logout: state => {
+      state.user = initialState.user;
+      state.isloggedIn = initialState.isloggedIn;
+      state.loading = initialState.loading;
+      state.isSuccess = initialState.isSuccess;
+      state.isLogout = true;
+    },
+    creditionals: state => {
+      state.isSuccessCreditonals = false;
+    },
   },
   extraReducers: buider => {
     buider
@@ -134,7 +153,6 @@ export const UserSlice = createSlice({
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.user.email = action.payload.user.email;
-        state.user.password = action.payload.user.password;
         state.loading = false;
         state.isloggedIn = true;
       })
@@ -175,23 +193,30 @@ export const UserSlice = createSlice({
       })
       .addCase(changeUserCreditionalsAction.pending, state => {
         state.loading = true;
-        state.isSuccess = false;
+        state.isSuccessCreditonals = false;
       })
-      .addCase(changeUserCreditionalsAction.fulfilled, (state, action) => {
+      .addCase(changeUserCreditionalsAction.fulfilled, state => {
         state.loading = false;
-        state.isSuccess = true;
-        state.user.password = action.payload;
+        state.isSuccessCreditonals = true;
+        state.error = false;
       })
       .addCase(changeUserCreditionalsAction.rejected, state => {
         state.loading = false;
-        state.isSuccess = false;
+        state.isSuccessCreditonals = false;
+        state.error = true;
       });
   },
 });
-export const { switchRegister } = UserSlice.actions;
+export const { switchRegister, logout, creditionals } = UserSlice.actions;
 export const user = (state: RootState): user => state.user.user;
 export const loading = (state: RootState): boolean => state.user.loading;
 export const isRegistered = (state: RootState): boolean =>
   state.user.isRegistered;
 export const isloggedIn = (state: RootState): boolean => state.user.isloggedIn;
+export const isLogout = (state: RootState): boolean => state.user.isLogout;
+export const isCreditionalError = (state: RootState): boolean =>
+  state.user.error;
+export const isSuccess = (state: RootState): boolean =>
+  state.user.isSuccessCreditonals;
+
 export default UserSlice.reducer;

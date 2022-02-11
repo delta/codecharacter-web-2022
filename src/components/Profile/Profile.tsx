@@ -5,17 +5,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactFlagsSelect from 'react-flags-select';
 import styles from './profile.module.css';
 import classnames from 'classnames';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import {
+  faEye,
+  faEyeSlash,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   getUserDetailsAction,
   user,
   changeUserDetailsAction,
   changeUserCreditionalsAction,
   loading,
+  isCreditionalError,
+  isSuccess,
+  logout,
+  creditionals,
 } from '../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const Profile = (): JSX.Element => {
+  const navigate = useNavigate();
   const [show, isShow] = useState(true);
   const [selected, setSelected] = useState('IN');
   const [password, setpassword] = useState('');
@@ -34,9 +45,77 @@ const Profile = (): JSX.Element => {
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [oldpasswordError, isoldpasswordError] = useState(false);
-  const getUser = useAppSelector(user);
-  const dispatch = useAppDispatch();
+  const [passwordType, setPasswordType] = useState<{
+    oldpassword: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    oldpassword: 'password',
+    password: 'password',
+    confirmPassword: 'password',
+  });
+  const err = useAppSelector(isCreditionalError);
+  const oldpasswordTypeAction = () => {
+    if (passwordType.oldpassword === 'password') {
+      setPasswordType({
+        oldpassword: 'text',
+        password: passwordType.password,
+        confirmPassword: passwordType.confirmPassword,
+      });
+    } else {
+      setPasswordType({
+        oldpassword: 'password',
+        password: passwordType.password,
+        confirmPassword: passwordType.confirmPassword,
+      });
+    }
+  };
+
+  const passwordTypeAction = () => {
+    if (passwordType.password === 'password') {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: 'text',
+        confirmPassword: passwordType.confirmPassword,
+      });
+    } else {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: 'password',
+        confirmPassword: passwordType.confirmPassword,
+      });
+    }
+  };
+
+  const confirmpasswordTypeAction = () => {
+    if (passwordType.confirmPassword === 'password') {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: passwordType.password,
+        confirmPassword: 'text',
+      });
+    } else {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: passwordType.password,
+        confirmPassword: 'password',
+      });
+    }
+  };
   const loadingStatus = useAppSelector(loading);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (err) isoldpasswordError(true);
+  }, [loadingStatus, err]);
+  const success = useAppSelector(isSuccess);
+  useEffect(() => {
+    if (submitoldPassword && err == false) {
+      dispatch(logout());
+      navigate('/login', { replace: true });
+    }
+  }, [success]);
+  const getUser = useAppSelector(user);
   useEffect(() => {
     dispatch(getUserDetailsAction());
   }, [getUser]);
@@ -62,12 +141,10 @@ const Profile = (): JSX.Element => {
 
   const hanldeOldPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOldpassword(e.target.value);
-    issubmitoldPassword(true);
-    if (
-      !(oldPassword === getUser.password || e.target.value === getUser.password)
-    )
-      isoldpasswordError(true);
-    else isoldpasswordError(false);
+    if (submitoldPassword) {
+      if (e.target.value.length < 8) isoldpasswordError(true);
+      else isoldpasswordError(false);
+    }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +188,7 @@ const Profile = (): JSX.Element => {
   };
 
   const handleCreditionals = () => {
+    issubmitoldPassword(true);
     dispatch(
       changeUserCreditionalsAction({
         oldPassword: oldPassword,
@@ -236,7 +314,7 @@ const Profile = (): JSX.Element => {
                       >
                         Save Changes{' '}
                         {loadingStatus ? (
-                          <FontAwesomeIcon icon={faSpinner} />
+                          <FontAwesomeIcon icon={faSpinner as IconProp} />
                         ) : (
                           <></>
                         )}
@@ -250,20 +328,39 @@ const Profile = (): JSX.Element => {
                       controlId="formBasicoldPassword"
                     >
                       <Form.Label>Old Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Old Password"
-                        value={oldPassword}
-                        onChange={hanldeOldPasswordChange}
-                        className={
-                          submitoldPassword
-                            ? oldpasswordError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                      />
-                      {oldpasswordError ? (
+                      <div className={styles.eyeContainer}>
+                        <Form.Control
+                          type={passwordType.oldpassword}
+                          placeholder="Old Password"
+                          value={oldPassword}
+                          onChange={hanldeOldPasswordChange}
+                          className={
+                            submitoldPassword
+                              ? oldpasswordError && err
+                                ? styles.error
+                                : oldpasswordError == false && err == false
+                                ? styles.correct
+                                : styles.normal
+                              : styles.normal
+                          }
+                        />
+                        <div className={styles.eye}>
+                          {passwordType.oldpassword === 'password' ? (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEyeSlash as IconProp}
+                              onClick={oldpasswordTypeAction}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEye as IconProp}
+                              onClick={oldpasswordTypeAction}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      {oldpasswordError && err ? (
                         <AlertMessage
                           err={oldpasswordError}
                           content={'Incorrect Old Password'}
@@ -277,19 +374,36 @@ const Profile = (): JSX.Element => {
                       controlId="formBasicPassword"
                     >
                       <Form.Label>Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        className={
-                          submitPassword
-                            ? passwordError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                      />
+                      <div className={styles.eyeContainer}>
+                        <Form.Control
+                          type={passwordType.password}
+                          placeholder="Password"
+                          value={password}
+                          onChange={handlePasswordChange}
+                          className={
+                            submitPassword
+                              ? passwordError
+                                ? styles.error
+                                : styles.correct
+                              : styles.normal
+                          }
+                        />
+                        <div className={styles.eye}>
+                          {passwordType.password === 'password' ? (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEyeSlash as IconProp}
+                              onClick={passwordTypeAction}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEye as IconProp}
+                              onClick={passwordTypeAction}
+                            />
+                          )}
+                        </div>
+                      </div>
                       <PasswordAlertMessage
                         err={submitPassword && passwordError}
                         variantColor="danger"
@@ -300,19 +414,36 @@ const Profile = (): JSX.Element => {
                       controlId="formBasicConfirmPassword"
                     >
                       <Form.Label>Confirm password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        className={
-                          submitconfirmPassword
-                            ? confirmpasswordError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                        onChange={handleConfirmPasswordChange}
-                      />
+                      <div className={styles.eyeContainer}>
+                        <Form.Control
+                          type={passwordType.confirmPassword}
+                          placeholder="Confirm Password"
+                          value={confirmPassword}
+                          className={
+                            submitconfirmPassword
+                              ? confirmpasswordError
+                                ? styles.error
+                                : styles.correct
+                              : styles.normal
+                          }
+                          onChange={handleConfirmPasswordChange}
+                        />
+                        <div className={styles.eye}>
+                          {passwordType.confirmPassword === 'password' ? (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEyeSlash as IconProp}
+                              onClick={confirmpasswordTypeAction}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEye as IconProp}
+                              onClick={confirmpasswordTypeAction}
+                            />
+                          )}
+                        </div>
+                      </div>
                       {confirmpasswordError ? (
                         <AlertMessage
                           err={confirmpasswordError}
@@ -342,7 +473,7 @@ const Profile = (): JSX.Element => {
                       >
                         Submit{' '}
                         {loadingStatus ? (
-                          <FontAwesomeIcon icon={faSpinner} />
+                          <FontAwesomeIcon icon={faSpinner as IconProp} />
                         ) : (
                           <></>
                         )}
@@ -357,6 +488,7 @@ const Profile = (): JSX.Element => {
                     variant="link"
                     onClick={() => {
                       setFormNumber(2);
+                      dispatch(creditionals());
                     }}
                   >
                     Want to Change Credentials

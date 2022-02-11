@@ -91,3 +91,14 @@
   border-radius: 5px;
   margin: 2rem 1rem 1rem 1rem;
 }
+
+.eyeContainer {
+  position: relative;
+}
+
+.eye {
+  color: #242a3c;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}

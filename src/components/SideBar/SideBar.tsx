@@ -10,7 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
-
+import { logout, isloggedIn } from '../../store/User/UserSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const icons = [
   { icon: faCode, route: 'editor', tooltip: 'Code Editor' },
   { icon: faGlobeAsia, route: 'mapdesginer', tooltip: 'Map Designer' },
@@ -22,6 +24,13 @@ const icons = [
 ];
 
 const SideBar: React.FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+  const loggedInStatus = useAppSelector(isloggedIn);
+  const handleLogout = (icon: string) => {
+    if (icon == 'Logout' && loggedInStatus) {
+      dispatch(logout());
+    }
+  };
   return (
     <div className={styles.sideBar}>
       {icons.map(icon => {
@@ -31,7 +40,10 @@ const SideBar: React.FunctionComponent = () => {
               <FontAwesomeIcon
                 className={styles.sideBarIconComponent}
                 title={icon.tooltip}
-                icon={icon.icon}
+                onClick={() => {
+                  handleLogout(icon.tooltip);
+                }}
+                icon={icon.icon as IconProp}
                 size="2x"
               />
             </Link>

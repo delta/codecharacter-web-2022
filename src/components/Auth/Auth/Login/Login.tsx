@@ -6,7 +6,11 @@ import AlertMessage from '../Alert/Alert';
 import styles from '../auth.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import classnames from 'classnames';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEye,
+  faEyeSlash,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 import { BASE_PATH } from '../../../../config/config';
 import {
   loginAction,
@@ -15,6 +19,7 @@ import {
   isloggedIn,
 } from '../../../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -23,6 +28,14 @@ function Login(): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, islogin] = useState(false);
+  const [passwordType, setPasswordType] = useState<string>('password');
+  const passwordTypeAction = () => {
+    if (passwordType === 'password') {
+      setPasswordType('text');
+    } else {
+      setPasswordType('password');
+    }
+  };
   const hookDispatch = useAppDispatch();
   const loadingStatus = useAppSelector(loading);
   const loggedInStatus = useAppSelector(isloggedIn);
@@ -116,19 +129,36 @@ function Login(): JSX.Element {
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={handlePasswordSubmit}
-              className={
-                login
-                  ? passwordError
-                    ? styles.error
-                    : styles.correct
-                  : styles.normal
-              }
-            />
+            <div className={styles.eyeContainer}>
+              <Form.Control
+                type={passwordType}
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordSubmit}
+                className={
+                  login
+                    ? passwordError
+                      ? styles.error
+                      : styles.correct
+                    : styles.normal
+                }
+              />
+              <div className={styles.eye}>
+                {passwordType === 'password' ? (
+                  <FontAwesomeIcon
+                    size="sm"
+                    icon={faEyeSlash as IconProp}
+                    onClick={passwordTypeAction}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    size="sm"
+                    icon={faEye as IconProp}
+                    onClick={passwordTypeAction}
+                  />
+                )}
+              </div>
+            </div>
             {passwordError && login ? (
               <>
                 <AlertMessage
@@ -143,7 +173,11 @@ function Login(): JSX.Element {
           <div className={classnames('d-grid gap-2', styles.submitContainer)}>
             <Button variant="outline-primary" onClick={handleLoginSubmit}>
               Login{' '}
-              {loadingStatus ? <FontAwesomeIcon icon={faSpinner} /> : <></>}
+              {loadingStatus ? (
+                <FontAwesomeIcon icon={faSpinner as IconProp} />
+              ) : (
+                <></>
+              )}
             </Button>
           </div>
         </form>
@@ -157,7 +191,8 @@ function Login(): JSX.Element {
             >
               <Button variant="primary">
                 <div>
-                  <FontAwesomeIcon icon={faGoogle} /> Login with Google
+                  <FontAwesomeIcon icon={faGoogle as IconProp} /> Login with
+                  Google
                 </div>
               </Button>
             </a>
@@ -170,7 +205,8 @@ function Login(): JSX.Element {
             >
               <Button variant="dark">
                 <div>
-                  <FontAwesomeIcon icon={faGithub} /> Login with Github
+                  <FontAwesomeIcon icon={faGithub as IconProp} /> Login with
+                  Github
                 </div>
               </Button>
             </a>

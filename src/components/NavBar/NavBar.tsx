@@ -1,10 +1,32 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.css';
 // import toast from 'react-hot-toast';
-
+import {
+  isloggedIn,
+  isLogout,
+  getUserDetailsAction,
+  user,
+} from '../../store/User/UserSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useEffect } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const NavBar: React.FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const loggedInStatus = useAppSelector(isloggedIn);
+  const logoutStatus = useAppSelector(isLogout);
+  const getUser = useAppSelector(user);
+  useEffect(() => {
+    dispatch(getUserDetailsAction());
+  }, [getUser]);
+  useEffect(() => {
+    if (loggedInStatus == false && logoutStatus) {
+      navigate('/login', { replace: true });
+    }
+  }, [loggedInStatus]);
+  // const bell = faBell as IconProp;
   return (
     <div className={styles.navBar}>
       <div className={styles.branding}>
@@ -12,8 +34,9 @@ const NavBar: React.FunctionComponent = () => {
           <h2 className={styles.navLogo}>Code Character</h2>
         </Link>
       </div>
-      <div className={styles.profileIcons}>
-        {/* <button
+      {loggedInStatus ? (
+        <div className={styles.profileIcons}>
+          {/* <button
           className="toastTest"
           onClick={() => {
             toast.success('Toast Rendered!', {
@@ -24,12 +47,15 @@ const NavBar: React.FunctionComponent = () => {
         >
           Toast
         </button> */}
-        <div className={styles.notifIcon}>
-          <FontAwesomeIcon icon={faBell} />
+          <div className={styles.notifIcon}>
+            <FontAwesomeIcon icon={faBell as IconProp} />
+          </div>
+          <div className={styles.fakeProfileIcon} />
+          <h3 className={styles.profileName}>{getUser.userName}</h3>
         </div>
-        <div className={styles.fakeProfileIcon} />
-        <h3 className={styles.profileName}>blndlyblv</h3>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

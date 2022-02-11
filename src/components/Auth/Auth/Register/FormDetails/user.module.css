@@ -1,25 +1,40 @@
 .levelTitle {
-    text-align: center;
-    margin: 0.5rem 0rem 0.5rem 0rem;
-    font-size: 25px;
-    color: whitesmoke;
+  text-align: center;
+  margin: 0.5rem 0rem 0.5rem 0rem;
+  font-size: 25px;
+  color: whitesmoke;
 }
 
 .error {
-    background: #ffdddd !important;
+  background: #ffdddd !important;
 }
 
 .correct {
-    background: #c9ffad !important;
+  background: #c9ffad !important;
 }
 
 .normal {
-    background: #ffffff !important;
+  background: #ffffff !important;
 }
 
 .alert {
-    min-height: 30px;
-    margin-top: 5px;
-    padding: 0px;
-    padding-left: 5px;
+  min-height: 30px;
+  margin-top: 5px;
+  padding: 0px;
+  padding-left: 5px;
+}
+
+.eyeContainer {
+  position: relative;
+}
+
+.eye {
+  color: #242a3c;
+  position: absolute;
+  bottom: 2px;
+  right: 5px;
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
 }

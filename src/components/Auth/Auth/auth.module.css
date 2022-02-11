@@ -120,3 +120,18 @@
 .normal {
   background: #ffffff !important;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+.eyeContainer {
+  position: relative;
+}
+
+.eye {
+  color: #242a3c;
+  position: absolute;
+  bottom: 2px;
+  right: 5px;
+}

@@ -20,6 +20,7 @@ import {
   isRegistered,
   registerAction,
 } from '../../../../store/User/UserSlice';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 let increment = 1;
 let passCondition = 0;
 export default function Register(): JSX.Element {
@@ -55,11 +56,12 @@ export default function Register(): JSX.Element {
         script.type = 'text/javascript';
         script.src = url;
         script.id = id;
+        script.style.visibility = 'hidden';
         document.body.appendChild(script);
       }
     };
     loadScriptByURL(
-      SITE_KEY,
+      'your site key goes here',
       `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`,
     );
   }, []);
@@ -262,7 +264,6 @@ export default function Register(): JSX.Element {
   };
   const handleRegistration = async () => {
     isCompleted(true);
-
     grecaptcha.ready(() => {
       grecaptcha
         .execute(SITE_KEY, { action: 'submit' })
@@ -356,7 +357,12 @@ export default function Register(): JSX.Element {
                     collegeError={collegeError}
                     submitThird={submitThird}
                   />
-                  <div>
+                  <input
+                    type="hidden"
+                    id="g-recaptcha-response"
+                    name="g-recaptcha-response"
+                  />
+                  <div style={{ visibility: 'hidden', background: 'black' }}>
                     <ReCAPTCHA sitekey={SITE_KEY} theme="dark" />
                   </div>
                   <div className={styles.registerButton}>
@@ -364,7 +370,7 @@ export default function Register(): JSX.Element {
                       <Button variant="outline-success" onClick={handleCollege}>
                         Register{'  '}
                         {loadingStatus ? (
-                          <FontAwesomeIcon icon={faSpinner} />
+                          <FontAwesomeIcon icon={faSpinner as IconProp} />
                         ) : (
                           <></>
                         )}
@@ -399,7 +405,7 @@ export default function Register(): JSX.Element {
                 type="submit"
                 className={styles.previous}
               >
-                <FontAwesomeIcon icon={faChevronLeft} />
+                <FontAwesomeIcon icon={faChevronLeft as IconProp} />
               </Button>
             ) : (
               <></>
@@ -413,7 +419,7 @@ export default function Register(): JSX.Element {
                 onClick={handleNext}
                 className={styles.next}
               >
-                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight as IconProp} />
               </Button>
             ) : (
               <></>

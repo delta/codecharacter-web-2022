@@ -135,7 +135,7 @@ export const ChangeUserCreditionals = (creditionals: {
       })
       .catch(error => {
         if (error instanceof ApiError) {
-          reject();
+          reject({ error: error.message });
         }
       });
   });
