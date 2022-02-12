@@ -21,12 +21,12 @@ import {
 } from '../models';
 
 export interface ActivateUserOperationRequest {
-  userId: number;
+  userId: string;
   activateUserRequest: ActivateUserRequest;
 }
 
 export interface GetRatingHistoryRequest {
-  userId: number;
+  userId: string;
 }
 
 export interface RegisterRequest {
@@ -43,7 +43,7 @@ export interface UserApiInterface {
   /**
    * Activate user by using the token sent via email
    * @summary Activate user
-   * @param {number} userId ID of the user
+   * @param {string} userId ID of the user
    * @param {ActivateUserRequest} activateUserRequest
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -59,7 +59,7 @@ export interface UserApiInterface {
    * Activate user
    */
   activateUser(
-    userId: number,
+    userId: string,
     activateUserRequest: ActivateUserRequest,
     initOverrides?: RequestInit,
   ): Promise<void>;
@@ -67,7 +67,7 @@ export interface UserApiInterface {
   /**
    * Get user rating history
    * @summary Get user rating history
-   * @param {number} userId ID of the user
+   * @param {string} userId ID of the user
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UserApiInterface
@@ -82,7 +82,7 @@ export interface UserApiInterface {
    * Get user rating history
    */
   getRatingHistory(
-    userId: number,
+    userId: string,
     initOverrides?: RequestInit,
   ): Promise<Array<RatingHistory>>;
 
@@ -169,7 +169,7 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
    * Activate user
    */
   async activateUser(
-    userId: number,
+    userId: string,
     activateUserRequest: ActivateUserRequest,
     initOverrides?: RequestInit,
   ): Promise<void> {
@@ -230,7 +230,7 @@ export class UserApi extends runtime.BaseAPI implements UserApiInterface {
    * Get user rating history
    */
   async getRatingHistory(
-    userId: number,
+    userId: string,
     initOverrides?: RequestInit,
   ): Promise<Array<RatingHistory>> {
     const response = await this.getRatingHistoryRaw(

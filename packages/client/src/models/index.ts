@@ -61,6 +61,12 @@ export interface CodeRevision {
    * @type {string}
    * @memberof CodeRevision
    */
+  message: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CodeRevision
+   */
   parentRevision?: string;
   /**
    *
@@ -89,6 +95,12 @@ export interface CreateCodeRevisionRequest {
   code: string;
   /**
    *
+   * @type {string}
+   * @memberof CreateCodeRevisionRequest
+   */
+  message: string;
+  /**
+   *
    * @type {Language}
    * @memberof CreateCodeRevisionRequest
    */
@@ -106,6 +118,12 @@ export interface CreateMapRevisionRequest {
    * @memberof CreateMapRevisionRequest
    */
   map: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateMapRevisionRequest
+   */
+  message: string;
 }
 /**
  * Create match request
@@ -308,6 +326,12 @@ export interface GameMapRevision {
    * @memberof GameMapRevision
    */
   createdAt: Date;
+  /**
+   *
+   * @type {string}
+   * @memberof GameMapRevision
+   */
+  message: string;
 }
 /**
  *
