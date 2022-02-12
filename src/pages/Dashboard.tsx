@@ -21,8 +21,9 @@ import {
   faCodeBranch,
   faAngleRight,
   faAngleLeft,
+  faSave,
 } from '@fortawesome/free-solid-svg-icons';
-import { CodeApi } from '@codecharacter-2022/client';
+import { CodeApi, Language } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../api/ApiConfig';
 
 export default function Dashboard(): JSX.Element {
@@ -30,21 +31,25 @@ export default function Dashboard(): JSX.Element {
   const userLanguage = useSelector(
     (state: RootState) => state.editorState.language,
   );
+  const userCode = useSelector(
+    (state: RootState) => state.editorState.userCode,
+  );
   const dispatch = useDispatch();
+  const codeAPI = new CodeApi(apiConfig);
 
-  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    const codeAPI = new CodeApi(apiConfig);
-    codeAPI
-      .getLatestCode()
-      .then(response => {
-        console.log(response);
-        dispatch(initializeEditorStates(response));
-      })
-      .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
-      })
-      .finally(() => setIsLoaded(true));
+    if (localStorage.getItem('firstTime') === null) {
+      codeAPI
+        .getLatestCode()
+        .then(response => {
+          console.log(response);
+          dispatch(initializeEditorStates(response));
+        })
+        .catch(err => {
+          if (err instanceof ApiError) console.log(err.message);
+        })
+        .finally(() => localStorage.setItem('firstTime', 'true'));
+    }
   }, []);
 
   const languages: string[] = ['C++', 'Python'];
@@ -65,6 +70,7 @@ export default function Dashboard(): JSX.Element {
   // 45 is the width of sideBar + slideInOutBtn
   const [pane1Width, setpane1Width] = useState((window.innerWidth - 45) / 2);
   const [slideBtnDimensions, setSlideBtnDimensions] = useState('w-100 h-50');
+  const [commitName, setCommitName] = useState('');
 
   function handleLanguageChange(language: string) {
     switch (language) {
@@ -81,6 +87,31 @@ export default function Dashboard(): JSX.Element {
       default:
         dispatch(changeLanguage('c_cpp'));
     }
+  }
+
+  function handleSave() {
+    let languageType: Language;
+    if (userLanguage === 'c_cpp') languageType = Language.Cpp;
+    else if (userLanguage === 'python') languageType = Language.Python;
+
+    codeAPI
+      .updateLatestCode({
+        code: userCode,
+        lock: false,
+        language: languageType,
+      })
+      .then()
+      .catch(err => {
+        if (err instanceof ApiError) console.log(err.message);
+      });
+  }
+
+  function handleCommitNameInput(e: React.ChangeEvent<HTMLInputElement>) {
+    setCommitName(e.target.value);
+  }
+
+  function handleCommit() {
+    console.log(commitName);
   }
 
   function handleUpperSlideInOutBtn() {
@@ -116,13 +147,20 @@ export default function Dashboard(): JSX.Element {
           <Row className="w-100 h-100 m-0 p-0 align-items-center">
             <Col>
               <input
+                onChange={handleCommitNameInput}
                 className={classnames(styles.popOverInput)}
                 type={'text'}
                 placeholder={'Commit Name'}
               ></input>
             </Col>
             <Col>
-              <button className={classnames(styles.popOverBtn)}> Done </button>
+              <button
+                className={classnames(styles.popOverBtn)}
+                onClick={handleCommit}
+              >
+                {' '}
+                Done{' '}
+              </button>
             </Col>
           </Row>
         </Container>
@@ -162,7 +200,15 @@ export default function Dashboard(): JSX.Element {
             </select>
           </Col>
 
-          <Col xs={6} className={classnames(styles.btnsParent)}>
+          <Col xs={7} className={classnames(styles.btnsParent)}>
+            <Button
+              className={classnames(styles.btnBarMembers)}
+              onClick={handleSave}
+            >
+              <FontAwesomeIcon icon={faSave} />
+              {`   Save`}
+            </Button>
+
             <OverlayTrigger
               trigger="click"
               placement="bottom"
@@ -206,75 +252,67 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <>
-      {!isLoaded && <div>LOADING.......</div>}
-      {isLoaded && (
-        <SplitPane
-          split="vertical"
-          minSize={window.innerWidth / 3}
-          maxSize={window.innerWidth / 1.2}
-          pane1Style={{ width: pane1Width }}
-          style={{ height: '93.5vh', position: 'static' }}
-          onChange={width => {
-            if (isCodeEditorOpen === false) setCodeEditorOpen(true);
-            setEditorWidth(width - slideInOutBtn.current.clientWidth);
-            setpane1Width(width);
-          }}
-        >
-          <Container
-            className={classnames(styles.dashboardMainContainer)}
-            fluid
-          >
-            <Row className="h-100 w-100 m-0 p-0">
-              {codeEditorComponent}
-              <Col
-                ref={slideInOutBtn}
-                className="m-0 p-0 h-100"
-                xs="auto"
-                sm="auto"
-                md="auto"
-                lg="auto"
-                xl="auto"
-                xxl="auto"
-              >
-                {isCodeEditorOpen && (
-                  <div
-                    className={classnames(
-                      styles.slideInOutBtn,
-                      slideBtnDimensions,
-                    )}
-                    onClick={handleUpperSlideInOutBtn}
-                  >
-                    <FontAwesomeIcon
-                      icon={
-                        isRendererOpen === true ? faAngleRight : faAngleLeft
-                      }
-                      className="text-white fs-3"
-                    />
-                  </div>
-                )}
+      <SplitPane
+        split="vertical"
+        minSize={window.innerWidth / 2.65}
+        maxSize={window.innerWidth / 1.2}
+        pane1Style={{ width: pane1Width }}
+        style={{ height: '93.5vh', position: 'static' }}
+        onChange={width => {
+          if (isCodeEditorOpen === false) setCodeEditorOpen(true);
+          setEditorWidth(width - slideInOutBtn.current.clientWidth);
+          setpane1Width(width);
+        }}
+      >
+        <Container className={classnames(styles.dashboardMainContainer)} fluid>
+          <Row className="h-100 w-100 m-0 p-0">
+            {codeEditorComponent}
+            <Col
+              ref={slideInOutBtn}
+              className="m-0 p-0 h-100"
+              xs="auto"
+              sm="auto"
+              md="auto"
+              lg="auto"
+              xl="auto"
+              xxl="auto"
+            >
+              {isCodeEditorOpen && (
+                <div
+                  className={classnames(
+                    styles.slideInOutBtn,
+                    slideBtnDimensions,
+                  )}
+                  onClick={handleUpperSlideInOutBtn}
+                >
+                  <FontAwesomeIcon
+                    icon={isRendererOpen === true ? faAngleRight : faAngleLeft}
+                    className="text-white fs-3"
+                  />
+                </div>
+              )}
 
-                {isRendererOpen && (
-                  <div
-                    className={classnames(
-                      styles.slideInOutBtn,
-                      slideBtnDimensions,
-                    )}
-                    onClick={handleLowerSlideInOutBtn}
-                  >
-                    <FontAwesomeIcon
-                      icon={
-                        isCodeEditorOpen === true ? faAngleLeft : faAngleRight
-                      }
-                      className="text-white fs-3"
-                    />
-                  </div>
-                )}
-              </Col>
-            </Row>
-          </Container>
-          {rendererComponent}
-        </SplitPane>
-      )}
+              {isRendererOpen && (
+                <div
+                  className={classnames(
+                    styles.slideInOutBtn,
+                    slideBtnDimensions,
+                  )}
+                  onClick={handleLowerSlideInOutBtn}
+                >
+                  <FontAwesomeIcon
+                    icon={
+                      isCodeEditorOpen === true ? faAngleLeft : faAngleRight
+                    }
+                    className="text-white fs-3"
+                  />
+                </div>
+              )}
+            </Col>
+          </Row>
+        </Container>
+        {rendererComponent}
+      </SplitPane>
     </>
   );
 }

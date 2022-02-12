@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
 
 const icons = [
-  { icon: faCode, route: 'editor', tooltip: 'Code Editor' },
+  { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
   { icon: faGlobeAsia, route: 'mapdesginer', tooltip: 'Map Designer' },
   { icon: faTrophy, route: 'leaderboard', tooltip: 'Leaderboard' },
   { icon: faCodeBranch, route: 'history', tooltip: 'Commits' },

@@ -46,7 +46,7 @@ ReactDOM.render(
                 <Col className={classnames(styles.componentCol)}>
                   <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/editor" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/history" element={<History />} />
                     <Route path="/settings" element={<EditorSettings />} />
                   </Routes>

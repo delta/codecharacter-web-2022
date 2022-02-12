@@ -11,12 +11,9 @@ export interface editorStateType {
 }
 
 const initialState: editorStateType = {
-  allLanguagesCode: [
-    '//Welcome to Code Character 2022',
-    '# Welcome to Code Character 2022',
-  ],
-  userCode: '//Welcome to Code Character 2022',
-  language: 'c_cpp',
+  allLanguagesCode: ['', ''],
+  userCode: '',
+  language: '',
   lastSavedAt: new Date(),
 };
 
