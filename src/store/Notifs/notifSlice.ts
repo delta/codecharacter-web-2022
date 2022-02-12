@@ -75,6 +75,12 @@ export const notifSlice = createSlice({
       .addCase(addNotifToState.fulfilled, (state, action) => {
         state.notifs.push(action.payload);
         state.unreadNotifs += 1;
+      })
+      .addCase(markNotifAction.fulfilled, state => {
+        state.notifs.map(notif => {
+          notif.read = true;
+        });
+        state.unreadNotifs = 0;
       });
   },
 });
