@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { MatchApi } from '@codecharacter-2022/client';
+import { apiConfig } from '../../api/ApiConfig';
+import { Action, createSlice, ThunkAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 
 export interface BattleTvInterFace {
@@ -43,19 +45,24 @@ export const battleTvSelector = (state: RootState): BattleTvInterFace =>
 export default battleTvSlice.reducer;
 
 // Asynchronous thunk action
-export function fetchBattleTv() {
+export function fetchBattleTv(): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  Action<string>
+> {
   return async useAppDispatch => {
     useAppDispatch(getBattleTv());
 
-    try {
-      const response = await fetch(
-        'https://stoplight.io/mocks/rinish-api-testbed/codecharacter/14036190/user/matches',
-      );
-      const data = await response.json();
-
-      useAppDispatch(getBattleTvSuccess(data));
-    } catch (error) {
-      useAppDispatch(getBattleTvFailure());
-    }
+    const matchesAPI = new MatchApi(apiConfig);
+    matchesAPI
+      .getUserMatches()
+      .then(response => {
+        useAppDispatch(getBattleTvSuccess(response));
+      })
+      .catch(error => {
+        console.log(error);
+        useAppDispatch(getBattleTvFailure());
+      });
   };
 }

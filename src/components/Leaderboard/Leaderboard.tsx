@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
+import { LeaderboardApi } from '@codecharacter-2022/client';
+import { apiConfig } from '../../api/ApiConfig';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -14,12 +16,11 @@ function PaginatedItems() {
 
   useEffect(() => {
     setIsLoaded(false);
-    fetch(
-      `https://stoplight.io/mocks/rinish-api-testbed/codecharacter/14036190/leaderboard`,
-    )
-      .then(res => res.json())
-      .then(data => {
-        data.sort(
+    const leaderboardAPI = new LeaderboardApi(apiConfig);
+    leaderboardAPI
+      .getLeaderboard()
+      .then(response => {
+        response.sort(
           (
             a: { stats: { rating: string } },
             b: { stats: { rating: string } },
@@ -29,10 +30,11 @@ function PaginatedItems() {
             return parsedA > parsedB ? -1 : 1; // for descending sort inverse -1 and 1
           },
         );
-        setItems(data);
-      })
-      .finally(() => {
+        setItems(response);
         setIsLoaded(true);
+      })
+      .catch(error => {
+        console.log(error);
       });
   }, []);
 
