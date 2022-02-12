@@ -47,7 +47,6 @@ function PaginatedItems() {
   }, [itemOffset, itemsPerPage, battletv]);
 
   const handlePageClick = (event: { selected: number }) => {
-    console.log(event);
     const newOffset = (event.selected * itemsPerPage) % battletv.length;
     setItemOffset(newOffset);
   };
@@ -56,22 +55,26 @@ function PaginatedItems() {
     <>
       <>
         {loading || hasErrors ? (
-          <div>Loading...</div>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border text-white" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
         ) : (
           <>
             {currentItems &&
               currentItems.map((row: rowInterface) => (
                 <div className={styles.item} key={row.id}>
                   <div
-                    className={styles.battlecard}
-                    style={{
-                      backgroundColor:
-                        row.games[0].gameVerdict === 'PLAYER1'
-                          ? '#00bc6244'
-                          : row.games[0].gameVerdict === 'TIE'
-                          ? '#808080'
-                          : '#BC170044',
-                    }}
+                    className={
+                      styles.battlecard +
+                      ' ' +
+                      (row.games[0].gameVerdict === 'PLAYER1'
+                        ? styles.battlecardwin
+                        : row.games[0].gameVerdict === 'TIE'
+                        ? styles.battlecardtie
+                        : styles.battlecardlose)
+                    }
                   >
                     <div className={styles.pic}>
                       <img src={row.user1.avatarId}></img>

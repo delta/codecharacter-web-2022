@@ -54,7 +54,6 @@ function PaginatedItems() {
   }, [itemOffset, itemsPerPage, items]);
 
   const handlePageClick = (event: { selected: number }) => {
-    console.log(event);
     const newOffset = (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
   };
@@ -63,7 +62,11 @@ function PaginatedItems() {
     <>
       <>
         {!isLoaded ? (
-          <div>Loading...</div>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border text-white" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
         ) : (
           <>
             <div className={styles.top3}>

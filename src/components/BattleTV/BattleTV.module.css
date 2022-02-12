@@ -18,8 +18,8 @@ html {
   color: #e8ecfd;
 }
 
-.battlecardHeader{
-  width:80%;
+.battlecardHeader {
+  width: 80%;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
@@ -32,7 +32,8 @@ html {
   padding: 0 2%;
 }
 
-.battlecardHeader .coinused, .battlecardHeader .destruction{
+.battlecardHeader .coinused,
+.battlecardHeader .destruction {
   font-size: 0.8vw;
 }
 
@@ -54,6 +55,16 @@ html {
   color: #ffffff;
 }
 
+.battlecardwin {
+  background-color: #00bc6244;
+}
+.battlecardlose {
+  background-color: #bc170044;
+}
+.battlecardtie {
+  background-color: #808080;
+}
+
 .battlecard img {
   width: 80%;
   /* height: 4rem; */
@@ -64,7 +75,7 @@ html {
     0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
 }
 
-.pic{
+.pic {
   width: 5%;
   text-align: center;
 }
@@ -75,11 +86,11 @@ html {
   line-height: 24px;
 }
 
-.left{
+.left {
   text-align: left;
 }
 
-.right{
+.right {
   text-align: right;
 }
 
@@ -124,37 +135,38 @@ html {
     margin-right: auto;
     width: 80%;
   }
-  .battlecardHeader .destruction{
+  .battlecardHeader .destruction {
     font-size: 1vh;
   }
-  .username{
+  .username {
     width: 25%;
     font-size: 1.3vh;
   }
-  .coinused{
+  .coinused {
     font-size: 1.1vh;
   }
-  .destruction{
+  .destruction {
     width: 15%;
     font-size: 2vh;
   }
-  .vs{
+  .vs {
     font-size: 1.3vh;
   }
-  .battlecard .headingcoinused,.coinused {
+  .battlecard .headingcoinused,
+  .coinused {
     display: none;
   }
   .pic {
     display: none;
   }
-  .title{
+  .title {
     font-size: 3vh;
   }
 }
 
 @media screen and (max-width: 720px) {
   .battlecardHeader {
-    width:95%;
+    width: 95%;
   }
   .battlecard {
     width: 95%;
