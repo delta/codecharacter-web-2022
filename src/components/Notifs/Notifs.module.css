@@ -1,4 +1,5 @@
 .notifIconContainer {
+  position: relative;
   width: 28px;
   height: 28px;
   display: flex;
@@ -7,16 +8,33 @@
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
+  padding-top: 5px;
   transition: all 0.1s ease-in-out;
 }
 .notifIcon {
-  font-size: 20px;
+  font-size: 24px;
 }
 .notifIcon:hover {
   opacity: 0.8;
 }
 .notifIconShow {
-  background-color: #3b4d7c;
+  color: #ffffff;
+}
+.notifUnreadCounter {
+  display: flex;
+  position: absolute;
+  top: -1px;
+  right: 0px;
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 800;
+  color: #3b4d7c;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0px;
 }
 .notifModal {
   position: absolute;
@@ -28,7 +46,7 @@
   background-color: #242a3c;
   top: 40px;
   left: -200px;
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: 0px 3px 6px 4px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
   z-index: 1;
@@ -58,13 +76,10 @@
   padding: 0.3rem;
   padding-left: 0.7rem;
   background-color: #303e61;
-  border-radius: 4px;
+  border-radius: 8px;
   box-sizing: content-box;
-  margin: 2px;
-  margin-top: 4px;
-}
-.notif:nth-child(1) {
-  margin-top: 0px;
+  margin: 10px;
+  font-family: 'Montserrat', 'Poppins';
 }
 .notifRead {
   opacity: 0.55;
@@ -77,6 +92,12 @@
 .notifHeader {
   color: #ffffff;
   font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+.notifContent {
+  color: #b6b4b4;
+  font-size: 0.95rem;
 }
 .notifTime {
   font-size: 0.8rem;

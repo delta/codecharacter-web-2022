@@ -5,10 +5,12 @@ import { getNotifs, markNotifAsRead } from './notifAPI';
 
 interface NotifState {
   notifs: Notification[];
+  unreadNotifs: number;
 }
 
 const initialState: NotifState = {
   notifs: [],
+  unreadNotifs: 0,
 };
 
 export const getNotifAction = createAsyncThunk('notifs/getNotifs', async () => {
@@ -32,6 +34,18 @@ export const markNotifAction = createAsyncThunk(
   },
 );
 
+export const getUnreadNotifsAction = createAsyncThunk(
+  'notifs/getUnreadNotifs',
+  async (_arg, { getState }) => {
+    const { notifs } = getState() as RootState;
+    let unreadNotifs = 0;
+    for (let i = 0; i < notifs.notifs.length; i++) {
+      unreadNotifs += 1;
+    }
+    return unreadNotifs;
+  },
+);
+
 export const notifSlice = createSlice({
   name: 'notifs',
   initialState,
@@ -47,10 +61,19 @@ export const notifSlice = createSlice({
       })
       .addCase(getNotifAction.fulfilled, (state, action) => {
         state.notifs = action.payload;
+        const unreadNotifs = state.notifs.filter(
+          notif => notif.read === false,
+        ).length;
+        state.unreadNotifs = unreadNotifs;
+      })
+      .addCase(getUnreadNotifsAction.fulfilled, (state, action) => {
+        state.unreadNotifs = action.payload;
       });
   },
 });
 
 export const { addNewNotif } = notifSlice.actions;
 export const notifs = (state: RootState): Notification[] => state.notifs.notifs;
+export const unreadNotifs = (state: RootState): number =>
+  state.notifs.unreadNotifs;
 export default notifSlice.reducer;

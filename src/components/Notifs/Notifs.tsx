@@ -8,6 +8,7 @@ import {
   getNotifAction,
   markNotifAction,
   notifs as notifications,
+  unreadNotifs as unreadNotifications,
 } from '../../store/Notifs/notifSlice';
 
 const Notifs: React.FunctionComponent = () => {
@@ -17,6 +18,7 @@ const Notifs: React.FunctionComponent = () => {
   const notifs = useAppSelector<Notification[]>(notifications)
     .slice()
     .reverse();
+  const unreadNotifs = useAppSelector<number>(unreadNotifications);
   const hookDispatch = useAppDispatch();
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const Notifs: React.FunctionComponent = () => {
       (new Date().getTime() - createdDate.getTime()) / (1000 * 3600 * 24),
     );
     const dateDiff =
-      diff === 0 ? `Today` : diff === 1 ? `Yesterday` : `${diff} days ago`;
+      diff === 0 ? `Today` : diff === 1 ? `Yesterday` : `${diff} days`;
     return `${dateDiff}`;
   };
 
@@ -67,6 +69,9 @@ const Notifs: React.FunctionComponent = () => {
         onClick={toggleNotifModal}
       >
         <FontAwesomeIcon className={styles.notifIcon} icon={faBell} />
+        {unreadNotifs > 0 ? (
+          <div className={styles.notifUnreadCounter}>{unreadNotifs}</div>
+        ) : null}
       </div>
       <div className={styles.notifModalTriangle} ref={notifTriangleRef}></div>
       <div className={styles.notifModal} ref={notifModalRef}>
