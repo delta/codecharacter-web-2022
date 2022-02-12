@@ -15,7 +15,7 @@ html {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-left: 35%;
+  /* margin-left: 35%; */
   padding: 10px 25px;
   color: #e8ecfd;
   background: radial-gradient(
@@ -41,7 +41,7 @@ html {
 
 .center {
   display: flex;
-  margin-left: 35%;
+  /* margin-left: 35%; */
 }
 
 .ranklist {
@@ -50,6 +50,7 @@ html {
   align-items: center;
   padding-top: 10px;
   font-family: 'Red Hat Display', sans-serif;
+  margin: auto;
 }
 
 .top3 {
@@ -104,6 +105,9 @@ html {
 .top3 .item .name {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .top3 .item .score {
@@ -163,9 +167,18 @@ html {
 }
 
 .list .item .name {
-  flex-grow: 2;
-  flex-basis: 10rem;
+  flex-basis: 6rem;
   font-size: 1.1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.list .item .scoreParent {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-around;
 }
 
 .list .item .score {
@@ -195,22 +208,4 @@ html {
   display: inline-flex;
   margin-top: 20px;
   position: relative;
-}
-
-@media screen and (max-width: 1080px) {
-  .header {
-    margin-left: 20%;
-  }
-  .center {
-    margin-left: 20%;
-  }
-}
-
-@media screen and (max-width: 720px) {
-  .header {
-    margin-left: 5%;
-  }
-  .center {
-    margin-left: 5%;
-  }
 }

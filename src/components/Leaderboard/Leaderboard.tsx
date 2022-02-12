@@ -86,10 +86,12 @@ function PaginatedItems() {
                 ></img>
                 <div className={styles.pos}>#</div>
                 <div className={styles.name}>Username</div>
-                <div className={styles.score}>Ratings</div>
-                <div className={styles.score}>Won</div>
-                <div className={styles.score}>Tied</div>
-                <div className={styles.score}>Lost</div>
+                <div className={styles.scoreParent}>
+                  <div className={styles.score}>Ratings</div>
+                  <div className={styles.score}>Won</div>
+                  <div className={styles.score}>Tied</div>
+                  <div className={styles.score}>Lost</div>
+                </div>
               </div>
               {currentItems &&
                 currentItems.map(row => (
@@ -99,10 +101,12 @@ function PaginatedItems() {
                     </div>
                     <img className={styles.pic} src={row.user.avatarId}></img>
                     <div className={styles.name}>{row.user.name}</div>
-                    <div className={styles.score}>{row.stats.rating}</div>
-                    <div className={styles.score}>{row.stats.wins} win</div>
-                    <div className={styles.score}>{row.stats.ties} tied</div>
-                    <div className={styles.score}>{row.stats.losses} lost</div>
+                    <div className={styles.scoreParent}>
+                      <div className={styles.score}>{row.stats.rating}</div>
+                      <div className={styles.score}>{row.stats.wins}</div>
+                      <div className={styles.score}>{row.stats.ties}</div>
+                      <div className={styles.score}>{row.stats.losses}</div>
+                    </div>
                   </div>
                 ))}
             </div>
