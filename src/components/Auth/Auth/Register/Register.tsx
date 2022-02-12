@@ -6,7 +6,7 @@ import {
   faChevronLeft,
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { default as ReCAPTCHA } from 'react-google-recaptcha';
 import styles from '../auth.module.css';
 import { SITE_KEY } from '../../../../config/config';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -47,7 +47,6 @@ export default function Register(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   let registeredStatus = false;
-  // adding script tag for recaptcha verfication
   registeredStatus = useAppSelector(isRegistered);
   useEffect(() => {
     if (registeredStatus) {
@@ -327,6 +326,7 @@ export default function Register(): JSX.Element {
                       <ReCAPTCHA
                         sitekey={SITE_KEY}
                         onChange={handleRecaptcha}
+                        theme="dark"
                       />
                     </div>
                   </div>
