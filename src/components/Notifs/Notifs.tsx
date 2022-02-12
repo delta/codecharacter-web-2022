@@ -22,6 +22,18 @@ const Notifs: React.FunctionComponent = () => {
     hookDispatch(getNotifAction());
   }, []);
 
+  window.addEventListener('click', e => {
+    const eventTarget = e.target as HTMLElement;
+    if (
+      !notifModalRef.current?.contains(eventTarget) &&
+      !notifIconRef.current?.contains(eventTarget) &&
+      notifModalRef.current?.classList.contains(styles.notifModalShow)
+    ) {
+      console.log('clicked outside');
+      toggleNotifModal();
+    }
+  });
+
   const toggleNotifModal = () => {
     if (!notifModalRef.current?.classList.contains(styles.notifModalShow)) {
       hookDispatch(markNotifAction(notifs[0].id));
