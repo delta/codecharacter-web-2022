@@ -46,14 +46,17 @@ export const getUnreadNotifsAction = createAsyncThunk(
   },
 );
 
+export const addNotifToState = createAsyncThunk(
+  'notifs/addNotifToState',
+  async (notif: Notification) => {
+    return notif;
+  },
+);
+
 export const notifSlice = createSlice({
   name: 'notifs',
   initialState,
-  reducers: {
-    addNewNotif: (state, action) => {
-      state.notifs.push(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(getNotifAction.pending, state => {
@@ -68,11 +71,14 @@ export const notifSlice = createSlice({
       })
       .addCase(getUnreadNotifsAction.fulfilled, (state, action) => {
         state.unreadNotifs = action.payload;
+      })
+      .addCase(addNotifToState.fulfilled, (state, action) => {
+        state.notifs.push(action.payload);
+        state.unreadNotifs += 1;
       });
   },
 });
 
-export const { addNewNotif } = notifSlice.actions;
 export const notifs = (state: RootState): Notification[] => state.notifs.notifs;
 export const unreadNotifs = (state: RootState): number =>
   state.notifs.unreadNotifs;
