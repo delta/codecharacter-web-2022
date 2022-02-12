@@ -13,6 +13,7 @@ import {
 const Notifs: React.FunctionComponent = () => {
   const notifModalRef = useRef<HTMLDivElement>(null);
   const notifIconRef = useRef<HTMLDivElement>(null);
+  const notifTriangleRef = useRef<HTMLDivElement>(null);
   const notifs = useAppSelector<Notification[]>(notifications)
     .slice()
     .reverse();
@@ -40,18 +41,16 @@ const Notifs: React.FunctionComponent = () => {
     }
     notifModalRef.current?.classList.toggle(styles.notifModalShow);
     notifIconRef.current?.classList.toggle(styles.notifIconShow);
+    notifTriangleRef.current?.classList.toggle(styles.notifTriangleShow);
   };
 
   const parseDate = (date: Date) => {
     const createdDate = new Date(date);
-    const diff =
-      (new Date().getTime() - createdDate.getTime()) / (1000 * 3600 * 24);
+    const diff = Math.round(
+      (new Date().getTime() - createdDate.getTime()) / (1000 * 3600 * 24),
+    );
     const dateDiff =
-      diff === 0
-        ? `Today`
-        : diff === 1
-        ? `Yesterday`
-        : `${Math.round(diff)} days ago`;
+      diff === 0 ? `Today` : diff === 1 ? `Yesterday` : `${diff} days ago`;
     return `${dateDiff}`;
   };
 
@@ -67,8 +66,9 @@ const Notifs: React.FunctionComponent = () => {
         ref={notifIconRef}
         onClick={toggleNotifModal}
       >
-        <FontAwesomeIcon icon={faBell} />
+        <FontAwesomeIcon className={styles.notifIcon} icon={faBell} />
       </div>
+      <div className={styles.notifModalTriangle} ref={notifTriangleRef}></div>
       <div className={styles.notifModal} ref={notifModalRef}>
         {notifs.map((notif: Notification) => {
           return (

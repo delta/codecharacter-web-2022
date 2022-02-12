@@ -1,6 +1,6 @@
 .notifIconContainer {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,6 +8,12 @@
   background: transparent;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
+}
+.notifIcon {
+  font-size: 20px;
+}
+.notifIcon:hover {
+  opacity: 0.8;
 }
 .notifIconShow {
   background-color: #3b4d7c;
@@ -19,7 +25,7 @@
   max-height: 400px;
   max-width: 350px;
   width: 70vw;
-  background-color: #3b4d7c;
+  background-color: #242a3c;
   top: 40px;
   left: -200px;
   border-radius: 4px;
@@ -33,16 +39,35 @@
 .notifModalShow {
   display: block;
 }
+.notifModalTriangle {
+  display: none;
+  position: absolute;
+  left: 8px;
+  top: 32px;
+  border-color: transparent transparent #2b3146 transparent;
+  border-style: solid;
+  border-width: 0px 9px 9px 9px;
+  height: 0px;
+  width: 0px;
+}
+.notifTriangleShow {
+  display: block;
+}
 .notif {
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   padding: 0.3rem;
   padding-left: 0.7rem;
-  background-color: #2b3869;
+  background-color: #273352;
   border-radius: 4px;
   box-sizing: content-box;
+  margin: 2px;
+  margin-top: 4px;
+}
+.notif:nth-child(1) {
+  margin-top: 0px;
 }
 .notifUnRead {
-  border-left: 2.5px solid white;
+  border-left: 3px solid white;
 }
 .notifLine {
   display: flex;
@@ -59,4 +84,18 @@
 .notifTimeSection > p {
   margin-bottom: 0px;
   text-align: right;
+}
+@media screen and (max-width: 500px) {
+  .notifModal {
+    left: -150px;
+  }
+  .notifHeader {
+    font-size: 1rem;
+  }
+  .notifTime {
+    font-size: 0.7rem;
+  }
+  .notifContent {
+    font-size: 0.8rem;
+  }
 }
