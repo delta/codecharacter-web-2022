@@ -74,7 +74,7 @@ const Notifs: React.FunctionComponent = () => {
           return (
             <div
               className={`${styles.notif} ${
-                notif.read ? '' : styles.notifUnRead
+                !notif.read ? '' : styles.notifRead
               }`}
               key={notif.id}
             >

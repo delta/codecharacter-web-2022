@@ -35,7 +35,11 @@ export const markNotifAction = createAsyncThunk(
 export const notifSlice = createSlice({
   name: 'notifs',
   initialState,
-  reducers: {},
+  reducers: {
+    addNewNotif: (state, action) => {
+      state.notifs.push(action.payload);
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getNotifAction.pending, state => {
@@ -47,5 +51,6 @@ export const notifSlice = createSlice({
   },
 });
 
+export const { addNewNotif } = notifSlice.actions;
 export const notifs = (state: RootState): Notification[] => state.notifs.notifs;
 export default notifSlice.reducer;
