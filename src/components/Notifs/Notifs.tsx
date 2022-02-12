@@ -40,7 +40,12 @@ const Notifs: React.FunctionComponent = () => {
         : diff === 1
         ? `Yesterday`
         : `${Math.round(diff)} days ago`;
-    return `${createdDate.getHours()}:${createdDate.getMinutes()}, ${dateDiff}`;
+    return `${dateDiff}`;
+  };
+
+  const parseTime = (date: Date) => {
+    const createdDate = new Date(date);
+    return `${createdDate.getHours()}:${createdDate.getMinutes()}`;
   };
 
   return (
@@ -63,7 +68,14 @@ const Notifs: React.FunctionComponent = () => {
             >
               <div className={styles.notifLine}>
                 <h5 className={styles.notifHeader}>{notif.title}</h5>
-                <p className={styles.notifTime}>{parseDate(notif.createdAt)}</p>
+                <div className={styles.notifTimeSection}>
+                  <p className={styles.notifTime}>
+                    {parseTime(notif.createdAt)}
+                  </p>
+                  <p className={styles.notifTime}>
+                    {parseDate(notif.createdAt)}
+                  </p>
+                </div>
               </div>
               <div className={styles.notifLine}>
                 <p className={styles.notifContent}>{notif.content}</p>
