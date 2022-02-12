@@ -1,6 +1,5 @@
 import { Alert } from 'react-bootstrap';
 import styles from './alert.module.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface alert {
   err?: boolean;

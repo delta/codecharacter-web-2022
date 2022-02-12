@@ -56,7 +56,6 @@ export default function Register(): JSX.Element {
         script.type = 'text/javascript';
         script.src = url;
         script.id = id;
-        script.style.visibility = 'hidden';
         document.body.appendChild(script);
       }
     };
@@ -357,12 +356,7 @@ export default function Register(): JSX.Element {
                     collegeError={collegeError}
                     submitThird={submitThird}
                   />
-                  <input
-                    type="hidden"
-                    id="g-recaptcha-response"
-                    name="g-recaptcha-response"
-                  />
-                  <div style={{ visibility: 'hidden', background: 'black' }}>
+                  <div>
                     <ReCAPTCHA sitekey={SITE_KEY} theme="dark" />
                   </div>
                   <div className={styles.registerButton}>
