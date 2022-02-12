@@ -24,7 +24,7 @@ const Notifs: React.FunctionComponent = () => {
 
   const toggleNotifModal = () => {
     if (!notifModalRef.current?.classList.contains(styles.notifModalShow)) {
-      hookDispatch(markNotifAction(notifs[notifs.length - 1].id));
+      hookDispatch(markNotifAction(notifs[0].id));
     }
     notifModalRef.current?.classList.toggle(styles.notifModalShow);
     notifIconRef.current?.classList.toggle(styles.notifIconShow);
