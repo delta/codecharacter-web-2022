@@ -8,7 +8,7 @@ import {
   getNotifAction,
   markNotifAction,
   notifs as notifications,
-} from '../../store/Notifs/NotifSlice';
+} from '../../store/Notifs/notifSlice';
 
 const Notifs: React.FunctionComponent = () => {
   const notifModalRef = useRef<HTMLDivElement>(null);
