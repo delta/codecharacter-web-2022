@@ -32,7 +32,6 @@ const Notifs: React.FunctionComponent = () => {
       !notifIconRef.current?.contains(eventTarget) &&
       notifModalRef.current?.classList.contains(styles.notifModalShow)
     ) {
-      console.log('clicked outside');
       toggleNotifModal();
     }
   });
