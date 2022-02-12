@@ -5,6 +5,20 @@ import styles from './Leaderboard.module.css';
 import { LeaderboardApi } from '@codecharacter-2022/client';
 import { apiConfig } from '../../api/ApiConfig';
 
+export interface rowInterface {
+  user: {
+    username: string;
+    avatarId: string;
+    name: string;
+  };
+  stats: {
+    rating: number;
+    wins: number;
+    losses: number;
+    ties: number;
+  };
+}
+
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -20,16 +34,11 @@ function PaginatedItems() {
     leaderboardAPI
       .getLeaderboard()
       .then(response => {
-        response.sort(
-          (
-            a: { stats: { rating: string } },
-            b: { stats: { rating: string } },
-          ) => {
-            const parsedA = parseInt(a.stats.rating, 10);
-            const parsedB = parseInt(b.stats.rating, 10);
-            return parsedA > parsedB ? -1 : 1; // for descending sort inverse -1 and 1
-          },
-        );
+        response.sort((a, b) => {
+          const parsedA = a.stats.rating;
+          const parsedB = b.stats.rating;
+          return parsedA > parsedB ? -1 : 1; // for descending sort inverse -1 and 1
+        });
         setItems(response);
         setIsLoaded(true);
       })
@@ -94,7 +103,7 @@ function PaginatedItems() {
                 </div>
               </div>
               {currentItems &&
-                currentItems.map(row => (
+                currentItems.map((row: rowInterface) => (
                   <div className={styles.item} key={row.user.username}>
                     <div className={styles.pos}>
                       {itemOffset + 1 + currentItems.indexOf(row)}
