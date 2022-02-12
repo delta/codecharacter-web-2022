@@ -11,3 +11,9 @@ An extension for VSCode that allows players to play CodeCharacter from the comfo
 5. Run `yarn install`
 6. Open the run panel from the left sidebar or do `Ctrl + Shift + D`
 7. Click the run button or press `F5` to start the extension. (Wait for the webpack compilation to get over - might take a couple of minutes and refresh it)
+
+In the extension:
+
+1. The extension will be available in the last entry of the left sidebar.
+2. Create and save some maps/source files.
+3. Use files from [here](https://gist.github.com/CaptainIRS/9d8d162e2a7b7b62ae1ffa13b23a18fa) for testing renderer.
