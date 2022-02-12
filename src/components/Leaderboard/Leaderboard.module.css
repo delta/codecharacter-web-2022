@@ -9,7 +9,7 @@ html {
 }
 
 .header {
-  max-width: 500px;
+  max-width: 650px;
   margin: 50px auto;
   border-radius: 12px;
   display: flex;
@@ -45,7 +45,7 @@ html {
 }
 
 .ranklist {
-  max-width: 500px;
+  max-width: 650px;
   display: block;
   align-items: center;
   padding-top: 10px;
@@ -55,10 +55,10 @@ html {
 
 .top3 {
   position: relative;
-  max-width: 500px;
+  max-width: 650px;
   padding-top: 10px;
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 
 .top3 .item {
@@ -69,10 +69,10 @@ html {
     rgba(184, 207, 205, 1) 0%,
     rgba(133, 157, 217, 1) 100%
   );
-  width: 9rem;
+  width: 12rem;
   height: 10rem;
   text-align: center;
-  padding: 2.8rem 0 0;
+  padding: 2.8rem 1rem 0;
   margin: 1rem 1rem 2rem;
   border-radius: 0.5rem;
   transform-origin: bottom;

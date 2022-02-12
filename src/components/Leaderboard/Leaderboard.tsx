@@ -29,6 +29,21 @@ function PaginatedItems() {
   const itemsPerPage = 4;
 
   useEffect(() => {
+    fetchLeaderboard();
+  }, []);
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(items.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(items.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, items]);
+
+  const handlePageClick = (event: { selected: number }) => {
+    const newOffset = (event.selected * itemsPerPage) % items.length;
+    setItemOffset(newOffset);
+  };
+
+  const fetchLeaderboard = () => {
     setIsLoaded(false);
     const leaderboardAPI = new LeaderboardApi(apiConfig);
     leaderboardAPI
@@ -45,17 +60,6 @@ function PaginatedItems() {
       .catch(error => {
         console.log(error);
       });
-  }, []);
-
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(items.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, items]);
-
-  const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    setItemOffset(newOffset);
   };
 
   return (
@@ -145,6 +149,13 @@ function PaginatedItems() {
           containerClassName={styles.pagination}
           activeClassName="active"
         />
+        <button
+          type="button"
+          className="btn m-2 btn-outline-light"
+          onClick={fetchLeaderboard}
+        >
+          Refresh
+        </button>
       </nav>
     </>
   );
