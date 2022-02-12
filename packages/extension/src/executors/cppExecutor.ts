@@ -28,13 +28,13 @@ export class CppCodeExecutor {
       simulatorExecutable.stdout.on('data', data => {
         userExecutable.stdin.write(data);
         outputChannel?.append(`<<< ${data.toString()}`);
-        simulatorLog += data.toString();
       });
 
       userExecutable.stderr.on('data', data => {
         outputChannel?.append(`[E] ${data.toString()}`);
       });
       simulatorExecutable.stderr.on('data', data => {
+        simulatorLog += data.toString();
         outputChannel?.append(`[E] ${data.toString()}`);
       });
 
