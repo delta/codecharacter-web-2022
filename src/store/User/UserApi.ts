@@ -15,13 +15,12 @@ export const startRegister = (user: user): Promise<{ user: user }> => {
         college: user.college,
         avatarId: 0,
       })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         resolve({ user: user });
       })
       .catch(error => {
         if (error instanceof ApiError) {
-          reject();
+          reject(error.message);
         }
       });
   });
@@ -39,15 +38,12 @@ export function startLogin(
         email: user.email,
         password: user.password,
       })
-      .then(res => {
-        const { token } = res;
-        console.log(token);
+      .then(() => {
         resolve({ user: user });
       })
       .catch(error => {
         if (error instanceof ApiError) {
-          console.log(error.message);
-          reject();
+          reject(error);
         }
       });
   });
@@ -57,11 +53,9 @@ export const getUserDetails = (): Promise<{
   fullName: string;
   userName: string;
   email: string;
-  id: number;
   admin: boolean;
   college: string;
   country: string;
-  currentLevel: number;
 }> => {
   return new Promise((resolve, reject) => {
     const currentUserapi = new CurrentUserApi(apiConfig);
@@ -72,11 +66,9 @@ export const getUserDetails = (): Promise<{
           fullName: res.name,
           userName: res.username,
           email: res.email,
-          id: res.id,
           admin: res.isAdmin,
           college: res.college,
           country: res.country,
-          currentLevel: res.currentLevel,
         });
       })
       .catch(error => {
@@ -104,8 +96,7 @@ export const ChangeUserDetails = (user: {
         college: user.college,
         country: user.country,
       })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         resolve({ user: user });
       })
       .catch(error => {
@@ -129,8 +120,7 @@ export const ChangeUserCreditionals = (creditionals: {
         password: creditionals.newPassword,
         passwordConfirmation: creditionals.confirmPassword,
       })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         resolve(creditionals.confirmPassword);
       })
       .catch(error => {

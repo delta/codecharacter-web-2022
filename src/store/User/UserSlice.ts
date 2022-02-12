@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { ApiError } from '../../api/ApiConfig';
 import { RootState } from '../store';
 import {
   startRegister,
@@ -28,6 +29,7 @@ interface register {
   isSuccessCreditonals: boolean;
   isLogout: boolean;
   error: boolean;
+  loginError: string;
 }
 
 const initialState: register = {
@@ -48,6 +50,7 @@ const initialState: register = {
   isSuccessCreditonals: false,
   isLogout: false,
   error: false,
+  loginError: 'no',
 };
 
 export const registerAction = createAsyncThunk(
@@ -69,7 +72,7 @@ export const loginAction = createAsyncThunk(
       const response = await startLogin(user);
       return response;
     } catch (error) {
-      throw rejectWithValue(error);
+      if (error instanceof ApiError) throw rejectWithValue(error.message);
     }
   },
 );
@@ -87,7 +90,7 @@ export const getUserDetailsAction = createAsyncThunk(
 );
 
 export const changeUserDetailsAction = createAsyncThunk(
-  'user/chnageUserDetails',
+  'user/changeUserDetails',
   async (
     details: { userName: string; college: string; country: string },
     { rejectWithValue },
@@ -152,11 +155,14 @@ export const UserSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
-        state.user.email = action.payload.user.email;
+        if (action.payload?.user.email)
+          state.user.email = action.payload?.user.email;
         state.loading = false;
         state.isloggedIn = true;
       })
-      .addCase(loginAction.rejected, state => {
+      .addCase(loginAction.rejected, (state, action) => {
+        if (typeof action.payload == 'string')
+          state.loginError = action.payload;
         state.loading = false;
         state.isloggedIn = false;
       })

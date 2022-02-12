@@ -6,9 +6,9 @@ import {
   faChevronLeft,
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
-import { ReCAPTCHA } from 'react-google-recaptcha';
+import ReCAPTCHA from 'react-google-recaptcha';
 import styles from '../auth.module.css';
-import { accessUrl, SECRET_KEY, SITE_KEY } from '../../../../config/config';
+import { SITE_KEY } from '../../../../config/config';
 import { NavLink, useNavigate } from 'react-router-dom';
 import UserDetails from './FormDetails/UserDetails';
 import UserCreditionals from './FormDetails/UserCreditionals';
@@ -42,30 +42,13 @@ export default function Register(): JSX.Element {
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [completed, isCompleted] = useState(false);
   const [collegeError, iscollegeError] = useState(false);
+  const [isHuman, setIshuman] = useState(false);
   const loadingStatus = useAppSelector(loading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   let registeredStatus = false;
   // adding script tag for recaptcha verfication
-  useEffect(() => {
-    const loadScriptByURL = (id: string, url: string) => {
-      const isScript = document.getElementById(id);
-
-      if (!isScript) {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = url;
-        script.id = id;
-        document.body.appendChild(script);
-      }
-    };
-    loadScriptByURL(
-      'your site key goes here',
-      `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`,
-    );
-  }, []);
   registeredStatus = useAppSelector(isRegistered);
-
   useEffect(() => {
     if (registeredStatus) {
       setFormnumber(1);
@@ -73,6 +56,9 @@ export default function Register(): JSX.Element {
       navigate('/login', { replace: true });
     }
   }, [registeredStatus]);
+  const handleRecaptcha = (value: string | null) => {
+    if (value) setIshuman(true);
+  };
   const handleFullname = () => {
     if (fullName.trim().length < 5) {
       isfullNameError(true);
@@ -263,13 +249,6 @@ export default function Register(): JSX.Element {
   };
   const handleRegistration = async () => {
     isCompleted(true);
-    grecaptcha.ready(() => {
-      grecaptcha
-        .execute(SITE_KEY, { action: 'submit' })
-        .then((token: string) => {
-          submitData(token);
-        });
-    });
 
     await dispatch(
       registerAction({
@@ -283,19 +262,6 @@ export default function Register(): JSX.Element {
         avatarId: 0,
       }),
     );
-  };
-  const submitData = async (token: string) => {
-    await fetch('  https://www.google.com/recaptcha/api/siteverify ', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${accessUrl}`,
-      },
-      body: JSON.stringify({
-        secret: { SECRET_KEY },
-        response: token,
-      }),
-    });
   };
   const handleFlagSelect = (code: string) => {
     setSelected(code);
@@ -356,12 +322,21 @@ export default function Register(): JSX.Element {
                     collegeError={collegeError}
                     submitThird={submitThird}
                   />
-                  <div>
-                    <ReCAPTCHA sitekey={SITE_KEY} theme="dark" />
+                  <div className="form-row d-flex justify-content-center my-1">
+                    <div className="d-flex justify-content-center input-group">
+                      <ReCAPTCHA
+                        sitekey={SITE_KEY}
+                        onChange={handleRecaptcha}
+                      />
+                    </div>
                   </div>
                   <div className={styles.registerButton}>
                     <div className="d-grid gap-2">
-                      <Button variant="outline-success" onClick={handleCollege}>
+                      <Button
+                        variant="outline-success"
+                        onClick={handleCollege}
+                        disabled={!isHuman}
+                      >
                         Register{'  '}
                         {loadingStatus ? (
                           <FontAwesomeIcon icon={faSpinner as IconProp} />
