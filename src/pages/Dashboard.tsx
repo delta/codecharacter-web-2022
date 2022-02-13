@@ -4,6 +4,8 @@ import SplitPane from 'react-split-pane';
 import Editor from '../components/Editor';
 import '../styles/DefaultSplitPane.css';
 import styles from '../styles/Dashboard.module.css';
+import { MapDesignerComponent } from '@codecharacter-2022/map-designer';
+import { RendererComponent } from '@codecharacter-2022/renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RootState } from '../redux/store';
 import { changeLanguage, initializeEditorStates } from '../redux/code';
@@ -253,10 +255,12 @@ export default function Dashboard(): JSX.Element {
     rendererComponent = (
       <SplitPane
         split="horizontal"
+        minSize={window.innerHeight / 4}
+        maxSize={window.innerHeight * (3 / 4)}
         defaultSize={(0.935 * window.innerHeight) / 2}
       >
-        <div className="bg-primary w-100 m-0 p-0">UP</div>
-        <div className="bg-success h-100 m-0 p-0">DOWN</div>
+        <MapDesignerComponent />
+        <RendererComponent />
       </SplitPane>
     );
   } else {
