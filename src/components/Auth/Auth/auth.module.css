@@ -1,25 +1,27 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 .mainContainer {
-  width: 100%;
-  min-height: 100vh;
-  position: absolute;
-  left: 0;
+  width: 100vw;
+  min-height: calc(100vh - 60px);
   background-color: #242a3c;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   color: white;
   font-family: Montserrat;
   margin: 0px;
+  margin-left: -60px;
   font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.03rem;
 }
 
 .cardContainer {
   width: 36rem;
-  margin-top: 4%;
   padding: 2%;
-  margin: 5%;
   padding-top: 0%;
+  margin: auto;
   background-color: #2d3342;
 }
 

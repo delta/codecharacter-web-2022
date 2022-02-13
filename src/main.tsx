@@ -18,7 +18,6 @@ const History = lazy(
 );
 const Login = lazy(() => import('./pages/Auth/LoginForm'));
 const Register = lazy(() => import('./pages/Auth/RegisterForm'));
-const Profile = lazy(() => import('./components/Profile/Profile'));
 
 ReactDOM.render(
   <React.StrictMode>
