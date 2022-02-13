@@ -1,9 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
+import Notifs from '../Notifs/Notifs';
 // import toast from 'react-hot-toast';
 
 const NavBar: React.FunctionComponent = () => {
@@ -37,7 +36,7 @@ const NavBar: React.FunctionComponent = () => {
           Toast
         </button> */}
         <div className={styles.notifIcon}>
-          <FontAwesomeIcon icon={faBell} />
+          <Notifs />
         </div>
         <div className={styles.profile} onClick={handleOpen}>
           <div className={styles.fakeProfileIcon} />
