@@ -1,9 +1,42 @@
-import { useState } from 'react';
 import classnames from 'classnames';
 import { FormGroup, Col, Container, Row, Modal } from 'react-bootstrap';
 import styles from '../styles/EditorSettings.module.css';
+import { RootState } from '../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  isSettingsOpened,
+  fontSizeChanged,
+  themeChanged,
+  keyboardHandlerChanged,
+  enableBasicAutoCompleteChanged,
+  enableSnippetsChanged,
+} from '../redux/settings';
 
 const EditorSettings = (): JSX.Element => {
+  const isSettingsOpen = useSelector(
+    (state: RootState) => state.settingsState.isSettingsOpen,
+  );
+
+  const fontSize = useSelector(
+    (state: RootState) => state.settingsState.fontSize,
+  );
+
+  const theme = useSelector((state: RootState) => state.settingsState.theme);
+
+  const keyboardHandler = useSelector(
+    (state: RootState) => state.settingsState.keyboardHandler,
+  );
+
+  const enableBasicAutoComplete = useSelector(
+    (state: RootState) => state.settingsState.enableBasicAutoComplete,
+  );
+
+  const enableSnippets = useSelector(
+    (state: RootState) => state.settingsState.enableSnippets,
+  );
+
+  const dispatch = useDispatch();
+
   const fontSizeOptions = [];
   for (let i = 8; i <= 40; i += 2) {
     fontSizeOptions.push(i);
@@ -28,70 +61,32 @@ const EditorSettings = (): JSX.Element => {
 
   const keyboardHandlers = ['default', 'emacs', 'vim'];
 
-  const localStoreFontSize = localStorage.getItem('fontSize');
-  const [fontSize, setFontSize] = useState(
-    localStoreFontSize === null
-      ? fontSizeOptions[4].toString()
-      : localStoreFontSize,
-  );
-
-  const localStoreTheme = localStorage.getItem('theme');
-  const [theme, setTheme] = useState(
-    localStoreTheme === null ? editorThemes[0] : localStoreTheme,
-  );
-
-  const localStoreKeyboardHandler = localStorage.getItem('keyboardHandler');
-  const [keyboardHandler, setKeyboardHandler] = useState(
-    localStoreKeyboardHandler === null
-      ? keyboardHandlers[0]
-      : localStoreKeyboardHandler,
-  );
-
-  const localStoreAutoComplete = localStorage.getItem(
-    'enableBasicAutoComplete',
-  );
-  const [enableBasicAutoComplete, setBasicAutoComplete] = useState(
-    localStoreAutoComplete === null ? 'true' : localStoreAutoComplete,
-  );
-
-  const localStoreEnableSnippets = localStorage.getItem('enableSnippets');
-  const [enableSnippets, setSnippets] = useState(
-    localStoreEnableSnippets === null ? 'true' : localStoreEnableSnippets,
-  );
-
-  const [isSettingsOpen, setSettingsOpen] = useState('true');
-
-  function handleFontSizeChange(newFontSize: string) {
-    setFontSize(newFontSize);
-    localStorage.setItem('fontSize', newFontSize);
+  function handleFontSizeChange(newFontSize: number) {
+    dispatch(fontSizeChanged(newFontSize));
   }
 
   function handleThemeChange(newTheme: string) {
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+    dispatch(themeChanged(newTheme));
   }
 
   function handleKeyboardHandlerChange(newKeyboardHandler: string) {
-    setKeyboardHandler(newKeyboardHandler);
-    localStorage.setItem('keyboardHandler', newKeyboardHandler);
+    dispatch(keyboardHandlerChanged(newKeyboardHandler));
   }
 
-  function handleAutoCompleteToggle(toggle: string) {
-    setBasicAutoComplete(toggle);
-    localStorage.setItem('enableBasicAutoComplete', toggle);
+  function handleAutoCompleteToggle(toggle: boolean) {
+    dispatch(enableBasicAutoCompleteChanged(toggle));
   }
 
-  function handleSnippetsToggle(toggle: string) {
-    setSnippets(toggle);
-    localStorage.setItem('enableSnippets', toggle);
+  function handleSnippetsToggle(toggle: boolean) {
+    dispatch(enableSnippetsChanged(toggle));
   }
 
   return (
     <Modal
-      show={isSettingsOpen === 'true' ? true : false}
+      show={isSettingsOpen}
       centered
       className={classnames(styles.editorSettingsModal)}
-      onHide={() => setSettingsOpen('false')}
+      onHide={() => dispatch(isSettingsOpened(false))}
     >
       <Modal.Header
         className={classnames(styles.editorSettingsHeader)}
@@ -109,7 +104,7 @@ const EditorSettings = (): JSX.Element => {
                 <select
                   className={classnames(styles.settingDropdown)}
                   value={fontSize}
-                  onChange={e => handleFontSizeChange(e.target.value)}
+                  onChange={e => handleFontSizeChange(Number(e.target.value))}
                 >
                   {fontSizeOptions.map((font: number) => (
                     <option
@@ -178,7 +173,11 @@ const EditorSettings = (): JSX.Element => {
                 <select
                   className={classnames(styles.settingDropdown)}
                   value={enableBasicAutoComplete ? 'enable' : 'disable'}
-                  onChange={e => handleAutoCompleteToggle(e.target.value)}
+                  onChange={e =>
+                    handleAutoCompleteToggle(
+                      e.target.value === 'enable' ? true : false,
+                    )
+                  }
                 >
                   <option
                     value={'enable'}
@@ -204,7 +203,11 @@ const EditorSettings = (): JSX.Element => {
                 <select
                   className={classnames(styles.settingDropdown)}
                   value={enableSnippets ? 'enable' : 'disable'}
-                  onChange={e => handleSnippetsToggle(e.target.value)}
+                  onChange={e =>
+                    handleSnippetsToggle(
+                      e.target.value === 'enable' ? true : false,
+                    )
+                  }
                 >
                   <option
                     value={'enable'}

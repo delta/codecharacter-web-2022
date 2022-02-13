@@ -29,6 +29,7 @@ ReactDOM.render(
       <PersistGate loading={null} persistor={persistor}>
         <HashRouter>
           <Suspense fallback={<div>Loading...</div>}>
+            <EditorSettings />
             <NavBar />
             <Container className={classnames(styles.mainContainer)} fluid>
               <Row className={classnames(styles.mainRow)}>
@@ -48,7 +49,6 @@ ReactDOM.render(
                     <Route path="/" element={<Home />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/history" element={<History />} />
-                    <Route path="/settings" element={<EditorSettings />} />
                   </Routes>
                 </Col>
               </Row>

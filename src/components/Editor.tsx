@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import * as Editor from '../types/Editor';
 import AceEditor from 'react-ace';
 
@@ -33,54 +32,26 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
   const userCode = useSelector(
     (state: RootState) => state.editorState.userCode,
   );
+
+  const fontSize = useSelector(
+    (state: RootState) => state.settingsState.fontSize,
+  );
+
+  const theme = useSelector((state: RootState) => state.settingsState.theme);
+
+  const keyboardHandler = useSelector(
+    (state: RootState) => state.settingsState.keyboardHandler,
+  );
+
+  const enableBasicAutoComplete = useSelector(
+    (state: RootState) => state.settingsState.enableBasicAutoComplete,
+  );
+
+  const enableSnippets = useSelector(
+    (state: RootState) => state.settingsState.enableSnippets,
+  );
+
   const dispatch = useDispatch();
-
-  // All editor settings set at localStorage
-  // They are retrieved here and stored in variables
-
-  const localStoreFontSize = localStorage.getItem('fontSize');
-  const [fontSize, setFontSize] = useState(
-    localStoreFontSize === null ? '16' : localStorage.getItem('fontSize'),
-  );
-
-  const localStoreTheme = localStorage.getItem('theme');
-  const [theme, setTheme] = useState(
-    localStoreTheme === null ? 'monokai' : localStorage.getItem('theme'),
-  );
-
-  const localStoreKeyboardHandler = localStorage.getItem('keyboardHandler');
-  const [keyboardHandler, setKeyboardHandler] = useState(
-    localStoreKeyboardHandler === null
-      ? 'default'
-      : localStorage.getItem('keyboardHandler'),
-  );
-
-  const localStoreBasicAutoComplete = localStorage.getItem(
-    'enableBasicAutoComplete',
-  );
-  const [enableBasicAutoComplete, setBasicAutoComplete] = useState(
-    localStoreBasicAutoComplete === null
-      ? 'true'
-      : localStorage.getItem('enableBasicAutoComplete'),
-  );
-
-  const localStoreEnableSnippets = localStorage.getItem('enableSnippets');
-  const [enableSnippets, setSnippets] = useState(
-    localStoreEnableSnippets === null
-      ? 'true'
-      : localStorage.getItem('enableSnippets'),
-  );
-
-  // When editor settings are changed
-  // editor attributes are changed
-
-  window.addEventListener('storage', () => {
-    setFontSize(localStorage.getItem('fontSize'));
-    setTheme(localStorage.getItem('theme'));
-    setKeyboardHandler(localStorage.getItem('keyboardHandler'));
-    setBasicAutoComplete(localStorage.getItem('enableBasicAutoComplete'));
-    setSnippets(localStorage.getItem('enableSnippets'));
-  });
 
   const { editorWidth, language } = props;
 
@@ -89,15 +60,14 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       mode={language}
       theme={theme}
       name="codeEditor"
-      fontSize={Number(fontSize)}
+      fontSize={fontSize}
       wrapEnabled={true}
       showPrintMargin={false}
       showGutter={true}
       highlightActiveLine={true}
       setOptions={{
-        enableBasicAutoCompletion:
-          enableBasicAutoComplete === 'true' ? true : false,
-        enableSnippets: enableSnippets === 'true' ? true : false,
+        enableBasicAutoCompletion: enableBasicAutoComplete,
+        enableSnippets: enableSnippets,
       }}
       keyboardHandler={keyboardHandler !== 'default' ? keyboardHandler : ''}
       editorProps={{ $blockScrolling: true }}

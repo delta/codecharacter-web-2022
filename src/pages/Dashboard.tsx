@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RootState } from '../redux/store';
 import { changeLanguage, initializeEditorStates } from '../redux/code';
 import { useSelector, useDispatch } from 'react-redux';
+import { CodeApi, Language } from '@codecharacter-2022/client';
+import { apiConfig, ApiError } from '../api/ApiConfig';
 import {
   Container,
   Row,
@@ -23,8 +25,6 @@ import {
   faAngleLeft,
   faSave,
 } from '@fortawesome/free-solid-svg-icons';
-import { CodeApi, Language } from '@codecharacter-2022/client';
-import { apiConfig, ApiError } from '../api/ApiConfig';
 
 export default function Dashboard(): JSX.Element {
   // Retreiving only needed info from global store
@@ -48,7 +48,7 @@ export default function Dashboard(): JSX.Element {
         .catch(err => {
           if (err instanceof ApiError) console.log(err.message);
         })
-        .finally(() => localStorage.setItem('firstTime', 'true'));
+        .finally(() => localStorage.setItem('firstTime', 'false'));
     }
   }, []);
 
@@ -111,7 +111,19 @@ export default function Dashboard(): JSX.Element {
   }
 
   function handleCommit() {
-    console.log(commitName);
+    let languageType: Language;
+    if (userLanguage === 'c_cpp') languageType = Language.Cpp;
+    else if (userLanguage === 'python') languageType = Language.Python;
+
+    codeAPI
+      .createCodeRevision({
+        code: userCode,
+        language: languageType,
+      })
+      .then()
+      .catch(err => {
+        if (err instanceof ApiError) console.log(err.message);
+      });
   }
 
   function handleUpperSlideInOutBtn() {

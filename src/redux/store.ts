@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import editorReducer from './code';
+import settingsReducer from './settings';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
@@ -7,6 +8,7 @@ import thunk from 'redux-thunk';
 
 const reducers = combineReducers({
   editorState: editorReducer,
+  settingsState: settingsReducer,
 });
 
 const persistConfig = {

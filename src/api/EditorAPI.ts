@@ -26,14 +26,4 @@ codeAPI
     if (err instanceof ApiError) console.log(err.message);
   });
 
-const bodyOfCreateRevisionRequest: CreateCodeRevisionRequest = {
-  code: userCode,
-  language: languageInFormat,
-};
-codeAPI
-  .createCodeRevision(bodyOfCreateRevisionRequest)
-  .then()
-  .catch(err => {
-    if (err instanceof ApiError) console.log(err.message);
-  });
 */
