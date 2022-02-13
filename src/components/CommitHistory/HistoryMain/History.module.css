@@ -2,7 +2,7 @@
 
 .historyMain {
   overflow: hidden;
-  height: 100%;
+  height: calc(100vh - 60px);
   width: 100%;
   display: grid;
   grid-template-columns: 30% 60% 10%;
@@ -117,7 +117,6 @@
   display: none;
 }
 
-.noCommitDataHeader{
+.noCommitDataHeader {
   color: #ffffff;
-  
 }
