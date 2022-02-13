@@ -1,16 +1,21 @@
-.sideBar {
-  height: 100vh;
-  width: 65px;
-  background-color: #2d3342;
+.sideBar{
+    height: calc(100vh - 60px) ;
+    width: 65px;
+    background-color: #2D3342;
+    position: fixed;
+    top: 60px;
+    z-index: 1000;
 }
-.sideBarIcon {
-  margin: auto;
-  width: fit-content;
-  margin-top: 1.1rem;
-  padding: 5px;
-  background-color: transparent;
+
+.sideBarIcon{
+    margin: auto;
+    width: fit-content;
+    margin-top: 1.1rem;
+    padding: 5px;
+    background-color: transparent;
 }
-.sideBarIconComponent {
-  color: #9c9c9c;
-  cursor: pointer;
+
+.sideBarIconComponent{
+    color: #9c9c9c;
+    cursor: pointer;
 }

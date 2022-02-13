@@ -1,10 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from './counter/counterSlice';
 import UserReducer from './User/UserSlice';
+import battleTvReducer from '../components/BattleTV/BattleTvSlice';
+
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     user: UserReducer,
+    battletv: battleTvReducer,
   },
 });
 

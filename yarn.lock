@@ -1718,6 +1718,7 @@ __metadata:
     react-flags-select: ^2.1.2
     react-google-recaptcha: ^2.1.0
     react-hot-toast: ^2.2.0
+    react-paginate: ^8.1.0
     react-redux: ^7.2.6
     react-router-dom: 6
     react-step-progress-bar: ^1.0.3
@@ -13708,7 +13709,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -14100,6 +14101,17 @@ __metadata:
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
+  languageName: node
+  linkType: hard
+
+"react-paginate@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "react-paginate@npm:8.1.0"
+  dependencies:
+    prop-types: ^15.6.1
+  peerDependencies:
+    react: ^16 || ^17
+  checksum: bb0575c009adc2b7379f22bca86d20fba6303a40bae7a8dc1557b7c7106d5ed188f9a53df601e1c8b9a27eb601643a6836c266ff1eab0c8d1c50ad4a71916396
   languageName: node
   linkType: hard
 

@@ -11,6 +11,8 @@ import styles from './main.module.css';
 import { Counter } from './store/counter/Counter';
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
+const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
 const History = lazy(
   () => import('./components/CommitHistory/HistoryMain/History'),
 );
@@ -34,7 +36,8 @@ ReactDOM.render(
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/counter" element={<Counter />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/leaderboard" element={<Leaderboard />} />
+                <Route path="/battletv" element={<BattleTV />} />
               </Routes>
             </Suspense>
           </div>
