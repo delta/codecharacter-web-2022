@@ -1,11 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col } from 'react-bootstrap';
 import styles from './main.module.css';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Toast from './components/Toast/Toast';
-import classnames from 'classnames';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
