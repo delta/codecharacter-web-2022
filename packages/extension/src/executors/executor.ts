@@ -4,6 +4,7 @@ import { rendererPanel } from '../panels/rendererPanel';
 import { CCodeExecutor } from './cExecutor';
 import { CppCodeExecutor } from './cppExecutor';
 import { PythonCodeExecutor } from './pythonExecutor';
+import { JavaCodeExecutor } from './javaExecutor';
 
 export const outputChannel = vscode.window.createOutputChannel(
   'Code Character Executor',
@@ -41,11 +42,13 @@ export const getLogFromSimulatorLog = (log: string): string => {
 class Executor {
   cExecutor: CCodeExecutor;
   cppExecutor: CppCodeExecutor;
+  javaExecutor: JavaCodeExecutor;
   pythonExecutor: PythonCodeExecutor;
 
   constructor() {
     this.cExecutor = new CCodeExecutor();
     this.cppExecutor = new CppCodeExecutor();
+    this.javaExecutor = new JavaCodeExecutor();
     this.pythonExecutor = new PythonCodeExecutor();
   }
 
@@ -80,7 +83,18 @@ class Executor {
             })
             .catch(err => {
               reject(err);
-              vscode.window.showErrorMessage(`Execution failed: ${err}`);
+            });
+          break;
+        case 'java':
+          this.javaExecutor
+            .execute(mapData, uri)
+            .then(log => {
+              rendererPanel.renderLog(log, context);
+              vscode.window.showInformationMessage('Execution succeeded');
+              resolve();
+            })
+            .catch(err => {
+              reject(err);
             });
           break;
         case 'python':
@@ -93,7 +107,6 @@ class Executor {
             })
             .catch(err => {
               reject(err);
-              vscode.window.showErrorMessage(`Execution failed: ${err}`);
             });
           break;
         default:
