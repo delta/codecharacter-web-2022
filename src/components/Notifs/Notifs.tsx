@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Notification } from '@codecharacter-2022/client';
 import styles from './Notifs.module.css';
@@ -20,6 +20,7 @@ const Notifs: React.FunctionComponent = () => {
     .reverse();
   const unreadNotifs = useAppSelector<number>(unreadNotifications);
   const hookDispatch = useAppDispatch();
+  const [firstTime, setFirstTime] = useState(true);
 
   useEffect(() => {
     hookDispatch(getNotifAction());
@@ -27,7 +28,6 @@ const Notifs: React.FunctionComponent = () => {
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      console.log('event listener');
       const eventTarget = e.target as HTMLElement;
       if (
         !notifModalRef.current?.contains(eventTarget) &&
@@ -39,11 +39,13 @@ const Notifs: React.FunctionComponent = () => {
     };
     window.addEventListener('click', handleClick);
 
-    return window.addEventListener('click', handleClick);
-  }, []);
+    return () => {
+      window.removeEventListener('click', handleClick);
+    };
+  }, [unreadNotifs]);
   const toggleNotifModal = () => {
     if (
-      !notifModalRef.current?.classList.contains(styles.notifModalShow) &&
+      notifModalRef.current?.classList.contains(styles.notifModalShow) &&
       unreadNotifs > 0
     ) {
       hookDispatch(markNotifAction(notifs[0].id));
