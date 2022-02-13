@@ -1,6 +1,4 @@
 .gitignore
-.npmignore
-package.json
 src/apis/AuthApi.ts
 src/apis/CodeApi.ts
 src/apis/CurrentUserApi.ts
@@ -14,4 +12,3 @@ src/apis/index.ts
 src/index.ts
 src/models/index.ts
 src/runtime.ts
-tsconfig.json

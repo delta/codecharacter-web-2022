@@ -5,6 +5,6 @@
     "composite": true,
     "noEmit": false
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

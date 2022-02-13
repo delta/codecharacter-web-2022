@@ -1,0 +1,174 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: #242a3c;
+  color: #333;
+  overflow-x: auto;
+}
+
+.title {
+  margin-top: 3vh;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 3vw;
+  text-align: center;
+  left: 50%;
+  /* letter-spacing: 4.5px; */
+  color: #e8ecfd;
+}
+
+.battlecardHeader {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 20px auto 0 auto;
+  padding: 0 2%;
+}
+
+.battlecardHeader .coinused,
+.battlecardHeader .destruction {
+  font-size: 0.8vw;
+}
+
+.battlecard {
+  display: flex;
+  flex-wrap: wrap;
+  /* min-width: 720px; */
+  margin: 1rem auto;
+  width: 80%;
+  border-radius: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #242a3c;
+  padding: 10px 2%;
+
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.battlecardwin {
+  background-color: #00bc6244;
+}
+.battlecardlose {
+  background-color: #bc170044;
+}
+.battlecardtie {
+  background-color: #808080;
+}
+
+.battlecard img {
+  width: 80%;
+  /* height: 4rem; */
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
+    0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.pic {
+  width: 5%;
+  text-align: center;
+}
+
+.username {
+  width: 17%;
+  font-size: 1.3vw;
+  line-height: 24px;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.coinused {
+  width: 7%;
+  text-align: center;
+  font-size: 1vw;
+  line-height: 22px;
+}
+.destruction {
+  width: 12%;
+  text-align: center;
+  font-size: 2vw;
+  line-height: 25px;
+}
+.vs {
+  width: 5%;
+  text-align: center;
+  font-size: 1vw;
+  line-height: 22px;
+}
+
+.paginationouter {
+  text-align: center;
+}
+.pagination {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.5vh;
+  display: inline-flex;
+  margin-top: 20px;
+  position: relative;
+}
+
+@media screen and (max-width: 720px) {
+  .battlecardHeader {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .battlecard {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  .battlecardHeader .destruction {
+    font-size: 1vh;
+  }
+  .username {
+    width: 25%;
+    font-size: 1.3vh;
+  }
+  .coinused {
+    font-size: 1.1vh;
+  }
+  .destruction {
+    width: 15%;
+    font-size: 2vh;
+  }
+  .vs {
+    font-size: 1.3vh;
+  }
+  .battlecard .headingcoinused,
+  .coinused {
+    display: none;
+  }
+  .pic {
+    display: none;
+  }
+  .title {
+    font-size: 3vh;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .battlecardHeader {
+    width: 95%;
+  }
+  .battlecard {
+    width: 95%;
+  }
+}

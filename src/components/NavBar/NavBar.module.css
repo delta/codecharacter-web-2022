@@ -34,6 +34,7 @@
   border-radius: 50%;
   margin-left: 0.6rem;
 }
+
 .profileName {
   font-family: 'Montserrat';
   color: #ffffff;
@@ -41,10 +42,14 @@
   margin-left: 0.5rem;
   margin-right: 2rem;
   font-weight: 500;
+  font-size: 1.3rem;
 }
+
 .notifIcon {
   margin: auto;
+  position: relative;
 }
+
 @media screen and (max-width: 500px) {
   .navLogo {
     font-size: 18px;

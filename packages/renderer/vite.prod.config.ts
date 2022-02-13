@@ -13,7 +13,7 @@ export default defineConfig({
       fileName: 'codecharacter-renderer-2022',
     },
     rollupOptions: {
-      external: ['phaser', 'lit'],
+      external: ['phaser', 'lit', 'react'],
       plugins: [
         replace({
           'typeof CANVAS_RENDERER': "'true'",
@@ -29,6 +29,7 @@ export default defineConfig({
         globals: {
           phaser: 'Phaser',
           lit: 'lit',
+          react: 'React',
         },
       },
     },
