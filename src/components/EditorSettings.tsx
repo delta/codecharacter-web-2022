@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { FormGroup, Col, Container, Row, Modal } from 'react-bootstrap';
-import styles from '../styles/EditorSettings.module.css';
+import styles from './EditorSettings.module.css';
 import { RootState } from '../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import {
