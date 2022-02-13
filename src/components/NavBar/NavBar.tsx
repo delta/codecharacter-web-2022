@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
+import Notifs from '../Notifs/Notifs';
 // import toast from 'react-hot-toast';
 import {
   isloggedIn,

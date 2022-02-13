@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const icons = [
   { icon: faCode, route: 'editor', tooltip: 'Code Editor' },
-  { icon: faGlobeAsia, route: 'mapdesginer', tooltip: 'Map Designer' },
+  { icon: faGlobeAsia, route: 'mapdesigner', tooltip: 'Map Designer' },
   { icon: faTrophy, route: 'leaderboard', tooltip: 'Leaderboard' },
   { icon: faCodeBranch, route: 'history', tooltip: 'Commits' },
   { icon: faTv, route: 'battletv', tooltip: 'Battle TV' },
