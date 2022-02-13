@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Notification } from '@codecharacter-2022/client';
 import styles from './Notifs.module.css';
@@ -20,7 +20,6 @@ const Notifs: React.FunctionComponent = () => {
     .reverse();
   const unreadNotifs = useAppSelector<number>(unreadNotifications);
   const hookDispatch = useAppDispatch();
-  const [firstTime, setFirstTime] = useState(true);
 
   useEffect(() => {
     hookDispatch(getNotifAction());
