@@ -77,19 +77,19 @@ function PaginatedItems() {
               <div className={styles.item}>
                 <div className={styles.pos}>2</div>
                 <img className={styles.pic} src={items[1].user.avatarId}></img>
-                <div className={styles.name}>{items[1].user.name}</div>
+                <div className={styles.name}>{items[1].user.username}</div>
                 <div className={styles.score}>{items[1].stats.rating}</div>
               </div>
               <div className={styles.item}>
                 <div className={styles.pos}>1</div>
                 <img className={styles.pic} src={items[0].user.avatarId}></img>
-                <div className={styles.name}>{items[0].user.name}</div>
+                <div className={styles.name}>{items[0].user.username}</div>
                 <div className={styles.score}>{items[0].stats.rating}</div>
               </div>
               <div className={styles.item}>
                 <div className={styles.pos}>3</div>
                 <img className={styles.pic} src={items[2].user.avatarId}></img>
-                <div className={styles.name}>{items[2].user.name}</div>
+                <div className={styles.name}>{items[2].user.username}</div>
                 <div className={styles.score}>{items[2].stats.rating}</div>
               </div>
             </div>
@@ -116,7 +116,7 @@ function PaginatedItems() {
                       {itemOffset + 1 + currentItems.indexOf(row)}
                     </div>
                     <img className={styles.pic} src={row.user.avatarId}></img>
-                    <div className={styles.name}>{row.user.name}</div>
+                    <div className={styles.name}>{row.user.username}</div>
                     <div className={styles.scoreParent}>
                       <div className={styles.score}>{row.stats.rating}</div>
                       <div className={styles.score}>{row.stats.wins}</div>

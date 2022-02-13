@@ -59,6 +59,7 @@ html {
   padding-top: 10px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .top3 .item {
@@ -72,7 +73,7 @@ html {
   width: 12rem;
   height: 10rem;
   text-align: center;
-  padding: 2.8rem 1rem 0;
+  padding: 3rem 0rem 0;
   margin: 1rem 1rem 2rem;
   border-radius: 0.5rem;
   transform-origin: bottom;
@@ -85,13 +86,14 @@ html {
 .top3 .item .pic {
   position: absolute;
   top: -2rem;
-  left: 2.5rem;
+  left: 50%;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
   margin-right: 1rem;
+  transform: translateX(-50%);
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
     0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
 }
@@ -104,7 +106,7 @@ html {
 
 .top3 .item .name {
   font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

@@ -6,12 +6,14 @@ import { RootState } from '../../store/store';
 export interface BattleTvInterFace {
   loading: boolean;
   hasErrors: boolean;
+  hasbeenFetched: boolean;
   battletv: never[];
 }
 
 export const initialState = {
   loading: false,
   hasErrors: false,
+  hasbeenFetched: false,
   battletv: [],
 };
 
@@ -25,6 +27,7 @@ const battleTvSlice = createSlice({
     getBattleTvSuccess: (state, { payload }) => {
       state.battletv = payload;
       state.loading = false;
+      state.hasbeenFetched = true;
       state.hasErrors = false;
     },
     getBattleTvFailure: state => {

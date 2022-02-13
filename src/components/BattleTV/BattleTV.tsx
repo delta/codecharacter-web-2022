@@ -31,12 +31,13 @@ function PaginatedItems() {
 
   const itemsPerPage = 4;
 
-  const { battletv, loading, hasErrors } = useAppSelector(battleTvSelector);
+  const { battletv, loading, hasbeenFetched, hasErrors } =
+    useAppSelector(battleTvSelector);
 
   // initialize the redux hook
   const dispatch = useAppDispatch();
 
-  if (battletv.length === 0) {
+  if (!hasbeenFetched) {
     dispatch(fetchBattleTv());
   }
 
