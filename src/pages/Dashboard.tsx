@@ -70,7 +70,7 @@ export default function Dashboard(): JSX.Element {
   // 45 is the width of sideBar + slideInOutBtn
   const [pane1Width, setpane1Width] = useState((window.innerWidth - 45) / 2);
   const [slideBtnDimensions, setSlideBtnDimensions] = useState('w-100 h-50');
-  const [commitName, setCommitName] = useState('');
+  // const [commitName, setCommitName] = useState('');
 
   function handleLanguageChange(language: string) {
     switch (language) {
@@ -106,25 +106,26 @@ export default function Dashboard(): JSX.Element {
       });
   }
 
-  function handleCommitNameInput(e: React.ChangeEvent<HTMLInputElement>) {
-    setCommitName(e.target.value);
-  }
+  // function handleCommitNameInput(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setCommitName(e.target.value);
+  // }
 
-  function handleCommit() {
-    let languageType: Language;
-    if (userLanguage === 'c_cpp') languageType = Language.Cpp;
-    else if (userLanguage === 'python') languageType = Language.Python;
+  // function handleCommit() {
+  //   let languageType: Language;
+  //   if (userLanguage === 'c_cpp') languageType = Language.Cpp;
+  //   else if (userLanguage === 'python') languageType = Language.Python;
 
-    codeAPI
-      .createCodeRevision({
-        code: userCode,
-        language: languageType,
-      })
-      .then()
-      .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
-      });
-  }
+  //   codeAPI
+  //     .createCodeRevision({
+  //       code: userCode,
+  //       message: commitName,
+  //       language: languageType,
+  //     })
+  //     .then()
+  //     .catch(err => {
+  //       if (err instanceof ApiError) console.log(err.message);
+  //     });
+  // }
 
   function handleUpperSlideInOutBtn() {
     if (isRendererOpen === true) {
@@ -159,7 +160,7 @@ export default function Dashboard(): JSX.Element {
           <Row className="w-100 h-100 m-0 p-0 align-items-center">
             <Col>
               <input
-                onChange={handleCommitNameInput}
+                // onChange={handleCommitNameInput}
                 className={classnames(styles.popOverInput)}
                 type={'text'}
                 placeholder={'Commit Name'}
@@ -168,7 +169,7 @@ export default function Dashboard(): JSX.Element {
             <Col>
               <button
                 className={classnames(styles.popOverBtn)}
-                onClick={handleCommit}
+                // onClick={handleCommit}
               >
                 {' '}
                 Done{' '}
