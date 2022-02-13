@@ -8,8 +8,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
+    base: '',
     minify: 'terser',
     outDir: path.resolve(__dirname, 'dist'),
+    sourcemap: true,
     terserOptions: {
       format: { comments: false },
       compress: true,

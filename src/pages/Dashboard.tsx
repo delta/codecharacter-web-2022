@@ -7,8 +7,9 @@ import styles from '../styles/Dashboard.module.css';
 import { MapDesignerComponent } from '@codecharacter-2022/map-designer';
 import { RendererComponent } from '@codecharacter-2022/renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RootState } from '../redux/store';
-import { changeLanguage, initializeEditorStates } from '../redux/code';
+// import { RootState } from '../redux/store';
+import { RootState } from '../store/store';
+import { changeLanguage, initializeEditorStates } from '../store/editor/code';
 import { useSelector, useDispatch } from 'react-redux';
 import { CodeApi, Language } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../api/ApiConfig';
@@ -27,14 +28,15 @@ import {
   faAngleLeft,
   faSave,
 } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export default function Dashboard(): JSX.Element {
   // Retreiving only needed info from global store
   const userLanguage = useSelector(
-    (state: RootState) => state.editorState.language,
+    (state: RootState) => state.persistReducer.editorState.language,
   );
   const userCode = useSelector(
-    (state: RootState) => state.editorState.userCode,
+    (state: RootState) => state.persistReducer.editorState.userCode,
   );
   const dispatch = useDispatch();
   const codeAPI = new CodeApi(apiConfig);
@@ -56,7 +58,7 @@ export default function Dashboard(): JSX.Element {
 
   const languages: string[] = ['C++', 'Python'];
 
-  const slideInOutBtn = useRef(null);
+  const slideInOutBtn = useRef<HTMLDivElement>(null);
 
   const [editorWidth, setEditorWidth] = useState(
     (window.innerWidth - 45) / 2 - 20,
@@ -220,7 +222,7 @@ export default function Dashboard(): JSX.Element {
               className={classnames(styles.btnBarMembers)}
               onClick={handleSave}
             >
-              <FontAwesomeIcon icon={faSave} />
+              <FontAwesomeIcon icon={faSave as IconProp} />
               {`   Save`}
             </Button>
 
@@ -230,13 +232,13 @@ export default function Dashboard(): JSX.Element {
               overlay={popover}
             >
               <Button className={classnames(styles.btnBarMembers)}>
-                <FontAwesomeIcon icon={faCodeBranch} />
+                <FontAwesomeIcon icon={faCodeBranch as IconProp} />
                 {`   Commit`}
               </Button>
             </OverlayTrigger>
 
             <Button className={classnames(styles.btnBarMembers)}>
-              <FontAwesomeIcon icon={faCloudUploadAlt} />
+              <FontAwesomeIcon icon={faCloudUploadAlt as IconProp} />
               {`   Submit`}
             </Button>
           </Col>
@@ -277,7 +279,7 @@ export default function Dashboard(): JSX.Element {
         style={{ height: '93.5vh', position: 'static' }}
         onChange={width => {
           if (isCodeEditorOpen === false) setCodeEditorOpen(true);
-          setEditorWidth(width - slideInOutBtn.current.clientWidth);
+          setEditorWidth(width - slideInOutBtn?.current?.clientWidth ?? 0);
           setpane1Width(width);
         }}
       >
@@ -303,7 +305,11 @@ export default function Dashboard(): JSX.Element {
                   onClick={handleUpperSlideInOutBtn}
                 >
                   <FontAwesomeIcon
-                    icon={isRendererOpen === true ? faAngleRight : faAngleLeft}
+                    icon={
+                      isRendererOpen === true
+                        ? (faAngleRight as IconProp)
+                        : (faAngleLeft as IconProp)
+                    }
                     className="text-white fs-3"
                   />
                 </div>

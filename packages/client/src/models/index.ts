@@ -61,6 +61,12 @@ export interface CodeRevision {
    * @type {string}
    * @memberof CodeRevision
    */
+  message: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CodeRevision
+   */
   parentRevision?: string;
   /**
    *
@@ -89,6 +95,12 @@ export interface CreateCodeRevisionRequest {
   code: string;
   /**
    *
+   * @type {string}
+   * @memberof CreateCodeRevisionRequest
+   */
+  message: string;
+  /**
+   *
    * @type {Language}
    * @memberof CreateCodeRevisionRequest
    */
@@ -106,6 +118,12 @@ export interface CreateMapRevisionRequest {
    * @memberof CreateMapRevisionRequest
    */
   map: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateMapRevisionRequest
+   */
+  message: string;
 }
 /**
  * Create match request
@@ -146,10 +164,10 @@ export interface CreateMatchRequest {
 export interface CurrentUserProfile {
   /**
    *
-   * @type {number}
+   * @type {string}
    * @memberof CurrentUserProfile
    */
-  id: number;
+  id: string;
   /**
    *
    * @type {string}
@@ -180,12 +198,6 @@ export interface CurrentUserProfile {
    * @memberof CurrentUserProfile
    */
   college: string;
-  /**
-   *
-   * @type {number}
-   * @memberof CurrentUserProfile
-   */
-  currentLevel: number;
   /**
    *
    * @type {boolean}
@@ -242,22 +254,16 @@ export interface Game {
   id: string;
   /**
    *
-   * @type {string}
+   * @type {number}
    * @memberof Game
    */
-  map?: string;
+  destruction: number;
   /**
    *
    * @type {number}
    * @memberof Game
    */
-  points1: number;
-  /**
-   *
-   * @type {number}
-   * @memberof Game
-   */
-  points2: number;
+  coinsUsed: number;
   /**
    *
    * @type {GameStatus}
@@ -313,7 +319,19 @@ export interface GameMapRevision {
    * @type {string}
    * @memberof GameMapRevision
    */
-  parentRevision: string;
+  parentRevision?: string;
+  /**
+   *
+   * @type {Date}
+   * @memberof GameMapRevision
+   */
+  createdAt: Date;
+  /**
+   *
+   * @type {string}
+   * @memberof GameMapRevision
+   */
+  message: string;
 }
 /**
  *
@@ -505,10 +523,10 @@ export interface PasswordLoginResponse {
 export interface PublicUser {
   /**
    *
-   * @type {number}
+   * @type {string}
    * @memberof PublicUser
    */
-  userId: number;
+  userId: string;
   /**
    *
    * @type {string}
@@ -751,12 +769,6 @@ export interface UpdatePasswordRequest {
  * @interface UserStats
  */
 export interface UserStats {
-  /**
-   *
-   * @type {number}
-   * @memberof UserStats
-   */
-  currentLevel: number;
   /**
    *
    * @type {number}

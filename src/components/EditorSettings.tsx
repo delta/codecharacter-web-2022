@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { FormGroup, Col, Container, Row, Modal } from 'react-bootstrap';
 import styles from '../styles/EditorSettings.module.css';
-import { RootState } from '../redux/store';
+import { RootState } from '../store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   isSettingsOpened,
@@ -10,29 +10,32 @@ import {
   keyboardHandlerChanged,
   enableBasicAutoCompleteChanged,
   enableSnippetsChanged,
-} from '../redux/settings';
+} from '../store/editor/settings';
 
 const EditorSettings = (): JSX.Element => {
   const isSettingsOpen = useSelector(
-    (state: RootState) => state.settingsState.isSettingsOpen,
+    (state: RootState) => state.persistReducer.settingsState.isSettingsOpen,
   );
 
   const fontSize = useSelector(
-    (state: RootState) => state.settingsState.fontSize,
+    (state: RootState) => state.persistReducer.settingsState.fontSize,
   );
 
-  const theme = useSelector((state: RootState) => state.settingsState.theme);
+  const theme = useSelector(
+    (state: RootState) => state.persistReducer.settingsState.theme,
+  );
 
   const keyboardHandler = useSelector(
-    (state: RootState) => state.settingsState.keyboardHandler,
+    (state: RootState) => state.persistReducer.settingsState.keyboardHandler,
   );
 
   const enableBasicAutoComplete = useSelector(
-    (state: RootState) => state.settingsState.enableBasicAutoComplete,
+    (state: RootState) =>
+      state.persistReducer.settingsState.enableBasicAutoComplete,
   );
 
   const enableSnippets = useSelector(
-    (state: RootState) => state.settingsState.enableSnippets,
+    (state: RootState) => state.persistReducer.settingsState.enableSnippets,
   );
 
   const dispatch = useDispatch();

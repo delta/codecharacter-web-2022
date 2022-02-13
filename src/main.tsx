@@ -2,11 +2,11 @@ import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
-import styles from './main_page.module.css';
+import styles from './main.module.css';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Toast from './components/Toast/Toast';
 import classnames from 'classnames';
-import { store } from './redux/store';
+import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
@@ -22,6 +22,9 @@ const History = lazy(
 const Login = lazy(() => import('./pages/Auth/Login'));
 const Register = lazy(() => import('./pages/Auth/Register'));
 const EditorSettings = lazy(() => import('./components/EditorSettings'));
+import { Counter } from './store/counter/Counter';
+const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
+const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
 
 ReactDOM.render(
   <React.StrictMode>
@@ -31,32 +34,21 @@ ReactDOM.render(
           <Suspense fallback={<div>Loading...</div>}>
             <EditorSettings />
             <NavBar />
-            <Container className={classnames(styles.mainContainer)} fluid>
-              <Row className={classnames(styles.mainRow)}>
-                <Col
-                  className={classnames(styles.sideBarCol)}
-                  xs="auto"
-                  sm="auto"
-                  md="auto"
-                  lg="auto"
-                  xl="auto"
-                  xxl="auto"
-                >
-                  <SideBar />
-                </Col>
-                <Col className={classnames(styles.componentCol)}>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/history" element={<History />} />
-                  </Routes>
-                </Col>
-              </Row>
-            </Container>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </Routes>
+            <div className={styles.mainWindow}>
+              <SideBar />
+              <div className={styles.gameArea}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/history" element={<History />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/counter" element={<Counter />} />
+                  <Route path="/leaderboard" element={<Leaderboard />} />
+                  <Route path="/battletv" element={<BattleTV />} />
+                </Routes>
+              </div>
+            </div>
           </Suspense>
         </HashRouter>
         <Toast />

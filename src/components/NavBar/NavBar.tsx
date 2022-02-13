@@ -1,12 +1,23 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import styles from './NavBar.module.css';
+import Profile from '../Profile/Profile';
+import Notifs from '../Notifs/Notifs';
 // import toast from 'react-hot-toast';
 
 const NavBar: React.FunctionComponent = () => {
+  const [open, isOpen] = useState(false);
+  const handleOpen = () => {
+    isOpen(true);
+  };
+
+  const handleClose = () => {
+    isOpen(false);
+  };
   return (
     <div className={styles.navBar}>
+      <Profile open={open} handleClose={handleClose} />
+
       <div className={styles.branding}>
         <Link to="dashboard" className={styles.logoLink}>
           <h2 className={styles.navLogo}>Code Character</h2>
@@ -25,10 +36,12 @@ const NavBar: React.FunctionComponent = () => {
           Toast
         </button> */}
         <div className={styles.notifIcon}>
-          <FontAwesomeIcon icon={faBell} />
+          <Notifs />
         </div>
-        <div className={styles.fakeProfileIcon} />
-        <h3 className={styles.profileName}>blndlyblv</h3>
+        <div className={styles.profile} onClick={handleOpen}>
+          <div className={styles.fakeProfileIcon} />
+          <h3 className={styles.profileName}>blndlyblv</h3>
+        </div>
       </div>
     </div>
   );

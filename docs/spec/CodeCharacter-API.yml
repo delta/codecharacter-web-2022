@@ -175,15 +175,122 @@ paths:
                 Example:
                   value:
                     - user:
-                        userId: 1
+                        userId: 123e4567-e89b-12d3-a456-426614174001
                         username: testUser
-                        name: Test User
+                        name: Test User1
                         country: IN
                         college: NIT Trichy
                         avatarId: 0
                       stats:
-                        currentLevel: 0
-                        rating: 0
+                        rating: 500
+                        wins: 6
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser2
+                        name: Test User2
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 1
+                      stats:
+                        rating: 50
+                        wins: 3
+                        losses: 3
+                        ties: 2
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174003
+                        username: testUser3
+                        name: Test User3
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 80
+                        wins: 1
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174004
+                        username: testUser4
+                        name: Test User4
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 230
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174005
+                        username: testUser5
+                        name: Test User5
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 850
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174006
+                        username: testUser6
+                        name: Test User6
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 600
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174007
+                        username: testUser7
+                        name: Test User7
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 57
+                        wins: 20
+                        losses: 70
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174008
+                        username: testUser8
+                        name: Test User8
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 850
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174009
+                        username: testUser9
+                        name: Test User9
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 78
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        userId: 123e4567-e89b-12d3-a456-426614174010
+                        username: testUser10
+                        name: Test User10
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 10
                         wins: 0
                         losses: 0
                         ties: 0
@@ -225,23 +332,190 @@ paths:
                     - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                          mapId: 0
-                          points1: 0
-                          points2: 0
+                          coinsUsed: 100
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
                       matchVerdict: PLAYER1
                       createdAt: '2019-08-24T14:15:22Z'
                       user1:
-                        userId: 1
+                        userId: 123e4567-e89b-12d3-a456-426614174001
                         username: testUser
                         name: Test User
                         country: IN
                         college: NIT Trichy
                         avatarId: 0
                       user2:
-                        userId: 1
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f09
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f07
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f06
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f05
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f04
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f03
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f02
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                          gameVerdict: PLAYER1
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        userId: 123e4567-e89b-12d3-a456-426614174001
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        userId: 123e4567-e89b-12d3-a456-426614174002
                         username: testUser
                         name: Test User
                         country: IN
@@ -285,13 +559,12 @@ paths:
               examples:
                 Example:
                   value:
-                    id: 5
+                    id: 123e4567-e89b-12d3-a456-426614174001
                     username: testUser
                     name: Test User
                     email: user@example.com
                     country: IN
                     college: NITT
-                    currentLevel: 3
                     isAdmin: false
         '401':
           description: Unauthorized
@@ -443,9 +716,28 @@ paths:
                   value:
                     - id: 123e4567-e89b-12d3-a456-426614174000
                       code: '#include<iostream.h>'
+                      message: 'revision1'
                       language: C
                       parentRevision: 123e4567-e89b-12d3-a456-426614174111
                       createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174001
+                      code: print('Hello World!')
+                      message: 'revision2'
+                      language: PYTHON
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174112
+                      createdAt: '2020-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174002
+                      code: import sys
+                      message: 'revision3'
+                      language: PYTHON
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174113
+                      createdAt: '2021-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174003
+                      code: '#include<conio.h>'
+                      message: 'revision4'
+                      language: C
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174114
+                      createdAt: '2021-12-24T14:15:22Z'
         '401':
           description: Unauthorized
       operationId: getCodeRevisions
@@ -479,6 +771,7 @@ paths:
               Example:
                 value:
                   code: '#include<iostream>'
+                  message: 'revision1'
                   language: C
       tags:
         - code
@@ -557,7 +850,39 @@ paths:
                   value:
                     - id: 123e4567-e89b-12d3-a456-426614174000
                       map: 0000\n0010\n0100\n1000\n
+                      message: 'revision1'
                       parentRevision: 123e4567-e89b-12d3-a456-426614174111
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174001
+                      map: 0000\n0010\n0100\n1000\n\n1001
+                      message: 'revision2'
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174112
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174002
+                      map: 0000\n0010\n0100\n1000\n\n1002
+                      message: 'revision3'
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174113
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174003
+                      map: 0000\n0010\n0100\n1000\n\n1003
+                      message: 'revision4'
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174114
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174004
+                      map: 0000\n0010\n0100\n1000\n\n1001
+                      message: 'revision5'
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174112
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174005
+                      map: 0000\n0010\n0100\n1000\n\n1002
+                      message: 'revision6'
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174113
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174006
+                      map: 0000\n0010\n0100\n1000\n\n1003
+                      message: 'revision7'
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174114
+                      createdAt: '2019-08-24T14:15:22Z'
         '401':
           description: Unauthorized
       operationId: getMapRevisions
@@ -591,6 +916,7 @@ paths:
               Example:
                 value:
                   map: 0000\n0010\n0100\n1000\n
+                  message: 'revision1'
       tags:
         - map
     parameters: []
@@ -614,23 +940,22 @@ paths:
                     - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
                       games:
                         - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                          mapId: 0
-                          points1: 0
-                          points2: 0
+                          coinsUsed: 100
+                          destruction: 45
                           status: IDLE
                           gameVerdict: PLAYER1
                       matchMode: SELF
                       matchVerdict: PLAYER1
                       createdAt: '2019-08-24T14:15:22Z'
                       user1:
-                        userId: 1
+                        userId: 123e4567-e89b-12d3-a456-426614174001
                         username: testUser
                         name: Test User
                         country: IN
                         college: NIT Trichy
                         avatarId: 0
                       user2:
-                        userId: 1
+                        userId: 123e4567-e89b-12d3-a456-426614174002
                         username: testUser
                         name: Test User
                         country: IN
@@ -664,6 +989,7 @@ paths:
       tags:
         - match
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -944,8 +1270,9 @@ components:
       description: Public user model
       properties:
         userId:
-          type: integer
-          example: 1
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174003
+          format: uuid
         username:
           type: string
           example: test
@@ -973,9 +1300,6 @@ components:
       type: object
       description: User stats model
       properties:
-        currentLevel:
-          type: integer
-          example: 1
         rating:
           type: number
           example: 1000
@@ -990,7 +1314,6 @@ components:
           type: integer
           example: 1
       required:
-        - currentLevel
         - rating
         - wins
         - losses
@@ -1046,6 +1369,9 @@ components:
         code:
           type: string
           example: '#include <iostream>'
+        message:
+          type: string
+          example: message
         parentRevision:
           type: string
           format: uuid
@@ -1058,6 +1384,7 @@ components:
       required:
         - id
         - code
+        - message
         - language
         - createdAt
     CreateCodeRevisionRequest:
@@ -1068,10 +1395,14 @@ components:
         code:
           type: string
           example: '#include <iostream>'
+        message:
+          type: string
+          example: message
         language:
           $ref: '#/components/schemas/Language'
       required:
         - code
+        - message
         - language
     GameMap:
       title: GameMap
@@ -1117,10 +1448,17 @@ components:
           type: string
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174111
+        createdAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+          example: message
       required:
         - id
         - map
-        - parentRevision
+        - createdAt
+        - message
     CreateMapRevisionRequest:
       title: CreateMapRevisionRequest
       type: object
@@ -1129,8 +1467,12 @@ components:
         map:
           type: string
           example: 0000\n0010\n0100\n1000\n
+        message:
+          type: string
+          example: message
       required:
         - map
+        - message
     ActivateUserRequest:
       title: ActivateUserRequest
       type: object
@@ -1202,8 +1544,9 @@ components:
       description: Current user profile model
       properties:
         id:
-          type: integer
-          example: 1
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174003
+          format: uuid
         username:
           type: string
           example: test
@@ -1221,9 +1564,6 @@ components:
         college:
           type: string
           example: Test
-        currentLevel:
-          type: integer
-          example: 1
         isAdmin:
           type: boolean
           default: false
@@ -1234,7 +1574,6 @@ components:
         - email
         - country
         - college
-        - currentLevel
         - isAdmin
     UpdateCurrentUserProfile:
       title: UpdateCurrentUserProfile
@@ -1366,23 +1705,19 @@ components:
           type: string
           format: uuid
           example: 123e4567-e89b-12d3-a456-426614174000
-        map:
-          type: string
-          example: 0000\n0010\n0100\n1000\n
-        points1:
-          type: integer
+        destruction:
+          type: number
           example: 100
-        points2:
+        coinsUsed:
           type: integer
-          example: 90
         status:
           $ref: '#/components/schemas/GameStatus'
         gameVerdict:
           $ref: '#/components/schemas/Verdict'
       required:
         - id
-        - points1
-        - points2
+        - destruction
+        - coinsUsed
         - status
         - gameVerdict
     GameLog:
@@ -1485,8 +1820,9 @@ components:
       in: path
       required: true
       schema:
-        type: integer
-        example: 1
+        type: string
+        format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174002
       description: ID of the user
     gameId:
       name: gameId

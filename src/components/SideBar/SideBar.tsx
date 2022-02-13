@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { isSettingsOpened } from '../../redux/settings';
+import { isSettingsOpened } from '../../store/editor/settings';
 import {
   faCode,
   faTrophy,
@@ -13,6 +13,7 @@ import {
   faSignOutAlt,
   faTools,
 } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const icons = [
   { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
@@ -26,7 +27,7 @@ const icons = [
 
 const SideBar: React.FunctionComponent = () => {
   const isSettingsOpen = useSelector(
-    (state: RootState) => state.settingsState.isSettingsOpen,
+    (state: RootState) => state.persistReducer.settingsState.isSettingsOpen,
   );
   const dispatch = useDispatch();
 
@@ -44,7 +45,7 @@ const SideBar: React.FunctionComponent = () => {
               <FontAwesomeIcon
                 className={styles.sideBarIconComponent}
                 title={icon.tooltip}
-                icon={icon.icon}
+                icon={icon.icon as IconProp}
                 onClick={handleOpenSettings}
               />
             </div>
@@ -56,7 +57,7 @@ const SideBar: React.FunctionComponent = () => {
                 <FontAwesomeIcon
                   className={styles.sideBarIconComponent}
                   title={icon.tooltip}
-                  icon={icon.icon}
+                  icon={icon.icon as IconProp}
                 />
               </Link>
             </div>

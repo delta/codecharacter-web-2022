@@ -1,9 +1,10 @@
 .sideBar{
-    height: 100%;
-    width: 100%;
+    height: calc(100vh - 60px) ;
+    width: 65px;
     background-color: #2D3342;
-    padding-top: 1rem;
-    margin: 0;
+    position: fixed;
+    top: 60px;
+    z-index: 1000;
 }
 
 .sideBarIcon{

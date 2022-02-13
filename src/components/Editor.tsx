@@ -22,33 +22,36 @@ import 'brace/theme/dracula';
 import 'brace/keybinding/emacs';
 import 'brace/keybinding/vim';
 
-import { RootState } from '../redux/store';
-import { updateUserCode, CodeAndLanguage } from '../redux/code';
+import { RootState } from '../store/store';
+import { updateUserCode, CodeAndLanguage } from '../store/editor/code';
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function CodeEditor(props: Editor.Props): JSX.Element {
   // Retreiving only needed info from global store
 
   const userCode = useSelector(
-    (state: RootState) => state.editorState.userCode,
+    (state: RootState) => state.persistReducer.editorState.userCode,
   );
 
   const fontSize = useSelector(
-    (state: RootState) => state.settingsState.fontSize,
+    (state: RootState) => state.persistReducer.settingsState.fontSize,
   );
 
-  const theme = useSelector((state: RootState) => state.settingsState.theme);
+  const theme = useSelector(
+    (state: RootState) => state.persistReducer.settingsState.theme,
+  );
 
   const keyboardHandler = useSelector(
-    (state: RootState) => state.settingsState.keyboardHandler,
+    (state: RootState) => state.persistReducer.settingsState.keyboardHandler,
   );
 
   const enableBasicAutoComplete = useSelector(
-    (state: RootState) => state.settingsState.enableBasicAutoComplete,
+    (state: RootState) =>
+      state.persistReducer.settingsState.enableBasicAutoComplete,
   );
 
   const enableSnippets = useSelector(
-    (state: RootState) => state.settingsState.enableSnippets,
+    (state: RootState) => state.persistReducer.settingsState.enableSnippets,
   );
 
   const dispatch = useDispatch();
