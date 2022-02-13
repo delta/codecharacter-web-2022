@@ -25,17 +25,22 @@ const Notifs: React.FunctionComponent = () => {
     hookDispatch(getNotifAction());
   }, []);
 
-  window.addEventListener('click', e => {
-    const eventTarget = e.target as HTMLElement;
-    if (
-      !notifModalRef.current?.contains(eventTarget) &&
-      !notifIconRef.current?.contains(eventTarget) &&
-      notifModalRef.current?.classList.contains(styles.notifModalShow)
-    ) {
-      toggleNotifModal();
-    }
-  });
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      console.log('event listener');
+      const eventTarget = e.target as HTMLElement;
+      if (
+        !notifModalRef.current?.contains(eventTarget) &&
+        !notifIconRef.current?.contains(eventTarget) &&
+        notifModalRef.current?.classList.contains(styles.notifModalShow)
+      ) {
+        toggleNotifModal();
+      }
+    };
+    window.addEventListener('click', handleClick);
 
+    return window.addEventListener('click', handleClick);
+  }, []);
   const toggleNotifModal = () => {
     if (
       !notifModalRef.current?.classList.contains(styles.notifModalShow) &&
