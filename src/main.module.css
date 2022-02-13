@@ -3,16 +3,19 @@
   margin: 0px;
   padding: 0px;
 }
+
 .mainWindow {
   display: flex;
   flex-direction: row;
 }
+
 .gameArea {
   /* width: 100%; */
   width: calc(100% - 60px);
   margin-top: 60px;
   margin-left: 60px;
 }
+
 body {
   background-color: #3b4d7c;
 }

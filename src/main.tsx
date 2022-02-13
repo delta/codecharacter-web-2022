@@ -4,7 +4,6 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
-
 import NavBar from './components/NavBar/NavBar';
 import SideBar from './components/SideBar/SideBar';
 import Toast from './components/Toast/Toast';
@@ -17,8 +16,8 @@ const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
 const History = lazy(
   () => import('./components/CommitHistory/HistoryMain/History'),
 );
-const Login = lazy(() => import('./pages/Auth/Login'));
-const Register = lazy(() => import('./pages/Auth/Register'));
+const Login = lazy(() => import('./pages/Auth/LoginForm'));
+const Register = lazy(() => import('./pages/Auth/RegisterForm'));
 
 ReactDOM.render(
   <React.StrictMode>
