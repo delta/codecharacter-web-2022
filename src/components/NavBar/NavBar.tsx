@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
@@ -13,7 +11,6 @@ import {
   user,
 } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -60,7 +57,7 @@ const NavBar: React.FunctionComponent = () => {
           Toast
         </button> */}
           <div className={styles.notifIcon}>
-            <FontAwesomeIcon icon={faBell as IconProp} />
+            <Notifs />
           </div>
           <div className={styles.profile} onClick={handleOpen}>
             <div className={styles.fakeProfileIcon} />
