@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 export interface settingsStateType {
   isSettingsOpen: boolean;
@@ -56,5 +57,18 @@ export const {
   enableBasicAutoCompleteChanged,
   enableSnippetsChanged,
 } = settingsSlice.actions;
+
+export const IsSettingsOpen = (state: RootState): boolean =>
+  state.codeEditorReducer.settingsState.isSettingsOpen;
+export const FontSize = (state: RootState): number =>
+  state.codeEditorReducer.settingsState.fontSize;
+export const Theme = (state: RootState): string =>
+  state.codeEditorReducer.settingsState.theme;
+export const KeyboardHandler = (state: RootState): string =>
+  state.codeEditorReducer.settingsState.keyboardHandler;
+export const EnableBasicAutoComplete = (state: RootState): boolean =>
+  state.codeEditorReducer.settingsState.enableBasicAutoComplete;
+export const EnableSnippets = (state: RootState): boolean =>
+  state.codeEditorReducer.settingsState.enableSnippets;
 
 export default settingsSlice.reducer;

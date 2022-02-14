@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
 import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { isSettingsOpened } from '../../store/editor/settings';
+import { isSettingsOpened } from '../../store/EditorSettings/settings';
 import {
   faCode,
   faTrophy,
@@ -27,7 +27,7 @@ const icons = [
 
 const SideBar: React.FunctionComponent = () => {
   const isSettingsOpen = useSelector(
-    (state: RootState) => state.persistReducer.settingsState.isSettingsOpen,
+    (state: RootState) => state.codeEditorReducer.settingsState.isSettingsOpen,
   );
   const dispatch = useDispatch();
 

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 .dashboardMainContainer{
-    margin: 0;
+    margin-left: 5px;
     padding: 0;
     height: 93.5vh;
 }
@@ -19,6 +19,10 @@
 .btnBarAboveEditor{
     height: 6.5vh;
     background: #2B3760;
+    width: 100%;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 .btnBarMembers{
@@ -86,6 +90,21 @@
     border: 0px;
     margin: 0;
     padding: 0;
+    height: 50%;
+}
+
+
+.slideInOutBtn2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #232323;
+    padding: auto;
+    width: 20px !important;
+    border: 0px;
+    margin: 0;
+    padding: 0;
+    height: 100%
 }
 
 @media (max-width: 1000px){

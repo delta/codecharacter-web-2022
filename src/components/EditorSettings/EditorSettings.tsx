@@ -1,8 +1,6 @@
-import classnames from 'classnames';
 import { FormGroup, Col, Container, Row, Modal } from 'react-bootstrap';
-import styles from '../styles/EditorSettings.module.css';
-import { RootState } from '../store/store';
-import { useSelector, useDispatch } from 'react-redux';
+import styles from './EditorSettings.module.css';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   isSettingsOpened,
   fontSizeChanged,
@@ -10,35 +8,48 @@ import {
   keyboardHandlerChanged,
   enableBasicAutoCompleteChanged,
   enableSnippetsChanged,
-} from '../store/editor/settings';
+  IsSettingsOpen,
+  FontSize,
+  Theme,
+  KeyboardHandler,
+  EnableBasicAutoComplete,
+  EnableSnippets,
+} from '../../store/EditorSettings/settings';
 
 const EditorSettings = (): JSX.Element => {
-  const isSettingsOpen = useSelector(
-    (state: RootState) => state.persistReducer.settingsState.isSettingsOpen,
-  );
+  // const isSettingsOpen = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.settingsState.isSettingsOpen,
+  // );
 
-  const fontSize = useSelector(
-    (state: RootState) => state.persistReducer.settingsState.fontSize,
-  );
+  // const fontSize = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.settingsState.fontSize,
+  // );
 
-  const theme = useSelector(
-    (state: RootState) => state.persistReducer.settingsState.theme,
-  );
+  // const theme = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.settingsState.theme,
+  // );
 
-  const keyboardHandler = useSelector(
-    (state: RootState) => state.persistReducer.settingsState.keyboardHandler,
-  );
+  // const keyboardHandler = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.settingsState.keyboardHandler,
+  // );
 
-  const enableBasicAutoComplete = useSelector(
-    (state: RootState) =>
-      state.persistReducer.settingsState.enableBasicAutoComplete,
-  );
+  // const enableBasicAutoComplete = useSelector(
+  //   (state: RootState) =>
+  //     state.codeEditorReducer.settingsState.enableBasicAutoComplete,
+  // );
 
-  const enableSnippets = useSelector(
-    (state: RootState) => state.persistReducer.settingsState.enableSnippets,
-  );
+  // const enableSnippets = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.settingsState.enableSnippets,
+  // );
 
-  const dispatch = useDispatch();
+  const isSettingsOpen = useAppSelector(IsSettingsOpen);
+  const fontSize = useAppSelector(FontSize);
+  const theme = useAppSelector(Theme);
+  const keyboardHandler = useAppSelector(KeyboardHandler);
+  const enableBasicAutoComplete = useAppSelector(EnableBasicAutoComplete);
+  const enableSnippets = useAppSelector(EnableSnippets);
+
+  const dispatch = useAppDispatch();
 
   const fontSizeOptions = [];
   for (let i = 8; i <= 40; i += 2) {
@@ -88,24 +99,21 @@ const EditorSettings = (): JSX.Element => {
     <Modal
       show={isSettingsOpen}
       centered
-      className={classnames(styles.editorSettingsModal)}
+      className={styles.editorSettingsModal}
       onHide={() => dispatch(isSettingsOpened(false))}
     >
-      <Modal.Header
-        className={classnames(styles.editorSettingsHeader)}
-        closeButton
-      >
+      <Modal.Header className={styles.editorSettingsHeader} closeButton>
         <Modal.Title className="fw-bold fs-3">Settings</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className={classnames(styles.editorSettingsBody)}>
+      <Modal.Body className={styles.editorSettingsBody}>
         <Container fluid>
           <Row>
-            <Col xs={12} className={classnames(styles.settingFormGroup)}>
+            <Col xs={12} className={styles.settingFormGroup}>
               <FormGroup controlId="fontSize">
-                <div className={classnames(styles.settingLabel)}>Font Size</div>
+                <div className={styles.settingLabel}>Font Size</div>
                 <select
-                  className={classnames(styles.settingDropdown)}
+                  className={styles.settingDropdown}
                   value={fontSize}
                   onChange={e => handleFontSizeChange(Number(e.target.value))}
                 >
@@ -113,7 +121,7 @@ const EditorSettings = (): JSX.Element => {
                     <option
                       value={font}
                       key={font}
-                      className={classnames(styles.optionsDropdown)}
+                      className={styles.optionsDropdown}
                     >
                       {font}
                     </option>
@@ -122,13 +130,11 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12} className={classnames(styles.settingFormGroup)}>
+            <Col xs={12} className={styles.settingFormGroup}>
               <FormGroup controlId="editorTheme">
-                <div className={classnames(styles.settingLabel)}>
-                  Editor Theme
-                </div>
+                <div className={styles.settingLabel}>Editor Theme</div>
                 <select
-                  className={classnames(styles.settingDropdown)}
+                  className={styles.settingDropdown}
                   value={theme}
                   onChange={e => handleThemeChange(e.target.value)}
                 >
@@ -136,7 +142,7 @@ const EditorSettings = (): JSX.Element => {
                     <option
                       value={themeValue}
                       key={themeValue}
-                      className={classnames(styles.optionsDropdown)}
+                      className={styles.optionsDropdown}
                     >
                       {themeValue}
                     </option>
@@ -145,13 +151,11 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12} className={classnames(styles.settingFormGroup)}>
+            <Col xs={12} className={styles.settingFormGroup}>
               <FormGroup controlId="editorKeybinding">
-                <div className={classnames(styles.settingLabel)}>
-                  Editor Keybinding
-                </div>
+                <div className={styles.settingLabel}>Editor Keybinding</div>
                 <select
-                  className={classnames(styles.settingDropdown)}
+                  className={styles.settingDropdown}
                   value={keyboardHandler}
                   onChange={e => handleKeyboardHandlerChange(e.target.value)}
                 >
@@ -159,7 +163,7 @@ const EditorSettings = (): JSX.Element => {
                     <option
                       value={keyboardHandlerValue}
                       key={keyboardHandlerValue}
-                      className={classnames(styles.optionsDropdown)}
+                      className={styles.optionsDropdown}
                     >
                       {keyboardHandlerValue}
                     </option>
@@ -168,13 +172,11 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12} className={classnames(styles.settingFormGroup)}>
+            <Col xs={12} className={styles.settingFormGroup}>
               <FormGroup controlId="basicAutoCompletion">
-                <div className={classnames(styles.settingLabel)}>
-                  Basic Auto Completion
-                </div>
+                <div className={styles.settingLabel}>Basic Auto Completion</div>
                 <select
-                  className={classnames(styles.settingDropdown)}
+                  className={styles.settingDropdown}
                   value={enableBasicAutoComplete ? 'enable' : 'disable'}
                   onChange={e =>
                     handleAutoCompleteToggle(
@@ -185,14 +187,14 @@ const EditorSettings = (): JSX.Element => {
                   <option
                     value={'enable'}
                     key={'enable'}
-                    className={classnames(styles.optionsDropdown)}
+                    className={styles.optionsDropdown}
                   >
                     enable
                   </option>
                   <option
                     value={'disable'}
                     key={'disable'}
-                    className={classnames(styles.optionsDropdown)}
+                    className={styles.optionsDropdown}
                   >
                     disable
                   </option>
@@ -200,11 +202,11 @@ const EditorSettings = (): JSX.Element => {
               </FormGroup>
             </Col>
 
-            <Col xs={12} className={classnames(styles.settingFormGroup)}>
+            <Col xs={12} className={styles.settingFormGroup}>
               <FormGroup controlId="snippets">
-                <div className={classnames(styles.settingLabel)}>Snippets</div>
+                <div className={styles.settingLabel}>Snippets</div>
                 <select
-                  className={classnames(styles.settingDropdown)}
+                  className={styles.settingDropdown}
                   value={enableSnippets ? 'enable' : 'disable'}
                   onChange={e =>
                     handleSnippetsToggle(
@@ -215,14 +217,14 @@ const EditorSettings = (): JSX.Element => {
                   <option
                     value={'enable'}
                     key={'enable'}
-                    className={classnames(styles.optionsDropdown)}
+                    className={styles.optionsDropdown}
                   >
                     enable
                   </option>
                   <option
                     value={'disable'}
                     key={'disable'}
-                    className={classnames(styles.optionsDropdown)}
+                    className={styles.optionsDropdown}
                   >
                     disable
                   </option>

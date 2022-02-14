@@ -16,25 +16,15 @@ const NavBar: React.FunctionComponent = () => {
   };
   return (
     <div className={styles.navBar}>
-      <Profile open={open} handleClose={handleClose} />
-
-      <div className={styles.branding}>
-        <Link to="dashboard" className={styles.logoLink}>
-          <h2 className={styles.navLogo}>Code Character</h2>
-        </Link>
+      <div>
+        <Profile open={open} handleClose={handleClose} />
+        <div className={styles.branding}>
+          <Link to="dashboard" className={styles.logoLink}>
+            <h2 className={styles.navLogo}>Code Character</h2>
+          </Link>
+        </div>
       </div>
       <div className={styles.profileIcons}>
-        {/* <button
-          className="toastTest"
-          onClick={() => {
-            toast.success('Toast Rendered!', {
-              position: 'bottom-right',
-              duration: 3000,
-            });
-          }}
-        >
-          Toast
-        </button> */}
         <div className={styles.notifIcon}>
           <Notifs />
         </div>

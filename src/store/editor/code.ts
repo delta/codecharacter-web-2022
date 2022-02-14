@@ -1,5 +1,6 @@
 import { Code } from '@codecharacter-2022/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 const languagesAvailable = ['c_cpp', 'python'];
 
@@ -40,12 +41,10 @@ export const editorSlice = createSlice({
       const tempCurrentUserLanguage = action.payload.currentUserLanguage;
       const desiredIndex = languagesAvailable.indexOf(tempCurrentUserLanguage);
       state.allLanguagesCode[desiredIndex] = action.payload.currentUserCode;
-      console.log(state.allLanguagesCode[desiredIndex]);
       state.userCode = action.payload.currentUserCode;
     },
 
     changeLanguage: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       const tempCurrentUserLanguage = action.payload;
       const desiredIndex = languagesAvailable.indexOf(tempCurrentUserLanguage);
       state.userCode = state.allLanguagesCode[desiredIndex];
@@ -56,4 +55,8 @@ export const editorSlice = createSlice({
 
 export const { updateUserCode, changeLanguage, initializeEditorStates } =
   editorSlice.actions;
+export const UserCode = (state: RootState): string =>
+  state.codeEditorReducer.editorState.userCode;
+export const UserLanguage = (state: RootState): string =>
+  state.codeEditorReducer.editorState.language;
 export default editorSlice.reducer;

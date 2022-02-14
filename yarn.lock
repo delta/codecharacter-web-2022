@@ -1702,7 +1702,7 @@ __metadata:
     brace: ^0.11.1
     classnames: ^2.3.1
     concurrently: ^5.3.0
-    css-loader: ^6.5.1
+    css-loader: ^6.6.0
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
     eslint-plugin-import: ^2.25.4
@@ -6839,7 +6839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.5.1":
+"css-loader@npm:^6.6.0":
   version: 6.6.0
   resolution: "css-loader@npm:6.6.0"
   dependencies:

@@ -8,8 +8,8 @@ import counterReducer from './counter/counterSlice';
 import battleTvReducer from '../components/BattleTV/BattleTvSlice';
 import notifReducer from './Notifs/notifSlice';
 import historyReducer from './historyEditor/historyEditorSlice';
-import editorReducer from './editor/code';
-import settingsReducer from './editor/settings';
+import editorReducer from './Editor/code';
+import settingsReducer from './EditorSettings/settings';
 
 const reducers = combineReducers({
   editorState: editorReducer,
@@ -29,7 +29,7 @@ export const store = configureStore({
     battletv: battleTvReducer,
     notifs: notifReducer,
     historyEditor: historyReducer,
-    persistReducer: persistedReducer,
+    codeEditorReducer: persistedReducer,
   },
   middleware: [thunk],
 });

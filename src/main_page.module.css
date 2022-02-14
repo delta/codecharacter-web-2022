@@ -1,7 +1,7 @@
 .mainContainer{
     margin: 0;
     padding: 0;
-    height: 93.5vh; /* size of navbar is 6.5vh */
+    height: 93.5vh;
 }
 
 .mainRow{
@@ -12,14 +12,14 @@
 }
 
 .sideBarCol{
-    width: 45px;   /* same as sidebar width */
+    width: 45px; 
     height: 93.5vh; 
     margin: 0;
     padding: 0;
 }
 
 .componentCol{
-    height: 93.5vh;  /* navbar height is 6.5vh */
+    height: 93.5vh; 
     margin: 0;
     padding: 0;
 }

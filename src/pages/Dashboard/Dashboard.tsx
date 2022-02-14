@@ -1,18 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
-import classnames from 'classnames';
 import SplitPane from 'react-split-pane';
-import Editor from '../components/Editor';
-import '../styles/DefaultSplitPane.css';
-import styles from '../styles/Dashboard.module.css';
+import Editor from '../../components/Editor/Editor';
+import './DefaultSplitPane.css';
+import styles from './Dashboard.module.css';
 import { MapDesignerComponent } from '@codecharacter-2022/map-designer';
 import { RendererComponent } from '@codecharacter-2022/renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { RootState } from '../redux/store';
-import { RootState } from '../store/store';
-import { changeLanguage, initializeEditorStates } from '../store/editor/code';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  changeLanguage,
+  initializeEditorStates,
+  UserCode,
+  UserLanguage,
+} from '../../store/Editor/code';
 import { CodeApi, Language } from '@codecharacter-2022/client';
-import { apiConfig, ApiError } from '../api/ApiConfig';
+import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
   Container,
   Row,
@@ -29,16 +30,21 @@ import {
   faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function Dashboard(): JSX.Element {
-  // Retreiving only needed info from global store
-  const userLanguage = useSelector(
-    (state: RootState) => state.persistReducer.editorState.language,
-  );
-  const userCode = useSelector(
-    (state: RootState) => state.persistReducer.editorState.userCode,
-  );
-  const dispatch = useDispatch();
+  // const userLanguage = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.editorState.language,
+  // );
+  // const userCode = useSelector(
+  //   (state: RootState) => state.codeEditorReducer.editorState.userCode,
+  // );
+  // const dispatch = useDispatch();
+
+  const userLanguage = useAppSelector(UserLanguage);
+  const userCode = useAppSelector(UserCode);
+  const dispatch = useAppDispatch();
+
   const codeAPI = new CodeApi(apiConfig);
 
   useEffect(() => {
@@ -46,7 +52,6 @@ export default function Dashboard(): JSX.Element {
       codeAPI
         .getLatestCode()
         .then(response => {
-          console.log(response);
           dispatch(initializeEditorStates(response));
         })
         .catch(err => {
@@ -61,8 +66,8 @@ export default function Dashboard(): JSX.Element {
   const slideInOutBtn = useRef<HTMLDivElement>(null);
 
   const [editorWidth, setEditorWidth] = useState(
-    (window.innerWidth - 45) / 2 - 20,
-  ); /* 45 is sidebar width and 20 is slidInOutBtn width */
+    (window.innerWidth - 45) / 2 - 25,
+  );
 
   const localStoreLanguageChose = localStorage.getItem('languageChose');
   const [languageChose, setLanguageChose] = useState(
@@ -71,9 +76,7 @@ export default function Dashboard(): JSX.Element {
 
   const [isCodeEditorOpen, setCodeEditorOpen] = useState(true);
   const [isRendererOpen, setRendererOpen] = useState(true);
-  // 45 is the width of sideBar + slideInOutBtn
   const [pane1Width, setpane1Width] = useState((window.innerWidth - 45) / 2);
-  const [slideBtnDimensions, setSlideBtnDimensions] = useState('w-100 h-50');
   const [commitName, setCommitName] = useState('');
 
   function handleLanguageChange(language: string) {
@@ -133,26 +136,22 @@ export default function Dashboard(): JSX.Element {
 
   function handleUpperSlideInOutBtn() {
     if (isRendererOpen === true) {
-      setSlideBtnDimensions('w-100 h-100');
-      setpane1Width(window.innerWidth - 45 - 1); // width of sidebar is 45
-      setEditorWidth(window.innerWidth - 45 - 21); // width of slideInOutBar is 20
+      setpane1Width(window.innerWidth - 65 - 1);
+      setEditorWidth(window.innerWidth - 65 - 21);
       setRendererOpen(false);
     } else {
-      setSlideBtnDimensions('w-100 h-50');
-      setpane1Width((window.innerWidth - 45) / 2);
-      setEditorWidth((window.innerWidth - 45) / 2 - 20);
+      setpane1Width((window.innerWidth - 65) / 2);
+      setEditorWidth((window.innerWidth - 65) / 2 - 25);
       setRendererOpen(true);
     }
   }
 
   function handleLowerSlideInOutBtn() {
     if (isCodeEditorOpen === true) {
-      setSlideBtnDimensions('w-100 h-100');
-      setpane1Width(slideInOutBtn.current.clientWidth);
+      setpane1Width(slideInOutBtn.current.clientWidth + 5);
       setCodeEditorOpen(false);
     } else {
-      setSlideBtnDimensions('w-100 h-50');
-      setpane1Width(editorWidth + slideInOutBtn.current.clientWidth);
+      setpane1Width(editorWidth + slideInOutBtn.current.clientWidth + 5);
       setCodeEditorOpen(true);
     }
   }
@@ -165,16 +164,13 @@ export default function Dashboard(): JSX.Element {
             <Col>
               <input
                 onChange={handleCommitNameInput}
-                className={classnames(styles.popOverInput)}
+                className={styles.popOverInput}
                 type={'text'}
                 placeholder={'Commit Name'}
               ></input>
             </Col>
             <Col>
-              <button
-                className={classnames(styles.popOverBtn)}
-                onClick={handleCommit}
-              >
+              <button className={styles.popOverBtn} onClick={handleCommit}>
                 {' '}
                 Done{' '}
               </button>
@@ -197,16 +193,11 @@ export default function Dashboard(): JSX.Element {
         xl="auto"
         xxl="auto"
       >
-        <Row
-          className={classnames(
-            styles.btnBarAboveEditor,
-            'align-items-center justify-content-center w-100 m-0',
-          )}
-        >
+        <Row className={styles.btnBarAboveEditor}>
           <Col className="text-center">
             <select
               value={languageChose}
-              className={classnames(styles.languageDropdown, 'w-75 pt-1 pb-1')}
+              className={styles.languageDropdown}
               onChange={e => handleLanguageChange(e.target.value)}
             >
               {languages.map(language => (
@@ -217,11 +208,8 @@ export default function Dashboard(): JSX.Element {
             </select>
           </Col>
 
-          <Col xs={7} className={classnames(styles.btnsParent)}>
-            <Button
-              className={classnames(styles.btnBarMembers)}
-              onClick={handleSave}
-            >
+          <Col xs={7} className={styles.btnsParent}>
+            <Button className={styles.btnBarMembers} onClick={handleSave}>
               <FontAwesomeIcon icon={faSave as IconProp} />
               {`   Save`}
             </Button>
@@ -231,13 +219,13 @@ export default function Dashboard(): JSX.Element {
               placement="bottom"
               overlay={popover}
             >
-              <Button className={classnames(styles.btnBarMembers)}>
+              <Button className={styles.btnBarMembers}>
                 <FontAwesomeIcon icon={faCodeBranch as IconProp} />
                 {`   Commit`}
               </Button>
             </OverlayTrigger>
 
-            <Button className={classnames(styles.btnBarMembers)}>
+            <Button className={styles.btnBarMembers}>
               <FontAwesomeIcon icon={faCloudUploadAlt as IconProp} />
               {`   Submit`}
             </Button>
@@ -276,14 +264,18 @@ export default function Dashboard(): JSX.Element {
         minSize={window.innerWidth / 2.65}
         maxSize={window.innerWidth / 1.2}
         pane1Style={{ width: pane1Width }}
-        style={{ height: '93.5vh', position: 'static' }}
+        style={{
+          height: window.innerHeight - 60,
+          position: 'static',
+          width: window.innerWidth - 60,
+        }}
         onChange={width => {
           if (isCodeEditorOpen === false) setCodeEditorOpen(true);
-          setEditorWidth(width - slideInOutBtn?.current?.clientWidth ?? 0);
+          setEditorWidth(width - slideInOutBtn.current.clientWidth);
           setpane1Width(width);
         }}
       >
-        <Container className={classnames(styles.dashboardMainContainer)} fluid>
+        <Container className={styles.dashboardMainContainer} fluid>
           <Row className="h-100 w-100 m-0 p-0">
             {codeEditorComponent}
             <Col
@@ -298,10 +290,11 @@ export default function Dashboard(): JSX.Element {
             >
               {isCodeEditorOpen && (
                 <div
-                  className={classnames(
-                    styles.slideInOutBtn,
-                    slideBtnDimensions,
-                  )}
+                  className={
+                    isRendererOpen === true
+                      ? styles.slideInOutBtn
+                      : styles.slideInOutBtn2
+                  }
                   onClick={handleUpperSlideInOutBtn}
                 >
                   <FontAwesomeIcon
@@ -317,15 +310,18 @@ export default function Dashboard(): JSX.Element {
 
               {isRendererOpen && (
                 <div
-                  className={classnames(
-                    styles.slideInOutBtn,
-                    slideBtnDimensions,
-                  )}
+                  className={
+                    isCodeEditorOpen === true
+                      ? styles.slideInOutBtn
+                      : styles.slideInOutBtn2
+                  }
                   onClick={handleLowerSlideInOutBtn}
                 >
                   <FontAwesomeIcon
                     icon={
-                      isCodeEditorOpen === true ? faAngleLeft : faAngleRight
+                      isCodeEditorOpen === true
+                        ? (faAngleLeft as IconProp)
+                        : (faAngleRight as IconProp)
                     }
                     className="text-white fs-3"
                   />

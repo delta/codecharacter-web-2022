@@ -8,10 +8,11 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { Counter } from './store/counter/Counter';
 
 const persistor = persistStore(store);
 const Home = lazy(() => import('./pages/Home'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const NavBar = lazy(() => import('./components/NavBar/NavBar'));
 const SideBar = lazy(() => import('./components/SideBar/SideBar'));
 const History = lazy(
@@ -19,8 +20,9 @@ const History = lazy(
 );
 const Login = lazy(() => import('./pages/Auth/Login'));
 const Register = lazy(() => import('./pages/Auth/Register'));
-const EditorSettings = lazy(() => import('./components/EditorSettings'));
-import { Counter } from './store/counter/Counter';
+const EditorSettings = lazy(
+  () => import('./components/EditorSettings/EditorSettings'),
+);
 const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
 const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
 
