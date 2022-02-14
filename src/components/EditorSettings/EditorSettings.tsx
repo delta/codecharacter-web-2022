@@ -17,31 +17,6 @@ import {
 } from '../../store/EditorSettings/settings';
 
 const EditorSettings = (): JSX.Element => {
-  // const isSettingsOpen = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.isSettingsOpen,
-  // );
-
-  // const fontSize = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.fontSize,
-  // );
-
-  // const theme = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.theme,
-  // );
-
-  // const keyboardHandler = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.keyboardHandler,
-  // );
-
-  // const enableBasicAutoComplete = useSelector(
-  //   (state: RootState) =>
-  //     state.codeEditorReducer.settingsState.enableBasicAutoComplete,
-  // );
-
-  // const enableSnippets = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.enableSnippets,
-  // );
-
   const isSettingsOpen = useAppSelector(IsSettingsOpen);
   const fontSize = useAppSelector(FontSize);
   const theme = useAppSelector(Theme);

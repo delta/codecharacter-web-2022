@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import styles from './SideBar.module.css';
-import { RootState } from '../../store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { isSettingsOpened } from '../../store/EditorSettings/settings';
+import {
+  IsSettingsOpen,
+  isSettingsOpened,
+} from '../../store/EditorSettings/settings';
 import {
   faCode,
   faTrophy,
@@ -14,6 +15,7 @@ import {
   faTools,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const icons = [
   { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
@@ -26,10 +28,8 @@ const icons = [
 ];
 
 const SideBar: React.FunctionComponent = () => {
-  const isSettingsOpen = useSelector(
-    (state: RootState) => state.codeEditorReducer.settingsState.isSettingsOpen,
-  );
-  const dispatch = useDispatch();
+  const isSettingsOpen = useAppSelector(IsSettingsOpen);
+  const dispatch = useAppDispatch();
 
   function handleOpenSettings() {
     if (isSettingsOpen === true) dispatch(isSettingsOpened(false));

@@ -37,32 +37,6 @@ import {
 } from '../../store/Editor/code';
 
 export default function CodeEditor(props: Editor.Props): JSX.Element {
-  // const userCode = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.editorState.userCode,
-  // );
-
-  // const fontSize = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.fontSize,
-  // );
-
-  // const theme = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.theme,
-  // );
-
-  // const keyboardHandler = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.keyboardHandler,
-  // );
-
-  // const enableBasicAutoComplete = useSelector(
-  //   (state: RootState) =>
-  //     state.codeEditorReducer.settingsState.enableBasicAutoComplete,
-  // );
-
-  // const enableSnippets = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.settingsState.enableSnippets,
-  // );
-
-  // const dispatch = useDispatch();
   const userCode = useAppSelector(UserCode);
   const fontSize = useAppSelector(FontSize);
   const theme = useAppSelector(Theme);

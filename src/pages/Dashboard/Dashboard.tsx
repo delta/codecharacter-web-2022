@@ -33,14 +33,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function Dashboard(): JSX.Element {
-  // const userLanguage = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.editorState.language,
-  // );
-  // const userCode = useSelector(
-  //   (state: RootState) => state.codeEditorReducer.editorState.userCode,
-  // );
-  // const dispatch = useDispatch();
-
   const userLanguage = useAppSelector(UserLanguage);
   const userCode = useAppSelector(UserCode);
   const dispatch = useAppDispatch();
@@ -97,7 +89,7 @@ export default function Dashboard(): JSX.Element {
   }
 
   function handleSave() {
-    let languageType: Language;
+    let languageType: Language = Language.Cpp;
     if (userLanguage === 'c_cpp') languageType = Language.Cpp;
     else if (userLanguage === 'python') languageType = Language.Python;
 
@@ -118,7 +110,7 @@ export default function Dashboard(): JSX.Element {
   }
 
   function handleCommit() {
-    let languageType: Language;
+    let languageType: Language = Language.Cpp;
     if (userLanguage === 'c_cpp') languageType = Language.Cpp;
     else if (userLanguage === 'python') languageType = Language.Python;
 
