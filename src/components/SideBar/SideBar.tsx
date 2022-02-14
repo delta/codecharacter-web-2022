@@ -1,6 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import styles from './SideBar.module.css';
 import {
   IsSettingsOpen,
   isSettingsOpened,
@@ -14,9 +12,12 @@ import {
   faSignOutAlt,
   faTools,
 } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import styles from './SideBar.module.css';
+import { logout, isloggedIn } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const icons = [
   { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
   { icon: faGlobeAsia, route: 'mapdesginer', tooltip: 'Map Designer' },
@@ -29,41 +30,61 @@ const icons = [
 
 const SideBar: React.FunctionComponent = () => {
   const isSettingsOpen = useAppSelector(IsSettingsOpen);
-  const dispatch = useAppDispatch();
 
   function handleOpenSettings() {
     if (isSettingsOpen === true) dispatch(isSettingsOpened(false));
     else dispatch(isSettingsOpened(true));
   }
-
+  const location = useLocation();
+  const [pathName, setpathName] = useState('/dashboard');
+  useEffect(() => {
+    setpathName(location.pathname);
+  }, [location]);
+  const dispatch = useAppDispatch();
+  const loggedInStatus = useAppSelector(isloggedIn);
+  const handleLogout = (icon: string) => {
+    if (icon == 'Logout' && loggedInStatus) {
+      dispatch(logout());
+    }
+  };
   return (
-    <div className={styles.sideBar}>
-      {icons.map(icon => {
-        if (icon.tooltip === 'Editor Settings') {
-          return (
-            <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
-              <FontAwesomeIcon
-                className={styles.sideBarIconComponent}
-                title={icon.tooltip}
-                icon={icon.icon as IconProp}
-                onClick={handleOpenSettings}
-              />
-            </div>
-          );
-        } else {
-          return (
-            <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
-              <Link to={icon.route} key={icon.route}>
-                <FontAwesomeIcon
-                  className={styles.sideBarIconComponent}
-                  title={icon.tooltip}
-                  icon={icon.icon as IconProp}
-                />
-              </Link>
-            </div>
-          );
-        }
-      })}
+    <div>
+      {pathName != '/register' && pathName != '/login' ? (
+        <div className={styles.sideBar}>
+          {icons.map(icon => {
+            if (icon.tooltip === 'Editor Settings') {
+              return (
+                <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
+                  <FontAwesomeIcon
+                    className={styles.sideBarIconComponent}
+                    title={icon.tooltip}
+                    icon={icon.icon as IconProp}
+                    onClick={handleOpenSettings}
+                  />
+                </div>
+              );
+            } else {
+              return (
+                <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
+                  <Link to={icon.route} key={icon.route}>
+                    <FontAwesomeIcon
+                      className={styles.sideBarIconComponent}
+                      title={icon.tooltip}
+                      onClick={() => {
+                        handleLogout(icon.tooltip);
+                      }}
+                      icon={icon.icon as IconProp}
+                      size="2x"
+                    />
+                  </Link>
+                </div>
+              );
+            }
+          })}
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

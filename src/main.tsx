@@ -18,8 +18,8 @@ const SideBar = lazy(() => import('./components/SideBar/SideBar'));
 const History = lazy(
   () => import('./components/CommitHistory/HistoryMain/History'),
 );
-const Login = lazy(() => import('./pages/Auth/Login'));
-const Register = lazy(() => import('./pages/Auth/Register'));
+const Login = lazy(() => import('./pages/Auth/LoginForm'));
+const Register = lazy(() => import('./pages/Auth/RegisterForm'));
 const EditorSettings = lazy(
   () => import('./components/EditorSettings/EditorSettings'),
 );

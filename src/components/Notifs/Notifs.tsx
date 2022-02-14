@@ -4,6 +4,8 @@ import { Notification } from '@codecharacter-2022/client';
 import styles from './Notifs.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 import {
   getNotifAction,
   markNotifAction,
@@ -76,7 +78,10 @@ const Notifs: React.FunctionComponent = () => {
         ref={notifIconRef}
         onClick={toggleNotifModal}
       >
-        <FontAwesomeIcon className={styles.notifIcon} icon={faBell} />
+        <FontAwesomeIcon
+          className={styles.notifIcon}
+          icon={faBell as IconProp}
+        />
         {unreadNotifs > 0 ? (
           <div className={styles.notifUnreadCounter}>{unreadNotifs}</div>
         ) : null}

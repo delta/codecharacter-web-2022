@@ -1,10 +1,31 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
 import Notifs from '../Notifs/Notifs';
-
+// import toast from 'react-hot-toast';
+import {
+  isloggedIn,
+  isLogout,
+  getUserDetailsAction,
+  user,
+} from '../../store/User/UserSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 const NavBar: React.FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const loggedInStatus = useAppSelector(isloggedIn);
+  const logoutStatus = useAppSelector(isLogout);
+  const getUser = useAppSelector(user);
+  useEffect(() => {
+    dispatch(getUserDetailsAction());
+  }, [getUser]);
+  useEffect(() => {
+    if (loggedInStatus == false && logoutStatus) {
+      handleClose();
+      navigate('/login', { replace: true });
+    }
+  }, [loggedInStatus]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
     isOpen(true);
@@ -23,15 +44,30 @@ const NavBar: React.FunctionComponent = () => {
           </Link>
         </div>
       </div>
-      <div className={styles.profileIcons}>
-        <div className={styles.notifIcon}>
-          <Notifs />
+      {loggedInStatus ? (
+        <div className={styles.profileIcons}>
+          {/* <button
+          className="toastTest"
+          onClick={() => {
+            toast.success('Toast Rendered!', {
+              position: 'bottom-right',
+              duration: 3000,
+            });
+          }}
+        >
+          Toast
+        </button> */}
+          <div className={styles.notifIcon}>
+            <Notifs />
+          </div>
+          <div className={styles.profile} onClick={handleOpen}>
+            <div className={styles.fakeProfileIcon} />
+            <h3 className={styles.profileName}>{getUser.userName}</h3>
+          </div>
         </div>
-        <div className={styles.profile} onClick={handleOpen}>
-          <div className={styles.fakeProfileIcon} />
-          <h3 className={styles.profileName}>blndlyblv</h3>
-        </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

@@ -1,15 +1,37 @@
 import { Form, Button, Offcanvas, CloseButton } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AlertMessage from '../Auth/Auth/Alert/Alert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactFlagsSelect from 'react-flags-select';
 import styles from './profile.module.css';
 import classnames from 'classnames';
+import { useNavigate } from 'react-router-dom';
+import {
+  faEye,
+  faEyeSlash,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  getUserDetailsAction,
+  user,
+  changeUserDetailsAction,
+  changeUserCreditionalsAction,
+  loading,
+  isCreditionalError,
+  isSuccess,
+  logout,
+  creditionals,
+} from '../../store/User/UserSlice';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface profile {
   open?: boolean;
   handleClose?: () => void;
 }
 const Profile = (props: profile): JSX.Element => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState('IN');
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmpassword] = useState('');
@@ -17,46 +39,125 @@ const Profile = (props: profile): JSX.Element => {
   const [submitPassword, issubmitPassword] = useState(false);
   const [submitconfirmPassword, issubmitconfirmPassword] = useState(false);
   const [submitoldPassword, issubmitoldPassword] = useState(false);
-  const [fullName, setfullName] = useState('');
+  const [collegeName, setCollegeName] = useState('');
   const [userName, setUsername] = useState('');
-  const [submitFullname, issubmitFullname] = useState(false);
+  const [submitCollege, issubmitCollege] = useState(false);
   const [submitUsername, issubmitUsername] = useState(false);
   const [formNumber, setFormNumber] = useState(1);
   const [userNameError, isuserNameError] = useState(false);
-  const [fullNameError, isfullNameError] = useState(false);
+  const [collegeError, isCollegeError] = useState(false);
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [oldpasswordError, isoldpasswordError] = useState(false);
-  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setfullName(e.target.value);
-    issubmitFullname(true);
-    if (e.target.value.trim().length < 5 || fullName.length < 4)
-      isfullNameError(true);
-    else isfullNameError(false);
+  const [passwordType, setPasswordType] = useState<{
+    oldpassword: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    oldpassword: 'password',
+    password: 'password',
+    confirmPassword: 'password',
+  });
+  const err = useAppSelector(isCreditionalError);
+  const oldpasswordTypeAction = () => {
+    if (passwordType.oldpassword === 'password') {
+      setPasswordType({
+        oldpassword: 'text',
+        password: passwordType.password,
+        confirmPassword: passwordType.confirmPassword,
+      });
+    } else {
+      setPasswordType({
+        oldpassword: 'password',
+        password: passwordType.password,
+        confirmPassword: passwordType.confirmPassword,
+      });
+    }
+  };
+
+  const passwordTypeAction = () => {
+    if (passwordType.password === 'password') {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: 'text',
+        confirmPassword: passwordType.confirmPassword,
+      });
+    } else {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: 'password',
+        confirmPassword: passwordType.confirmPassword,
+      });
+    }
+  };
+
+  const confirmpasswordTypeAction = () => {
+    if (passwordType.confirmPassword === 'password') {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: passwordType.password,
+        confirmPassword: 'text',
+      });
+    } else {
+      setPasswordType({
+        oldpassword: passwordType.oldpassword,
+        password: passwordType.password,
+        confirmPassword: 'password',
+      });
+    }
+  };
+  const loadingStatus = useAppSelector(loading);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (err) isoldpasswordError(true);
+  }, [loadingStatus, err]);
+  const success = useAppSelector(isSuccess);
+  useEffect(() => {
+    if (submitoldPassword && err == false) {
+      dispatch(logout());
+      navigate('/login', { replace: true });
+    }
+  }, [success]);
+  const getUser = useAppSelector(user);
+  useEffect(() => {
+    dispatch(getUserDetailsAction());
+  }, [getUser]);
+  const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCollegeName(e.target.value);
+    issubmitCollege(true);
+    if (e.target.value.trim().length == 0) isCollegeError(true);
+    else isCollegeError(false);
   };
 
   const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
     issubmitUsername(true);
-    if (e.target.value.trim().length < 5 || userName.length < 4)
+    if (e.target.value.trim().length < 5) {
       isuserNameError(true);
-    else isuserNameError(false);
+    } else {
+      isuserNameError(false);
+    }
   };
 
   const hanldeOldPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOldpassword(e.target.value);
-    issubmitoldPassword(true);
-    if (e.target.value.trim().length < 5 || oldPassword.length < 4)
-      isoldpasswordError(true);
-    else isoldpasswordError(false);
+    if (submitoldPassword) {
+      if (e.target.value.length < 8) isoldpasswordError(true);
+      else isoldpasswordError(false);
+    }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpassword(e.target.value);
     issubmitPassword(true);
-    if (e.target.value.trim().length < 5 || password.length < 4)
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+    if (e.target.value.match(passwordFormat)) {
+      ispasswordError(false);
+    } else {
       ispasswordError(true);
-    else ispasswordError(false);
+    }
   };
 
   const handleConfirmPasswordChange = (
@@ -64,9 +165,38 @@ const Profile = (props: profile): JSX.Element => {
   ) => {
     setConfirmpassword(e.target.value);
     issubmitconfirmPassword(true);
-    if (!(e.target.value.trim() == password) || confirmPassword.length < 4)
+    if (e.target.value != password) {
       isconfirmpasswordError(true);
-    else isconfirmpasswordError(false);
+    } else {
+      isconfirmpasswordError(false);
+    }
+  };
+  const getCountryName = (code: string) => {
+    const countryName = new Intl.DisplayNames(['en'], {
+      type: 'region',
+    }).of(code);
+
+    return countryName ? countryName : 'INDIA';
+  };
+  const handleSubmit = () => {
+    dispatch(
+      changeUserDetailsAction({
+        userName: userName,
+        college: collegeName,
+        country: getCountryName(selected),
+      }),
+    );
+  };
+
+  const handleCreditionals = () => {
+    issubmitoldPassword(true);
+    dispatch(
+      changeUserCreditionalsAction({
+        oldPassword: oldPassword,
+        newPassword: password,
+        confirmPassword: confirmPassword,
+      }),
+    );
   };
   return (
     <div>
@@ -79,7 +209,7 @@ const Profile = (props: profile): JSX.Element => {
         >
           <Offcanvas.Header className={styles.header}>
             <Offcanvas.Title>
-              <h3>FULL NAME</h3>
+              <h3>Hey! {getUser.userName}</h3>
             </Offcanvas.Title>
             <CloseButton className={styles.close} onClick={props.handleClose} />
           </Offcanvas.Header>
@@ -92,7 +222,7 @@ const Profile = (props: profile): JSX.Element => {
                 </div>
                 <div className={styles.profileName}>
                   {' '}
-                  <b>User name</b>
+                  <b>{getUser.userName}</b>
                 </div>
               </div>
             ) : (
@@ -102,30 +232,6 @@ const Profile = (props: profile): JSX.Element => {
               <Form className={styles.formContainer}>
                 {formNumber == 1 ? (
                   <div>
-                    <Form.Group className="mb-3" controlId="formBasicFullName">
-                      <Form.Label>Fullname</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Fullname"
-                        value={fullName}
-                        className={
-                          submitFullname
-                            ? fullNameError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                        onChange={handleFullNameChange}
-                      />
-                      {fullNameError ? (
-                        <AlertMessage
-                          err={fullNameError}
-                          content={'Name should be atleast 5 characters'}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </Form.Group>
                     <Form.Group
                       className={classnames('mb-3', styles.formField)}
                       controlId="formBasicUserName"
@@ -133,7 +239,7 @@ const Profile = (props: profile): JSX.Element => {
                       <Form.Label>Username</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Username"
+                        placeholder={getUser.userName}
                         value={userName}
                         className={
                           submitUsername
@@ -148,6 +254,30 @@ const Profile = (props: profile): JSX.Element => {
                         <AlertMessage
                           err={userNameError}
                           content={'Username already exist'}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicCollege">
+                      <Form.Label>College</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder={getUser.college}
+                        value={collegeName}
+                        className={
+                          submitCollege
+                            ? collegeError
+                              ? styles.error
+                              : styles.correct
+                            : styles.normal
+                        }
+                        onChange={handleCollegeChange}
+                      />
+                      {collegeError ? (
+                        <AlertMessage
+                          err={collegeError}
+                          content={'Please Enter a valid College name'}
                         />
                       ) : (
                         <></>
@@ -176,8 +306,19 @@ const Profile = (props: profile): JSX.Element => {
                         styles.submitContainer,
                       )}
                     >
-                      <Button variant="light" type="submit">
-                        Save Changes
+                      <Button
+                        variant="light"
+                        onClick={handleSubmit}
+                        disabled={
+                          userName.length < 5 || collegeName.length == 0
+                        }
+                      >
+                        Save Changes{' '}
+                        {loadingStatus ? (
+                          <FontAwesomeIcon icon={faSpinner as IconProp} />
+                        ) : (
+                          <></>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -188,23 +329,42 @@ const Profile = (props: profile): JSX.Element => {
                       controlId="formBasicoldPassword"
                     >
                       <Form.Label>Old Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Old Password"
-                        value={oldPassword}
-                        onChange={hanldeOldPasswordChange}
-                        className={
-                          submitoldPassword
-                            ? oldpasswordError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                      />
-                      {oldpasswordError ? (
+                      <div className={styles.eyeContainer}>
+                        <Form.Control
+                          type={passwordType.oldpassword}
+                          placeholder="Old Password"
+                          value={oldPassword}
+                          onChange={hanldeOldPasswordChange}
+                          className={
+                            submitoldPassword
+                              ? oldpasswordError && err
+                                ? styles.error
+                                : oldpasswordError == false && err == false
+                                ? styles.correct
+                                : styles.normal
+                              : styles.normal
+                          }
+                        />
+                        <div className={styles.eye}>
+                          {passwordType.oldpassword === 'password' ? (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEyeSlash as IconProp}
+                              onClick={oldpasswordTypeAction}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEye as IconProp}
+                              onClick={oldpasswordTypeAction}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      {oldpasswordError && err ? (
                         <AlertMessage
                           err={oldpasswordError}
-                          content={'Password should be atleast 5 characters'}
+                          content={'Incorrect Old Password'}
                         />
                       ) : (
                         <></>
@@ -215,46 +375,76 @@ const Profile = (props: profile): JSX.Element => {
                       controlId="formBasicPassword"
                     >
                       <Form.Label>Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        className={
-                          submitPassword
-                            ? passwordError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                      />
-                      {passwordError ? (
-                        <AlertMessage
-                          err={passwordError}
-                          content={'Password should be atleast 5 characters'}
+                      <div className={styles.eyeContainer}>
+                        <Form.Control
+                          type={passwordType.password}
+                          placeholder="Password"
+                          value={password}
+                          onChange={handlePasswordChange}
+                          className={
+                            submitPassword
+                              ? passwordError
+                                ? styles.error
+                                : styles.correct
+                              : styles.normal
+                          }
                         />
-                      ) : (
-                        <></>
-                      )}
+                        <div className={styles.eye}>
+                          {passwordType.password === 'password' ? (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEyeSlash as IconProp}
+                              onClick={passwordTypeAction}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEye as IconProp}
+                              onClick={passwordTypeAction}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <PasswordAlertMessage
+                        err={submitPassword && passwordError}
+                        variantColor="danger"
+                      />
                     </Form.Group>
                     <Form.Group
                       className={classnames('mb-3', styles.formField)}
                       controlId="formBasicConfirmPassword"
                     >
                       <Form.Label>Confirm password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        className={
-                          submitconfirmPassword
-                            ? confirmpasswordError
-                              ? styles.error
-                              : styles.correct
-                            : styles.normal
-                        }
-                        onChange={handleConfirmPasswordChange}
-                      />
+                      <div className={styles.eyeContainer}>
+                        <Form.Control
+                          type={passwordType.confirmPassword}
+                          placeholder="Confirm Password"
+                          value={confirmPassword}
+                          className={
+                            submitconfirmPassword
+                              ? confirmpasswordError
+                                ? styles.error
+                                : styles.correct
+                              : styles.normal
+                          }
+                          onChange={handleConfirmPasswordChange}
+                        />
+                        <div className={styles.eye}>
+                          {passwordType.confirmPassword === 'password' ? (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEyeSlash as IconProp}
+                              onClick={confirmpasswordTypeAction}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              size="sm"
+                              icon={faEye as IconProp}
+                              onClick={confirmpasswordTypeAction}
+                            />
+                          )}
+                        </div>
+                      </div>
                       {confirmpasswordError ? (
                         <AlertMessage
                           err={confirmpasswordError}
@@ -270,8 +460,24 @@ const Profile = (props: profile): JSX.Element => {
                         styles.submitContainer,
                       )}
                     >
-                      <Button variant="light" type="submit">
-                        Submit
+                      <Button
+                        variant="light"
+                        onClick={handleCreditionals}
+                        disabled={
+                          oldpasswordError ||
+                          passwordError ||
+                          confirmpasswordError ||
+                          oldPassword.length == 0 ||
+                          password.length == 0 ||
+                          confirmPassword.length == 0
+                        }
+                      >
+                        Submit{' '}
+                        {loadingStatus ? (
+                          <FontAwesomeIcon icon={faSpinner as IconProp} />
+                        ) : (
+                          <></>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -283,6 +489,7 @@ const Profile = (props: profile): JSX.Element => {
                     variant="link"
                     onClick={() => {
                       setFormNumber(2);
+                      dispatch(creditionals());
                     }}
                     className={styles.linkButton}
                   >
