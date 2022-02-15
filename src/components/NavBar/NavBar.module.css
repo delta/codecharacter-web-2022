@@ -5,7 +5,10 @@
   background-color: #262e4b;
   width: 100%;
   height: 60px;
+  position: fixed;
+  z-index: 1000;
 }
+
 .navLogo {
   font-family: 'Montserrat';
   color: #ffffff;
@@ -13,15 +16,33 @@
   margin: 1rem;
   margin-left: 2rem;
 }
+
 .logoLink {
   text-decoration: none;
 }
+
+.branding {
+  position: absolute;
+  left: 0px;
+}
+
 .profileIcons {
   color: #9c9c9c;
   margin: 1rem;
   display: flex;
   flex-direction: row;
 }
+
+.profile {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 .fakeProfileIcon {
   width: 30px;
   height: 30px;
@@ -29,6 +50,7 @@
   border-radius: 50%;
   margin-left: 0.6rem;
 }
+
 .profileName {
   font-family: 'Montserrat';
   color: #ffffff;
@@ -36,10 +58,14 @@
   margin-left: 0.5rem;
   margin-right: 2rem;
   font-weight: 500;
+  font-size: 1.3rem;
 }
+
 .notifIcon {
   margin: auto;
+  position: relative;
 }
+
 @media screen and (max-width: 500px) {
   .navLogo {
     font-size: 18px;

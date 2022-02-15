@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import AlertMessage from '../Alert/Alert';
+import AlertMessage from '../../Alert/Alert';
 import styles from './user.module.css';
 
 export default function UserDetails(props: user): JSX.Element {
@@ -11,6 +11,7 @@ export default function UserDetails(props: user): JSX.Element {
         <Form.Control
           type="text"
           placeholder="Fullname"
+          autoComplete="off"
           value={props.fullName}
           onChange={props.handleFullNameChange}
           className={
@@ -35,6 +36,7 @@ export default function UserDetails(props: user): JSX.Element {
         <Form.Control
           type="text"
           placeholder="Username"
+          autoComplete="off"
           value={props.userName}
           onChange={props.handleUserNameChange}
           className={

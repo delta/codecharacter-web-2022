@@ -8,7 +8,7 @@
 }
 
 .header {
-    background-color: #242A3C;
+    background-color: #242a3c;
     color: white;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .body {
-    background-color: #242A3C;
+    background-color: #242a3c;
     color: white;
 }
 
@@ -90,4 +90,19 @@
     background: white;
     border-radius: 5px;
     margin: 2rem 1rem 1rem 1rem;
+}
+
+.eyeContainer {
+    position: relative;
+}
+
+.eye {
+    color: #242a3c;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.linkButton {
+    text-decoration: none;
 }

@@ -43,10 +43,12 @@
     "react-flags-select": "^2.1.2",
     "react-google-recaptcha": "^2.1.0",
     "react-hot-toast": "^2.2.0",
+    "react-paginate": "^8.1.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "6",
     "react-step-progress-bar": "^1.0.3",
-    "react-vertical-timeline-component": "^3.5.2"
+    "react-vertical-timeline-component": "^3.5.2",
+    "redux": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",

@@ -4,16 +4,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronRight,
   faChevronLeft,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
-import { ReCAPTCHA } from 'react-google-recaptcha';
-import styles from './auth.module.css';
-import { accessUrl, SECRET_KEY, SITE_KEY } from '../../config/config';
-import { NavLink } from 'react-router-dom';
-import UserDetails from '../../components/Auth/Auth/Register/UserDetails';
-import UserCreditionals from '../../components/Auth/Auth/Register/UserCreditionals';
-import OtherDetails from '../../components/Auth/Auth/Register/OtherDetails';
-import ProgressBar from '../../components/Auth/Auth/ProgressBar/Progressbar';
-
+import { default as ReCAPTCHA } from 'react-google-recaptcha';
+import styles from '../auth.module.css';
+import { SITE_KEY } from '../../../../config/config';
+import { NavLink, useNavigate } from 'react-router-dom';
+import UserDetails from './FormDetails/UserDetails';
+import UserCreditionals from './FormDetails/UserCreditionals';
+import OtherDetails from './FormDetails/OtherDetails';
+import ProgressBar from '../ProgressBar/Progressbar';
+import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
+import {
+  loading,
+  isRegistered,
+  registerAction,
+} from '../../../../store/User/UserSlice';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 let increment = 1;
 let passCondition = 0;
 export default function Register(): JSX.Element {
@@ -21,35 +28,36 @@ export default function Register(): JSX.Element {
   const [formNumber, setFormnumber] = useState(1);
   const [email, setEmail] = useState('');
   const [fullName, setfullName] = useState('');
+  const [college, setCollege] = useState('');
   const [userName, setUsername] = useState('');
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmpassword] = useState('');
   const [submitFirst, issubmitFirst] = useState(false);
   const [submitSecond, issubmitSecond] = useState(false);
+  const [submitThird, isSubmitThird] = useState(false);
   const [userNameError, isuserNameError] = useState(false);
   const [fullNameError, isfullNameError] = useState(false);
   const [emailError, isemailError] = useState(false);
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [completed, isCompleted] = useState(false);
-  // adding script tag for recaptcha verfication
+  const [collegeError, iscollegeError] = useState(false);
+  const [isHuman, setIshuman] = useState(false);
+  const loadingStatus = useAppSelector(loading);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  let registeredStatus = false;
+  registeredStatus = useAppSelector(isRegistered);
   useEffect(() => {
-    const loadScriptByURL = (id: string, url: string) => {
-      const isScript = document.getElementById(id);
-
-      if (!isScript) {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = url;
-        script.id = id;
-        document.body.appendChild(script);
-      }
-    };
-    loadScriptByURL(
-      SITE_KEY,
-      `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`,
-    );
-  }, []);
+    if (registeredStatus) {
+      setFormnumber(1);
+      increment = 1;
+      navigate('/login', { replace: true });
+    }
+  }, [registeredStatus]);
+  const handleRecaptcha = (value: string | null) => {
+    if (value) setIshuman(true);
+  };
   const handleFullname = () => {
     if (fullName.trim().length < 5) {
       isfullNameError(true);
@@ -77,7 +85,9 @@ export default function Register(): JSX.Element {
   };
 
   const handlepassword = () => {
-    if (password.trim().length < 5) {
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+    if (!password.match(passwordFormat)) {
       ispasswordError(true);
       passCondition += 1;
     } else {
@@ -85,11 +95,37 @@ export default function Register(): JSX.Element {
     }
   };
   const handleConfirmpassword = () => {
-    if (!(password === confirmPassword) || password.length < 5) {
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
+    if (
+      !(password === confirmPassword) ||
+      !confirmPassword.match(passwordFormat)
+    ) {
       isconfirmpasswordError(true);
       passCondition += 1;
     } else {
       isconfirmpasswordError(false);
+    }
+  };
+
+  const handleCollege = () => {
+    isSubmitThird(true);
+    if (college.trim().length == 0 || college.trim() == '') {
+      passCondition += 1;
+      iscollegeError(true);
+    } else {
+      iscollegeError(false);
+      handleRegistration();
+    }
+  };
+  const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCollege(e.target.value);
+    if (submitThird) {
+      if (e.target.value.trim().length == 0) {
+        iscollegeError(true);
+      } else {
+        iscollegeError(false);
+      }
     }
   };
   const handleForm1 = () => {
@@ -169,12 +205,14 @@ export default function Register(): JSX.Element {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordFormat =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
     setpassword(e.target.value);
     if (submitSecond) {
-      if (e.target.value.trim().length < 5 || password.length < 4) {
-        ispasswordError(true);
-      } else {
+      if (e.target.value.match(passwordFormat)) {
         ispasswordError(false);
+      } else {
+        ispasswordError(true);
       }
     }
   };
@@ -184,7 +222,7 @@ export default function Register(): JSX.Element {
   ) => {
     setConfirmpassword(e.target.value);
     if (submitSecond) {
-      if (!(e.target.value.trim() == password) || confirmPassword.length < 4) {
+      if (e.target.value != password) {
         isconfirmpasswordError(true);
       } else {
         isconfirmpasswordError(false);
@@ -201,28 +239,28 @@ export default function Register(): JSX.Element {
     handleForm(-1);
     isCompleted(false);
   };
-  const handleRegistration = () => {
-    isCompleted(true);
-    grecaptcha.ready(() => {
-      grecaptcha
-        .execute(SITE_KEY, { action: 'submit' })
-        .then((token: string) => {
-          submitData(token);
-        });
-    });
+  const getCountryName = (code: string) => {
+    const countryName = new Intl.DisplayNames(['en'], {
+      type: 'region',
+    }).of(code);
+
+    return countryName ? countryName : 'INDIA';
   };
-  const submitData = async (token: string) => {
-    await fetch('  https://www.google.com/recaptcha/api/siteverify ', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${accessUrl}`,
-      },
-      body: JSON.stringify({
-        secret: { SECRET_KEY },
-        response: token,
+  const handleRegistration = async () => {
+    isCompleted(true);
+
+    await dispatch(
+      registerAction({
+        userName: userName,
+        name: fullName,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        country: getCountryName(selected),
+        college: college,
+        avatarId: 0,
       }),
-    });
+    );
   };
   const handleFlagSelect = (code: string) => {
     setSelected(code);
@@ -277,17 +315,34 @@ export default function Register(): JSX.Element {
                   <OtherDetails
                     selectedCode={selected}
                     handleFlagSelect={handleFlagSelect}
+                    formNumber={formNumber}
+                    handleCollegeChange={handleCollegeChange}
+                    college={college}
+                    collegeError={collegeError}
+                    submitThird={submitThird}
                   />
-                  <div>
-                    <ReCAPTCHA sitekey={SITE_KEY} theme="dark" />
+                  <div className="form-row d-flex justify-content-center my-1">
+                    <div className="d-flex justify-content-center input-group">
+                      <ReCAPTCHA
+                        sitekey={SITE_KEY}
+                        onChange={handleRecaptcha}
+                        theme="dark"
+                      />
+                    </div>
                   </div>
                   <div className={styles.registerButton}>
                     <div className="d-grid gap-2">
                       <Button
                         variant="outline-success"
-                        onClick={handleRegistration}
+                        onClick={handleCollege}
+                        disabled={!isHuman}
                       >
-                        Register
+                        Register{'  '}
+                        {loadingStatus ? (
+                          <FontAwesomeIcon icon={faSpinner as IconProp} />
+                        ) : (
+                          <></>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -319,7 +374,7 @@ export default function Register(): JSX.Element {
                 type="submit"
                 className={styles.previous}
               >
-                <FontAwesomeIcon icon={faChevronLeft} />
+                <FontAwesomeIcon icon={faChevronLeft as IconProp} />
               </Button>
             ) : (
               <></>
@@ -333,7 +388,7 @@ export default function Register(): JSX.Element {
                 onClick={handleNext}
                 className={styles.next}
               >
-                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight as IconProp} />
               </Button>
             ) : (
               <></>

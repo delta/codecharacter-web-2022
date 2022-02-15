@@ -1,0 +1,122 @@
+.notifIconContainer {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  padding-top: 5px;
+  transition: all 0.1s ease-in-out;
+}
+.notifIcon {
+  font-size: 24px;
+}
+.notifIcon:hover {
+  opacity: 0.8;
+}
+.notifIconShow {
+  color: #ffffff;
+}
+.notifUnreadCounter {
+  display: flex;
+  position: absolute;
+  top: -1px;
+  right: 0px;
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 800;
+  color: #3b4d7c;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0px;
+}
+.notifModal {
+  position: absolute;
+  display: none;
+  height: 100vh;
+  max-height: 400px;
+  max-width: 350px;
+  width: 70vw;
+  background-color: #242a3c;
+  top: 40px;
+  left: -200px;
+  border-radius: 8px;
+  box-shadow: 0px 3px 6px 4px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 1;
+}
+.notifModal::-webkit-scrollbar {
+  display: none;
+}
+.notifModalShow {
+  display: block;
+}
+.notifModalTriangle {
+  display: none;
+  position: absolute;
+  left: 8px;
+  top: 32px;
+  border-color: transparent transparent #2b3146 transparent;
+  border-style: solid;
+  border-width: 0px 9px 9px 9px;
+  height: 0px;
+  width: 0px;
+}
+.notifTriangleShow {
+  display: block;
+}
+.notif {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
+  padding-left: 0.7rem;
+  background-color: #303e61;
+  border-radius: 8px;
+  box-sizing: content-box;
+  margin: 10px;
+  font-family: 'Montserrat', 'Poppins';
+}
+.notifRead {
+  opacity: 0.55;
+}
+.notifLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.notifHeader {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+.notifContent {
+  color: #b6b4b4;
+  font-size: 0.95rem;
+}
+.notifTime {
+  font-size: 0.8rem;
+}
+.notifTimeSection > p {
+  margin-bottom: 0px;
+  text-align: right;
+}
+@media screen and (max-width: 500px) {
+  .notifModal {
+    left: -150px;
+  }
+  .notifHeader {
+    font-size: 1rem;
+  }
+  .notifTime {
+    font-size: 0.7rem;
+  }
+  .notifContent {
+    font-size: 0.8rem;
+  }
+}
