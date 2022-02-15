@@ -74,7 +74,6 @@ const SideBar: React.FunctionComponent = () => {
                         handleLogout(icon.tooltip);
                       }}
                       icon={icon.icon as IconProp}
-                      size="2x"
                     />
                   </Link>
                 </div>
