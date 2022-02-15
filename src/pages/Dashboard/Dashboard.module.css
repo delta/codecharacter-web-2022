@@ -17,6 +17,12 @@
     height: calc(100vh - 60px);
 }
 
+.btnBarAndEditor{
+    width: calc(100% - 25px);
+    padding: 0;
+    margin: 0;
+}
+
 .btnBarAboveEditor{
     height: 6.5vh;
     background: #2B3760;
