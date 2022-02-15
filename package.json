@@ -48,7 +48,6 @@
     "react-hot-toast": "^2.2.0",
     "react-paginate": "^8.1.0",
     "react-redux": "^7.2.6",
-    "react-reflex": "^4.0.3",
     "react-router-dom": "6",
     "react-split-pane": "^0.1.92",
     "react-step-progress-bar": "^1.0.3",

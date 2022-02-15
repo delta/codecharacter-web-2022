@@ -1,4 +1,4 @@
-export const BASE_PATH = 'http://localhost:8000/';
+export const BASE_PATH = 'http://localhost:8080';
 export const PREFER_DEV_OVERRIDE = '';
 export const SITE_KEY = 'YOUR SITE KEY';
 export const SECRET_KEY = 'YOUR SECRET KEY';
