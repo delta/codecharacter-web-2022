@@ -276,16 +276,16 @@ export default function Dashboard(): JSX.Element {
   }
 
   return (
-    <>
+    <div className={styles.splitPane}>
       <SplitPane
         split="vertical"
         minSize={window.innerWidth / 2.65}
         maxSize={window.innerWidth / 1.2}
         pane1Style={{ width: pane1Width }}
         style={{
-          height: window.innerHeight - 60,
+          height: '100%',
           position: 'static',
-          width: window.innerWidth - 60,
+          width: '100%',
         }}
         onChange={width => {
           if (isCodeEditorOpen === false) setCodeEditorOpen(true);
@@ -350,6 +350,6 @@ export default function Dashboard(): JSX.Element {
         </Container>
         {rendererComponent}
       </SplitPane>
-    </>
+    </div>
   );
 }

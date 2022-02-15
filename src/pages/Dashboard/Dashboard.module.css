@@ -12,6 +12,11 @@
     margin: 0;
 }
 
+.splitPane{
+    width: calc(100vw - 60px);
+    height: calc(100vh - 60px);
+}
+
 .btnBarAboveEditor{
     height: 6.5vh;
     background: #2B3760;
