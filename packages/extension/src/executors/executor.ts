@@ -62,7 +62,7 @@ class Executor {
       switch (languageId) {
         case 'c':
           this.cExecutor
-            .execute(mapData, uri)
+            .execute(mapData, uri, context)
             .then(log => {
               rendererPanel.renderLog(log, context);
               vscode.window.showInformationMessage('Execution succeeded');
@@ -75,7 +75,7 @@ class Executor {
           break;
         case 'cpp':
           this.cppExecutor
-            .execute(mapData, uri)
+            .execute(mapData, uri, context)
             .then(log => {
               rendererPanel.renderLog(log, context);
               vscode.window.showInformationMessage('Execution succeeded');
@@ -87,7 +87,7 @@ class Executor {
           break;
         case 'java':
           this.javaExecutor
-            .execute(mapData, uri)
+            .execute(mapData, uri, context)
             .then(log => {
               rendererPanel.renderLog(log, context);
               vscode.window.showInformationMessage('Execution succeeded');
@@ -99,7 +99,7 @@ class Executor {
           break;
         case 'python':
           this.pythonExecutor
-            .execute(mapData, uri)
+            .execute(mapData, uri, context)
             .then(log => {
               rendererPanel.renderLog(log, context);
               vscode.window.showInformationMessage('Execution succeeded');

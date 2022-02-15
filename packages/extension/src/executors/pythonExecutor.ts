@@ -1,19 +1,22 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { spawn } from 'child_process';
 import {
   getLogFromSimulatorLog,
   outputChannel,
   provideInitialInput,
 } from './executor';
-import { SIMULATOR_PATH } from '../config/config';
 
 export class PythonCodeExecutor {
   async execute(
     mapData: Array<Array<number>>,
     uri: vscode.Uri,
+    context: vscode.ExtensionContext,
   ): Promise<string> {
     const userExecutable = spawn('python3', ['-u', uri.fsPath]);
-    const simulatorExecutable = spawn(SIMULATOR_PATH);
+    const simulatorExecutable = spawn(
+      path.join(context.globalStorageUri.fsPath, 'simulator'),
+    );
     return new Promise((resolve, reject) => {
       let simulatorLog = '';
       outputChannel?.show();
