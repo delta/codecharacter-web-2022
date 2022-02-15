@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "vite --config vite.dev.config.ts",
-    "build": "vite build --config vite.prod.config.ts --emptyOutDir",
+    "build": "vite build --config vite.prod.config.ts",
     "build:watch": "vite build --watch --config vite.prod.config.ts --emptyOutDir",
     "analyze": "cem analyze --litelement"
   },
