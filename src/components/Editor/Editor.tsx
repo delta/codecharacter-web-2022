@@ -66,7 +66,7 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
       keyboardHandler={keyboardHandler !== 'default' ? keyboardHandler : ''}
       editorProps={{ $blockScrolling: true }}
       width={editorWidth.toString() + 'px'}
-      height={'87vh'}
+      height={(window.innerHeight - 60).toString() + 'px'}
       value={userCode}
       onChange={value => {
         const codeNlanguage: CodeAndLanguage = {

@@ -203,7 +203,7 @@ export default function Dashboard(): JSX.Element {
   if (isCodeEditorOpen === true) {
     codeEditorComponent = (
       <Col
-        className="p-0 m-0"
+        className={styles.btnBarAndEditor}
         xs="auto"
         sm="auto"
         md="auto"
