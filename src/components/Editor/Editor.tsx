@@ -34,7 +34,7 @@ import {
   updateUserCode,
   CodeAndLanguage,
   UserCode,
-} from '../../store/Editor/code';
+} from '../../store/editor/code';
 
 export default function CodeEditor(props: Editor.Props): JSX.Element {
   const userCode = useAppSelector(UserCode);
