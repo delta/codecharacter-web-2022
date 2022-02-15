@@ -3,17 +3,13 @@
 .dashboardMainContainer{
     margin-left: 5px;
     padding: 0;
-    height: 93.5vh;
+    height: calc(100vh - 60px);
 }
 
 .sideBar{
     width: 50px !important;
     padding: 0;
     margin: 0;
-}
-
-.splitPane{
-    height: 91vh;
 }
 
 .btnBarAboveEditor{

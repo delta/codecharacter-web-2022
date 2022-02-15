@@ -2,7 +2,7 @@ import { Code } from '@codecharacter-2022/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-const languagesAvailable = ['c_cpp', 'python'];
+const languagesAvailable = ['c_cpp', 'python', 'java'];
 
 export interface editorStateType {
   allLanguagesCode: string[];
@@ -12,7 +12,7 @@ export interface editorStateType {
 }
 
 const initialState: editorStateType = {
-  allLanguagesCode: ['', ''],
+  allLanguagesCode: ['', '', ''],
   userCode: '',
   language: '',
   lastSavedAt: new Date(),
@@ -32,6 +32,7 @@ export const editorSlice = createSlice({
       if (action.payload.language === 'C' || action.payload.language === 'CPP')
         state.language = 'c_cpp';
       else if (action.payload.language === 'PYTHON') state.language = 'python';
+      else if (action.payload.language === 'JAVA') state.language = 'java';
       state.lastSavedAt = action.payload.lastSavedAt;
       const desiredIndex = languagesAvailable.indexOf(state.language);
       state.allLanguagesCode[desiredIndex] = action.payload.code;

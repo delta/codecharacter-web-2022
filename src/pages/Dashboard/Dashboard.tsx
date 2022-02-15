@@ -33,6 +33,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function Dashboard(): JSX.Element {
+  const [forceRender, setForceRender] = useState(0);
+  window.addEventListener('resize', () => {
+    setForceRender(forceRender + 1);
+  });
   const userLanguage = useAppSelector(UserLanguage);
   const userCode = useAppSelector(UserCode);
   const dispatch = useAppDispatch();
@@ -53,7 +57,7 @@ export default function Dashboard(): JSX.Element {
     }
   }, []);
 
-  const languages: string[] = ['C++', 'Python'];
+  const languages: string[] = ['C++', 'Python', 'Java'];
 
   const slideInOutBtn = useRef<HTMLDivElement>(null);
 
@@ -83,6 +87,11 @@ export default function Dashboard(): JSX.Element {
         setLanguageChose('Python');
         localStorage.setItem('languageChose', 'Python');
         break;
+      case 'Java':
+        dispatch(changeLanguage('java'));
+        setLanguageChose('Java');
+        localStorage.setItem('languageChose', 'Java');
+        break;
       default:
         dispatch(changeLanguage('c_cpp'));
     }
@@ -92,6 +101,7 @@ export default function Dashboard(): JSX.Element {
     let languageType: Language = Language.Cpp;
     if (userLanguage === 'c_cpp') languageType = Language.Cpp;
     else if (userLanguage === 'python') languageType = Language.Python;
+    else if (userLanguage === 'java') languageType = Language.Java;
 
     codeAPI
       .updateLatestCode({
@@ -99,7 +109,6 @@ export default function Dashboard(): JSX.Element {
         lock: false,
         language: languageType,
       })
-      .then()
       .catch(err => {
         if (err instanceof ApiError) console.log(err.message);
       });
@@ -113,6 +122,7 @@ export default function Dashboard(): JSX.Element {
     let languageType: Language = Language.Cpp;
     if (userLanguage === 'c_cpp') languageType = Language.Cpp;
     else if (userLanguage === 'python') languageType = Language.Python;
+    else if (userLanguage === 'java') languageType = Language.Java;
 
     codeAPI
       .createCodeRevision({
@@ -120,7 +130,23 @@ export default function Dashboard(): JSX.Element {
         message: commitName,
         language: languageType,
       })
-      .then()
+      .catch(err => {
+        if (err instanceof ApiError) console.log(err.message);
+      });
+  }
+
+  function handleSubmit() {
+    let languageType: Language = Language.Cpp;
+    if (userLanguage === 'c_cpp') languageType = Language.Cpp;
+    else if (userLanguage === 'python') languageType = Language.Python;
+    else if (userLanguage === 'java') languageType = Language.Java;
+
+    codeAPI
+      .updateLatestCode({
+        code: userCode,
+        lock: true,
+        language: languageType,
+      })
       .catch(err => {
         if (err instanceof ApiError) console.log(err.message);
       });
@@ -217,7 +243,7 @@ export default function Dashboard(): JSX.Element {
               </Button>
             </OverlayTrigger>
 
-            <Button className={styles.btnBarMembers}>
+            <Button className={styles.btnBarMembers} onClick={handleSubmit}>
               <FontAwesomeIcon icon={faCloudUploadAlt as IconProp} />
               {`   Submit`}
             </Button>
@@ -263,7 +289,7 @@ export default function Dashboard(): JSX.Element {
         }}
         onChange={width => {
           if (isCodeEditorOpen === false) setCodeEditorOpen(true);
-          setEditorWidth(width - slideInOutBtn.current.clientWidth);
+          setEditorWidth(width - slideInOutBtn.current.clientWidth - 5);
           setpane1Width(width);
         }}
       >

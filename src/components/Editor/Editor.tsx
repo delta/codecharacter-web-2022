@@ -3,6 +3,7 @@ import AceEditor from 'react-ace';
 
 import 'brace/mode/c_cpp';
 import 'brace/mode/python';
+import 'brace/mode/java';
 
 import 'brace/theme/monokai';
 import 'brace/theme/github';

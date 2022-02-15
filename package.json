@@ -12,7 +12,7 @@
     "format": "eslint --ext .ts,.tsx . --fix --ignore-path .gitignore && prettier \"**/*.{ts,tsx,js,json,yml,md}\" --write --ignore-path .gitignore",
     "compile": "yarn workspace @codecharacter-2022/client run tsc && yarn workspace @codecharacter-2022/renderer run tsc && yarn workspace @codecharacter-2022/map-designer run tsc && tsc",
     "test": "jest --coverage",
-    "dev": "concurrently -k -r \"yarn workspace @codecharacter-2022/client build:watch\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\" \"sleep 5 && vite --config vite.dev.config.ts\"",
+    "dev": "concurrently -k -r \"yarn workspace @codecharacter-2022/client build:watch\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\" \"sleep 10 && vite --config vite.dev.config.ts\"",
     "build": "yarn workspace @codecharacter-2022/client run build && yarn workspace @codecharacter-2022/renderer run build && yarn workspace @codecharacter-2022/map-designer run build && vite build --config vite.prod.config.ts --emptyOutDir",
     "prod": "concurrently -k -r \"sleep 5 && vite build --watch --config vite.prod.config.ts --emptyOutDir\" \"sleep 10 && live-server --host=0.0.0.0 --middleware=spa-ignore-assets dist/\" \"yarn workspace @codecharacter-2022/client build:watch\" \"yarn workspace @codecharacter-2022/renderer build:watch\" \"yarn workspace @codecharacter-2022/map-designer build:watch\"",
     "renderer:demo": "yarn workspace @codecharacter-2022/renderer run dev",
