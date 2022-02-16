@@ -1,5 +1,5 @@
 import { CodeRevision } from '@codecharacter-2022/client';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type PropsType = {
