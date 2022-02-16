@@ -17,7 +17,6 @@ import { useAppDispatch } from '../../../store/hooks';
 import styles from './History.module.css';
 import CodeView from '../CodeMapViewbox/CodeView';
 import MapView from '../CodeMapViewbox/MapView';
-import { mapCoordinates1 } from '../CodeMapViewbox/mapCoordinates';
 
 export default function History(): JSX.Element {
   const [BigButton, setBigButton] = useState('Code');
@@ -25,7 +24,7 @@ export default function History(): JSX.Element {
   const [completeMapHistory, setMapHistory] = useState<GameMapRevision[]>([]);
   const [currentCode, setCurrentCode] = useState('');
   const [codeLanguage, setCodeLanguage] = useState('');
-  const [currentMap, setCurrentMap] = useState('');
+  const [currentMap, setCurrentMap] = useState<Array<Array<number>>>([]);
 
   const dispatch = useAppDispatch();
 
@@ -64,7 +63,7 @@ export default function History(): JSX.Element {
     });
     completeMapHistory.forEach(mapData => {
       if (mapData.id == id) {
-        setCurrentMap(mapData.map);
+        setCurrentMap(JSON.parse(mapData.map));
       }
     });
   };
@@ -72,7 +71,7 @@ export default function History(): JSX.Element {
   const changesEditorDetails = () => {
     if (BigButton == 'Code' && currentCode != '') {
       dispatch(changeHistoryEditorCode(currentCode));
-    } else if (BigButton == 'Map' && currentMap != '') {
+    } else if (BigButton == 'Map' && currentMap != []) {
       dispatch(changeHistoryEditorMap(currentMap));
     }
   };
@@ -124,11 +123,11 @@ export default function History(): JSX.Element {
               </Button>
             </ButtonGroup>
           </div>
-          <div className={styles.codeMapBox}>
+          <div className={BigButton == 'Code' ? styles.codeBox : styles.mapBox}>
             {BigButton == 'Code' ? (
               <CodeView code={currentCode} codeLang={codeLanguage} />
             ) : (
-              <MapView mapCoordinates={mapCoordinates1} />
+              <MapView mapCoordinates={currentMap} />
             )}
           </div>
           <div className={styles.select}>

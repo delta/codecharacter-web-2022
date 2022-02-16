@@ -8,9 +8,15 @@ interface MapViewBoxProps {
 }
 
 export default function MapView(props: MapViewBoxProps): JSX.Element {
+  const saveMapCallback = (newMap: Array<Array<number>>) => {
+    return newMap;
+  };
+
   return (
     <MapDesignerComponent
+      saveMapCallback={saveMapCallback}
       {...MapDesignerUtils.loadMap(props.mapCoordinates)}
+      readonly={true}
     ></MapDesignerComponent>
   );
 }

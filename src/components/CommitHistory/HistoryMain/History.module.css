@@ -19,7 +19,7 @@
   background-color: #242a3c;
   text-align: left;
   padding-top: 34px;
-  padding-left: 10px;
+  padding-left: 300px;
 }
 
 .largeButton {
@@ -60,10 +60,16 @@
   cursor: pointer;
 }
 
-.codeMapBox {
+.codeBox {
   font-family: Montserrat;
   font-style: normal;
   background: rgb(29, 31, 33);
+}
+
+.mapBox {
+  font-family: Montserrat;
+  font-style: normal;
+  background: black;
 }
 
 .timeline {
@@ -123,13 +129,13 @@
   color: #ffffff;
 }
 
-.codeMapBox {
+.codeBox, .mapBox {
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.codeMapBox::-webkit-scrollbar {
+.mapBox::-webkit-scrollbar, .codeBox::-webkit-scrollbar {
   display: none;
 }
