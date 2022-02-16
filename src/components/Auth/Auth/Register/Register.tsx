@@ -21,6 +21,7 @@ import {
   registerAction,
 } from '../../../../store/User/UserSlice';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Toast from 'react-hot-toast';
 let increment = 1;
 let passCondition = 0;
 export default function Register(): JSX.Element {
@@ -52,6 +53,7 @@ export default function Register(): JSX.Element {
     if (registeredStatus) {
       setFormnumber(1);
       increment = 1;
+      Toast.success('Registeration Successful');
       navigate('/login', { replace: true });
     }
   }, [registeredStatus]);

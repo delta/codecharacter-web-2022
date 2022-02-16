@@ -20,6 +20,7 @@ import {
 } from '../../../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Toast from 'react-hot-toast';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ function Login(): JSX.Element {
   const loggedInStatus = useAppSelector(isloggedIn);
   useEffect(() => {
     if (loggedInStatus) {
+      Toast.success('Logged In');
       navigate('/dashboard', { replace: true });
     }
   }, [loggedInStatus]);
