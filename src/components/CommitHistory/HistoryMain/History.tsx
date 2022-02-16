@@ -15,12 +15,16 @@ import {
 } from '../../../store/historyEditor/historyEditorSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import styles from './History.module.css';
+import CodeView from '../CodeMapViewbox/CodeView';
+import MapView from '../CodeMapViewbox/MapView';
+import { mapCoordinates1 } from '../CodeMapViewbox/mapCoordinates';
 
 export default function History(): JSX.Element {
   const [BigButton, setBigButton] = useState('Code');
   const [completeCodeHistroy, setCodeHistory] = useState<CodeRevision[]>([]);
   const [completeMapHistory, setMapHistory] = useState<GameMapRevision[]>([]);
   const [currentCode, setCurrentCode] = useState('');
+  const [codeLanguage, setCodeLanguage] = useState('');
   const [currentMap, setCurrentMap] = useState('');
 
   const dispatch = useAppDispatch();
@@ -55,6 +59,7 @@ export default function History(): JSX.Element {
     completeCodeHistroy.forEach(codeData => {
       if (codeData.id == id) {
         setCurrentCode(codeData.code);
+        setCodeLanguage(codeData.language.toLowerCase());
       }
     });
     completeMapHistory.forEach(mapData => {
@@ -121,9 +126,9 @@ export default function History(): JSX.Element {
           </div>
           <div className={styles.codeMapBox}>
             {BigButton == 'Code' ? (
-              <p style={{ color: 'white' }}>{currentCode}</p>
+              <CodeView code={currentCode} codeLang={codeLanguage} />
             ) : (
-              <p style={{ color: 'white' }}>{currentMap}</p>
+              <MapView mapCoordinates={mapCoordinates1} />
             )}
           </div>
           <div className={styles.select}>

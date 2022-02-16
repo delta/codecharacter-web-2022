@@ -9,8 +9,10 @@
 }
 
 .codeView {
+  background-color: #242a3c;
   display: grid;
-  grid-template-rows: 15% 70% 15%;
+  height: 100vh;
+  grid-template-rows: 13% 72% 15%;
 }
 
 .codeMapButton {
@@ -61,14 +63,14 @@
 .codeMapBox {
   font-family: Montserrat;
   font-style: normal;
-  background-color: black;
+  background: rgb(29, 31, 33);
 }
 
 .timeline {
   background-color: #242a3c;
   height: 100vh;
   display: grid;
-  grid-template-rows: 13% 72% 15%;
+  grid-template-rows: 12% 70% 18%;
 }
 
 .select {
@@ -119,4 +121,15 @@
 
 .noCommitDataHeader {
   color: #ffffff;
+}
+
+.codeMapBox {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.codeMapBox::-webkit-scrollbar {
+  display: none;
 }

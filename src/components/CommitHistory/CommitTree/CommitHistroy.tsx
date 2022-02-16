@@ -21,7 +21,6 @@ export default function CommitHistory(props: PropsType): JSX.Element {
   const [commitNumber, setCommitNumber] = useState('0');
 
   const parseTimeFormat = (machineTime: string) => {
-    //     "createdAt": "2019-08-24T14:15:22Z"
     const commitTimestamp = new Date(machineTime);
     const datePart = commitTimestamp.toDateString().substring(4, 10);
     const timePart = commitTimestamp.toLocaleTimeString();
@@ -31,7 +30,7 @@ export default function CommitHistory(props: PropsType): JSX.Element {
   return (
     <VerticalTimeline layout={'1-column'} animate={true}>
       {props.commitHistoryDetails && props.commitHistoryDetails.length > 0 ? (
-        props.commitHistoryDetails.map(eachCommit => {
+        props.commitHistoryDetails.map((eachCommit, index) => {
           return (
             <VerticalTimelineElement
               key={eachCommit.id.toString()}
@@ -52,8 +51,11 @@ export default function CommitHistory(props: PropsType): JSX.Element {
               }}
             >
               <h3 className="vertical-timeline-element-title">
-                {eachCommit.message}
+                {`Commit - ${index + 1}`}
               </h3>
+              <h6 className="vertical-timeline-element-subtitle">
+                {eachCommit.message}
+              </h6>
             </VerticalTimelineElement>
           );
         })
