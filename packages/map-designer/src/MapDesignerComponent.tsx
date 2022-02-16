@@ -22,6 +22,7 @@ const MapDesignerLayer = createComponent(React, 'cc-map-designer', MapDesigner);
 
 interface MapDesignerComponentProps {
   saveMapCallback: (map: Array<Array<number>>) => void;
+  readonly: boolean;
 }
 
 const CoinsRemainingText = () => {
@@ -74,7 +75,7 @@ export default function MapDesignerComponent(
     };
   }, [mapData]);
 
-  return (
+  return !props.readonly ? (
     <>
       <ButtonToolbar
         className="justify-content-evenly"
@@ -160,5 +161,9 @@ export default function MapDesignerComponent(
       </ButtonToolbar>
       <MapDesignerLayer />
     </>
+  ) : (
+    <div style={{ pointerEvents: 'none' }}>
+      <MapDesignerLayer />
+    </div>
   );
 }
