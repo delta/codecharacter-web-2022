@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  IsSettingsOpen,
+  isSettingsOpened,
+} from '../../store/EditorSettings/settings';
+import {
   faCode,
   faTrophy,
   faGlobeAsia,
@@ -15,7 +19,7 @@ import { logout, isloggedIn } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const icons = [
-  { icon: faCode, route: 'editor', tooltip: 'Code Editor' },
+  { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
   { icon: faGlobeAsia, route: 'mapdesigner', tooltip: 'Map Designer' },
   { icon: faTrophy, route: 'leaderboard', tooltip: 'Leaderboard' },
   { icon: faCodeBranch, route: 'history', tooltip: 'Commits' },
@@ -25,6 +29,12 @@ const icons = [
 ];
 
 const SideBar: React.FunctionComponent = () => {
+  const isSettingsOpen = useAppSelector(IsSettingsOpen);
+
+  function handleOpenSettings() {
+    if (isSettingsOpen === true) dispatch(isSettingsOpened(false));
+    else dispatch(isSettingsOpened(true));
+  }
   const location = useLocation();
   const [pathName, setpathName] = useState('/dashboard');
   useEffect(() => {
@@ -42,21 +52,33 @@ const SideBar: React.FunctionComponent = () => {
       {pathName != '/register' && pathName != '/login' ? (
         <div className={styles.sideBar}>
           {icons.map(icon => {
-            return (
-              <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
-                <Link to={icon.route} key={icon.route}>
+            if (icon.tooltip === 'Editor Settings') {
+              return (
+                <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
                   <FontAwesomeIcon
                     className={styles.sideBarIconComponent}
                     title={icon.tooltip}
-                    onClick={() => {
-                      handleLogout(icon.tooltip);
-                    }}
                     icon={icon.icon as IconProp}
-                    size="2x"
+                    onClick={handleOpenSettings}
                   />
-                </Link>
-              </div>
-            );
+                </div>
+              );
+            } else {
+              return (
+                <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
+                  <Link to={icon.route} key={icon.route}>
+                    <FontAwesomeIcon
+                      className={styles.sideBarIconComponent}
+                      title={icon.tooltip}
+                      onClick={() => {
+                        handleLogout(icon.tooltip);
+                      }}
+                      icon={icon.icon as IconProp}
+                    />
+                  </Link>
+                </div>
+              );
+            }
           })}
         </div>
       ) : (
