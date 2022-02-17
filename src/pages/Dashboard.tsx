@@ -9,7 +9,7 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <main>
-      <MapDesignerComponent saveMapCallback={saveMapCallback} />
+      <MapDesignerComponent saveMapCallback={saveMapCallback} readonly={true} />
       <RendererComponent />
     </main>
   );

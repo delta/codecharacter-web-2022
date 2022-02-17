@@ -10,7 +10,6 @@
 }
 
 .gameArea {
-  /* width: 100%; */
   width: calc(100% - 60px);
   margin-top: 60px;
   margin-left: 60px;
