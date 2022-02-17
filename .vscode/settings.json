@@ -1,7 +1,7 @@
 {
   "files.exclude": {
     "**/.husky": true,
-    "**/.vscode": true,
+    ".vscode": true,
     "**/.yarn": true,
     "**/coverage": true,
     "**/dist": true,

@@ -20,12 +20,12 @@ export default defineConfig({
     rollupOptions: {
       plugins: [
         replace({
-          'typeof CANVAS_RENDERER': "'true'",
-          'typeof WEBGL_RENDERER': "'true'",
-          'typeof EXPERIMENTAL': "'false'",
-          'typeof PLUGIN_CAMERA3D': "'false'",
-          'typeof PLUGIN_FBINSTANT': "'false'",
-          'typeof FEATURE_SOUND': "'false'",
+          'typeof CANVAS_RENDERER': 'false',
+          'typeof WEBGL_RENDERER': 'false',
+          'typeof EXPERIMENTAL': 'false',
+          'typeof PLUGIN_CAMERA3D': 'false',
+          'typeof PLUGIN_FBINSTANT': 'false',
+          'typeof FEATURE_SOUND': 'false',
           preventAssignment: true,
         }),
         html({

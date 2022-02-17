@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Delta Force",
   "version": "2022.0.0",
-  "main": "./dist/codecharacter-map-designer-2022.es.js",
+  "main": "./dist/codecharacter-map-designer-2022.umd.js",
   "module": "./dist/codecharacter-map-designer-2022.es.js",
   "types": "./dist/src/index.d.ts",
   "files": [
@@ -12,7 +12,8 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/codecharacter-map-designer-2022.es.js"
+      "import": "./dist/codecharacter-map-designer-2022.es.js",
+      "require": "./dist/codecharacter-map-designer-2022.umd.js"
     }
   },
   "scripts": {

@@ -1,0 +1,4 @@
+.vscode-test
+dist
+out
+src/config/config.ts

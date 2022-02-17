@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [dts()],
   build: {
     lib: {
-      formats: ['es'],
+      formats: ['es', 'umd'],
       name: 'codecharacter-renderer-2022',
       entry: path.resolve(__dirname, 'src/index.ts'),
       fileName: 'codecharacter-renderer-2022',
@@ -16,12 +16,12 @@ export default defineConfig({
       external: ['phaser', 'lit', 'react'],
       plugins: [
         replace({
-          'typeof CANVAS_RENDERER': "'true'",
-          'typeof WEBGL_RENDERER': "'true'",
-          'typeof EXPERIMENTAL': "'false'",
-          'typeof PLUGIN_CAMERA3D': "'false'",
-          'typeof PLUGIN_FBINSTANT': "'false'",
-          'typeof FEATURE_SOUND': "'false'",
+          'typeof CANVAS_RENDERER': 'false',
+          'typeof WEBGL_RENDERER': 'false',
+          'typeof EXPERIMENTAL': 'false',
+          'typeof PLUGIN_CAMERA3D': 'false',
+          'typeof PLUGIN_FBINSTANT': 'false',
+          'typeof FEATURE_SOUND': 'false',
           preventAssignment: true,
         }),
       ],

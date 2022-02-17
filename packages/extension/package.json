@@ -1,0 +1,150 @@
+{
+  "name": "@codecharacter-2022/extension",
+  "displayName": "CodeCharacter 2022",
+  "description": "An extension for simulating code for CodeCharacter 2022 locally",
+  "version": "2022.0.1",
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:codecharacter-2022-codes"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codecharacter-2022.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "codecharacter-2022.addMapFile",
+        "title": "Add Map File",
+        "icon": "$(add)"
+      },
+      {
+        "command": "codecharacter-2022.deleteMapFile",
+        "title": "Delete Map File",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "codecharacter-2022.runCode",
+        "title": "Run Code",
+        "icon": "media/icon.svg"
+      },
+      {
+        "command": "codecharacter-2022.deleteCodeFile",
+        "title": "Delete Code",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "codecharacter-2022.addCodeFile",
+        "title": "Add Code",
+        "icon": "$(add)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codecharacter-2022",
+          "title": "CodeCharacter 2022",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "menus": {
+      "editor/title": [
+        {
+          "command": "codecharacter-2022.runCode",
+          "group": "navigation",
+          "when": "resourceFilename =~ /\\.(c|cpp|js|py|java)$/ && resourcePath =~ /codes/ && editorFocus"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codecharacter-2022.addMapFile",
+          "when": "view == codecharacter-2022-maps",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "codecharacter-2022.deleteCodeFile",
+          "when": "view == codecharacter-2022-codes && viewItem == sourceFile",
+          "group": "inline"
+        },
+        {
+          "command": "codecharacter-2022.deleteMapFile",
+          "when": "view == codecharacter-2022-maps && viewItem == map",
+          "group": "inline"
+        },
+        {
+          "command": "codecharacter-2022.addCodeFile",
+          "when": "view == codecharacter-2022-codes && viewItem == sourceFolder",
+          "group": "inline"
+        }
+      ]
+    },
+    "views": {
+      "codecharacter-2022": [
+        {
+          "id": "codecharacter-2022-codes",
+          "name": "Local Source Code Files",
+          "icon": "media/icons.svg",
+          "contextualTitle": "Source Code Files"
+        },
+        {
+          "id": "codecharacter-2022-maps",
+          "name": "Local Maps",
+          "icon": "media/icons.svg",
+          "contextualTitle": "Map Files"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "codecharacter-2022-codes",
+        "contents": "No local source file found.\n[Add Source File](command:codecharacter-2022.addSourceFile)"
+      },
+      {
+        "view": "codecharacter-2022-maps",
+        "contents": "No local map found.\n[Add Map File](command:codecharacter-2022.addMapFile)"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "14.x",
+    "@types/rimraf": "^3.0.2",
+    "@types/vscode": "^1.63.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "@vscode/test-electron": "^2.0.3",
+    "eslint": "^8.6.0",
+    "glob": "^7.2.0",
+    "mocha": "^9.1.3",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.4",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "@codecharacter-2022/map-designer": "workspace:^",
+    "@codecharacter-2022/renderer": "workspace:^",
+    "rimraf": "^3.0.2"
+  }
+}
