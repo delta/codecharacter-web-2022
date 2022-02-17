@@ -12,7 +12,7 @@ import { Counter } from './store/counter/Counter';
 
 const persistor = persistStore(store);
 const Home = lazy(() => import('./pages/Home'));
-const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
+const Dashboard = lazy(() => import('./pages/Dashboard/DashboardPage'));
 const NavBar = lazy(() => import('./components/NavBar/NavBar'));
 const SideBar = lazy(() => import('./components/SideBar/SideBar'));
 const History = lazy(

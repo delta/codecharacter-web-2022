@@ -1,27 +1,27 @@
 import * as Editor from './EditorTypes';
 import AceEditor from 'react-ace';
 
-import 'brace/mode/c_cpp';
-import 'brace/mode/python';
-import 'brace/mode/java';
+import 'ace-builds/src-noconflict/mode-c_cpp';
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/mode-java';
 
-import 'brace/theme/monokai';
-import 'brace/theme/github';
-import 'brace/theme/tomorrow';
-import 'brace/theme/kuroir';
-import 'brace/theme/twilight';
-import 'brace/theme/xcode';
-import 'brace/theme/textmate';
-import 'brace/theme/solarized_dark';
-import 'brace/theme/solarized_light';
-import 'brace/theme/terminal';
-import 'brace/theme/chaos';
-import 'brace/theme/chrome';
-import 'brace/theme/eclipse';
-import 'brace/theme/dracula';
+import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-tomorrow';
+import 'ace-builds/src-noconflict/theme-kuroir';
+import 'ace-builds/src-noconflict/theme-twilight';
+import 'ace-builds/src-noconflict/theme-xcode';
+import 'ace-builds/src-noconflict/theme-textmate';
+import 'ace-builds/src-noconflict/theme-solarized_dark';
+import 'ace-builds/src-noconflict/theme-solarized_light';
+import 'ace-builds/src-noconflict/theme-terminal';
+import 'ace-builds/src-noconflict/theme-chaos';
+import 'ace-builds/src-noconflict/theme-chrome';
+import 'ace-builds/src-noconflict/theme-eclipse';
+import 'ace-builds/src-noconflict/theme-dracula';
 
-import 'brace/keybinding/emacs';
-import 'brace/keybinding/vim';
+import 'ace-builds/src-noconflict/keybinding-emacs';
+import 'ace-builds/src-noconflict/keybinding-vim';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {

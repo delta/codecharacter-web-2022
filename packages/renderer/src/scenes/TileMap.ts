@@ -50,29 +50,11 @@ export class TileMap extends Phaser.Scene {
 
     this.groundLayer.setCullPadding(6, 6);
 
-    const cursors = this.input.keyboard.createCursorKeys();
-
-    const controlConfig = {
-      camera: this.cameras.main,
-      left: cursors.left,
-      right: cursors.right,
-      up: cursors.up,
-      down: cursors.down,
-      zoomIn: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
-      zoomOut: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
-      acceleration: 0.04,
-      drag: 0.0005,
-      maxSpeed: 0.7,
-    };
-
-    this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(
-      controlConfig,
-    );
-
     const pinch = new Pinch(this);
     const pan = new Pan(this);
     const camera = this.cameras.main;
-    camera.zoom = 0.5;
+    camera.zoom = 0.1;
+    camera.setScroll(-200, 2000);
     pinch.on(
       'pinch',
       () => {
@@ -434,8 +416,7 @@ export class TileMap extends Phaser.Scene {
     });
   }
 
-  update(_: number, delta: number): void {
-    this.controls.update(delta);
+  update(): void {
     this.troops.forEach(skeleton => {
       skeleton.update();
     });
