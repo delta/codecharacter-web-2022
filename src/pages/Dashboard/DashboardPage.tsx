@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import SplitPane from 'react-split-pane';
+import Toast from 'react-hot-toast';
 import Editor from '../../components/Editor/Editor';
 import './DefaultSplitPane.css';
 import styles from './Dashboard.module.css';
@@ -12,7 +13,7 @@ import {
   UserCode,
   UserLanguage,
 } from '../../store/editor/code';
-import { CodeApi, Language } from '@codecharacter-2022/client';
+import { CodeApi, MapApi, Language } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
   Container,
@@ -51,7 +52,7 @@ export default function Dashboard(): JSX.Element {
           dispatch(initializeEditorStates(response));
         })
         .catch(err => {
-          if (err instanceof ApiError) console.log(err.message);
+          if (err instanceof ApiError) Toast.error(err.message);
         })
         .finally(() => localStorage.setItem('firstTime', 'false'));
     }
@@ -97,6 +98,23 @@ export default function Dashboard(): JSX.Element {
     }
   }
 
+  const saveMapCallback = (map: Array<Array<number>>) => {
+    const mapAPI = new MapApi(apiConfig);
+    mapAPI
+      .updateLatestMap({
+        map: JSON.stringify(map),
+        lock: false,
+      })
+      .then(() => {
+        Toast.success('Map Saved');
+      })
+      .catch(error => {
+        if (error instanceof ApiError) {
+          Toast.error(error.message);
+        }
+      });
+  };
+
   function handleSave() {
     let languageType: Language = Language.Cpp;
     if (userLanguage === 'c_cpp') languageType = Language.Cpp;
@@ -109,8 +127,11 @@ export default function Dashboard(): JSX.Element {
         lock: false,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Saved');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   }
 
@@ -130,8 +151,11 @@ export default function Dashboard(): JSX.Element {
         message: commitName,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Commit Created');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   }
 
@@ -147,8 +171,11 @@ export default function Dashboard(): JSX.Element {
         lock: true,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Submit Successful');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   }
 
@@ -267,7 +294,10 @@ export default function Dashboard(): JSX.Element {
         maxSize={window.innerHeight * (3 / 4)}
         defaultSize={(0.935 * window.innerHeight) / 2}
       >
-        <MapDesignerComponent />
+        <MapDesignerComponent
+          saveMapCallback={saveMapCallback}
+          readonly={false}
+        />
         <RendererComponent />
       </SplitPane>
     );
