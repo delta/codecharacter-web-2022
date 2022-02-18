@@ -16,7 +16,7 @@ import {
   loginAction,
   loading,
   switchRegister,
-  isloggedIn,
+  loginError,
 } from '../../../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -29,6 +29,7 @@ function Login(): JSX.Element {
   const [password, setPassword] = useState('');
   const [login, islogin] = useState(false);
   const [passwordType, setPasswordType] = useState<string>('password');
+  const [typing, isTyping] = useState<boolean>(false);
   const passwordTypeAction = () => {
     if (passwordType === 'password') {
       setPasswordType('text');
@@ -38,12 +39,27 @@ function Login(): JSX.Element {
   };
   const hookDispatch = useAppDispatch();
   const loadingStatus = useAppSelector(loading);
-  const loggedInStatus = useAppSelector(isloggedIn);
+  const loggedInError = useAppSelector(loginError);
   useEffect(() => {
-    if (loggedInStatus) {
+    switch (loggedInError) {
+      case 'Invalid Password':
+        setPassword('');
+        ispasswordError(true);
+        break;
+      case 'User not found':
+        setEmail('');
+        isemailError(true);
+        setPassword('');
+        ispasswordError(true);
+        islogin(false);
+        break;
+    }
+  }, [loggedInError]);
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
       navigate('/dashboard', { replace: true });
     }
-  }, [loggedInStatus]);
+  }, [localStorage.getItem('token')]);
   const handleLoginSubmit = () => {
     islogin(true);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
@@ -60,6 +76,7 @@ function Login(): JSX.Element {
       ispasswordError(true);
     }
     if (!(emailError && passwordError)) {
+      isTyping(false);
       hookDispatch(loginAction({ email: email, password: password }));
     }
   };
@@ -67,6 +84,7 @@ function Login(): JSX.Element {
   const handlePasswordSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value != null) {
       setPassword(event.target.value);
+      isTyping(true);
     }
     const passwordFormat =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
@@ -170,6 +188,12 @@ function Login(): JSX.Element {
               <></>
             )}
           </Form.Group>
+          {loggedInError != 'NIL' ? (
+            <AlertMessage err={true && !typing} content={loggedInError} />
+          ) : (
+            <></>
+          )}
+
           <div className={classnames('d-grid gap-2', styles.submitContainer)}>
             <Button variant="outline-primary" onClick={handleLoginSubmit}>
               Login{' '}
@@ -180,12 +204,14 @@ function Login(): JSX.Element {
               )}
             </Button>
           </div>
+          <div className={styles.forgotPassword}>
+            <NavLink to="/hello"> Forgot Password? </NavLink>
+          </div>
         </form>
-        <br />
         <div className={styles.externalAuthButtons}>
           <div className={styles.googleButton}>
             <a
-              href={`${BASE_PATH}/auth/login/external`}
+              href={`localhost:8080/auth/login/external`}
               target="_blank"
               rel="noreferrer"
             >
@@ -198,18 +224,17 @@ function Login(): JSX.Element {
             </a>
           </div>
           <div className={styles.githubButton}>
-            <a
-              href={`${BASE_PATH}/auth/login/external`}
-              target="_blank"
-              rel="noreferrer"
+            <Button
+              variant="dark"
+              onClick={() => {
+                window.open(`${BASE_PATH}/auth/login/external`);
+              }}
             >
-              <Button variant="dark">
-                <div>
-                  <FontAwesomeIcon icon={faGithub as IconProp} /> Login with
-                  Github
-                </div>
-              </Button>
-            </a>
+              <div>
+                <FontAwesomeIcon icon={faGithub as IconProp} /> Login with
+                Github
+              </div>
+            </Button>
           </div>
         </div>
         <div className={styles.linkContainer}>

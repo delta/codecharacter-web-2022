@@ -4,28 +4,24 @@ import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
 import Notifs from '../Notifs/Notifs';
 // import toast from 'react-hot-toast';
-import {
-  isloggedIn,
-  isLogout,
-  getUserDetailsAction,
-  user,
-} from '../../store/User/UserSlice';
+import { getUserDetailsAction, user } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loggedInStatus = useAppSelector(isloggedIn);
-  const logoutStatus = useAppSelector(isLogout);
   const getUser = useAppSelector(user);
+
   useEffect(() => {
-    dispatch(getUserDetailsAction());
+    if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [getUser]);
+
   useEffect(() => {
-    if (loggedInStatus == false && logoutStatus) {
+    if (localStorage.getItem('token') != null) {
+      navigate('/dashboard', { replace: true });
+    } else {
       handleClose();
-      navigate('/login', { replace: true });
     }
-  }, [loggedInStatus]);
+  }, [getUser]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
     isOpen(true);
@@ -44,7 +40,7 @@ const NavBar: React.FunctionComponent = () => {
           </Link>
         </div>
       </div>
-      {loggedInStatus ? (
+      {localStorage.getItem('token') != null ? (
         <div className={styles.profileIcons}>
           {/* <button
           className="toastTest"
@@ -62,7 +58,7 @@ const NavBar: React.FunctionComponent = () => {
           </div>
           <div className={styles.profile} onClick={handleOpen}>
             <div className={styles.fakeProfileIcon} />
-            <h3 className={styles.profileName}>{getUser.userName}</h3>
+            <h3 className={styles.profileName}>{getUser?.userName}</h3>
           </div>
         </div>
       ) : (
