@@ -1,15 +1,28 @@
 import { CodeRevision, GameMapRevision } from '@codecharacter-2022/client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import './CommitHistory.css';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import styles from '../HistoryMain/History.module.css';
+import { useAppDispatch } from '../../../store/hooks';
+import {
+  codeCommitIDChanged,
+  codeCommitNameChanged,
+  isSelfMatchModalOpened,
+  mapCommitIDChanged,
+  mapCommitNameChanged,
+} from '../../../store/selfMatchModal/selfMatchModal';
 
 type PropsType = {
   commitID: (commitID: string) => void;
   commitHistoryDetails: CodeRevision[] | GameMapRevision[];
+  BigButton: string;
 };
 
 export default function CommitHistory(props: PropsType): JSX.Element {
@@ -18,7 +31,96 @@ export default function CommitHistory(props: PropsType): JSX.Element {
     color: '#fff',
   };
 
+  const dispatch = useAppDispatch();
   const [commitNumber, setCommitNumber] = useState('0');
+
+  function handleCommitSelect(e: React.MouseEvent<HTMLDivElement>) {
+    // Since the button has an icon, event
+    // target doesnt give the button element
+    // when clicked on the icon. Hence we get the
+    // parent if clicked on icon
+    const target = e.target as HTMLDivElement;
+    if (target.getAttribute('data-uuid') === null) {
+      if (
+        (target.parentNode as HTMLButtonElement)?.getAttribute('data-uuid') !==
+        null
+      ) {
+        if (props.BigButton === 'Code') {
+          dispatch(
+            codeCommitNameChanged(
+              (target.parentNode as HTMLButtonElement)?.getAttribute(
+                'data-name',
+              ) || '',
+            ),
+          );
+          dispatch(
+            codeCommitIDChanged(
+              (target.parentNode as HTMLButtonElement)?.getAttribute(
+                'data-uuid',
+              ) || '',
+            ),
+          );
+        } else {
+          dispatch(
+            mapCommitNameChanged(
+              (target.parentNode as HTMLButtonElement)?.getAttribute(
+                'data-name',
+              ) || '',
+            ),
+          );
+          dispatch(
+            mapCommitIDChanged(
+              (target.parentNode as HTMLButtonElement)?.getAttribute(
+                'data-uuid',
+              ) || '',
+            ),
+          );
+        }
+      } else {
+        if (props.BigButton === 'Code') {
+          dispatch(
+            codeCommitNameChanged(
+              (
+                target.parentNode?.parentNode as HTMLButtonElement
+              )?.getAttribute('data-name') || '',
+            ),
+          );
+          dispatch(
+            codeCommitIDChanged(
+              (
+                target.parentNode?.parentNode as HTMLButtonElement
+              )?.getAttribute('data-uuid') || '',
+            ),
+          );
+        } else {
+          dispatch(
+            mapCommitNameChanged(
+              (
+                target.parentNode?.parentNode as HTMLButtonElement
+              )?.getAttribute('data-name') || '',
+            ),
+          );
+          dispatch(
+            mapCommitIDChanged(
+              (
+                target.parentNode?.parentNode as HTMLButtonElement
+              )?.getAttribute('data-uuid') || '',
+            ),
+          );
+        }
+      }
+    } else {
+      if (props.BigButton === 'Code') {
+        dispatch(codeCommitNameChanged(target.getAttribute('data-name') || ''));
+        dispatch(codeCommitIDChanged(target.getAttribute('data-uuid') || ''));
+      } else {
+        dispatch(mapCommitNameChanged(target.getAttribute('data-name') || ''));
+        dispatch(mapCommitIDChanged(target.getAttribute('data-uuid') || ''));
+      }
+    }
+
+    dispatch(isSelfMatchModalOpened(true));
+  }
 
   return (
     <VerticalTimeline layout={'1-column'} animate={true}>
@@ -46,6 +148,20 @@ export default function CommitHistory(props: PropsType): JSX.Element {
               <h3 className="vertical-timeline-element-title">
                 {`Commit - ${index + 1}`}
               </h3>
+              <div
+                className="vertical-timeline-element-subtitle flex d-flex justify-content-end"
+                onClick={e => handleCommitSelect(e)}
+              >
+                <button
+                  className={styles.selectBtn}
+                  data-name={eachCommit.message}
+                  data-uuid={eachCommit.id}
+                >
+                  {' '}
+                  <FontAwesomeIcon icon={faCheckCircle as IconProp} />{' '}
+                  <b>Select</b>{' '}
+                </button>
+              </div>
             </VerticalTimelineElement>
           );
         })

@@ -12,7 +12,7 @@ import {
   UserCode,
   UserLanguage,
 } from '../../store/editor/code';
-import { CodeApi, Language } from '@codecharacter-2022/client';
+import { CodeApi, Language, MapApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
   Container,
@@ -28,9 +28,17 @@ import {
   faAngleRight,
   faAngleLeft,
   faSave,
+  faPlay,
 } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  codeCommitIDChanged,
+  codeCommitNameChanged,
+  isSelfMatchModalOpened,
+  mapCommitIDChanged,
+  mapCommitNameChanged,
+} from '../../store/selfMatchModal/selfMatchModal';
 
 export default function Dashboard(): JSX.Element {
   const [forceRender, setForceRender] = useState(0);
@@ -42,6 +50,7 @@ export default function Dashboard(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const codeAPI = new CodeApi(apiConfig);
+  const mapAPI = new MapApi(apiConfig);
 
   useEffect(() => {
     if (localStorage.getItem('firstTime') === null) {
@@ -114,6 +123,30 @@ export default function Dashboard(): JSX.Element {
       });
   }
 
+  async function handleSimulate() {
+    await codeAPI
+      .getCodeRevisions()
+      .then(response => {
+        dispatch(codeCommitNameChanged(response[response.length - 1].message));
+        dispatch(codeCommitIDChanged(undefined));
+      })
+      .catch(err => {
+        if (err instanceof ApiError) console.log(err.message);
+      });
+
+    await mapAPI
+      .getMapRevisions()
+      .then(response => {
+        dispatch(mapCommitNameChanged(response[response.length - 1].message));
+        dispatch(mapCommitIDChanged(undefined));
+      })
+      .catch(err => {
+        if (err instanceof ApiError) console.log(err.message);
+      });
+
+    dispatch(isSelfMatchModalOpened(true));
+  }
+
   function handleCommitNameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setCommitName(e.target.value);
   }
@@ -154,8 +187,8 @@ export default function Dashboard(): JSX.Element {
 
   function handleUpperSlideInOutBtn() {
     if (isRendererOpen === true) {
-      setpane1Width(window.innerWidth - 65 - 1);
-      setEditorWidth(window.innerWidth - 65 - 21);
+      setpane1Width(window.innerWidth - 60 - 1);
+      setEditorWidth(window.innerWidth - 60 - 1 - 25);
       setRendererOpen(false);
     } else {
       setpane1Width((window.innerWidth - 65) / 2);
@@ -226,10 +259,15 @@ export default function Dashboard(): JSX.Element {
             </select>
           </Col>
 
-          <Col xs={7} className={styles.btnsParent}>
+          <Col xs={9} className={styles.btnsParent}>
             <Button className={styles.btnBarMembers} onClick={handleSave}>
               <FontAwesomeIcon icon={faSave as IconProp} />
               {`   Save`}
+            </Button>
+
+            <Button className={styles.btnBarMembers} onClick={handleSimulate}>
+              <FontAwesomeIcon icon={faPlay as IconProp} />
+              {`   Simulate`}
             </Button>
 
             <OverlayTrigger

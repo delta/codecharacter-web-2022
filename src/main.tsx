@@ -25,6 +25,9 @@ const EditorSettings = lazy(
 );
 const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
 const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
+const SelfMatchModal = lazy(
+  () => import('./components/matchMakingModal/selfMatchModal'),
+);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -33,6 +36,7 @@ ReactDOM.render(
         <HashRouter>
           <Suspense fallback={<div>Loading...</div>}>
             <EditorSettings />
+            <SelfMatchModal />
             <NavBar />
             <div className={styles.mainWindow}>
               <SideBar />
