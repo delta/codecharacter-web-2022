@@ -51,7 +51,10 @@ const SideBar: React.FunctionComponent = () => {
   };
   return (
     <div>
-      {pathName != '/register' && pathName != '/login' ? (
+      {pathName != '/register' &&
+      pathName != '/login' &&
+      pathName != '/activate' &&
+      pathName != '/reset-password' ? (
         <div className={styles.sideBar}>
           {icons.map(icon => {
             if (icon.tooltip === 'Editor Settings') {

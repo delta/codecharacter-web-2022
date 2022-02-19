@@ -15,9 +15,7 @@ export const startRegister = (user: user): Promise<{ user: user }> => {
         college: user.college,
         avatarId: 0,
       })
-      .then(res => {
-        console.log(res);
-
+      .then(() => {
         resolve({ user: user });
       })
       .catch(error => {

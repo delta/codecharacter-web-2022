@@ -20,6 +20,7 @@ import {
 } from '../../../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import ForgetPassword from './ForgetPassword/ForgetPassword';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function Login(): JSX.Element {
   const [login, islogin] = useState(false);
   const [passwordType, setPasswordType] = useState<string>('password');
   const [typing, isTyping] = useState<boolean>(false);
+  const [open, isOpen] = useState<boolean>(false);
   const passwordTypeAction = () => {
     if (passwordType === 'password') {
       setPasswordType('text');
@@ -60,6 +62,10 @@ function Login(): JSX.Element {
       navigate('/dashboard', { replace: true });
     }
   }, [localStorage.getItem('token')]);
+  const handleForgetPassword = () => {
+    if (open == false) isOpen(true);
+    else isOpen(false);
+  };
   const handleLoginSubmit = () => {
     islogin(true);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
@@ -205,13 +211,20 @@ function Login(): JSX.Element {
             </Button>
           </div>
           <div className={styles.forgotPassword}>
-            <NavLink to="/hello"> Forgot Password? </NavLink>
+            <Button variant="link" onClick={handleForgetPassword}>
+              {' '}
+              Forgot Password?{' '}
+            </Button>
+            <ForgetPassword
+              open={open}
+              handleForgetPassword={handleForgetPassword}
+            />
           </div>
         </form>
         <div className={styles.externalAuthButtons}>
           <div className={styles.googleButton}>
             <a
-              href={`localhost:8080/auth/login/external`}
+              href={`${BASE_PATH}/auth/login/external`}
               target="_blank"
               rel="noreferrer"
             >
