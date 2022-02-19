@@ -2,8 +2,13 @@ import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
-import { LeaderboardApi } from '@codecharacter-2022/client';
-import { apiConfig } from '../../api/ApiConfig';
+import {
+  LeaderboardApi,
+  MatchApi,
+  CodeApi,
+  MapApi,
+} from '@codecharacter-2022/client';
+import { apiConfig, ApiError } from '../../api/ApiConfig';
 
 export interface rowInterface {
   user: {
@@ -17,6 +22,13 @@ export interface rowInterface {
     losses: number;
     ties: number;
   };
+}
+
+export interface mapRequestInterface {
+  mode: string;
+  opponentId: string;
+  mapRevisionId: string | undefined;
+  codeRevisionId: string | undefined;
 }
 
 function PaginatedItems() {
@@ -62,6 +74,48 @@ function PaginatedItems() {
       });
   };
 
+  async function handleMatchStart(opponentId: string) {
+    enum MatchMode {
+      Self = 'SELF',
+      Manual = 'MANUAL',
+      Auto = 'AUTO',
+    }
+    function getCodeRevisionId(): string {
+      const codeAPI = new CodeApi(apiConfig);
+      let tmp: any;
+      codeAPI.getCodeRevisions().then(response => {
+        console.log(response);
+        tmp = response[response.length - 1];
+      });
+      return tmp.parentRevision;
+    }
+    function getMapRevisionId(): string {
+      const mapAPI = new MapApi(apiConfig);
+      let tmp: any;
+      mapAPI.getMapRevisions().then(response => {
+        tmp = response[response.length - 1];
+      });
+      return tmp.parentRevision;
+    }
+    const matchRequest = {
+      mode: MatchMode.Self,
+      opponentId: opponentId,
+      codeRevisionId: getCodeRevisionId(),
+      mapRevisionId: getMapRevisionId(),
+    };
+
+    const matchAPI = new MatchApi(apiConfig);
+    if (matchRequest.mapRevisionId && matchRequest.codeRevisionId) {
+      matchAPI
+        .createMatch(matchRequest)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          if (error instanceof ApiError) console.log(error);
+        });
+    }
+  }
   return (
     <>
       <>
@@ -111,7 +165,11 @@ function PaginatedItems() {
               </div>
               {currentItems &&
                 currentItems.map((row: rowInterface) => (
-                  <div className={styles.item} key={row.user.username}>
+                  <div
+                    className={styles.item}
+                    key={row.user.username}
+                    onClick={() => handleMatchStart(row.user.username)}
+                  >
                     <div className={styles.pos}>
                       {itemOffset + 1 + currentItems.indexOf(row)}
                     </div>
