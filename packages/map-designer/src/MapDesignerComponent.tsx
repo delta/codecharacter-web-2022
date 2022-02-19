@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowsAlt,
   faEraser,
@@ -106,7 +107,10 @@ export default function MapDesignerComponent(
                   events.emit(MapDesignerEvents.TOWER_SELECTED, tower);
                 }}
               >
-                <img src={`/assets/${tower.thumbnailAsset}`} alt={tower.name} />
+                <img
+                  src={`../assets/${tower.thumbnailAsset}`}
+                  alt={tower.name}
+                />
                 <br />
                 <span>{tower.name}</span>
               </Button>
@@ -121,7 +125,7 @@ export default function MapDesignerComponent(
               events.emit(MapDesignerEvents.MOVE_SELECTED);
             }}
           >
-            <FontAwesomeIcon size={'2x'} icon={faArrowsAlt} />
+            <FontAwesomeIcon size={'2x'} icon={faArrowsAlt as IconProp} />
             <br />
             <span>Move</span>
           </Button>
@@ -132,7 +136,7 @@ export default function MapDesignerComponent(
               events.emit(MapDesignerEvents.CLEAR_MAP);
             }}
           >
-            <FontAwesomeIcon size={'2x'} icon={faTimesCircle} />
+            <FontAwesomeIcon size={'2x'} icon={faTimesCircle as IconProp} />
             <br />
             <span>Clear</span>
           </Button>
@@ -143,7 +147,7 @@ export default function MapDesignerComponent(
               events.emit(MapDesignerEvents.ERASER_SELECTED);
             }}
           >
-            <FontAwesomeIcon size={'2x'} icon={faEraser} />
+            <FontAwesomeIcon size={'2x'} icon={faEraser as IconProp} />
             <br />
             <span>Erase</span>
           </Button>
@@ -152,7 +156,7 @@ export default function MapDesignerComponent(
             variant="outline-light"
             onClick={() => props.saveMapCallback(mapData)}
           >
-            <FontAwesomeIcon size={'2x'} icon={faSave} />
+            <FontAwesomeIcon size={'2x'} icon={faSave as IconProp} />
             <br />
             <span>Save</span>
           </Button>

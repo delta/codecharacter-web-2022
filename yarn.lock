@@ -1698,6 +1698,7 @@ __metadata:
     "@vitejs/plugin-react": ^1.0.7
     "@web/rollup-plugin-html": ^1.10.1
     ace-builds: ^1.4.14
+    ansi-to-react: ^6.1.6
     babel-loader: ^8.2.3
     bootstrap: 5.1.3
     concurrently: ^5.3.0
@@ -1716,7 +1717,7 @@ __metadata:
     postinstall-postinstall: ^2.1.0
     prettier: ^2.4.1
     react: ^17.0.2
-    react-ace: 8.0.0
+    react-ace: ^9.5.0
     react-bootstrap: ^2.1.2
     react-dom: ^17.0.2
     react-flags-select: ^2.1.2
@@ -4609,7 +4610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ace-builds@npm:^1.4.14, ace-builds@npm:^1.4.6":
+"ace-builds@npm:^1.4.13, ace-builds@npm:^1.4.14":
   version: 1.4.14
   resolution: "ace-builds@npm:1.4.14"
   checksum: 7e7fbfc6add7e250015bc3f6452a173b2b4722bb9d2ceaa7c5cc506d166906d6df72a595cee3d4c931f9814a480ce583026652a2285abdcd2c0881e92f34c5b0
@@ -4782,6 +4783,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"anser@npm:^1.4.1":
+  version: 1.4.10
+  resolution: "anser@npm:1.4.10"
+  checksum: 3823c64f8930d3d97f36e56cdf646fa6351f1227e25eee70c3a17697447cae4238fc3a309bb3bc2003cf930687fa72aed71426dbcf3c0a15565e120a7fee5507
+  languageName: node
+  linkType: hard
+
 "ansi-align@npm:^3.0.0":
   version: 3.0.1
   resolution: "ansi-align@npm:3.0.1"
@@ -4877,6 +4885,19 @@ __metadata:
   bin:
     ansi-to-html: bin/ansi-to-html
   checksum: c899362a29b92c8ae075b72168b826f7c233875b475719304942f80695e0ce4a6812845021192da5fb0ac80b10209b4fae5aede42620a1b1b3d3b30f3ef77a86
+  languageName: node
+  linkType: hard
+
+"ansi-to-react@npm:^6.1.6":
+  version: 6.1.6
+  resolution: "ansi-to-react@npm:6.1.6"
+  dependencies:
+    anser: ^1.4.1
+    escape-carriage: ^1.3.0
+  peerDependencies:
+    react: ^16.3.2 || ^17.0.0
+    react-dom: ^16.3.2 || ^17.0.0
+  checksum: c626cd36d4f53e98c2305f5d6c1ac6b32f59a9286a11458a64e05ff93e8248ca5b5785401b6ee4c6cd0af1a4a0bc94315c37696480c1906fb905e14a043f4652
   languageName: node
   linkType: hard
 
@@ -7162,7 +7183,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"diff-match-patch@npm:^1.0.4":
+"diff-match-patch@npm:^1.0.5":
   version: 1.0.5
   resolution: "diff-match-patch@npm:1.0.5"
   checksum: 841522d01b09cccbc4e4402cf61514a81b906349a7d97b67222390f2d35cf5df277cb23959eeed212d5e46afb5629cebab41b87918672c5a05c11c73688630e3
@@ -8022,6 +8043,13 @@ __metadata:
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
   checksum: a3e2a99f07acb74b3ad4989c48ca0c3140f69f923e56d0cba0526240ee470b91010f9d39001f2a4a313841d237ede70a729e92125191ba5d21e74b106800b133
+  languageName: node
+  linkType: hard
+
+"escape-carriage@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "escape-carriage@npm:1.3.0"
+  checksum: ced9a6cfc4cca4ea51882809a182ce135c7869c43dfffc7a8edd7f1eb0d22904a6cce08b61cad6c645a9eb73e895db564e05fe020e1d9b83a92bcfd5adf14436
   languageName: node
   linkType: hard
 
@@ -14021,19 +14049,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-ace@npm:8.0.0":
-  version: 8.0.0
-  resolution: "react-ace@npm:8.0.0"
+"react-ace@npm:^9.5.0":
+  version: 9.5.0
+  resolution: "react-ace@npm:9.5.0"
   dependencies:
-    ace-builds: ^1.4.6
-    diff-match-patch: ^1.0.4
+    ace-builds: ^1.4.13
+    diff-match-patch: ^1.0.5
     lodash.get: ^4.4.2
     lodash.isequal: ^4.5.0
     prop-types: ^15.7.2
   peerDependencies:
-    react: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0
-    react-dom: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0
-  checksum: f74c1307f2a9ac2299669767e6463ab27381596bbb4139e1ee1140e2b2b89860c14e9f1b6cda214c818d6b6d7ded3f9f7c6d68f9f05f236a017bccfdfb16c135
+    react: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0
+    react-dom: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0
+  checksum: 4fcb8cf5c69507074c5fca1d40965abef8e411ac6ab66bdfbfc8505eb13e3bc2bb1c31edb80762bae9578802a53c50fda9037619b8ade1084a89244641ebb1c8
   languageName: node
   linkType: hard
 
