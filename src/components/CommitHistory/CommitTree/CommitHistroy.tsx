@@ -20,6 +20,13 @@ export default function CommitHistory(props: PropsType): JSX.Element {
 
   const [commitNumber, setCommitNumber] = useState('0');
 
+  const parseTimeFormat = (machineTime: string) => {
+    const commitTimestamp = new Date(machineTime);
+    const datePart = commitTimestamp.toDateString().substring(4, 10);
+    const timePart = commitTimestamp.toLocaleTimeString();
+    return `${datePart} at ${timePart}`;
+  };
+
   return (
     <VerticalTimeline layout={'1-column'} animate={true}>
       {props.commitHistoryDetails && props.commitHistoryDetails.length > 0 ? (
@@ -32,7 +39,7 @@ export default function CommitHistory(props: PropsType): JSX.Element {
               contentArrowStyle={{
                 borderRight: '7px solid  rgb(33, 150, 243)',
               }}
-              date={eachCommit.createdAt.toString()}
+              date={parseTimeFormat(eachCommit.createdAt.toString())}
               iconStyle={
                 commitNumber == eachCommit.id
                   ? CircleIcon
@@ -46,6 +53,9 @@ export default function CommitHistory(props: PropsType): JSX.Element {
               <h3 className="vertical-timeline-element-title">
                 {`Commit - ${index + 1}`}
               </h3>
+              <h6 className="vertical-timeline-element-subtitle">
+                {eachCommit.message}
+              </h6>
             </VerticalTimelineElement>
           );
         })
