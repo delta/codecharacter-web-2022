@@ -7,6 +7,7 @@ import {
   MatchApi,
   CodeApi,
   MapApi,
+  CreateMatchRequest,
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 
@@ -61,11 +62,6 @@ function PaginatedItems() {
     leaderboardAPI
       .getLeaderboard()
       .then(response => {
-        response.sort((a, b) => {
-          const parsedA = a.stats.rating;
-          const parsedB = b.stats.rating;
-          return parsedA > parsedB ? -1 : 1; // for descending sort inverse -1 and 1
-        });
         setItems(response);
         setIsLoaded(true);
       })
@@ -80,41 +76,25 @@ function PaginatedItems() {
       Manual = 'MANUAL',
       Auto = 'AUTO',
     }
-    function getCodeRevisionId(): string {
-      const codeAPI = new CodeApi(apiConfig);
-      let tmp: any;
-      codeAPI.getCodeRevisions().then(response => {
-        console.log(response);
-        tmp = response[response.length - 1];
-      });
-      return tmp.parentRevision;
-    }
-    function getMapRevisionId(): string {
-      const mapAPI = new MapApi(apiConfig);
-      let tmp: any;
-      mapAPI.getMapRevisions().then(response => {
-        tmp = response[response.length - 1];
-      });
-      return tmp.parentRevision;
-    }
+    const codeAPI = new CodeApi(apiConfig);
+    const mapAPI = new MapApi(apiConfig);
+    const codeRevisionId = await codeAPI.getCodeRevisions().then(response => {
+      response[response.length - 1].parentRevision;
+    });
+    const mapRevisionId = await mapAPI.getMapRevisions().then(response => {
+      response[response.length - 1].parentRevision;
+    });
     const matchRequest = {
       mode: MatchMode.Self,
       opponentId: opponentId,
-      codeRevisionId: getCodeRevisionId(),
-      mapRevisionId: getMapRevisionId(),
+      codeRevisionId: codeRevisionId,
+      mapRevisionId: mapRevisionId,
     };
 
     const matchAPI = new MatchApi(apiConfig);
-    if (matchRequest.mapRevisionId && matchRequest.codeRevisionId) {
-      matchAPI
-        .createMatch(matchRequest)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          if (error instanceof ApiError) console.log(error);
-        });
-    }
+    matchAPI.createMatch(matchRequest as CreateMatchRequest).catch(error => {
+      if (error instanceof ApiError) console.log(error);
+    });
   }
   return (
     <>
@@ -128,19 +108,28 @@ function PaginatedItems() {
         ) : (
           <>
             <div className={styles.top3}>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => handleMatchStart(items[1].user.username)}
+              >
                 <div className={styles.pos}>2</div>
                 <img className={styles.pic} src={items[1].user.avatarId}></img>
                 <div className={styles.name}>{items[1].user.username}</div>
                 <div className={styles.score}>{items[1].stats.rating}</div>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => handleMatchStart(items[0].user.username)}
+              >
                 <div className={styles.pos}>1</div>
                 <img className={styles.pic} src={items[0].user.avatarId}></img>
                 <div className={styles.name}>{items[0].user.username}</div>
                 <div className={styles.score}>{items[0].stats.rating}</div>
               </div>
-              <div className={styles.item}>
+              <div
+                className={styles.item}
+                onClick={() => handleMatchStart(items[1].user.username)}
+              >
                 <div className={styles.pos}>3</div>
                 <img className={styles.pic} src={items[2].user.avatarId}></img>
                 <div className={styles.name}>{items[2].user.username}</div>
