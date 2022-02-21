@@ -4,7 +4,7 @@ import Toast from 'react-hot-toast';
 import Editor from '../../components/Editor/Editor';
 import './DefaultSplitPane.css';
 import styles from './Dashboard.module.css';
-import { MapDesignerComponent } from '@codecharacter-2022/map-designer';
+import MapDesigner from '../../components/MapDesigner/MapDesigner';
 import { RendererComponent } from '@codecharacter-2022/renderer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,7 +13,7 @@ import {
   UserCode,
   UserLanguage,
 } from '../../store/editor/code';
-import { CodeApi, MapApi, Language } from '@codecharacter-2022/client';
+import { CodeApi, Language } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
   Container,
@@ -97,23 +97,6 @@ export default function Dashboard(): JSX.Element {
         dispatch(changeLanguage('c_cpp'));
     }
   }
-
-  const saveMapCallback = (map: Array<Array<number>>) => {
-    const mapAPI = new MapApi(apiConfig);
-    mapAPI
-      .updateLatestMap({
-        map: JSON.stringify(map),
-        lock: false,
-      })
-      .then(() => {
-        Toast.success('Map Saved');
-      })
-      .catch(error => {
-        if (error instanceof ApiError) {
-          Toast.error(error.message);
-        }
-      });
-  };
 
   function handleSave() {
     let languageType: Language = Language.Cpp;
@@ -294,10 +277,7 @@ export default function Dashboard(): JSX.Element {
         maxSize={window.innerHeight * (3 / 4)}
         defaultSize={(0.935 * window.innerHeight) / 2}
       >
-        <MapDesignerComponent
-          saveMapCallback={saveMapCallback}
-          readonly={false}
-        />
+        <MapDesigner />
         <RendererComponent />
       </SplitPane>
     );

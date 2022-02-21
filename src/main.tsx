@@ -15,6 +15,7 @@ const persistor = persistStore(store);
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard/DashboardPage'));
 const NavBar = lazy(() => import('./components/NavBar/NavBar'));
+const MapDesigner = lazy(() => import('./components/MapDesigner/MapDesigner'));
 const SideBar = lazy(() => import('./components/SideBar/SideBar'));
 const History = lazy(
   () => import('./components/CommitHistory/HistoryMain/History'),
@@ -41,6 +42,7 @@ ReactDOM.render(
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/mapdesigner" element={<MapDesigner />} />
                   <Route path="/history" element={<History />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
