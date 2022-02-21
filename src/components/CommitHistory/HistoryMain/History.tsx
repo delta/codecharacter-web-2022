@@ -78,10 +78,7 @@ export default function History(): JSX.Element {
         <div className={styles.timeline}>
           <div></div>
           <div className={styles.completeTimeline}>
-            {completeMapHistory &&
-            completeCodeHistroy &&
-            completeCodeHistroy.length > 0 &&
-            completeMapHistory.length > 0 ? (
+            {completeMapHistory && completeCodeHistroy ? (
               <CommitHistory
                 commitID={commitID}
                 commitHistoryDetails={
