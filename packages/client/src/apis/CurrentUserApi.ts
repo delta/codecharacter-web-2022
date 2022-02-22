@@ -14,11 +14,16 @@
 
 import * as runtime from '../runtime';
 import {
+  CompleteProfileRequest,
   CurrentUserProfile,
   GenericError,
   UpdateCurrentUserProfile,
   UpdatePasswordRequest,
 } from '../models';
+
+export interface CompleteUserProfileRequest {
+  completeProfileRequest: CompleteProfileRequest;
+}
 
 export interface UpdateCurrentUserRequest {
   updateCurrentUserProfile: UpdateCurrentUserProfile;
@@ -35,6 +40,28 @@ export interface UpdatePasswordOperationRequest {
  * @interface CurrentUserApiInterface
  */
 export interface CurrentUserApiInterface {
+  /**
+   * Complete the user profile for users who registered using OAuth
+   * @summary Complete user profile
+   * @param {CompleteProfileRequest} completeProfileRequest
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CurrentUserApiInterface
+   */
+  completeUserProfileRaw(
+    requestParameters: CompleteUserProfileRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>>;
+
+  /**
+   * Complete the user profile for users who registered using OAuth
+   * Complete user profile
+   */
+  completeUserProfile(
+    completeProfileRequest: CompleteProfileRequest,
+    initOverrides?: RequestInit,
+  ): Promise<void>;
+
   /**
    * Get current user profile
    * @summary Get current user profile
@@ -104,6 +131,66 @@ export class CurrentUserApi
   extends runtime.BaseAPI
   implements CurrentUserApiInterface
 {
+  /**
+   * Complete the user profile for users who registered using OAuth
+   * Complete user profile
+   */
+  async completeUserProfileRaw(
+    requestParameters: CompleteUserProfileRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>> {
+    if (
+      requestParameters.completeProfileRequest === null ||
+      requestParameters.completeProfileRequest === undefined
+    ) {
+      throw new runtime.RequiredError(
+        'completeProfileRequest',
+        'Required parameter requestParameters.completeProfileRequest was null or undefined when calling completeUserProfile.',
+      );
+    }
+
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters['Content-Type'] = 'application/json';
+
+    if (this.configuration && this.configuration.accessToken) {
+      const token = this.configuration.accessToken;
+      const tokenString = await token('http-bearer', []);
+
+      if (tokenString) {
+        headerParameters['Authorization'] = `Bearer ${tokenString}`;
+      }
+    }
+    const response = await this.request(
+      {
+        path: `/user/complete-profile`,
+        method: 'POST',
+        headers: headerParameters,
+        query: queryParameters,
+        body: requestParameters.completeProfileRequest,
+      },
+      initOverrides,
+    );
+
+    return new runtime.VoidApiResponse(response);
+  }
+
+  /**
+   * Complete the user profile for users who registered using OAuth
+   * Complete user profile
+   */
+  async completeUserProfile(
+    completeProfileRequest: CompleteProfileRequest,
+    initOverrides?: RequestInit,
+  ): Promise<void> {
+    await this.completeUserProfileRaw(
+      { completeProfileRequest: completeProfileRequest },
+      initOverrides,
+    );
+  }
+
   /**
    * Get current user profile
    * Get current user profile
