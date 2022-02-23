@@ -14,6 +14,29 @@ export interface ActivateUserRequest {
   token: string;
 }
 /**
+ *
+ * @export
+ * @interface AuthStatusResponse
+ */
+export interface AuthStatusResponse {
+  /**
+   *
+   * @type {string}
+   * @memberof AuthStatusResponse
+   */
+  status?: AuthStatusResponseStatusEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum AuthStatusResponseStatusEnum {
+  Authenticated = 'AUTHENTICATED',
+  ProfileIncomplete = 'PROFILE_INCOMPLETE',
+  ActivationPending = 'ACTIVATION_PENDING',
+}
+/**
  * Code model
  * @export
  * @interface Code
@@ -82,6 +105,43 @@ export interface CodeRevision {
   createdAt: Date;
 }
 /**
+ * Model for complete profile request
+ * @export
+ * @interface CompleteProfileRequest
+ */
+export interface CompleteProfileRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof CompleteProfileRequest
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CompleteProfileRequest
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CompleteProfileRequest
+   */
+  country: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CompleteProfileRequest
+   */
+  college: string;
+  /**
+   *
+   * @type {number}
+   * @memberof CompleteProfileRequest
+   */
+  avatarId: number;
+}
+/**
  * Create code revision request
  * @export
  * @interface CreateCodeRevisionRequest
@@ -127,6 +187,9 @@ export interface CreateMapRevisionRequest {
 }
 /**
  * Create match request
+ *
+ * If mode is SELF: either/both of mapRevisionId and codeRevisionId have to be provided, or else latest code will be used to initiate the match
+ * If mode is MANUAL: only opponentUsername should be provided
  * @export
  * @interface CreateMatchRequest
  */
@@ -138,23 +201,23 @@ export interface CreateMatchRequest {
    */
   mode: MatchMode;
   /**
-   * User ID of the opponent
+   * Username of the opponent
    * @type {string}
    * @memberof CreateMatchRequest
    */
-  opponentId?: string;
+  opponentUsername?: string | null;
   /**
    * Revision ID of the map
    * @type {string}
    * @memberof CreateMatchRequest
    */
-  mapRevisionId?: string;
+  mapRevisionId?: string | null;
   /**
    * Revision of the code
    * @type {string}
    * @memberof CreateMatchRequest
    */
-  codeRevisionId?: string;
+  codeRevisionId?: string | null;
 }
 /**
  * Current user profile model
@@ -203,29 +266,7 @@ export interface CurrentUserProfile {
    * @type {boolean}
    * @memberof CurrentUserProfile
    */
-  isAdmin: boolean;
-}
-/**
- * External Login request
- * @export
- * @interface ExternalLoginRequest
- */
-export interface ExternalLoginRequest {
-  /**
-   *
-   * @type {string}
-   * @memberof ExternalLoginRequest
-   */
-  provider: ExternalLoginRequestProviderEnum;
-}
-
-/**
- * @export
- * @enum {string}
- */
-export enum ExternalLoginRequestProviderEnum {
-  Google = 'GOOGLE',
-  Github = 'GITHUB',
+  isProfileComplete: boolean;
 }
 /**
  * Forgot password request
@@ -521,12 +562,6 @@ export interface PasswordLoginResponse {
  * @interface PublicUser
  */
 export interface PublicUser {
-  /**
-   *
-   * @type {string}
-   * @memberof PublicUser
-   */
-  userId: string;
   /**
    *
    * @type {string}
