@@ -14,17 +14,13 @@
 
 import * as runtime from '../runtime';
 import {
-  ExternalLoginRequest,
+  AuthStatusResponse,
   ForgotPasswordRequest,
   GenericError,
   PasswordLoginRequest,
   PasswordLoginResponse,
   ResetPasswordRequest,
 } from '../models';
-
-export interface ExternalLoginOperationRequest {
-  externalLoginRequest: ExternalLoginRequest;
-}
 
 export interface ForgotPasswordOperationRequest {
   forgotPasswordRequest: ForgotPasswordRequest;
@@ -46,28 +42,6 @@ export interface ResetPasswordOperationRequest {
  */
 export interface AuthApiInterface {
   /**
-   * Redirect to challenge for the given external login provider
-   * @summary External Login
-   * @param {ExternalLoginRequest} externalLoginRequest
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof AuthApiInterface
-   */
-  externalLoginRaw(
-    requestParameters: ExternalLoginOperationRequest,
-    initOverrides?: RequestInit,
-  ): Promise<runtime.ApiResponse<void>>;
-
-  /**
-   * Redirect to challenge for the given external login provider
-   * External Login
-   */
-  externalLogin(
-    externalLoginRequest: ExternalLoginRequest,
-    initOverrides?: RequestInit,
-  ): Promise<void>;
-
-  /**
    * Request password reset email to be sent when user forgot their password
    * @summary Forgot password
    * @param {ForgotPasswordRequest} forgotPasswordRequest
@@ -88,6 +62,23 @@ export interface AuthApiInterface {
     forgotPasswordRequest: ForgotPasswordRequest,
     initOverrides?: RequestInit,
   ): Promise<void>;
+
+  /**
+   * Get authentication status: fully authenticated, activation pending and incomplete profile
+   * @summary Get authentication status
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AuthApiInterface
+   */
+  getAuthStatusRaw(
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<AuthStatusResponse>>;
+
+  /**
+   * Get authentication status: fully authenticated, activation pending and incomplete profile
+   * Get authentication status
+   */
+  getAuthStatus(initOverrides?: RequestInit): Promise<AuthStatusResponse>;
 
   /**
    * Login with email and password and get bearer token for authentication
@@ -139,58 +130,6 @@ export interface AuthApiInterface {
  */
 export class AuthApi extends runtime.BaseAPI implements AuthApiInterface {
   /**
-   * Redirect to challenge for the given external login provider
-   * External Login
-   */
-  async externalLoginRaw(
-    requestParameters: ExternalLoginOperationRequest,
-    initOverrides?: RequestInit,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (
-      requestParameters.externalLoginRequest === null ||
-      requestParameters.externalLoginRequest === undefined
-    ) {
-      throw new runtime.RequiredError(
-        'externalLoginRequest',
-        'Required parameter requestParameters.externalLoginRequest was null or undefined when calling externalLogin.',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters['Content-Type'] = 'application/json';
-
-    const response = await this.request(
-      {
-        path: `/auth/login/external`,
-        method: 'POST',
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters.externalLoginRequest,
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Redirect to challenge for the given external login provider
-   * External Login
-   */
-  async externalLogin(
-    externalLoginRequest: ExternalLoginRequest,
-    initOverrides?: RequestInit,
-  ): Promise<void> {
-    await this.externalLoginRaw(
-      { externalLoginRequest: externalLoginRequest },
-      initOverrides,
-    );
-  }
-
-  /**
    * Request password reset email to be sent when user forgot their password
    * Forgot password
    */
@@ -240,6 +179,49 @@ export class AuthApi extends runtime.BaseAPI implements AuthApiInterface {
       { forgotPasswordRequest: forgotPasswordRequest },
       initOverrides,
     );
+  }
+
+  /**
+   * Get authentication status: fully authenticated, activation pending and incomplete profile
+   * Get authentication status
+   */
+  async getAuthStatusRaw(
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<AuthStatusResponse>> {
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    if (this.configuration && this.configuration.accessToken) {
+      const token = this.configuration.accessToken;
+      const tokenString = await token('http-bearer', []);
+
+      if (tokenString) {
+        headerParameters['Authorization'] = `Bearer ${tokenString}`;
+      }
+    }
+    const response = await this.request(
+      {
+        path: `/auth/status`,
+        method: 'GET',
+        headers: headerParameters,
+        query: queryParameters,
+      },
+      initOverrides,
+    );
+
+    return new runtime.JSONApiResponse(response);
+  }
+
+  /**
+   * Get authentication status: fully authenticated, activation pending and incomplete profile
+   * Get authentication status
+   */
+  async getAuthStatus(
+    initOverrides?: RequestInit,
+  ): Promise<AuthStatusResponse> {
+    const response = await this.getAuthStatusRaw(initOverrides);
+    return await response.value();
   }
 
   /**
