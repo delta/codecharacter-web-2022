@@ -46,13 +46,13 @@
   min-width: 60px;
   height: 60px;
   text-align: center;
-  background-color: lightcoral;
+  background-color: #262e4b;
   border-radius: 5%;
   margin: 2px;
 }
 
 .avatar:hover {
-  background-color: violet;
+  background-color: #4595cf;
   cursor: pointer;
 }
 
