@@ -14,6 +14,7 @@ const MapDesigner: React.FunctionComponent = () => {
   const [stagedMap, setStagedMap] = useState<Array<Array<number>>>();
 
   type ButtonType = 'save' | 'submit' | 'commit';
+  const mapAPI = new MapApi(apiConfig);
 
   const closeModal = () => setModalShow(false);
   const closeCommitModal = () => {
@@ -33,7 +34,6 @@ const MapDesigner: React.FunctionComponent = () => {
     switch (button) {
       case 'save':
         closeModal();
-        const mapAPI = new MapApi(apiConfig);
         mapAPI
           .updateLatestMap({
             map: JSON.stringify(stagedMap),
@@ -50,8 +50,7 @@ const MapDesigner: React.FunctionComponent = () => {
         break;
       case 'submit':
         closeModal();
-        const mapAPi = new MapApi(apiConfig);
-        mapAPi
+        mapAPI
           .updateLatestMap({
             map: JSON.stringify(stagedMap),
             lock: true,
@@ -71,8 +70,7 @@ const MapDesigner: React.FunctionComponent = () => {
           return;
         }
         closeCommitModal();
-        const mapApi = new MapApi(apiConfig);
-        mapApi
+        mapAPI
           .createMapRevision({
             map: JSON.stringify(stagedMap),
             message: commitName,
