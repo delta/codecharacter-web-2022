@@ -6,7 +6,7 @@ export const getLogs = (id: string): Promise<string> => {
     const gameAPI = new GameApi(apiConfig);
     console.log('getLogs', id);
     gameAPI
-      .getGameLogsByGameId('497f6eca-6276-4993-bfeb-53cbbbba6f08')
+      .getGameLogsByGameId(id)
       .then(logs => {
         resolve(logs);
       })
