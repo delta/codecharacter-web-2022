@@ -5,38 +5,18 @@ import styles from './Leaderboard.module.css';
 import {
   LeaderboardApi,
   MatchApi,
-  CodeApi,
-  MapApi,
-  CreateMatchRequest,
+  LeaderboardEntry,
+  MatchMode,
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
-
-export interface rowInterface {
-  user: {
-    username: string;
-    avatarId: string;
-    name: string;
-  };
-  stats: {
-    rating: number;
-    wins: number;
-    losses: number;
-    ties: number;
-  };
-}
-
-export interface mapRequestInterface {
-  mode: string;
-  opponentId: string;
-  mapRevisionId: string | undefined;
-  codeRevisionId: string | undefined;
-}
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [items, setItems] = useState([]);
-  const [currentItems, setCurrentItems] = useState([]);
+  const [items, setItems] = useState(new Array<LeaderboardEntry>());
+  const [currentItems, setCurrentItems] = useState(
+    new Array<LeaderboardEntry>(),
+  );
   const [isLoaded, setIsLoaded] = useState(false);
 
   const itemsPerPage = 4;
@@ -71,30 +51,17 @@ function PaginatedItems() {
   };
 
   async function handleMatchStart(opponentId: string) {
-    enum MatchMode {
-      Self = 'SELF',
-      Manual = 'MANUAL',
-      Auto = 'AUTO',
-    }
-    const codeAPI = new CodeApi(apiConfig);
-    const mapAPI = new MapApi(apiConfig);
-    const codeRevisionId = await codeAPI.getCodeRevisions().then(response => {
-      response[response.length - 1].parentRevision;
-    });
-    const mapRevisionId = await mapAPI.getMapRevisions().then(response => {
-      response[response.length - 1].parentRevision;
-    });
-    const matchRequest = {
-      mode: MatchMode.Self,
-      opponentId: opponentId,
-      codeRevisionId: codeRevisionId,
-      mapRevisionId: mapRevisionId,
-    };
-
     const matchAPI = new MatchApi(apiConfig);
-    matchAPI.createMatch(matchRequest as CreateMatchRequest).catch(error => {
-      if (error instanceof ApiError) console.log(error);
-    });
+    matchAPI
+      .createMatch({
+        mode: MatchMode.Self,
+        opponentId: opponentId,
+        codeRevisionId: undefined,
+        mapRevisionId: undefined,
+      })
+      .catch(error => {
+        if (error instanceof ApiError) console.log(error);
+      });
   }
   return (
     <>
@@ -113,7 +80,10 @@ function PaginatedItems() {
                 onClick={() => handleMatchStart(items[1].user.username)}
               >
                 <div className={styles.pos}>2</div>
-                <img className={styles.pic} src={items[1].user.avatarId}></img>
+                <img
+                  className={styles.pic}
+                  src={(items[1].user.avatarId ?? 0).toString()}
+                ></img>
                 <div className={styles.name}>{items[1].user.username}</div>
                 <div className={styles.score}>{items[1].stats.rating}</div>
               </div>
@@ -122,7 +92,10 @@ function PaginatedItems() {
                 onClick={() => handleMatchStart(items[0].user.username)}
               >
                 <div className={styles.pos}>1</div>
-                <img className={styles.pic} src={items[0].user.avatarId}></img>
+                <img
+                  className={styles.pic}
+                  src={(items[0].user.avatarId ?? 0).toString()}
+                ></img>
                 <div className={styles.name}>{items[0].user.username}</div>
                 <div className={styles.score}>{items[0].stats.rating}</div>
               </div>
@@ -131,7 +104,10 @@ function PaginatedItems() {
                 onClick={() => handleMatchStart(items[1].user.username)}
               >
                 <div className={styles.pos}>3</div>
-                <img className={styles.pic} src={items[2].user.avatarId}></img>
+                <img
+                  className={styles.pic}
+                  src={(items[1].user.avatarId ?? 0).toString()}
+                ></img>
                 <div className={styles.name}>{items[2].user.username}</div>
                 <div className={styles.score}>{items[2].stats.rating}</div>
               </div>
@@ -153,7 +129,7 @@ function PaginatedItems() {
                 </div>
               </div>
               {currentItems &&
-                currentItems.map((row: rowInterface) => (
+                currentItems.map(row => (
                   <div
                     className={styles.item}
                     key={row.user.username}
@@ -162,7 +138,10 @@ function PaginatedItems() {
                     <div className={styles.pos}>
                       {itemOffset + 1 + currentItems.indexOf(row)}
                     </div>
-                    <img className={styles.pic} src={row.user.avatarId}></img>
+                    <img
+                      className={styles.pic}
+                      src={(row.user.avatarId ?? 0).toString()}
+                    ></img>
                     <div className={styles.name}>{row.user.username}</div>
                     <div className={styles.scoreParent}>
                       <div className={styles.score}>{row.stats.rating}</div>
