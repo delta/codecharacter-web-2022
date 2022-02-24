@@ -3,16 +3,16 @@ import { RootState } from '../store';
 
 export interface selfMatchModalState {
   isSelfMatchModalOpen: boolean;
-  codeCommitID: string | undefined;
-  mapCommitID: string | undefined;
+  codeCommitID: string | null;
+  mapCommitID: string | null;
   codeCommitName: string;
   mapCommitName: string;
 }
 
 const initialState: selfMatchModalState = {
   isSelfMatchModalOpen: false,
-  codeCommitID: undefined,
-  mapCommitID: undefined,
+  codeCommitID: '',
+  mapCommitID: '',
   codeCommitName: '',
   mapCommitName: '',
 };
@@ -24,10 +24,10 @@ export const selfMatchModalSlice = createSlice({
     isSelfMatchModalOpened: (state, action: PayloadAction<boolean>) => {
       state.isSelfMatchModalOpen = action.payload;
     },
-    codeCommitIDChanged: (state, action: PayloadAction<string | undefined>) => {
+    codeCommitIDChanged: (state, action: PayloadAction<string | null>) => {
       state.codeCommitID = action.payload;
     },
-    mapCommitIDChanged: (state, action: PayloadAction<string | undefined>) => {
+    mapCommitIDChanged: (state, action: PayloadAction<string | null>) => {
       state.mapCommitID = action.payload;
     },
     codeCommitNameChanged: (state, action: PayloadAction<string>) => {
@@ -49,9 +49,9 @@ export const {
 
 export const isSelfMatchModalOpen = (state: RootState): boolean =>
   state.selfMatchModal.isSelfMatchModalOpen;
-export const codeCommitID = (state: RootState): string | undefined =>
+export const codeCommitID = (state: RootState): string | null =>
   state.selfMatchModal.codeCommitID;
-export const mapCommitID = (state: RootState): string | undefined =>
+export const mapCommitID = (state: RootState): string | null =>
   state.selfMatchModal.mapCommitID;
 export const codeCommitName = (state: RootState): string =>
   state.selfMatchModal.codeCommitName;

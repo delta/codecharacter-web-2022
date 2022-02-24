@@ -43,9 +43,7 @@ const selfMatchModal = (): JSX.Element => {
         setCodeHistory(codeResp);
       })
       .catch(codeError => {
-        if (codeError instanceof ApiError) {
-          console.log(codeError);
-        }
+        if (codeError instanceof ApiError) console.log(codeError);
       });
 
     const mapApi = new MapApi(apiConfig);
@@ -56,26 +54,34 @@ const selfMatchModal = (): JSX.Element => {
         setMapHistory(mapResp);
       })
       .catch(mapError => {
-        if (mapError instanceof ApiError) {
-          console.log(mapError);
-        }
+        if (mapError instanceof ApiError) console.log(mapError);
       });
   }, []);
 
-  function handleCodeCommitIDChange(selectedValue: string) {
-    const newCommit = completeCodeHistory.filter(
-      codeCommit => codeCommit.message === selectedValue,
-    );
-    dispatch(codeCommitNameChanged(newCommit[0].message));
-    dispatch(codeCommitIDChanged(newCommit[0].id));
+  function handleCodeCommitChange(selectedValue: string) {
+    if (selectedValue === 'current code') {
+      dispatch(codeCommitNameChanged('current code'));
+      dispatch(codeCommitIDChanged(null));
+    } else {
+      const newCommit = completeCodeHistory.filter(
+        codeCommit => codeCommit.message === selectedValue,
+      );
+      dispatch(codeCommitNameChanged(newCommit[0].message));
+      dispatch(codeCommitIDChanged(newCommit[0].id));
+    }
   }
 
-  function handleMapCommitIDChange(selectedValue: string) {
-    const newCommit = completeMapHistory.filter(
-      mapCommit => mapCommit.message === selectedValue,
-    );
-    dispatch(mapCommitNameChanged(newCommit[0].message));
-    dispatch(mapCommitIDChanged(newCommit[0].id));
+  function handleMapCommitChange(selectedValue: string) {
+    if (selectedValue === 'current map') {
+      dispatch(mapCommitNameChanged('current map'));
+      dispatch(mapCommitIDChanged(null));
+    } else {
+      const newCommit = completeMapHistory.filter(
+        mapCommit => mapCommit.message === selectedValue,
+      );
+      dispatch(mapCommitNameChanged(newCommit[0].message));
+      dispatch(mapCommitIDChanged(newCommit[0].id));
+    }
   }
 
   function handleSimulate() {
@@ -83,14 +89,11 @@ const selfMatchModal = (): JSX.Element => {
     mapAPI
       .createMatch({
         mode: MatchMode.Self,
-        opponentId: undefined,
         codeRevisionId: CodeCommitID,
         mapRevisionId: MapCommitID,
       })
       .catch(mapError => {
-        if (mapError instanceof ApiError) {
-          console.log(mapError);
-        }
+        if (mapError instanceof ApiError) console.log(mapError);
       });
   }
 
@@ -116,8 +119,15 @@ const selfMatchModal = (): JSX.Element => {
                 <select
                   className={styles.selfMatchModalDropdown}
                   value={CodeCommitName}
-                  onChange={e => handleCodeCommitIDChange(e.target.value)}
+                  onChange={e => handleCodeCommitChange(e.target.value)}
                 >
+                  <option
+                    value={'current code'}
+                    key={'current code'}
+                    className={styles.dropdownOptions}
+                  >
+                    current code
+                  </option>
                   {completeCodeHistory.map(codeCommit => (
                     <option
                       value={codeCommit.message}
@@ -139,8 +149,15 @@ const selfMatchModal = (): JSX.Element => {
                 <select
                   className={styles.selfMatchModalDropdown}
                   value={MapCommitName}
-                  onChange={e => handleMapCommitIDChange(e.target.value)}
+                  onChange={e => handleMapCommitChange(e.target.value)}
                 >
+                  <option
+                    value={'current map'}
+                    key={'current map'}
+                    className={styles.dropdownOptions}
+                  >
+                    current map
+                  </option>
                   {completeMapHistory.map(mapCommit => (
                     <option
                       value={mapCommit.message}
