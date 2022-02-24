@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface historyEditorState {
   code: string;
-  map: string;
+  map: Array<Array<number>>;
 }
 
 const initialState: historyEditorState = {
   code: '',
-  map: '',
+  map: [],
 };
 
 export const historyEditorSlice = createSlice({
@@ -17,7 +17,10 @@ export const historyEditorSlice = createSlice({
     changeHistoryEditorCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload;
     },
-    changeHistoryEditorMap: (state, action: PayloadAction<string>) => {
+    changeHistoryEditorMap: (
+      state,
+      action: PayloadAction<Array<Array<number>>>,
+    ) => {
       state.map = action.payload;
     },
   },
