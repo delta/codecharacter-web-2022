@@ -11,6 +11,7 @@ import notifReducer from './Notifs/notifSlice';
 import historyReducer from './historyEditor/historyEditorSlice';
 import editorReducer from './editor/code';
 import settingsReducer from './EditorSettings/settings';
+import logReducer from './rendererLogs/logSlice';
 
 const reducers = combineReducers({
   editorState: editorReducer,
@@ -32,6 +33,7 @@ export const store = configureStore({
     notifs: notifReducer,
     historyEditor: historyReducer,
     codeEditorReducer: persistedReducer,
+    logs: logReducer,
   },
   middleware: [thunk],
 });

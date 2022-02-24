@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-
+import { getLogAction } from '../../store/rendererLogs/logSlice';
+import { useNavigate } from 'react-router-dom';
 import styles from './BattleTV.module.css';
 import { battleTvSelector, fetchBattleTv } from './BattleTvSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
@@ -28,6 +29,7 @@ function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
+  const navigate = useNavigate();
 
   const itemsPerPage = 4;
 
@@ -89,7 +91,15 @@ function PaginatedItems() {
                     <div className={styles.destruction}>
                       {row.games[0].destruction}
                     </div>
-                    <div className={styles.vs}>VS</div>
+                    <div
+                      className={styles.watchButton}
+                      onClick={() => {
+                        dispatch(getLogAction(row.id));
+                        navigate('/dashboard');
+                      }}
+                    >
+                      Watch
+                    </div>
                     <div className={styles.destruction}>
                       {row.games[0].destruction}
                     </div>
