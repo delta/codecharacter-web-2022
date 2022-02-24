@@ -44,6 +44,7 @@ export default function Register(): JSX.Element {
   const [completed, isCompleted] = useState(false);
   const [collegeError, iscollegeError] = useState(false);
   const [isHuman, setIshuman] = useState(false);
+  const [avatarID, setAvatarID] = useState(0);
   const loadingStatus = useAppSelector(loading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -108,6 +109,10 @@ export default function Register(): JSX.Element {
     } else {
       isconfirmpasswordError(false);
     }
+  };
+
+  const handleAvatarChange = (id: number) => {
+    setAvatarID(id);
   };
 
   const handleCollege = () => {
@@ -260,7 +265,7 @@ export default function Register(): JSX.Element {
         confirmPassword: confirmPassword,
         country: getCountryName(selected),
         college: college,
-        avatarId: 0,
+        avatarId: avatarID,
       }),
     );
   };
@@ -319,6 +324,7 @@ export default function Register(): JSX.Element {
                     handleFlagSelect={handleFlagSelect}
                     formNumber={formNumber}
                     handleCollegeChange={handleCollegeChange}
+                    handleAvatarChange={handleAvatarChange}
                     college={college}
                     collegeError={collegeError}
                     submitThird={submitThird}
