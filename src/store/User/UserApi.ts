@@ -67,7 +67,7 @@ export const getUserDetails = (): Promise<{
           fullName: res.name,
           userName: res.username,
           email: res.email,
-          admin: res.isAdmin,
+          admin: res.isProfileComplete,
           college: res.college,
           country: res.country,
         });

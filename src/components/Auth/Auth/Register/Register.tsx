@@ -315,6 +315,7 @@ export default function Register(): JSX.Element {
                   userNameError={userNameError}
                   email={email}
                   emailError={emailError}
+                  register={true}
                 />
               </>
             ) : formNumber === 2 ? (
@@ -340,6 +341,7 @@ export default function Register(): JSX.Element {
                     college={college}
                     collegeError={collegeError}
                     submitThird={submitThird}
+                    register={true}
                   />
                   <div className="form-row d-flex justify-content-center my-1">
                     <div className="d-flex justify-content-center input-group">

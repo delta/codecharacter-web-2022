@@ -46,6 +46,9 @@ const SideBar: React.FunctionComponent = () => {
     if (icon == 'Logout') {
       dispatch(logout());
       localStorage.removeItem('token');
+      document.cookie =
+        'bearer-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
       navigate('/login', { replace: true });
     }
   };
@@ -54,7 +57,8 @@ const SideBar: React.FunctionComponent = () => {
       {pathName != '/register' &&
       pathName != '/login' &&
       pathName != '/activate' &&
-      pathName != '/reset-password' ? (
+      pathName != '/reset-password' &&
+      pathName != '/incomplete-profile' ? (
         <div className={styles.sideBar}>
           {icons.map(icon => {
             if (icon.tooltip === 'Editor Settings') {

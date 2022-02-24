@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
@@ -9,8 +9,19 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const getUser = useAppSelector(user);
-
+  useEffect(() => {
+    const cookieValue = document.cookie;
+    const bearerToken = cookieValue.split(';');
+    bearerToken.map(cookie => {
+      if (cookie.trim().startsWith('bearer-token') != false) {
+        const index = cookie.indexOf('=') + 1;
+        const token = cookie.slice(index);
+        localStorage.setItem('token', token);
+      }
+    });
+  }, [document.cookie]);
   useEffect(() => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [getUser]);
@@ -40,7 +51,8 @@ const NavBar: React.FunctionComponent = () => {
           </Link>
         </div>
       </div>
-      {localStorage.getItem('token') != null ? (
+      {localStorage.getItem('token') != null &&
+      location.pathname != '/incomplete-profile' ? (
         <div className={styles.profileIcons}>
           {/* <button
           className="toastTest"

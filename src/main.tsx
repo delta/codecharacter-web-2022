@@ -35,6 +35,11 @@ const ResetPassword = lazy(
     ),
 );
 
+const IncompleteProfile = lazy(
+  () =>
+    import('./components/Auth/Auth/Login/IncompleteProfile/incompeleteProfile'),
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -57,6 +62,10 @@ ReactDOM.render(
                   <Route path="/battletv" element={<BattleTV />} />
                   <Route path="/activate" element={<Verify />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route
+                    path="/incomplete-profile"
+                    element={<IncompleteProfile />}
+                  />
                 </Routes>
               </div>
             </div>

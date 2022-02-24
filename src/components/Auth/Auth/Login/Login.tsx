@@ -114,6 +114,7 @@ function Login(): JSX.Element {
   const switchRegisterAction = () => {
     hookDispatch(switchRegister());
   };
+
   return (
     <div className={styles.mainContainer}>
       <Card className={styles.cardContainer}>
@@ -224,8 +225,7 @@ function Login(): JSX.Element {
         <div className={styles.externalAuthButtons}>
           <div className={styles.googleButton}>
             <a
-              href={`${BASE_PATH}/auth/login/external`}
-              target="_blank"
+              href={`${BASE_PATH}/oauth2/authorization/google`}
               rel="noreferrer"
             >
               <Button variant="primary">
@@ -237,17 +237,17 @@ function Login(): JSX.Element {
             </a>
           </div>
           <div className={styles.githubButton}>
-            <Button
-              variant="dark"
-              onClick={() => {
-                window.open(`${BASE_PATH}/auth/login/external`);
-              }}
+            <a
+              href={`${BASE_PATH}/oauth2/authorization/github`}
+              rel="noreferrer"
             >
-              <div>
-                <FontAwesomeIcon icon={faGithub as IconProp} /> Login with
-                Github
-              </div>
-            </Button>
+              <Button variant="dark">
+                <div>
+                  <FontAwesomeIcon icon={faGithub as IconProp} /> Login with
+                  Github
+                </div>
+              </Button>
+            </a>
           </div>
         </div>
         <div className={styles.linkContainer}>
