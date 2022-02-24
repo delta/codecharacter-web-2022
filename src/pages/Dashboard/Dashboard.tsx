@@ -1,5 +1,6 @@
 import { CodeApi, Language } from '@codecharacter-2022/client';
 import { RendererComponent } from '@codecharacter-2022/renderer';
+import Toast from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChevronLeft,
@@ -138,8 +139,11 @@ export default function Dashboard(): JSX.Element {
         lock: false,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Saved');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
@@ -159,8 +163,12 @@ export default function Dashboard(): JSX.Element {
         message: commitName,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Committed');
+        setCommitName('');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
@@ -176,8 +184,11 @@ export default function Dashboard(): JSX.Element {
         lock: true,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Submitted');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
