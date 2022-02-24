@@ -5,6 +5,8 @@ import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/mode-java';
 
+import 'ace-builds/src-noconflict/ext-language_tools';
+
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-tomorrow';
@@ -47,7 +49,7 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const { editorWidth, language } = props;
+  const { language } = props;
 
   return (
     <AceEditor
@@ -63,10 +65,11 @@ export default function CodeEditor(props: Editor.Props): JSX.Element {
         enableBasicAutoCompletion: enableBasicAutoComplete,
         enableSnippets: enableSnippets,
       }}
+      enableBasicAutocompletion
       keyboardHandler={keyboardHandler !== 'default' ? keyboardHandler : ''}
       editorProps={{ $blockScrolling: true }}
-      width={editorWidth.toString() + 'px'}
-      height={(window.innerHeight - 60).toString() + 'px'}
+      width={'100%'}
+      height={'100%'}
       value={userCode}
       onChange={value => {
         const codeNlanguage: CodeAndLanguage = {

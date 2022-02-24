@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faCompress,
   faExpand,
@@ -110,7 +111,9 @@ export default function RendererComponent(): JSX.Element {
                   }
                 }}
               >
-                <FontAwesomeIcon icon={isPaused ? faPlay : faPause} />
+                <FontAwesomeIcon
+                  icon={(isPaused ? faPlay : faPause) as IconProp}
+                />
               </Button>
               <Button
                 key="speed-up"
@@ -122,7 +125,7 @@ export default function RendererComponent(): JSX.Element {
                   );
                 }}
               >
-                <FontAwesomeIcon icon={faPlus} />
+                <FontAwesomeIcon icon={faPlus as IconProp} />
               </Button>
               <Button
                 key="slow-down"
@@ -131,7 +134,7 @@ export default function RendererComponent(): JSX.Element {
                   Parameters.timePerTurn *= 1.2;
                 }}
               >
-                <FontAwesomeIcon icon={faMinus} />
+                <FontAwesomeIcon icon={faMinus as IconProp} />
               </Button>
               <Button
                 key="reset"
@@ -141,7 +144,7 @@ export default function RendererComponent(): JSX.Element {
                   setPaused(false);
                 }}
               >
-                <FontAwesomeIcon icon={faRedo} />
+                <FontAwesomeIcon icon={faRedo as IconProp} />
               </Button>
               <Button
                 key="full-screen"
@@ -157,9 +160,9 @@ export default function RendererComponent(): JSX.Element {
                 }}
               >
                 {isFullscreen ? (
-                  <FontAwesomeIcon icon={faCompress} />
+                  <FontAwesomeIcon icon={faCompress as IconProp} />
                 ) : (
-                  <FontAwesomeIcon icon={faExpand} />
+                  <FontAwesomeIcon icon={faExpand as IconProp} />
                 )}
               </Button>
             </ButtonGroup>
