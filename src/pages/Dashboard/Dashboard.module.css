@@ -1,126 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
-
-.dashboardMainContainer{
-    margin-left: 5px;
-    padding: 0;
-    height: calc(100vh - 60px);
+.mainContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
-.sideBar{
-    width: 50px !important;
-    padding: 0;
-    margin: 0;
+.leftPane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.splitPane{
-    width: calc(100vw - 60px);
-    height: calc(100vh - 60px);
+.toolbar {
+  justify-content: center;
+  position: relative;
+  flex-wrap: wrap;
 }
 
-.btnBarAndEditor{
-    width: calc(100% - 25px);
-    padding: 0;
-    margin: 0;
+.toolbarColumn {
+  min-width: 12ch;
+  padding: 5px;
 }
 
-.btnBarAboveEditor{
-    height: 6.5vh;
-    background: #2B3760;
-    width: 100%;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
+.toolbarColumn > button {
+  background-color: #4595CF;
 }
 
-.btnBarMembers{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 80%;
-    width: 6.6vw;
-    height: 100%;
-    padding: 0;
-    margin-right: 10px;
-    height: 4.5vh;
-    background: #4595CF !important;
-    outline: none !important;
-    border: #4595CF;
-    border-radius: 0px;
+.toolbarButton {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  outline: none;
 }
 
-.btnBarMembers:hover, .popOverBtn:hover {
-    opacity: 0.7;
-    box-shadow: none !important;
+.closeEditorButton {
+  position: absolute;
+  border-radius: 0;
+  width: 20px;
+  right: 0;
+  margin: 5px 0px;
+  padding: 5px 0px;
+  z-index: 1000;
 }
 
-.btnBarMembers:focus{
-    box-shadow: none !important;
+.closeRendererButton {
+  position: absolute;
+  border-radius: 0;
+  width: 20px;
+  right: -20px;
+  margin: 5px 0px;
+  padding: 5px 0px;
+  z-index: 1000;
 }
 
-.btnsParent{
-    display: flex;
-    justify-content: end;
+.editorContainer {
+  flex-grow: 1;
 }
 
-.languageDropdown{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 95%;
-    width: 100%;
-    height: 4.5vh;
-    border: 0px;
-    background: white;
-    padding-left: 5px;
-}
-
-.popOverInput{
-    height: 35px;
-    width: 200px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-}
-
-.popOverBtn{
-    height: 35px;
-    width: 80px;
-    background: #4595CF;
-    color: white;
-    border: 0px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-}
-
-.slideInOutBtn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #232323;
-    padding: auto;
-    width: 20px !important;
-    border: 0px;
-    margin: 0;
-    padding: 0;
-    height: 50%;
-}
-
-
-.slideInOutBtn2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #232323;
-    padding: auto;
-    width: 20px !important;
-    border: 0px;
-    margin: 0;
-    padding: 0;
-    height: 100%
-}
-
-@media (max-width: 1000px){
-    .btnBarMembers{
-        font-size: 60%;
-        margin-right: 20px;
-        width: 9vw;
-    }
-    .btnsParent{
-        justify-content: center;
-    }
+.rightPane {
+  position: relative;
+  background-color: darkslateblue;
+  width: 100%;
+  height: 100%;
 }

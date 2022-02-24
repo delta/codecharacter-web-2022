@@ -9,15 +9,17 @@
 }
 
 .codeView {
+  background-color: #242a3c;
   display: grid;
-  grid-template-rows: 15% 70% 15%;
+  height: 100vh;
+  grid-template-rows: 13% 72% 15%;
 }
 
 .codeMapButton {
   background-color: #242a3c;
   text-align: left;
   padding-top: 34px;
-  padding-left: 10px;
+  padding-left: 300px;
 }
 
 .largeButton {
@@ -58,17 +60,23 @@
   cursor: pointer;
 }
 
-.codeMapBox {
+.codeBox {
   font-family: Montserrat;
   font-style: normal;
-  background-color: black;
+  background: rgb(29, 31, 33);
+}
+
+.mapBox {
+  font-family: Montserrat;
+  font-style: normal;
+  background: black;
 }
 
 .timeline {
   background-color: #242a3c;
   height: 100vh;
   display: grid;
-  grid-template-rows: 13% 72% 15%;
+  grid-template-rows: 12% 70% 18%;
 }
 
 .select {
@@ -143,4 +151,14 @@
 
 .selectBtn:hover{
   border-color: white;
+}
+.codeBox, .mapBox {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.mapBox::-webkit-scrollbar, .codeBox::-webkit-scrollbar {
+  display: none;
 }

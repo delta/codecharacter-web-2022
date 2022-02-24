@@ -25,7 +25,9 @@ jobs:
         if: steps.cache-yarn.outputs.cache-hit != 'true'
         run: yarn install
       - name: Copy config
-        run: cp ./src/config/config.example.ts ./src/config/config.ts
+        run: |
+          cp ./src/config/config.example.ts ./src/config/config.ts
+          sed -i 's/http:\/\/localhost:8080/https:\/\/stoplight.io\/mocks\/rinish-api-testbed\/codecharacter\/14036190/' ./src/config/config.ts
       - name: Run build
         run: yarn build
       - name: Run tests

@@ -1,7 +1,8 @@
 .vertical-timeline-element--work,
 .vertical-timeline-element {
-  height: fit-content;
+  height: 100px;
   width: 80%;
+  padding: 0%;
 }
 
 .vertical-timeline::before {
@@ -35,4 +36,10 @@
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
+  -ms-overflow-style: none;
+  overflow-x: auto;
+}
+
+.vertical-timeline-element-title::-webkit-scrollbar {
+  display: none;
 }
