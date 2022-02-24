@@ -1,0 +1,62 @@
+.mapSubmitModal {
+  width: 30vw;
+  margin-left: 35vw;
+}
+.modalHeader {
+  background: #2b3760;
+  color: white;
+  height: 10vh;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.modalHeader button {
+  background-color: white;
+}
+.modalContent {
+  background: #1c1c1c;
+  padding: 7px 0px;
+  margin: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.contentP {
+  color: #ffffff;
+  padding: 1rem;
+  padding-bottom: 0px;
+  font-size: 15px;
+  font-family: 'Montserrat', sans-serif;
+}
+.contentP > span {
+  text-decoration: underline;
+  font-weight: bold;
+}
+.buttonRow {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  flex-direction: row;
+}
+.modalButton {
+  outline: none;
+  border: none;
+  background: #3b4d7c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.commitNameInput {
+  width: 80%;
+  margin-left: 2rem;
+  border: none;
+  outline: none;
+}
+.commitModalError {
+  width: 100%;
+  text-align: center;
+  color: red;
+  font-size: 0.8rem;
+}
