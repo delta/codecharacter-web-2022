@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import ReactFlagsSelect from 'react-flags-select';
 import AlertMessage from '../../Alert/Alert';
@@ -108,6 +109,8 @@ const avatar = [
 ];
 
 export default function OtherDetails(props: user): JSX.Element {
+  const [selectedAvatar, setSelectedAvatar] = useState(0);
+
   return (
     <div>
       <div className={styles.levelTitle}>Other Details</div>
@@ -158,8 +161,11 @@ export default function OtherDetails(props: user): JSX.Element {
             {avatar.map((avatar, index: number) => (
               <div
                 key={index}
-                className={styles.avatar}
+                className={`${styles.avatar} ${
+                  selectedAvatar === avatar.id ? styles.avatarSelected : ''
+                }`}
                 onClick={() => {
+                  setSelectedAvatar(avatar.id);
                   props.handleAvatarChange(avatar.id);
                 }}
               >
