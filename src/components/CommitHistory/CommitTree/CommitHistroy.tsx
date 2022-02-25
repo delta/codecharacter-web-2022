@@ -1,9 +1,6 @@
 import { CodeRevision, GameMapRevision } from '@codecharacter-2022/client';
 import React, { useState } from 'react';
-import {
-  VerticalTimeline,
-  VerticalTimelineElement,
-} from 'react-vertical-timeline-component';
+import { VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import './CommitHistory.css';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
