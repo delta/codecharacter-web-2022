@@ -1,0 +1,50 @@
+.modalContainer {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  justify-content: center;
+  font-family: Montserrat;
+  margin-top: 2rem;
+}
+
+.cardContainer {
+  width: 50vw;
+  min-height: 20vh;
+}
+
+.cardTitle,
+.cardBody {
+  text-align: center;
+  font-size: 2.5rem;
+  color: green;
+}
+
+.cardTitleFailed,
+.cardBodyFailed {
+  text-align: center;
+  font-size: 2.5rem;
+  color: red;
+}
+
+.cardBody,
+.cardBodyFailed {
+  font-size: 1.5rem !important;
+}
+
+.cardMessageSuccess {
+  text-align: center;
+  font-size: 1.5rem;
+  color: green !important;
+}
+
+.cardMessageFailed {
+  text-align: center;
+  font-size: 1.5rem;
+  color: red !important;
+}
+
+.buttonContainer {
+  text-align: center;
+  color: white;
+  margin: 1rem;
+}

@@ -25,6 +25,20 @@ const EditorSettings = lazy(
 );
 const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
 const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
+const Verify = lazy(
+  () => import('./components/Auth/Auth/Register/ActivateUser/ActivateUser'),
+);
+const ResetPassword = lazy(
+  () =>
+    import(
+      './components/Auth/Auth/Login/ForgetPassword/ResetpasswordVerifcation'
+    ),
+);
+
+const IncompleteProfile = lazy(
+  () =>
+    import('./components/Auth/Auth/Login/IncompleteProfile/incompeleteProfile'),
+);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -46,6 +60,12 @@ ReactDOM.render(
                   <Route path="/counter" element={<Counter />} />
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/battletv" element={<BattleTV />} />
+                  <Route path="/activate" element={<Verify />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route
+                    path="/incomplete-profile"
+                    element={<IncompleteProfile />}
+                  />
                 </Routes>
               </div>
             </div>

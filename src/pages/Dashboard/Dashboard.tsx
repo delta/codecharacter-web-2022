@@ -1,4 +1,4 @@
-import { CodeApi, Language } from '@codecharacter-2022/client';
+import { AuthApi, CodeApi, Language } from '@codecharacter-2022/client';
 import { RendererComponent } from '@codecharacter-2022/renderer';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -32,6 +32,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 type SplitPaneState = {
   horizontalPercent: string;
@@ -80,7 +81,38 @@ export default function Dashboard(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const codeAPI = new CodeApi(apiConfig);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cookieValue = document.cookie;
+    const bearerToken = cookieValue.split(';');
 
+    bearerToken.map(cookie => {
+      if (cookie.trim().startsWith('bearer-token') != false) {
+        const index = cookie.indexOf('=') + 1;
+        const token = cookie.slice(index);
+        localStorage.setItem('token', token);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
+      const authApi = new AuthApi(apiConfig);
+      authApi
+        .getAuthStatus()
+        .then(res => {
+          const { status } = res;
+          if (status === 'PROFILE_INCOMPLETE') {
+            navigate('/incomplete-profile', { replace: true });
+          }
+        })
+        .catch((e: Error) => {
+          if (e instanceof ApiError) {
+            //Toast here
+          }
+        });
+    }
+  }, [localStorage.getItem('token')]);
   useEffect(() => {
     if (localStorage.getItem('firstTime') === null) {
       codeAPI
