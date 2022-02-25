@@ -11,10 +11,10 @@ export interface selfMatchModalState {
 
 const initialState: selfMatchModalState = {
   isSelfMatchModalOpen: false,
-  codeCommitID: '',
-  mapCommitID: '',
-  codeCommitName: '',
-  mapCommitName: '',
+  codeCommitID: null,
+  mapCommitID: null,
+  codeCommitName: 'Current Code',
+  mapCommitName: 'Current Map',
 };
 
 export const selfMatchModalSlice = createSlice({

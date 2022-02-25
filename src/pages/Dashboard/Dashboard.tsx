@@ -153,9 +153,9 @@ export default function Dashboard(): JSX.Element {
 
   function handleSimulate() {
     dispatch(isSelfMatchModalOpened(true));
-    dispatch(codeCommitNameChanged('current code'));
+    dispatch(codeCommitNameChanged('Current Code'));
     dispatch(codeCommitIDChanged(null));
-    dispatch(mapCommitNameChanged('current map'));
+    dispatch(mapCommitNameChanged('Current Map'));
     dispatch(mapCommitIDChanged(null));
   }
 

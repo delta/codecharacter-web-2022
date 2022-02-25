@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './selfMatchModal.module.css';
-import { FormGroup, Col, Container, Row, Modal } from 'react-bootstrap';
+import { FormGroup, Col, Container, Row, Modal, Button } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   isSelfMatchModalOpen,
@@ -59,8 +59,8 @@ const selfMatchModal = (): JSX.Element => {
   }, []);
 
   function handleCodeCommitChange(selectedValue: string) {
-    if (selectedValue === 'current code') {
-      dispatch(codeCommitNameChanged('current code'));
+    if (selectedValue === 'Current Code') {
+      dispatch(codeCommitNameChanged('Current Code'));
       dispatch(codeCommitIDChanged(null));
     } else {
       const newCommit = completeCodeHistory.filter(
@@ -72,8 +72,8 @@ const selfMatchModal = (): JSX.Element => {
   }
 
   function handleMapCommitChange(selectedValue: string) {
-    if (selectedValue === 'current map') {
-      dispatch(mapCommitNameChanged('current map'));
+    if (selectedValue === 'Current Map') {
+      dispatch(mapCommitNameChanged('Current Map'));
       dispatch(mapCommitIDChanged(null));
     } else {
       const newCommit = completeMapHistory.filter(
@@ -122,11 +122,11 @@ const selfMatchModal = (): JSX.Element => {
                   onChange={e => handleCodeCommitChange(e.target.value)}
                 >
                   <option
-                    value={'current code'}
-                    key={'current code'}
+                    value={'Current Code'}
+                    key={'Current Code'}
                     className={styles.dropdownOptions}
                   >
-                    current code
+                    Current Code
                   </option>
                   {completeCodeHistory.map(codeCommit => (
                     <option
@@ -152,11 +152,11 @@ const selfMatchModal = (): JSX.Element => {
                   onChange={e => handleMapCommitChange(e.target.value)}
                 >
                   <option
-                    value={'current map'}
-                    key={'current map'}
+                    value={'Current Map'}
+                    key={'Current Map'}
                     className={styles.dropdownOptions}
                   >
-                    current map
+                    Current Map
                   </option>
                   {completeMapHistory.map(mapCommit => (
                     <option
@@ -169,12 +169,12 @@ const selfMatchModal = (): JSX.Element => {
                   ))}
                 </select>
               </FormGroup>
-              <div
+              <Button
                 className={styles.selfMatchModalSimulateBtn}
                 onClick={handleSimulate}
               >
                 Simulate
-              </div>
+              </Button>
             </Col>
           </Row>
         </Container>
