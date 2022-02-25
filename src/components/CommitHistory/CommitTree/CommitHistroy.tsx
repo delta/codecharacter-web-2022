@@ -129,7 +129,7 @@ export default function CommitHistory(props: PropsType): JSX.Element {
   };
 
   return (
-    <VerticalTimeline layout={'1-column'} animate={true}>
+    <div>
       {props.commitHistoryDetails && props.commitHistoryDetails.length > 0 ? (
         props.commitHistoryDetails.map((eachCommit, index) => {
           return (
@@ -154,6 +154,9 @@ export default function CommitHistory(props: PropsType): JSX.Element {
               <h3 className="vertical-timeline-element-title">
                 {`Commit - ${index + 1}`}
               </h3>
+              <h6 className="vertical-timeline-element-subtitle">
+                {eachCommit.message}
+              </h6>
               <div
                 className="vertical-timeline-element-subtitle flex d-flex justify-content-end"
                 onClick={e => handleCommitSelect(e)}
@@ -172,8 +175,8 @@ export default function CommitHistory(props: PropsType): JSX.Element {
           );
         })
       ) : (
-        <h1>No Commit data</h1>
+        <h1 className="noCommitStyle">No Commits available</h1>
       )}
-    </VerticalTimeline>
+    </div>
   );
 }

@@ -95,4 +95,5 @@ interface user {
   userNameError?: boolean;
   email?: string;
   emailError?: boolean;
+  register?: boolean;
 }

@@ -43,3 +43,11 @@
 .vertical-timeline-element-title::-webkit-scrollbar {
   display: none;
 }
+
+.noCommitStyle {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  color: white;
+}

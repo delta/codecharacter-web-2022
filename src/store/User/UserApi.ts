@@ -1,9 +1,9 @@
 import { UserApi, AuthApi, CurrentUserApi } from '@codecharacter-2022/client';
-import { apiConfig, ApiError } from '../../api/ApiConfig';
+import { apiConfig, ApiError, authConfig } from '../../api/ApiConfig';
 import { user } from './UserSlice';
 export const startRegister = (user: user): Promise<{ user: user }> => {
   return new Promise<{ user: user }>((resolve, reject) => {
-    const userApi = new UserApi(apiConfig);
+    const userApi = new UserApi(authConfig);
     userApi
       .register({
         username: user.userName,
@@ -32,13 +32,14 @@ export function startLogin(
   return new Promise<{
     user: { email: string; password: string };
   }>((resolve, reject) => {
-    const authApi = new AuthApi(apiConfig);
+    const authApi = new AuthApi(authConfig);
     authApi
       .passwordLogin({
         email: user.email,
         password: user.password,
       })
-      .then(() => {
+      .then(res => {
+        localStorage.setItem('token', res.token);
         resolve({ user: user });
       })
       .catch(error => {
@@ -66,7 +67,7 @@ export const getUserDetails = (): Promise<{
           fullName: res.name,
           userName: res.username,
           email: res.email,
-          admin: res.isAdmin,
+          admin: res.isProfileComplete,
           college: res.college,
           country: res.country,
         });

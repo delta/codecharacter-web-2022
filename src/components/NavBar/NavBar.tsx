@@ -1,31 +1,38 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
 import Notifs from '../Notifs/Notifs';
 // import toast from 'react-hot-toast';
-import {
-  isloggedIn,
-  isLogout,
-  getUserDetailsAction,
-  user,
-} from '../../store/User/UserSlice';
+import { getUserDetailsAction, user } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loggedInStatus = useAppSelector(isloggedIn);
-  const logoutStatus = useAppSelector(isLogout);
+  const location = useLocation();
   const getUser = useAppSelector(user);
   useEffect(() => {
-    dispatch(getUserDetailsAction());
-  }, [getUser]);
+    const cookieValue = document.cookie;
+    const bearerToken = cookieValue.split(';');
+    bearerToken.map(cookie => {
+      if (cookie.trim().startsWith('bearer-token') != false) {
+        const index = cookie.indexOf('=') + 1;
+        const token = cookie.slice(index);
+        localStorage.setItem('token', token);
+      }
+    });
+  }, [document.cookie]);
   useEffect(() => {
-    if (loggedInStatus == false && logoutStatus) {
+    if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
+  }, [getUser]);
+
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
+      navigate('/dashboard', { replace: true });
+    } else {
       handleClose();
-      navigate('/login', { replace: true });
     }
-  }, [loggedInStatus]);
+  }, [getUser]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
     isOpen(true);
@@ -44,7 +51,8 @@ const NavBar: React.FunctionComponent = () => {
           </Link>
         </div>
       </div>
-      {loggedInStatus ? (
+      {localStorage.getItem('token') != null &&
+      location.pathname != '/incomplete-profile' ? (
         <div className={styles.profileIcons}>
           {/* <button
           className="toastTest"
@@ -62,7 +70,7 @@ const NavBar: React.FunctionComponent = () => {
           </div>
           <div className={styles.profile} onClick={handleOpen}>
             <div className={styles.fakeProfileIcon} />
-            <h3 className={styles.profileName}>{getUser.userName}</h3>
+            <h3 className={styles.profileName}>{getUser?.userName}</h3>
           </div>
         </div>
       ) : (

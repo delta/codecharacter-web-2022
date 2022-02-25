@@ -12,10 +12,10 @@ import {
   faSignOutAlt,
   faTools,
 } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './SideBar.module.css';
-import { logout, isloggedIn } from '../../store/User/UserSlice';
+import { logout } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const icons = [
@@ -25,7 +25,7 @@ const icons = [
   { icon: faCodeBranch, route: 'history', tooltip: 'Commits' },
   { icon: faTv, route: 'battletv', tooltip: 'Battle TV' },
   { icon: faTools, route: 'settings', tooltip: 'Editor Settings' },
-  { icon: faSignOutAlt, route: 'logout', tooltip: 'Logout' },
+  { icon: faSignOutAlt, route: 'login', tooltip: 'Logout' },
 ];
 
 const SideBar: React.FunctionComponent = () => {
@@ -41,15 +41,24 @@ const SideBar: React.FunctionComponent = () => {
     setpathName(location.pathname);
   }, [location]);
   const dispatch = useAppDispatch();
-  const loggedInStatus = useAppSelector(isloggedIn);
+  const navigate = useNavigate();
   const handleLogout = (icon: string) => {
-    if (icon == 'Logout' && loggedInStatus) {
+    if (icon == 'Logout') {
       dispatch(logout());
+      localStorage.removeItem('token');
+      document.cookie =
+        'bearer-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+      navigate('/login', { replace: true });
     }
   };
   return (
     <div>
-      {pathName != '/register' && pathName != '/login' ? (
+      {pathName != '/register' &&
+      pathName != '/login' &&
+      pathName != '/activate' &&
+      pathName != '/reset-password' &&
+      pathName != '/incomplete-profile' ? (
         <div className={styles.sideBar}>
           {icons.map(icon => {
             if (icon.tooltip === 'Editor Settings') {
