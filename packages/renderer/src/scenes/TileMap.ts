@@ -32,10 +32,13 @@ export class TileMap extends Phaser.Scene {
 
   preload(): void {
     this.load.image('tile', './assets/tile.png');
+    this.load.image('tile_crystal_N', './assets/tile_crystal_N.png');
+    this.load.image('tile_E', './assets/tile_E.png');
+    this.load.image('tile_treeQuad_N', './assets/tile_treeQuad_N.png');
     TowerConfig.towers.forEach(tower => {
       this.load.image(`${tower.name}-sprite`, `./assets/${tower.asset}`);
     });
-    this.load.tilemapTiledJSON('map', './assets/isometric-surface.json');
+    this.load.tilemapTiledJSON('map', './assets/map-2.json');
     this.load.spritesheet('skeleton', './assets/skeleton8.png', {
       frameWidth: 128,
       frameHeight: 128,
@@ -44,8 +47,12 @@ export class TileMap extends Phaser.Scene {
 
   create(): void {
     const map = this.add.tilemap('map');
-
-    const landscapeTile = map.addTilesetImage('tile.png', 'tile');
+    const landscapeTile = [
+      map.addTilesetImage('tile.png', 'tile'),
+      map.addTilesetImage('tile_crystal_N.png', 'tile_crystal_N'),
+      map.addTilesetImage('tile_E.png', 'tile_E'),
+      map.addTilesetImage('tile_treeQuad_N.png', 'tile_treeQuad_N'),
+    ];
     this.groundLayer = map.createLayer('Ground', landscapeTile, 0, 0);
     this.groundLayer.setDepth(0);
 
