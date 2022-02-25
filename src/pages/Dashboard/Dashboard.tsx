@@ -39,7 +39,7 @@ import {
   isSelfMatchModalOpened,
   mapCommitIDChanged,
   mapCommitNameChanged,
-} from '../../store/SelfMatchModal/SelfMatchModal';
+} from '../../store/SelfMatchMakeModal/SelfMatchModal';
 import { useNavigate } from 'react-router-dom';
 
 type SplitPaneState = {

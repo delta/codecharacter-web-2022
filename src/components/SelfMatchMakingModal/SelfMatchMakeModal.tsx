@@ -13,7 +13,7 @@ import {
   codeCommitName,
   mapCommitName,
   codeCommitNameChanged,
-} from '../../store/SelfMatchModal/SelfMatchModal';
+} from '../../store/SelfMatchMakeModal/SelfMatchModal';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
   CodeApi,
