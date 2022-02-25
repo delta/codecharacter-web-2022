@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
@@ -38,8 +39,16 @@ function PaginatedItems() {
   const [items, setItems] = useState([]);
   const [currentItems, setCurrentItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [show, setShow] = useState(false);
+  let currentOpponentId: string;
 
-  const itemsPerPage = 4;
+  const handleClose = () => setShow(false);
+  const handleShow = (opponentId: string) => {
+    currentOpponentId = opponentId;
+    setShow(true);
+  };
+
+  const itemsPerPage = 8;
 
   useEffect(() => {
     fetchLeaderboard();
@@ -70,7 +79,7 @@ function PaginatedItems() {
       });
   };
 
-  async function handleMatchStart(opponentId: string) {
+  async function handleMatchStart() {
     enum MatchMode {
       Self = 'SELF',
       Manual = 'MANUAL',
@@ -86,7 +95,7 @@ function PaginatedItems() {
     });
     const matchRequest = {
       mode: MatchMode.Self,
-      opponentId: opponentId,
+      opponentId: currentOpponentId,
       codeRevisionId: codeRevisionId,
       mapRevisionId: mapRevisionId,
     };
@@ -95,6 +104,7 @@ function PaginatedItems() {
     matchAPI.createMatch(matchRequest as CreateMatchRequest).catch(error => {
       if (error instanceof ApiError) console.log(error);
     });
+    setShow(false);
   }
   return (
     <>
@@ -107,37 +117,30 @@ function PaginatedItems() {
           </div>
         ) : (
           <>
-            <div className={styles.top3}>
-              <div
-                className={styles.item}
-                onClick={() => handleMatchStart(items[1].user.username)}
-              >
-                <div className={styles.pos}>2</div>
-                <img className={styles.pic} src={items[1].user.avatarId}></img>
-                <div className={styles.name}>{items[1].user.username}</div>
-                <div className={styles.score}>{items[1].stats.rating}</div>
-              </div>
-              <div
-                className={styles.item}
-                onClick={() => handleMatchStart(items[0].user.username)}
-              >
-                <div className={styles.pos}>1</div>
-                <img className={styles.pic} src={items[0].user.avatarId}></img>
-                <div className={styles.name}>{items[0].user.username}</div>
-                <div className={styles.score}>{items[0].stats.rating}</div>
-              </div>
-              <div
-                className={styles.item}
-                onClick={() => handleMatchStart(items[1].user.username)}
-              >
-                <div className={styles.pos}>3</div>
-                <img className={styles.pic} src={items[2].user.avatarId}></img>
-                <div className={styles.name}>{items[2].user.username}</div>
-                <div className={styles.score}>{items[2].stats.rating}</div>
-              </div>
-            </div>
-
             <div className={styles.list}>
+              <Modal
+                show={show}
+                onHide={handleClose}
+                className={styles.editorSettingsModal}
+              >
+                <Modal.Header className={styles.matchHeader} closeButton>
+                  <Modal.Title>Start a new match</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className={styles.editorSettingsBody}>
+                  Do you want to start a match ?
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button
+                    className={styles.matchButton}
+                    onClick={handleMatchStart}
+                  >
+                    Start match
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               <div className={styles.item}>
                 <img
                   className={styles.pic}
@@ -157,7 +160,7 @@ function PaginatedItems() {
                   <div
                     className={styles.item}
                     key={row.user.username}
-                    onClick={() => handleMatchStart(row.user.username)}
+                    onClick={() => handleShow(row.user.username)}
                   >
                     <div className={styles.pos}>
                       {itemOffset + 1 + currentItems.indexOf(row)}

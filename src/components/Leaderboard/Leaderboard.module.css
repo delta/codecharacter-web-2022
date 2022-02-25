@@ -41,7 +41,6 @@ html {
 
 .center {
   display: flex;
-  /* margin-left: 35%; */
 }
 
 .ranklist {
@@ -51,73 +50,6 @@ html {
   padding-top: 10px;
   font-family: 'Red Hat Display', sans-serif;
   margin: auto;
-}
-
-.top3 {
-  position: relative;
-  max-width: 650px;
-  padding-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.top3 .item {
-  box-sizing: border-box;
-  position: relative;
-  background: radial-gradient(
-    circle,
-    rgba(184, 207, 205, 1) 0%,
-    rgba(133, 157, 217, 1) 100%
-  );
-  width: 12rem;
-  height: 10rem;
-  text-align: center;
-  padding: 3rem 0rem 0;
-  margin: 1rem 1rem 2rem;
-  border-radius: 0.5rem;
-  transform-origin: bottom;
-  cursor: pointer;
-  transition: transform 200ms ease-in-out;
-  box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1),
-    0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
-}
-
-.top3 .item .pic {
-  position: absolute;
-  top: -2rem;
-  left: 50%;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  margin-right: 1rem;
-  transform: translateX(-50%);
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
-    0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
-}
-
-.top3 .item .pos {
-  font-weight: 900;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.top3 .item .name {
-  font-size: 1.1rem;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.top3 .item .score {
-  opacity: 0.5;
-}
-
-.top3 .item:hover {
-  transform: scale(1.1);
 }
 
 .list {
@@ -130,7 +62,7 @@ html {
   display: flex;
   align-items: center;
   background: white;
-  height: 3rem;
+  height: 2rem;
   border-radius: 4rem;
   margin-bottom: 2rem;
   transform-origin: left;
@@ -158,8 +90,8 @@ html {
 }
 
 .list .item .pic {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -210,4 +142,15 @@ html {
   display: inline-flex;
   margin-top: 20px;
   position: relative;
+}
+
+.matchHeader{
+  background: #2B3760;
+  color: white;
+  height: 10vh;
+  border: 0px;
+}
+
+.matchButton{
+  background: #2B3760;
 }
