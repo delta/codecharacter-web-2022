@@ -9,7 +9,7 @@ html {
 }
 
 .header {
-  max-width: 650px;
+  max-width: 1000px;
   margin: 50px auto;
   border-radius: 12px;
   display: flex;
@@ -39,12 +39,8 @@ html {
   letter-spacing: 4.5px;
 }
 
-.center {
-  display: flex;
-}
-
 .ranklist {
-  max-width: 650px;
+  max-width: 900px;
   display: block;
   align-items: center;
   padding-top: 10px;
@@ -53,21 +49,8 @@ html {
 }
 
 .list {
-  padding-left: 2rem;
   margin: 0 auto;
-}
-
-.list .item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: white;
-  height: 2rem;
-  border-radius: 4rem;
-  margin-bottom: 2rem;
-  transform-origin: left;
-  cursor: pointer;
-  transition: transform 200ms ease-in-out;
+  border-radius: 12px;
   background: radial-gradient(
     circle,
     rgba(184, 207, 205, 1) 0%,
@@ -78,24 +61,14 @@ html {
 }
 
 .list .item .pos {
-  font-weight: 900;
-  position: absolute;
-  left: -2rem;
   text-align: center;
-  font-size: 1.25rem;
-  width: 1.5rem;
-  color: white;
-  opacity: 0.6;
-  transition: opacity 200ms ease-in-out;
 }
 
 .list .item .pic {
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
   border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  margin-right: 1rem;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2),
     0 1rem 1rem -0.5rem rgba(0, 0, 0, 0.3);
 }
@@ -106,13 +79,7 @@ html {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  margin-right: 15px;
-}
-
-.list .item .scoreParent {
-  display: flex;
-  flex-grow: 1;
-  justify-content: space-around;
+  margin-right: 5px;
 }
 
 .list .item .score {
@@ -126,11 +93,7 @@ html {
 }
 
 .list .item:hover {
-  transform: scale(1.05);
-}
-
-.list .item:hover .pos {
-  opacity: 0.8;
+  transform: scale(1.01);
 }
 
 .paginationouter {

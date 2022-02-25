@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Table } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
@@ -48,7 +48,7 @@ function PaginatedItems() {
     setShow(true);
   };
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetchLeaderboard();
@@ -141,40 +141,44 @@ function PaginatedItems() {
                   </Button>
                 </Modal.Footer>
               </Modal>
-              <div className={styles.item}>
-                <img
-                  className={styles.pic}
-                  src="https://randomuser.me/api/portraits/men/34.jpg"
-                ></img>
-                <div className={styles.pos}>#</div>
-                <div className={styles.name}>Username</div>
-                <div className={styles.scoreParent}>
-                  <div className={styles.score}>Ratings</div>
-                  <div className={styles.score}>Won</div>
-                  <div className={styles.score}>Tied</div>
-                  <div className={styles.score}>Lost</div>
-                </div>
-              </div>
-              {currentItems &&
-                currentItems.map((row: rowInterface) => (
-                  <div
-                    className={styles.item}
-                    key={row.user.username}
-                    onClick={() => handleShow(row.user.username)}
-                  >
-                    <div className={styles.pos}>
-                      {itemOffset + 1 + currentItems.indexOf(row)}
-                    </div>
-                    <img className={styles.pic} src={row.user.avatarId}></img>
-                    <div className={styles.name}>{row.user.username}</div>
-                    <div className={styles.scoreParent}>
-                      <div className={styles.score}>{row.stats.rating}</div>
-                      <div className={styles.score}>{row.stats.wins}</div>
-                      <div className={styles.score}>{row.stats.ties}</div>
-                      <div className={styles.score}>{row.stats.losses}</div>
-                    </div>
-                  </div>
-                ))}
+              <Table hover className={styles.list}>
+                <thead>
+                  <tr className={styles.item}>
+                    <th className={styles.pos}>Rank</th>
+                    <th>Avatar</th>
+                    <th className={styles.name}>Username</th>
+                    <th className={styles.score}>Ratings</th>
+                    <th className={styles.score}>Won</th>
+                    <th className={styles.score}>Tied</th>
+                    <th className={styles.score}>Lost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentItems &&
+                    currentItems.map((row: rowInterface) => (
+                      <tr
+                        className={styles.item}
+                        key={row.user.username}
+                        onClick={handleShow}
+                      >
+                        <td className={styles.pos}>
+                          {itemOffset + 1 + currentItems.indexOf(row)}
+                        </td>
+                        <td>
+                          <img
+                            className={styles.pic}
+                            src={row.user.avatarId}
+                          ></img>
+                        </td>
+                        <td className={styles.name}>{row.user.username}</td>
+                        <td className={styles.score}>{row.stats.rating}</td>
+                        <td className={styles.score}>{row.stats.wins}</td>
+                        <td className={styles.score}>{row.stats.ties}</td>
+                        <td className={styles.score}>{row.stats.losses}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </div>
           </>
         )}
