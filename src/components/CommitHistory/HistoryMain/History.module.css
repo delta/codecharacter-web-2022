@@ -15,11 +15,15 @@
   grid-template-rows: 13% 72% 15%;
 }
 
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
 .codeMapButton {
   background-color: #242a3c;
-  text-align: left;
-  padding-top: 34px;
-  padding-left: 300px;
 }
 
 .largeButton {
@@ -82,16 +86,12 @@
 .select {
   text-align: right;
   background-color: #242a3c;
-  font-family: Montserrat;
-  font-weight: 600;
-  font-style: normal;
-  size: 24px;
   color: #ffffff;
   padding-top: 12px;
 }
 
 .selectButton {
-  align-content: right;
+  position: relative;
   color: #ffffff;
   width: 158px;
   height: 45px;
@@ -129,13 +129,15 @@
   color: #ffffff;
 }
 
-.codeBox, .mapBox {
+.codeBox,
+.mapBox {
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.mapBox::-webkit-scrollbar, .codeBox::-webkit-scrollbar {
+.mapBox::-webkit-scrollbar,
+.codeBox::-webkit-scrollbar {
   display: none;
 }

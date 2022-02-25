@@ -96,29 +96,33 @@ export default function History(): JSX.Element {
           <div></div>
         </div>
         <div className={styles.codeView}>
-          <div className={styles.codeMapButton}>
-            <ButtonGroup>
-              <Button
-                className={
-                  BigButton == 'Code' ? styles.largeButton : styles.smallButton
-                }
-                onClick={() => {
-                  setBigButton('Code');
-                }}
-              >
-                Code
-              </Button>
-              <Button
-                className={
-                  BigButton == 'Map' ? styles.largeButton : styles.smallButton
-                }
-                onClick={() => {
-                  setBigButton('Map');
-                }}
-              >
-                Map
-              </Button>
-            </ButtonGroup>
+          <div className={styles.buttonContainer}>
+            <div className={styles.codeMapButton}>
+              <ButtonGroup>
+                <Button
+                  className={
+                    BigButton == 'Code'
+                      ? styles.largeButton
+                      : styles.smallButton
+                  }
+                  onClick={() => {
+                    setBigButton('Code');
+                  }}
+                >
+                  Code
+                </Button>
+                <Button
+                  className={
+                    BigButton == 'Map' ? styles.largeButton : styles.smallButton
+                  }
+                  onClick={() => {
+                    setBigButton('Map');
+                  }}
+                >
+                  Map
+                </Button>
+              </ButtonGroup>
+            </div>
           </div>
           <div className={BigButton == 'Code' ? styles.codeBox : styles.mapBox}>
             {BigButton == 'Code' ? (
