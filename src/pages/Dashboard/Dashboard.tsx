@@ -29,7 +29,7 @@ import {
   initializeEditorStates,
   UserCode,
   UserLanguage,
-} from '../../store/Editor/code';
+} from '../../store/editor/code';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';

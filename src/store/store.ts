@@ -9,7 +9,7 @@ import UserReducer from './User/UserSlice';
 import battleTvReducer from '../components/BattleTV/BattleTvSlice';
 import notifReducer from './Notifs/notifSlice';
 import historyReducer from './historyEditor/historyEditorSlice';
-import editorReducer from './Editor/code';
+import editorReducer from './editor/code';
 import settingsReducer from './EditorSettings/settings';
 import selfMatchModalReducer from './SelfMatchModal/SelfMatchModal';
 

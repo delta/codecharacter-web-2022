@@ -26,7 +26,7 @@ const EditorSettings = lazy(
 const Leaderboard = lazy(() => import('./components/Leaderboard/Leaderboard'));
 const BattleTV = lazy(() => import('./components/BattleTV/BattleTV'));
 const SelfMatchModal = lazy(
-  () => import('./components/MatchMakingModal/SelfMatchModal'),
+  () => import('./components/SelfMatchMakingModal/SelfMatchMakeModal'),
 );
 const Verify = lazy(
   () => import('./components/Auth/Auth/Register/ActivateUser/ActivateUser'),
