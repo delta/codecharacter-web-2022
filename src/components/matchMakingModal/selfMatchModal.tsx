@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './SelfMatchModal.module.css';
+import styles from './SelfMatchModalStyle.module.css';
 import { FormGroup, Col, Container, Row, Modal, Button } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
