@@ -26,10 +26,12 @@ interface register {
   isRegistered: boolean;
   isloggedIn: boolean;
   isSuccess: boolean;
+  isSuccessUser: boolean;
   isSuccessCreditonals: boolean;
   isLogout: boolean;
   error: boolean;
   loginError: string;
+  registerError: string;
 }
 
 const initialState: register = {
@@ -47,10 +49,12 @@ const initialState: register = {
   isRegistered: false,
   isloggedIn: false,
   isSuccess: false,
+  isSuccessUser: false,
   isSuccessCreditonals: false,
   isLogout: false,
   error: false,
-  loginError: 'no',
+  loginError: 'NIL',
+  registerError: 'NIL',
 };
 
 export const registerAction = createAsyncThunk(
@@ -141,24 +145,30 @@ export const UserSlice = createSlice({
     buider
       .addCase(registerAction.pending, state => {
         state.loading = true;
+        state.registerError = initialState.registerError;
       })
       .addCase(registerAction.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
         state.isRegistered = true;
+        state.registerError = initialState.registerError;
       })
-      .addCase(registerAction.rejected, state => {
+      .addCase(registerAction.rejected, (state, action) => {
         state.loading = false;
         state.isRegistered = false;
+        if (typeof action.payload == 'string')
+          state.registerError = action.payload;
       })
       .addCase(loginAction.pending, state => {
         state.loading = true;
+        state.loginError = 'NIL';
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         if (action.payload?.user.email)
           state.user.email = action.payload?.user.email;
         state.loading = false;
         state.isloggedIn = true;
+        state.loginError = 'NIL';
       })
       .addCase(loginAction.rejected, (state, action) => {
         if (typeof action.payload == 'string')
@@ -184,18 +194,18 @@ export const UserSlice = createSlice({
       })
       .addCase(changeUserDetailsAction.pending, state => {
         state.loading = true;
-        state.isSuccess = false;
+        state.isSuccessUser = false;
       })
       .addCase(changeUserDetailsAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.isSuccess = true;
+        state.isSuccessUser = true;
         state.user.userName = action.payload.user.userName;
         state.user.country = action.payload.user.country;
         state.user.college = action.payload.user.college;
       })
       .addCase(changeUserDetailsAction.rejected, state => {
         state.loading = false;
-        state.isSuccess = false;
+        state.isSuccessUser = false;
       })
       .addCase(changeUserCreditionalsAction.pending, state => {
         state.loading = true;
@@ -220,9 +230,15 @@ export const isRegistered = (state: RootState): boolean =>
   state.user.isRegistered;
 export const isloggedIn = (state: RootState): boolean => state.user.isloggedIn;
 export const isLogout = (state: RootState): boolean => state.user.isLogout;
+export const loginError = (state: RootState): string =>
+  state.user.loginError ? state.user.loginError : 'NIL';
+export const registeredError = (state: RootState): string =>
+  state.user.registerError ? state.user.registerError : 'NIL';
 export const isCreditionalError = (state: RootState): boolean =>
   state.user.error;
 export const isSuccess = (state: RootState): boolean =>
   state.user.isSuccessCreditonals;
+export const isSuccessUser = (state: RootState): boolean =>
+  state.user.isSuccessUser;
 
 export default UserSlice.reducer;
