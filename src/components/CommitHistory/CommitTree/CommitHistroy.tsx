@@ -17,7 +17,7 @@ import {
   isSelfMatchModalOpened,
   mapCommitIDChanged,
   mapCommitNameChanged,
-} from '../../../store/selfMatchModal/selfMatchModal';
+} from '../../../store/SelfMatchModal/SelfMatchModal';
 
 type PropsType = {
   commitID: (commitID: string) => void;

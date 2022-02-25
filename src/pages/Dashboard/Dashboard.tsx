@@ -29,7 +29,7 @@ import {
   initializeEditorStates,
   UserCode,
   UserLanguage,
-} from '../../store/editor/code';
+} from '../../store/Editor/code';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
@@ -39,7 +39,7 @@ import {
   isSelfMatchModalOpened,
   mapCommitIDChanged,
   mapCommitNameChanged,
-} from '../../store/selfMatchModal/selfMatchModal';
+} from '../../store/SelfMatchModal/SelfMatchModal';
 
 type SplitPaneState = {
   horizontalPercent: string;

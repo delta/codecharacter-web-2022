@@ -9,9 +9,9 @@ import UserReducer from './User/UserSlice';
 import battleTvReducer from '../components/BattleTV/BattleTvSlice';
 import notifReducer from './Notifs/notifSlice';
 import historyReducer from './historyEditor/historyEditorSlice';
-import editorReducer from './editor/code';
+import editorReducer from './Editor/code';
 import settingsReducer from './EditorSettings/settings';
-import selfMatchModalReducer from './selfMatchModal/selfMatchModal';
+import selfMatchModalReducer from './SelfMatchModal/SelfMatchModal';
 
 const reducers = combineReducers({
   editorState: editorReducer,

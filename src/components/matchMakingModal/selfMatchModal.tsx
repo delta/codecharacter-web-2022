@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './selfMatchModal.module.css';
+import styles from './SelfMatchModal.module.css';
 import { FormGroup, Col, Container, Row, Modal, Button } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -13,7 +13,7 @@ import {
   codeCommitName,
   mapCommitName,
   codeCommitNameChanged,
-} from '../../store/selfMatchModal/selfMatchModal';
+} from '../../store/SelfMatchModal/SelfMatchModal';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
   CodeApi,
@@ -38,10 +38,7 @@ const selfMatchModal = (): JSX.Element => {
     const codeApi = new CodeApi(apiConfig);
     codeApi
       .getCodeRevisions()
-      .then(codeResp => {
-        console.log(codeResp);
-        setCodeHistory(codeResp);
-      })
+      .then(codeResp => setCodeHistory(codeResp))
       .catch(codeError => {
         if (codeError instanceof ApiError) console.log(codeError);
       });
@@ -49,10 +46,7 @@ const selfMatchModal = (): JSX.Element => {
     const mapApi = new MapApi(apiConfig);
     mapApi
       .getMapRevisions()
-      .then(mapResp => {
-        console.log(mapResp);
-        setMapHistory(mapResp);
-      })
+      .then(mapResp => setMapHistory(mapResp))
       .catch(mapError => {
         if (mapError instanceof ApiError) console.log(mapError);
       });
