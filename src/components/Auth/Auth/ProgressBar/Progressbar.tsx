@@ -6,6 +6,7 @@ import {
   faUserSecret,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 interface user {
   formNumber?: number;
   completed?: boolean;
@@ -37,7 +38,7 @@ export default function UserDetails(props: user): JSX.Element {
               }
               onClick={props.handleForm1}
             >
-              <FontAwesomeIcon icon={faUser} />
+              <FontAwesomeIcon icon={faUser as IconProp} />
             </button>
           </div>
           <div>
@@ -52,7 +53,7 @@ export default function UserDetails(props: user): JSX.Element {
               }
               onClick={props.handleForm2}
             >
-              <FontAwesomeIcon icon={faUserSecret} />
+              <FontAwesomeIcon icon={faUserSecret as IconProp} />
             </button>
           </div>
           <div>
@@ -62,7 +63,7 @@ export default function UserDetails(props: user): JSX.Element {
                 !props.completed ? styles.levelInitiated : styles.levelCompleted
               }
             >
-              <FontAwesomeIcon icon={faCode} />
+              <FontAwesomeIcon icon={faCode as IconProp} />
             </button>
           </div>
         </div>
