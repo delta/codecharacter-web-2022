@@ -1,57 +1,116 @@
+import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import ReactFlagsSelect from 'react-flags-select';
 import AlertMessage from '../../Alert/Alert';
 import styles from './OtherDetails.module.css';
 
+import duck from '../../../../../assets/avatars/duck.png';
+import elephant from '../../../../../assets/avatars/elephant.png';
+import giraffe from '../../../../../assets/avatars/giraffe.png';
+import frog from '../../../../../assets/avatars/frog.png';
+import monkey from '../../../../../assets/avatars/monkey.png';
+import moose from '../../../../../assets/avatars/moose.png';
+import narwhal from '../../../../../assets/avatars/narwhal.png';
+import owl from '../../../../../assets/avatars/owl.png';
+import panda from '../../../../../assets/avatars/panda.png';
+import parrot from '../../../../../assets/avatars/parrot.png';
+import penguin from '../../../../../assets/avatars/penguin.png';
+import pig from '../../../../../assets/avatars/pig.png';
+import rabbit from '../../../../../assets/avatars/rabbit.png';
+import rhino from '../../../../../assets/avatars/rhino.png';
+import sloth from '../../../../../assets/avatars/sloth.png';
+import snake from '../../../../../assets/avatars/snake.png';
+import walrus from '../../../../../assets/avatars/walrus.png';
+import whale from '../../../../../assets/avatars/whale.png';
+import zebra from '../../../../../assets/avatars/zebra.png';
+import horse from '../../../../../assets/avatars/horse.png';
+
 const avatar = [
   {
-    url: '1',
+    id: 0,
+    url: duck,
   },
   {
-    url: '2',
+    id: 1,
+    url: elephant,
   },
   {
-    url: '3',
+    id: 2,
+    url: giraffe,
   },
   {
-    url: '4',
+    id: 3,
+    url: frog,
   },
   {
-    url: '5',
+    id: 4,
+    url: monkey,
   },
   {
-    url: '6',
+    id: 5,
+    url: moose,
   },
   {
-    url: '5',
+    id: 6,
+    url: narwhal,
   },
   {
-    url: '6',
+    id: 7,
+    url: owl,
   },
   {
-    url: '5',
+    id: 8,
+    url: panda,
   },
   {
-    url: '6',
+    id: 9,
+    url: parrot,
   },
   {
-    url: '5',
+    id: 10,
+    url: penguin,
   },
   {
-    url: '6',
+    id: 11,
+    url: pig,
   },
   {
-    url: '6',
+    id: 12,
+    url: rabbit,
   },
   {
-    url: '5',
+    id: 13,
+    url: rhino,
   },
   {
-    url: '6',
+    id: 14,
+    url: sloth,
+  },
+  {
+    id: 15,
+    url: snake,
+  },
+  {
+    id: 16,
+    url: walrus,
+  },
+  {
+    id: 17,
+    url: whale,
+  },
+  {
+    id: 18,
+    url: zebra,
+  },
+  {
+    id: 19,
+    url: horse,
   },
 ];
 
 export default function OtherDetails(props: user): JSX.Element {
+  const [selectedAvatar, setSelectedAvatar] = useState(0);
+
   return (
     <div>
       {props.register ? (
@@ -104,7 +163,22 @@ export default function OtherDetails(props: user): JSX.Element {
         <div className={styles.avatarBox}>
           <div className={styles.avatarContainer}>
             {avatar.map((avatar, index: number) => (
-              <div key={index} className={styles.avatar}></div>
+              <div
+                key={index}
+                className={`${styles.avatar} ${
+                  selectedAvatar === avatar.id ? styles.avatarSelected : ''
+                }`}
+                onClick={() => {
+                  setSelectedAvatar(avatar.id);
+                  props.handleAvatarChange(avatar.id);
+                }}
+              >
+                <img
+                  className={styles.avatarImg}
+                  src={avatar.url}
+                  alt="avatar"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -118,6 +192,7 @@ interface user {
   handleFlagSelect?: (code: string) => void;
   formNumber?: number;
   handleCollegeChange?: React.ChangeEventHandler<HTMLInputElement>;
+  handleAvatarChange: (id: number) => void;
   college?: string;
   collegeError?: boolean;
   submitThird?: boolean;

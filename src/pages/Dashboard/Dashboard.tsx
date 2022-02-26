@@ -1,11 +1,13 @@
 import { AuthApi, CodeApi, Language } from '@codecharacter-2022/client';
-import { RendererComponent } from '@codecharacter-2022/renderer';
+import { RendererComponent, RendererUtils } from '@codecharacter-2022/renderer';
+import Toast from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChevronLeft,
   faChevronRight,
   faCloudUploadAlt,
   faCodeBranch,
+  faPlay,
   faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,9 +31,17 @@ import {
   UserCode,
   UserLanguage,
 } from '../../store/editor/code';
+import { logs } from '../../store/rendererLogs/logSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
+import {
+  codeCommitIDChanged,
+  codeCommitNameChanged,
+  isSelfMatchModalOpened,
+  mapCommitIDChanged,
+  mapCommitNameChanged,
+} from '../../store/SelfMatchMakeModal/SelfMatchModal';
 import { useNavigate } from 'react-router-dom';
 
 type SplitPaneState = {
@@ -78,7 +88,12 @@ export default function Dashboard(): JSX.Element {
 
   const userLanguage = useAppSelector(UserLanguage);
   const userCode = useAppSelector(UserCode);
+  const rendererLogs = useAppSelector(logs);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    RendererUtils.loadLog(rendererLogs);
+  }, [rendererLogs]);
 
   const codeAPI = new CodeApi(apiConfig);
   const navigate = useNavigate();
@@ -170,10 +185,21 @@ export default function Dashboard(): JSX.Element {
         lock: false,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Saved');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
+
+  function handleSimulate() {
+    dispatch(isSelfMatchModalOpened(true));
+    dispatch(codeCommitNameChanged('Current Code'));
+    dispatch(codeCommitIDChanged(null));
+    dispatch(mapCommitNameChanged('Current Map'));
+    dispatch(mapCommitIDChanged(null));
+  }
 
   const handleCommitNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommitName(e.target.value);
@@ -191,8 +217,12 @@ export default function Dashboard(): JSX.Element {
         message: commitName,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Committed');
+        setCommitName('');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
@@ -208,8 +238,11 @@ export default function Dashboard(): JSX.Element {
         lock: true,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Submitted');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
@@ -251,6 +284,15 @@ export default function Dashboard(): JSX.Element {
                 variant="primary"
               >
                 <FontAwesomeIcon icon={faSave as IconProp} /> Save
+              </Button>
+            </Col>
+            <Col className={styles.toolbarColumn} sm="2">
+              <Button
+                className={styles.toolbarButton}
+                onClick={handleSimulate}
+                variant="primary"
+              >
+                <FontAwesomeIcon icon={faPlay as IconProp} /> Simulate
               </Button>
             </Col>
             <Col className={styles.toolbarColumn} sm="2">

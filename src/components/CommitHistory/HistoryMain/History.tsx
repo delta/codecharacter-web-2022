@@ -86,8 +86,11 @@ export default function History(): JSX.Element {
               <CommitHistory
                 commitID={commitID}
                 commitHistoryDetails={
-                  BigButton == 'Code' ? completeCodeHistroy : completeMapHistory
+                  BigButton === 'Code'
+                    ? completeCodeHistroy
+                    : completeMapHistory
                 }
+                BigButton={BigButton}
               />
             ) : (
               <h1 className={styles.noCommitDataHeader}>Loading...</h1>

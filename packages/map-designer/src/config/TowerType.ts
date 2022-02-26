@@ -1,4 +1,4 @@
-export default class Tower {
+export default class TowerType {
   tileId: number;
 
   name: string;

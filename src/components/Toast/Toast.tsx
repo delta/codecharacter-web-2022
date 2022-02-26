@@ -3,7 +3,7 @@ import { Toaster } from 'react-hot-toast';
 const Toast: React.FunctionComponent = () => {
   return (
     <Toaster
-      position="top-right"
+      position="bottom-right"
       toastOptions={{
         style: {
           background: '#242a3b',
