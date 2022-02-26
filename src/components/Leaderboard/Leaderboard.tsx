@@ -49,7 +49,7 @@ function PaginatedItems() {
     setShow(true);
   };
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 8;
 
   useEffect(() => {
     fetchLeaderboard();
@@ -70,7 +70,7 @@ function PaginatedItems() {
     setIsLoaded(false);
     const leaderboardAPI = new LeaderboardApi(apiConfig);
     leaderboardAPI
-      .getLeaderboard()
+      .getLeaderboard(itemOffset, itemsPerPage)
       .then(response => {
         setItems(response);
         setIsLoaded(true);
@@ -148,6 +148,7 @@ function PaginatedItems() {
                     <th className={styles.pos}>Rank</th>
                     <th>Avatar</th>
                     <th className={styles.name}>Username</th>
+                    <th className={styles.name}>Attack</th>
                     <th className={styles.score}>Ratings</th>
                     <th className={styles.score}>Won</th>
                     <th className={styles.score}>Tied</th>
@@ -157,11 +158,7 @@ function PaginatedItems() {
                 <tbody>
                   {currentItems &&
                     currentItems.map((row: rowInterface) => (
-                      <tr
-                        className={styles.item}
-                        key={row.user.username}
-                        onClick={() => handleShow(row.user.username)}
-                      >
+                      <tr className={styles.item} key={row.user.username}>
                         <td className={styles.pos}>
                           {itemOffset + 1 + currentItems.indexOf(row)}
                         </td>
@@ -173,6 +170,14 @@ function PaginatedItems() {
                           ></img>
                         </td>
                         <td className={styles.name}>{row.user.username}</td>
+                        <td className={styles.attackButton}>
+                          <button onClick={() => handleShow(row.user.username)}>
+                            <img
+                              className={styles.attackImg}
+                              src={'src/assets/sword.png'}
+                            />
+                          </button>
+                        </td>
                         <td className={styles.score}>{row.stats.rating}</td>
                         <td className={styles.score}>{row.stats.wins}</td>
                         <td className={styles.score}>{row.stats.ties}</td>
