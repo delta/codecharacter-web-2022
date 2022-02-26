@@ -32,6 +32,14 @@
       document.getElementById('root')
     );
   </script>
+
+  <script>
+    const open = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+      url = url.replace("./assets", "/assets");
+      return open.call(this, method, url, ...rest);
+    };
+  </script>
 </body>
 
 </html>

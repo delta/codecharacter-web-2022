@@ -9,7 +9,11 @@ export class Parameters {
 
   static mapTileWidth = 512;
 
+  static mapTileHalfWidth = 256;
+
   static mapTileHeight = 512;
+
+  static mapTileHalfHeight = 256;
 
   static mapTileOffsetX = 256;
 
