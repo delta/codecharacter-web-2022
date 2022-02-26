@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
 import Notifs from '../Notifs/Notifs';
-// import toast from 'react-hot-toast';
+import { getAvatarByID } from '../Avatar/Avatar';
 import { getUserDetailsAction, user } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 const NavBar: React.FunctionComponent = () => {
@@ -54,22 +54,17 @@ const NavBar: React.FunctionComponent = () => {
       {localStorage.getItem('token') != null &&
       location.pathname != '/incomplete-profile' ? (
         <div className={styles.profileIcons}>
-          {/* <button
-          className="toastTest"
-          onClick={() => {
-            toast.success('Toast Rendered!', {
-              position: 'bottom-right',
-              duration: 3000,
-            });
-          }}
-        >
-          Toast
-        </button> */}
           <div className={styles.notifIcon}>
             <Notifs />
           </div>
           <div className={styles.profile} onClick={handleOpen}>
-            <div className={styles.fakeProfileIcon} />
+            <div className={styles.ProfileIcon}>
+              <img
+                className={styles.profileIconImg}
+                src={getAvatarByID(getUser.avatarId).url}
+                alt="Profile Icon"
+              />
+            </div>
             <h3 className={styles.profileName}>{getUser?.userName}</h3>
           </div>
         </div>
