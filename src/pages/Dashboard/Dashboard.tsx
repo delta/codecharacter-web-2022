@@ -1,5 +1,6 @@
 import { AuthApi, CodeApi, Language } from '@codecharacter-2022/client';
-import { RendererComponent } from '@codecharacter-2022/renderer';
+import { RendererComponent, RendererUtils } from '@codecharacter-2022/renderer';
+import Toast from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChevronLeft,
@@ -30,6 +31,7 @@ import {
   UserCode,
   UserLanguage,
 } from '../../store/editor/code';
+import { logs } from '../../store/rendererLogs/logSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
@@ -86,7 +88,12 @@ export default function Dashboard(): JSX.Element {
 
   const userLanguage = useAppSelector(UserLanguage);
   const userCode = useAppSelector(UserCode);
+  const rendererLogs = useAppSelector(logs);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    RendererUtils.loadLog(rendererLogs);
+  }, [rendererLogs]);
 
   const codeAPI = new CodeApi(apiConfig);
   const navigate = useNavigate();
@@ -178,8 +185,11 @@ export default function Dashboard(): JSX.Element {
         lock: false,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Saved');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
@@ -207,8 +217,12 @@ export default function Dashboard(): JSX.Element {
         message: commitName,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Committed');
+        setCommitName('');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
@@ -224,8 +238,11 @@ export default function Dashboard(): JSX.Element {
         lock: true,
         language: languageType,
       })
+      .then(() => {
+        Toast.success('Code Submitted');
+      })
       .catch(err => {
-        if (err instanceof ApiError) console.log(err.message);
+        if (err instanceof ApiError) Toast.error(err.message);
       });
   };
 
