@@ -24,25 +24,22 @@ export const getNotifAction = createAsyncThunk('notifs/getNotifs', async () => {
 
 export const markNotifAction = createAsyncThunk(
   'notifs/markAsRead',
-  async (id: string, { rejectWithValue }) => {
+  async (_arg, { rejectWithValue, getState }) => {
     try {
-      const response = await markNotifAsRead(id);
-      return response;
+      const { notifs } = getState() as RootState;
+      notifs.notifs.map(async notif => {
+        if (notif.read === false) {
+          try {
+            await markNotifAsRead(notif.id);
+          } catch (err) {
+            rejectWithValue(err);
+          }
+        }
+      });
+      return;
     } catch (e) {
       rejectWithValue(e);
     }
-  },
-);
-
-export const getUnreadNotifsAction = createAsyncThunk(
-  'notifs/getUnreadNotifs',
-  async (_arg, { getState }) => {
-    const { notifs } = getState() as RootState;
-    let unreadNotifs = 0;
-    for (let i = 0; i < notifs.notifs.length; i++) {
-      unreadNotifs += 1;
-    }
-    return unreadNotifs;
   },
 );
 
@@ -68,9 +65,6 @@ export const notifSlice = createSlice({
           notif => notif.read === false,
         ).length;
         state.unreadNotifs = unreadNotifs;
-      })
-      .addCase(getUnreadNotifsAction.fulfilled, (state, action) => {
-        state.unreadNotifs = action.payload;
       })
       .addCase(addNotifToState.fulfilled, (state, action) => {
         state.notifs.push(action.payload);

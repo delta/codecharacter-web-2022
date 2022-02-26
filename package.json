@@ -32,6 +32,7 @@
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@lit-labs/react": "^1.0.1",
     "@reduxjs/toolkit": "^1.7.2",
+    "@stomp/stompjs": "^6.1.2",
     "@types/grecaptcha": "^3.0.3",
     "@types/react-syntax-highlighter": "^13.5.2",
     "ace-builds": "^1.4.14",
@@ -55,7 +56,8 @@
     "react-syntax-highlighter": "^15.4.5",
     "react-vertical-timeline-component": "^3.5.2",
     "redux": "^4.1.2",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
