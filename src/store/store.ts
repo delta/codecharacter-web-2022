@@ -12,6 +12,7 @@ import historyReducer from './historyEditor/historyEditorSlice';
 import editorReducer from './editor/code';
 import settingsReducer from './EditorSettings/settings';
 import logReducer from './rendererLogs/logSlice';
+import selfMatchModalReducer from './SelfMatchMakeModal/SelfMatchModal';
 
 const reducers = combineReducers({
   editorState: editorReducer,
@@ -34,6 +35,7 @@ export const store = configureStore({
     historyEditor: historyReducer,
     codeEditorReducer: persistedReducer,
     logs: logReducer,
+    selfMatchModal: selfMatchModalReducer,
   },
   middleware: [thunk],
 });

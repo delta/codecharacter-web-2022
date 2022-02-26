@@ -113,7 +113,11 @@ export default function OtherDetails(props: user): JSX.Element {
 
   return (
     <div>
-      <div className={styles.levelTitle}>Other Details</div>
+      {props.register ? (
+        <div className={styles.levelTitle}>Other Details</div>
+      ) : (
+        <></>
+      )}
       <Form.Group className="mb-3" controlId="formBasicCountryName">
         <Form.Label>Country</Form.Label>
         <div className={styles.flagContainer}>
@@ -192,4 +196,5 @@ interface user {
   college?: string;
   collegeError?: boolean;
   submitThird?: boolean;
+  register?: boolean;
 }

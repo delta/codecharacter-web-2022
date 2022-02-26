@@ -19,6 +19,7 @@ import {
   loading,
   isRegistered,
   registerAction,
+  registeredError,
 } from '../../../../store/User/UserSlice';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Toast from 'react-hot-toast';
@@ -50,6 +51,25 @@ export default function Register(): JSX.Element {
   const navigate = useNavigate();
   let registeredStatus = false;
   registeredStatus = useAppSelector(isRegistered);
+  const registerError = useAppSelector(registeredError);
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, []);
+  useEffect(() => {
+    switch (registerError) {
+      case 'Username/Email already exists':
+        setFormnumber(1);
+        increment = 1;
+        setUsername('');
+        isuserNameError(true);
+        setEmail('');
+        isemailError(true);
+        isCompleted(false);
+        break;
+    }
+  }, [registerError]);
   useEffect(() => {
     if (registeredStatus) {
       setFormnumber(1);
@@ -256,7 +276,7 @@ export default function Register(): JSX.Element {
   const handleRegistration = async () => {
     isCompleted(true);
 
-    await dispatch(
+    dispatch(
       registerAction({
         userName: userName,
         name: fullName,
@@ -302,6 +322,7 @@ export default function Register(): JSX.Element {
                   userNameError={userNameError}
                   email={email}
                   emailError={emailError}
+                  register={true}
                 />
               </>
             ) : formNumber === 2 ? (
@@ -328,6 +349,7 @@ export default function Register(): JSX.Element {
                     college={college}
                     collegeError={collegeError}
                     submitThird={submitThird}
+                    register={true}
                   />
                   <div className="form-row d-flex justify-content-center my-1">
                     <div className="d-flex justify-content-center input-group">

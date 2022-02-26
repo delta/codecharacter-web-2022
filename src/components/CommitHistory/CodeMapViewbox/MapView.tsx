@@ -12,11 +12,15 @@ export default function MapView(props: MapViewBoxProps): JSX.Element {
     return newMap;
   };
 
-  return (
-    <MapDesignerComponent
-      saveMapCallback={saveMapCallback}
-      {...MapDesignerUtils.loadMap(props.mapCoordinates)}
-      readonly={true}
-    ></MapDesignerComponent>
-  );
+  if (props.mapCoordinates.length > 0) {
+    return (
+      <MapDesignerComponent
+        saveMapCallback={saveMapCallback}
+        {...MapDesignerUtils.loadMap(props.mapCoordinates)}
+        readonly={true}
+      ></MapDesignerComponent>
+    );
+  } else {
+    return <></>;
+  }
 }

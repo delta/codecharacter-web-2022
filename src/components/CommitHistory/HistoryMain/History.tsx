@@ -82,15 +82,15 @@ export default function History(): JSX.Element {
         <div className={styles.timeline}>
           <div></div>
           <div className={styles.completeTimeline}>
-            {completeMapHistory &&
-            completeCodeHistroy &&
-            completeCodeHistroy.length > 0 &&
-            completeMapHistory.length > 0 ? (
+            {completeMapHistory && completeCodeHistroy ? (
               <CommitHistory
                 commitID={commitID}
                 commitHistoryDetails={
-                  BigButton == 'Code' ? completeCodeHistroy : completeMapHistory
+                  BigButton === 'Code'
+                    ? completeCodeHistroy
+                    : completeMapHistory
                 }
+                BigButton={BigButton}
               />
             ) : (
               <h1 className={styles.noCommitDataHeader}>Loading...</h1>
@@ -103,7 +103,7 @@ export default function History(): JSX.Element {
             <ButtonGroup>
               <Button
                 className={
-                  BigButton == 'Code' ? styles.largeButton : styles.smallButton
+                  BigButton === 'Code' ? styles.largeButton : styles.smallButton
                 }
                 onClick={() => {
                   setBigButton('Code');
@@ -113,7 +113,7 @@ export default function History(): JSX.Element {
               </Button>
               <Button
                 className={
-                  BigButton == 'Map' ? styles.largeButton : styles.smallButton
+                  BigButton === 'Map' ? styles.largeButton : styles.smallButton
                 }
                 onClick={() => {
                   setBigButton('Map');

@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 import { Pan, Pinch } from 'phaser3-rex-plugins/plugins/gestures.js';
-import Tower from '../config/Tower.js';
 import TowerConfig from '../config/TowerConfig.js';
+import TowerType from '../config/TowerType.js';
 import { events, MapDesignerEvents } from '../events/EventEmitter.js';
+import { Tower } from '../objects/Tower.js';
 import { Parameters } from '../Parameters.js';
 
 enum SelectedObjectType {
@@ -14,7 +15,7 @@ enum SelectedObjectType {
 export class TileMap extends Phaser.Scene {
   _selectedObjectType = SelectedObjectType.TOWER;
 
-  _selectedTower: Tower = TowerConfig.towers[0];
+  _selectedTower: TowerType = TowerConfig.towers[0];
 
   controls!: Phaser.Cameras.Controls.SmoothedKeyControl;
 
@@ -22,9 +23,9 @@ export class TileMap extends Phaser.Scene {
 
   groundLayer!: Phaser.Tilemaps.TilemapLayer;
 
-  towerLayer!: Phaser.Tilemaps.TilemapLayer;
-
   coinsUsed = 0;
+
+  _currentTowers: Map<number, Tower> = new Map();
 
   constructor() {
     super({
@@ -34,28 +35,30 @@ export class TileMap extends Phaser.Scene {
 
   preload(): void {
     this.load.image('tile', './assets/tile.png');
+    this.load.image('tile_crystal_N', './assets/tile_crystal_N.png');
+    this.load.image('tile_E', './assets/tile_E.png');
+    this.load.image('tile_treeQuad_N', './assets/tile_treeQuad_N.png');
     TowerConfig.towers.forEach(tower => {
-      this.load.image(`${tower.name}tile`, `./assets/${tower.asset}`);
+      this.load.image(`${tower.name}-sprite`, `./assets/${tower.asset}`);
     });
-    this.load.tilemapTiledJSON('map', './assets/isometric-surface.json');
+    this.load.tilemapTiledJSON('map', './assets/map-2.json');
   }
 
   create(): void {
     this.map = this.add.tilemap('map');
 
-    const landscapeTile = this.map.addTilesetImage('tile.png', 'tile');
+    const landscapeTile = [
+      this.map.addTilesetImage('tile.png', 'tile'),
+      this.map.addTilesetImage('tile_crystal_N.png', 'tile_crystal_N'),
+      this.map.addTilesetImage('tile_E.png', 'tile_E'),
+      this.map.addTilesetImage('tile_treeQuad_N.png', 'tile_treeQuad_N'),
+    ];
     this.groundLayer = this.map.createLayer('Ground', landscapeTile, 0, 0);
-
-    const towerTiles = TowerConfig.towers.map(tower =>
-      this.map.addTilesetImage(tower.asset, `${tower.name}tile`),
-    );
-
-    this.towerLayer = this.map.createLayer('Towers', towerTiles, 0, 0);
+    this.groundLayer.setDepth(0);
 
     this.groundLayer.setCullPadding(6, 6);
-    this.towerLayer.setCullPadding(6, 6);
 
-    events.on(MapDesignerEvents.TOWER_SELECTED, (tower: Tower) => {
+    events.on(MapDesignerEvents.TOWER_SELECTED, (tower: TowerType) => {
       this._selectedObjectType = SelectedObjectType.TOWER;
       this._selectedTower = tower;
     });
@@ -216,48 +219,67 @@ export class TileMap extends Phaser.Scene {
       return;
     }
     if (
+      x === 0 ||
+      y === 0 ||
+      x === Parameters.mapWidth - 1 ||
+      y === Parameters.mapHeight - 1
+    ) {
+      return;
+    }
+    if (
       this._selectedObjectType === SelectedObjectType.TOWER &&
       this._selectedTower.price > Parameters.totalCoins - this.coinsUsed
     ) {
       return;
     }
-    const existingTileIndex = this.map.getTileAt(
-      x,
-      y,
-      false,
-      this.towerLayer,
-    )?.index;
-    this.map.putTileAt(
-      this._selectedObjectType === SelectedObjectType.TOWER
-        ? this._selectedTower.tileId
-        : 0,
-      x,
-      y,
-      true,
-      this.towerLayer,
-    );
-    const addedTile = this.map.getTileAt(x, y, false, this.towerLayer);
-    addedTile.width = Parameters.mapTileWidth;
-    addedTile.height = Parameters.mapTileHeight;
-
-    if (existingTileIndex !== addedTile.index) {
+    if (this._selectedObjectType === SelectedObjectType.ERASER) {
+      const tileIndex = x * 100 + y;
+      if (this._currentTowers.has(tileIndex)) {
+        this._currentTowers.get(tileIndex)?.destroy();
+        this._currentTowers.delete(tileIndex);
+        this._updateMap();
+      }
+      return;
+    }
+    const tile = this.groundLayer.getTileAt(x, y);
+    const tileIndex = x * 100 + y;
+    if (
+      !this._currentTowers.has(tileIndex) ||
+      this._currentTowers.get(tileIndex)?.towerType !== this._selectedTower
+    ) {
+      this._currentTowers.get(tileIndex)?.destroy();
+      this._currentTowers.set(
+        tileIndex,
+        this.add.existing(
+          new Tower(
+            this,
+            this._selectedTower,
+            tile.pixelX + Parameters.mapTileHalfWidth,
+            tile.pixelY + Parameters.mapTileHalfHeight,
+          ),
+        ),
+      );
       this._updateMap();
     }
   }
 
   private _updateMap() {
     const mapData: Array<Array<number>> = [];
+    let coins = 0;
     for (let y = 0; y < Parameters.mapHeight; y++) {
       const row: Array<number> = [];
       for (let x = 0; x < Parameters.mapWidth; x++) {
-        const tile = this.map.getTileAt(x, y, false, this.towerLayer);
-        row.push(
-          tile
-            ? TowerConfig.towers.findIndex(
-                tower => tower.tileId === tile.index,
-              ) + 1
-            : 0,
-        );
+        if (this._currentTowers.has(x * 100 + y)) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const towerType = this._currentTowers.get(x * 100 + y)!.towerType;
+          const tileIndex = TowerConfig.towers.findIndex(
+            tower => tower.tileId === towerType.tileId,
+          );
+          row.push(tileIndex ?? 0);
+          coins += towerType?.price ?? 0;
+        } else {
+          row.push(0);
+        }
       }
       mapData.push(row);
     }
@@ -267,18 +289,6 @@ export class TileMap extends Phaser.Scene {
       JSON.stringify(mapData),
     );
 
-    let coins = 0;
-    for (let y = 0; y < Parameters.mapHeight; y++) {
-      for (let x = 0; x < Parameters.mapWidth; x++) {
-        const tile = this.map.getTileAt(x, y, false, this.towerLayer);
-        if (tile) {
-          const towerType = TowerConfig.towers.find(
-            (tower: Tower) => tower.tileId === tile.index,
-          );
-          coins += towerType?.price || 0;
-        }
-      }
-    }
     this.coinsUsed = coins;
     events.emit(MapDesignerEvents.COINS_CHANGED, Parameters.totalCoins - coins);
   }
@@ -296,14 +306,10 @@ export class TileMap extends Phaser.Scene {
   }
 
   private _loadMap(mapData: Array<Array<number>>): void {
-    for (let y = 0; y < Parameters.mapHeight; y++) {
-      for (let x = 0; x < Parameters.mapWidth; x++) {
-        const tile = this.map.getTileAt(x, y, false, this.towerLayer);
-        if (tile) {
-          this.map.removeTileAt(x, y, true, true, this.towerLayer);
-        }
-      }
+    for (const tower of this._currentTowers.values()) {
+      tower.destroy();
     }
+    this._currentTowers.clear();
     localStorage.setItem(
       Parameters.mapLocalStorageKey,
       JSON.stringify(mapData),
@@ -312,20 +318,23 @@ export class TileMap extends Phaser.Scene {
     let coins = 0;
     for (let y = 0; y < Parameters.mapHeight; y++) {
       for (let x = 0; x < Parameters.mapWidth; x++) {
-        const tile = mapData[y][x];
-        if (tile >= 1) {
-          const tower = tile - 1;
-          this.map.putTileAt(
-            TowerConfig.towers[tower].tileId,
-            x,
-            y,
-            true,
-            this.towerLayer,
+        const tileId = mapData[y][x];
+        if (tileId >= 1) {
+          const towerId = tileId - 1;
+          const tile = this.groundLayer.getTileAt(x, y);
+          const tileIndex = x * 100 + y;
+          this._currentTowers.set(
+            tileIndex,
+            this.add.existing(
+              new Tower(
+                this,
+                TowerConfig.towers[towerId],
+                tile.pixelX + Parameters.mapTileHalfWidth,
+                tile.pixelY + Parameters.mapTileHalfHeight,
+              ),
+            ),
           );
-          const addedTile = this.map.getTileAt(x, y, false, this.towerLayer);
-          addedTile.width = Parameters.mapTileWidth;
-          addedTile.height = Parameters.mapTileHeight;
-          coins += TowerConfig.towers[tower].price;
+          coins += TowerConfig.towers[towerId].price;
         }
       }
     }

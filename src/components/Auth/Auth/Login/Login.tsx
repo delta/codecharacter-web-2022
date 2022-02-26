@@ -16,11 +16,12 @@ import {
   loginAction,
   loading,
   switchRegister,
-  isloggedIn,
+  loginError,
 } from '../../../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Toast from 'react-hot-toast';
+import ForgetPassword from './ForgetPassword/ForgetPassword';
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ function Login(): JSX.Element {
   const [password, setPassword] = useState('');
   const [login, islogin] = useState(false);
   const [passwordType, setPasswordType] = useState<string>('password');
+  const [typing, isTyping] = useState<boolean>(false);
+  const [open, isOpen] = useState<boolean>(false);
   const passwordTypeAction = () => {
     if (passwordType === 'password') {
       setPasswordType('text');
@@ -39,13 +42,31 @@ function Login(): JSX.Element {
   };
   const hookDispatch = useAppDispatch();
   const loadingStatus = useAppSelector(loading);
-  const loggedInStatus = useAppSelector(isloggedIn);
+  const loggedInError = useAppSelector(loginError);
   useEffect(() => {
-    if (loggedInStatus) {
-      Toast.success('Logged In');
+    switch (loggedInError) {
+      case 'Invalid Password':
+        setPassword('');
+        ispasswordError(true);
+        break;
+      case 'User not found':
+        setEmail('');
+        isemailError(true);
+        setPassword('');
+        ispasswordError(true);
+        islogin(false);
+        break;
+    }
+  }, [loggedInError]);
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
       navigate('/dashboard', { replace: true });
     }
-  }, [loggedInStatus]);
+  }, [localStorage.getItem('token')]);
+  const handleForgetPassword = () => {
+    if (open == false) isOpen(true);
+    else isOpen(false);
+  };
   const handleLoginSubmit = () => {
     islogin(true);
     const mailformat = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
@@ -62,6 +83,7 @@ function Login(): JSX.Element {
       ispasswordError(true);
     }
     if (!(emailError && passwordError)) {
+      isTyping(false);
       hookDispatch(loginAction({ email: email, password: password }));
     }
   };
@@ -69,6 +91,7 @@ function Login(): JSX.Element {
   const handlePasswordSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value != null) {
       setPassword(event.target.value);
+      isTyping(true);
     }
     const passwordFormat =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$/;
@@ -92,6 +115,7 @@ function Login(): JSX.Element {
   const switchRegisterAction = () => {
     hookDispatch(switchRegister());
   };
+
   return (
     <div className={styles.mainContainer}>
       <Card className={styles.cardContainer}>
@@ -172,6 +196,12 @@ function Login(): JSX.Element {
               <></>
             )}
           </Form.Group>
+          {loggedInError != 'NIL' ? (
+            <AlertMessage err={true && !typing} content={loggedInError} />
+          ) : (
+            <></>
+          )}
+
           <div className={classnames('d-grid gap-2', styles.submitContainer)}>
             <Button variant="outline-primary" onClick={handleLoginSubmit}>
               Login{' '}
@@ -182,13 +212,21 @@ function Login(): JSX.Element {
               )}
             </Button>
           </div>
+          <div className={styles.forgotPassword}>
+            <Button variant="link" onClick={handleForgetPassword}>
+              {' '}
+              Forgot Password?{' '}
+            </Button>
+            <ForgetPassword
+              open={open}
+              handleForgetPassword={handleForgetPassword}
+            />
+          </div>
         </form>
-        <br />
         <div className={styles.externalAuthButtons}>
           <div className={styles.googleButton}>
             <a
-              href={`${BASE_PATH}/auth/login/external`}
-              target="_blank"
+              href={`${BASE_PATH}/oauth2/authorization/google`}
               rel="noreferrer"
             >
               <Button variant="primary">
@@ -201,8 +239,7 @@ function Login(): JSX.Element {
           </div>
           <div className={styles.githubButton}>
             <a
-              href={`${BASE_PATH}/auth/login/external`}
-              target="_blank"
+              href={`${BASE_PATH}/oauth2/authorization/github`}
               rel="noreferrer"
             >
               <Button variant="dark">

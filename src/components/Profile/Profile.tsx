@@ -21,6 +21,7 @@ import {
   isSuccess,
   logout,
   creditionals,
+  isSuccessUser,
 } from '../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
@@ -113,15 +114,36 @@ const Profile = (props: profile): JSX.Element => {
     if (err) isoldpasswordError(true);
   }, [loadingStatus, err]);
   const success = useAppSelector(isSuccess);
+  const userSuccesschange = useAppSelector(isSuccessUser);
+  useEffect(() => {
+    if (userSuccesschange) {
+      setUsername('');
+      setCollegeName('');
+      isuserNameError(false);
+      isCollegeError(false);
+      issubmitUsername(false);
+      issubmitCollege(false);
+    }
+  }, [userSuccesschange]);
   useEffect(() => {
     if (submitoldPassword && err == false) {
+      setOldpassword('');
+      setpassword('');
+      setConfirmpassword('');
+      issubmitPassword(false);
+      issubmitoldPassword(false);
+      issubmitconfirmPassword(false);
+      ispasswordError(false);
+      isoldpasswordError(false);
+      isconfirmpasswordError(false);
       dispatch(logout());
+      localStorage.removeItem('token');
       navigate('/login', { replace: true });
     }
   }, [success]);
   const getUser = useAppSelector(user);
   useEffect(() => {
-    dispatch(getUserDetailsAction());
+    if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [getUser]);
   const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCollegeName(e.target.value);
@@ -181,8 +203,9 @@ const Profile = (props: profile): JSX.Element => {
   const handleSubmit = () => {
     dispatch(
       changeUserDetailsAction({
-        userName: userName,
-        college: collegeName,
+        userName: userName.toString().trim() === '' ? getUser.name : userName,
+        college:
+          collegeName.toString().trim() === '' ? getUser.college : collegeName,
         country: getCountryName(selected),
       }),
     );
@@ -222,7 +245,7 @@ const Profile = (props: profile): JSX.Element => {
                 </div>
                 <div className={styles.profileName}>
                   {' '}
-                  <b>{getUser.userName}</b>
+                  <b>{getUser.name}</b>
                 </div>
               </div>
             ) : (
@@ -253,7 +276,7 @@ const Profile = (props: profile): JSX.Element => {
                       {submitUsername && userNameError ? (
                         <AlertMessage
                           err={userNameError}
-                          content={'Username already exist'}
+                          content={'Invalid name'}
                         />
                       ) : (
                         <></>
@@ -310,7 +333,7 @@ const Profile = (props: profile): JSX.Element => {
                         variant="light"
                         onClick={handleSubmit}
                         disabled={
-                          userName.length < 5 || collegeName.length == 0
+                          userName.length < 5 && collegeName.length == 0
                         }
                       >
                         Save Changes{' '}

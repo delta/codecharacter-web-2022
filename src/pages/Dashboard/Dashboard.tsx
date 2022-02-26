@@ -1,4 +1,4 @@
-import { CodeApi, Language } from '@codecharacter-2022/client';
+import { AuthApi, CodeApi, Language } from '@codecharacter-2022/client';
 import { RendererComponent, RendererUtils } from '@codecharacter-2022/renderer';
 import Toast from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -7,6 +7,7 @@ import {
   faChevronRight,
   faCloudUploadAlt,
   faCodeBranch,
+  faPlay,
   faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,6 +35,14 @@ import { logs } from '../../store/rendererLogs/logSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
+import {
+  codeCommitIDChanged,
+  codeCommitNameChanged,
+  isSelfMatchModalOpened,
+  mapCommitIDChanged,
+  mapCommitNameChanged,
+} from '../../store/SelfMatchMakeModal/SelfMatchModal';
+import { useNavigate } from 'react-router-dom';
 
 type SplitPaneState = {
   horizontalPercent: string;
@@ -87,7 +96,38 @@ export default function Dashboard(): JSX.Element {
   }, [rendererLogs]);
 
   const codeAPI = new CodeApi(apiConfig);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const cookieValue = document.cookie;
+    const bearerToken = cookieValue.split(';');
 
+    bearerToken.map(cookie => {
+      if (cookie.trim().startsWith('bearer-token') != false) {
+        const index = cookie.indexOf('=') + 1;
+        const token = cookie.slice(index);
+        localStorage.setItem('token', token);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('token') != null) {
+      const authApi = new AuthApi(apiConfig);
+      authApi
+        .getAuthStatus()
+        .then(res => {
+          const { status } = res;
+          if (status === 'PROFILE_INCOMPLETE') {
+            navigate('/incomplete-profile', { replace: true });
+          }
+        })
+        .catch((e: Error) => {
+          if (e instanceof ApiError) {
+            //Toast here
+          }
+        });
+    }
+  }, [localStorage.getItem('token')]);
   useEffect(() => {
     if (localStorage.getItem('firstTime') === null) {
       codeAPI
@@ -152,6 +192,14 @@ export default function Dashboard(): JSX.Element {
         if (err instanceof ApiError) Toast.error(err.message);
       });
   };
+
+  function handleSimulate() {
+    dispatch(isSelfMatchModalOpened(true));
+    dispatch(codeCommitNameChanged('Current Code'));
+    dispatch(codeCommitIDChanged(null));
+    dispatch(mapCommitNameChanged('Current Map'));
+    dispatch(mapCommitIDChanged(null));
+  }
 
   const handleCommitNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommitName(e.target.value);
@@ -236,6 +284,15 @@ export default function Dashboard(): JSX.Element {
                 variant="primary"
               >
                 <FontAwesomeIcon icon={faSave as IconProp} /> Save
+              </Button>
+            </Col>
+            <Col className={styles.toolbarColumn} sm="2">
+              <Button
+                className={styles.toolbarButton}
+                onClick={handleSimulate}
+                variant="primary"
+              >
+                <FontAwesomeIcon icon={faPlay as IconProp} /> Simulate
               </Button>
             </Col>
             <Col className={styles.toolbarColumn} sm="2">

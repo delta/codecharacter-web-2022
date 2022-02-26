@@ -137,3 +137,8 @@
   bottom: 2px;
   right: 5px;
 }
+
+.forgotPassword {
+  margin-top: 0.3rem;
+  float: right;
+}
