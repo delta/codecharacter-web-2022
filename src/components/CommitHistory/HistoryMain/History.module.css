@@ -139,3 +139,9 @@
 .codeBox::-webkit-scrollbar {
   display: none;
 }
+
+.selectBtn{
+  background: #4595CF;
+  margin-top: 5%;
+  width: 100px;
+}
