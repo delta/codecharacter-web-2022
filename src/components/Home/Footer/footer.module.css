@@ -1,0 +1,29 @@
+.footerContainer {
+  background-color: rgb(32, 26, 26);
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 70px 100px 50px;
+}
+
+.footerContainer > div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-decoration: underline;
+}
+
+.container > div {
+  margin: 10px auto;
+}
+
+.container .links {
+  text-decoration: none;
+}

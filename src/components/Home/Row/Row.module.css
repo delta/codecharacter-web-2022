@@ -1,0 +1,23 @@
+.rowContainer {
+    width: 100%;
+    display: flex;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+    background-color: #eee;
+}
+
+.rowContainer > div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.descriptionContainer {
+    padding-top: 32px;
+}
+
+.title {
+    font-size: 64px;
+}
