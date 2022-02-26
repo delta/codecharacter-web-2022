@@ -20,7 +20,6 @@ import {
 } from '../../../../store/User/UserSlice';
 import { useAppSelector, useAppDispatch } from '../../../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Toast from 'react-hot-toast';
 import ForgetPassword from './ForgetPassword/ForgetPassword';
 
 function Login(): JSX.Element {
