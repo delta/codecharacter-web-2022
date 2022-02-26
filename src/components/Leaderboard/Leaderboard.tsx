@@ -9,13 +9,14 @@ import {
   CodeApi,
   MapApi,
   CreateMatchRequest,
+  LeaderboardEntry,
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 
 export interface rowInterface {
   user: {
     username: string;
-    avatarId: string;
+    avatarId: number;
     name: string;
   };
   stats: {
@@ -36,8 +37,8 @@ export interface mapRequestInterface {
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [items, setItems] = useState([]);
-  const [currentItems, setCurrentItems] = useState([]);
+  const [items, setItems] = useState<LeaderboardEntry[]>([]);
+  const [currentItems, setCurrentItems] = useState<Array<rowInterface>>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [show, setShow] = useState(false);
   let currentOpponentId: string;
@@ -159,7 +160,7 @@ function PaginatedItems() {
                       <tr
                         className={styles.item}
                         key={row.user.username}
-                        onClick={handleShow}
+                        onClick={() => handleShow(row.user.username)}
                       >
                         <td className={styles.pos}>
                           {itemOffset + 1 + currentItems.indexOf(row)}
@@ -167,7 +168,8 @@ function PaginatedItems() {
                         <td>
                           <img
                             className={styles.pic}
-                            src={row.user.avatarId}
+                            //Add img url here
+                            src={row.user.avatarId.toString()}
                           ></img>
                         </td>
                         <td className={styles.name}>{row.user.username}</td>
