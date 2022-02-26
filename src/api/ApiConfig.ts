@@ -27,6 +27,15 @@ export const apiConfig = new Configuration({
       },
       post: async context => {
         const status = context.response.status;
+        if (
+          (status == 401 || status == 403) &&
+          (localStorage.getItem('oauth') == 'false' ||
+            localStorage.getItem('oauth') == null)
+        ) {
+          console.log('middleware redirect');
+          window.location.href = 'http://localhost:3000/#/login';
+          localStorage.removeItem('token');
+        }
         if (status >= 400) {
           const body = await context.response.json();
           throw new ApiError(status, body?.message ?? 'Unknown error');

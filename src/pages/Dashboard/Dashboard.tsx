@@ -118,6 +118,7 @@ export default function Dashboard(): JSX.Element {
         .then(res => {
           const { status } = res;
           if (status === 'PROFILE_INCOMPLETE') {
+            localStorage.setItem('oauth', 'true');
             navigate('/incomplete-profile', { replace: true });
           }
         })

@@ -60,6 +60,7 @@ function IncompleteProfile(): JSX.Element {
       })
       .then(() => {
         isloadingStatus(false);
+        localStorage.setItem('oauth', 'false');
         dispatch(getUserDetailsAction());
         navigate('/login', { replace: true });
       })
