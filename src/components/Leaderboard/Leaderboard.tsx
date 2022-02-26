@@ -3,6 +3,7 @@ import { Modal, Button, Table } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
+import { getAvatarByID } from '../Avatar/Avatar';
 import {
   LeaderboardApi,
   MatchApi,
@@ -70,7 +71,7 @@ function PaginatedItems() {
     setIsLoaded(false);
     const leaderboardAPI = new LeaderboardApi(apiConfig);
     leaderboardAPI
-      .getLeaderboard(itemOffset, itemsPerPage)
+      .getLeaderboard()
       .then(response => {
         setItems(response);
         setIsLoaded(true);
@@ -165,18 +166,18 @@ function PaginatedItems() {
                         <td>
                           <img
                             className={styles.pic}
-                            //Add img url here
-                            src={row.user.avatarId.toString()}
+                            src={getAvatarByID(row.user.avatarId).url}
                           ></img>
                         </td>
                         <td className={styles.name}>{row.user.username}</td>
-                        <td className={styles.attackButton}>
-                          <button onClick={() => handleShow(row.user.username)}>
-                            <img
-                              className={styles.attackImg}
-                              src={'src/assets/sword.png'}
-                            />
-                          </button>
+                        <td
+                          className={styles.attackButton}
+                          onClick={() => handleShow(row.user.username)}
+                        >
+                          <img
+                            className={styles.attackImg}
+                            src={'src/assets/sword.png'}
+                          ></img>
                         </td>
                         <td className={styles.score}>{row.stats.rating}</td>
                         <td className={styles.score}>{row.stats.wins}</td>

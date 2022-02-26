@@ -50,7 +50,15 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <HashRouter>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border text-white" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              </div>
+            }
+          >
             <EditorSettings />
             <SelfMatchModal />
             <NavBar />
