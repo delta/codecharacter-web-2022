@@ -13,6 +13,7 @@ import {
   LeaderboardEntry,
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
+import Loader from '../Loader/Loader';
 
 export interface rowInterface {
   user: {
@@ -112,11 +113,7 @@ function PaginatedItems() {
     <>
       <>
         {!isLoaded ? (
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border text-white" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
+          <Loader />
         ) : (
           <>
             <div className={styles.list}>
