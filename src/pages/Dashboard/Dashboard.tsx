@@ -6,6 +6,7 @@ import {
   faChevronRight,
   faCloudUploadAlt,
   faCodeBranch,
+  faPlay,
   faSave,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,6 +33,13 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
+import {
+  codeCommitIDChanged,
+  codeCommitNameChanged,
+  isSelfMatchModalOpened,
+  mapCommitIDChanged,
+  mapCommitNameChanged,
+} from '../../store/SelfMatchMakeModal/SelfMatchModal';
 import { useNavigate } from 'react-router-dom';
 
 type SplitPaneState = {
@@ -175,6 +183,14 @@ export default function Dashboard(): JSX.Element {
       });
   };
 
+  function handleSimulate() {
+    dispatch(isSelfMatchModalOpened(true));
+    dispatch(codeCommitNameChanged('Current Code'));
+    dispatch(codeCommitIDChanged(null));
+    dispatch(mapCommitNameChanged('Current Map'));
+    dispatch(mapCommitIDChanged(null));
+  }
+
   const handleCommitNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommitName(e.target.value);
   };
@@ -251,6 +267,15 @@ export default function Dashboard(): JSX.Element {
                 variant="primary"
               >
                 <FontAwesomeIcon icon={faSave as IconProp} /> Save
+              </Button>
+            </Col>
+            <Col className={styles.toolbarColumn} sm="2">
+              <Button
+                className={styles.toolbarButton}
+                onClick={handleSimulate}
+                variant="primary"
+              >
+                <FontAwesomeIcon icon={faPlay as IconProp} /> Simulate
               </Button>
             </Col>
             <Col className={styles.toolbarColumn} sm="2">
