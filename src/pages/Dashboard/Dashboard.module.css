@@ -22,7 +22,7 @@
 }
 
 .toolbarColumn > button {
-  background-color: #4595CF;
+  background-color: #4595cf;
 }
 
 .toolbarButton {
@@ -62,4 +62,14 @@
   background-color: darkslateblue;
   width: 100%;
   height: 100%;
+}
+
+.popOverHeader {
+  background-color: #2b3760;
+  color: #ffffff;
+}
+
+.popOverBody {
+  background-color: #1c1c1c;
+  color: #ffffff;
 }

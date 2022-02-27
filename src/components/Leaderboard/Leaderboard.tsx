@@ -102,10 +102,10 @@ function PaginatedItems() {
                 <Modal.Header className={styles.matchHeader} closeButton>
                   <Modal.Title>Start a new match</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className={styles.editorSettingsBody}>
+                <Modal.Body className={styles.matchBody}>
                   Do you want to start a match ?
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className={styles.matchFooter}>
                   <Button variant="secondary" onClick={handleClose}>
                     Close
                   </Button>

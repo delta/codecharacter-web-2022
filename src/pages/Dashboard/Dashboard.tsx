@@ -283,10 +283,10 @@ export default function Dashboard(): JSX.Element {
                 rootClose
                 overlay={
                   <Popover>
-                    <Popover.Header as="h3">
+                    <Popover.Header as="h3" className={styles.popOverHeader}>
                       Enter commit message
                     </Popover.Header>
-                    <Popover.Body>
+                    <Popover.Body className={styles.popOverBody}>
                       <Form.Control
                         onChange={handleCommitNameInput}
                         type="text"

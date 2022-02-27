@@ -18,11 +18,7 @@ html {
   /* margin-left: 35%; */
   padding: 10px 25px;
   color: #e8ecfd;
-  background: radial-gradient(
-    circle,
-    #3f5efb 0%,
-    rgba(48, 67, 124, 1) 100%
-  );
+  background: radial-gradient(circle, #3f5efb 0%, rgba(48, 67, 124, 1) 100%);
 }
 
 .header__icon {
@@ -124,13 +120,27 @@ html {
   position: relative;
 }
 
-.matchHeader{
-  background: #2B3760;
-  color: white;
+.matchHeader {
+  background: #2b3760;
+  color: #ffffff;
   height: 10vh;
   border: 0px;
 }
 
-.matchButton{
-  background: #2B3760;
+.matchHeader button {
+  background-color: white;
+}
+
+.matchBody {
+  background-color: #1c1c1c;
+  color: #ffffff;
+}
+
+.matchFooter {
+  background-color: #1c1c1c;
+  border: none;
+}
+
+.matchButton {
+  background: #2b3760;
 }
