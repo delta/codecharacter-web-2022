@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { Counter } from './store/counter/Counter';
+import Loader from './components/Loader/Loader';
 import './websocket/websocket';
 
 const persistor = persistStore(store);
@@ -50,7 +51,7 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <HashRouter>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader />}>
             <EditorSettings />
             <SelfMatchModal />
             <NavBar />

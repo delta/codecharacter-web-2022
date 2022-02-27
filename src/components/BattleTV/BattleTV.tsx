@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './BattleTV.module.css';
 import { battleTvSelector, fetchBattleTv } from './BattleTvSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { getAvatarByID } from '../Avatar/Avatar';
 
 export interface rowInterface {
   id: string;
@@ -16,11 +17,11 @@ export interface rowInterface {
     },
   ];
   user1: {
-    avatarId: string;
+    avatarId: number;
     name: string;
   };
   user2: {
-    avatarId: string;
+    avatarId: number;
     name: string;
   };
 }
@@ -80,7 +81,7 @@ function PaginatedItems() {
                     }
                   >
                     <div className={styles.pic}>
-                      <img src={row.user1.avatarId}></img>
+                      <img src={getAvatarByID(row.user1.avatarId).url}></img>
                     </div>
                     <div className={[styles.username, styles.left].join(' ')}>
                       {row.user1.name}
@@ -110,7 +111,7 @@ function PaginatedItems() {
                       {row.user2.name}
                     </div>
                     <div className={styles.pic}>
-                      <img src={row.user2.avatarId}></img>
+                      <img src={getAvatarByID(row.user2.avatarId).url}></img>
                     </div>
                   </div>
                 </div>

@@ -20,7 +20,7 @@ html {
   color: #e8ecfd;
   background: radial-gradient(
     circle,
-    rgba(63, 94, 251, 1) 0%,
+    #3f5efb 0%,
     rgba(48, 67, 124, 1) 100%
   );
 }
@@ -92,8 +92,18 @@ html {
   opacity: 0.8;
 }
 
-.list .item:hover {
-  transform: scale(1.01);
+.attackButton {
+  background-color: transparent;
+}
+
+.attackImg:hover {
+  transform: scale(1.5);
+}
+
+.attackImg {
+  width: 2rem;
+  height: 2rem;
+  color: #3f5efb;
 }
 
 .paginationouter {

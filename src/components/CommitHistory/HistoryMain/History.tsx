@@ -33,7 +33,13 @@ export default function History(): JSX.Element {
     codeApi
       .getCodeRevisions()
       .then(codeResp => {
-        setCodeHistory(codeResp);
+        setCodeHistory(
+          codeResp.sort((a, b) => {
+            if (a.createdAt < b.createdAt) return -1;
+            else if (a.createdAt > b.createdAt) return 1;
+            else return 0;
+          }),
+        );
       })
       .catch(codeError => {
         if (codeError instanceof ApiError) {
@@ -45,7 +51,14 @@ export default function History(): JSX.Element {
     mapApi
       .getMapRevisions()
       .then(mapResp => {
-        setMapHistory(mapResp);
+        setMapHistory(
+          mapResp.sort((a, b) => {
+            if (a.createdAt < b.createdAt) return -1;
+            else if (a.createdAt > b.createdAt) return 1;
+            else return 0;
+          }),
+        );
+        console.log(completeMapHistory);
       })
       .catch(mapError => {
         if (mapError instanceof ApiError) {

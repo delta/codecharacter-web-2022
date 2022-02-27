@@ -3,6 +3,7 @@ import { Modal, Button, Table } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
 import styles from './Leaderboard.module.css';
+import { getAvatarByID } from '../Avatar/Avatar';
 import {
   LeaderboardApi,
   MatchApi,
@@ -12,6 +13,7 @@ import {
   LeaderboardEntry,
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
+import Loader from '../Loader/Loader';
 
 export interface rowInterface {
   user: {
@@ -49,7 +51,7 @@ function PaginatedItems() {
     setShow(true);
   };
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 8;
 
   useEffect(() => {
     fetchLeaderboard();
@@ -111,11 +113,7 @@ function PaginatedItems() {
     <>
       <>
         {!isLoaded ? (
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border text-white" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
+          <Loader />
         ) : (
           <>
             <div className={styles.list}>
@@ -148,6 +146,7 @@ function PaginatedItems() {
                     <th className={styles.pos}>Rank</th>
                     <th>Avatar</th>
                     <th className={styles.name}>Username</th>
+                    <th className={styles.name}>Attack</th>
                     <th className={styles.score}>Ratings</th>
                     <th className={styles.score}>Won</th>
                     <th className={styles.score}>Tied</th>
@@ -157,22 +156,26 @@ function PaginatedItems() {
                 <tbody>
                   {currentItems &&
                     currentItems.map((row: rowInterface) => (
-                      <tr
-                        className={styles.item}
-                        key={row.user.username}
-                        onClick={() => handleShow(row.user.username)}
-                      >
+                      <tr className={styles.item} key={row.user.username}>
                         <td className={styles.pos}>
                           {itemOffset + 1 + currentItems.indexOf(row)}
                         </td>
                         <td>
                           <img
                             className={styles.pic}
-                            //Add img url here
-                            src={row.user.avatarId.toString()}
+                            src={getAvatarByID(row.user.avatarId).url}
                           ></img>
                         </td>
                         <td className={styles.name}>{row.user.username}</td>
+                        <td
+                          className={styles.attackButton}
+                          onClick={() => handleShow(row.user.username)}
+                        >
+                          <img
+                            className={styles.attackImg}
+                            src={'src/assets/sword.png'}
+                          ></img>
+                        </td>
                         <td className={styles.score}>{row.stats.rating}</td>
                         <td className={styles.score}>{row.stats.wins}</td>
                         <td className={styles.score}>{row.stats.ties}</td>

@@ -1,4 +1,4 @@
-import { AuthApi, CodeApi, Language } from '@codecharacter-2022/client';
+import { CodeApi, Language } from '@codecharacter-2022/client';
 import { RendererComponent, RendererUtils } from '@codecharacter-2022/renderer';
 import Toast from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -42,7 +42,6 @@ import {
   mapCommitIDChanged,
   mapCommitNameChanged,
 } from '../../store/SelfMatchMakeModal/SelfMatchModal';
-import { useNavigate } from 'react-router-dom';
 
 type SplitPaneState = {
   horizontalPercent: string;
@@ -96,7 +95,6 @@ export default function Dashboard(): JSX.Element {
   }, [rendererLogs]);
 
   const codeAPI = new CodeApi(apiConfig);
-  const navigate = useNavigate();
   useEffect(() => {
     const cookieValue = document.cookie;
     const bearerToken = cookieValue.split(';');
@@ -110,24 +108,6 @@ export default function Dashboard(): JSX.Element {
     });
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem('token') != null) {
-      const authApi = new AuthApi(apiConfig);
-      authApi
-        .getAuthStatus()
-        .then(res => {
-          const { status } = res;
-          if (status === 'PROFILE_INCOMPLETE') {
-            navigate('/incomplete-profile', { replace: true });
-          }
-        })
-        .catch((e: Error) => {
-          if (e instanceof ApiError) {
-            //Toast here
-          }
-        });
-    }
-  }, [localStorage.getItem('token')]);
   useEffect(() => {
     if (localStorage.getItem('firstTime') === null) {
       codeAPI

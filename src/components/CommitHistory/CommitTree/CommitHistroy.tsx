@@ -155,7 +155,7 @@ export default function CommitHistory(props: PropsType): JSX.Element {
                 {eachCommit.message}
               </h6>
               <div
-                className="vertical-timeline-element-subtitle flex d-flex justify-content-end"
+                className="vertical-timeline-element-subtitle flex d-flex justify-content-start"
                 onClick={e => handleCommitSelect(e)}
               >
                 <button

@@ -62,12 +62,18 @@
   opacity: 0.8;
 }
 
-.fakeProfileIcon {
-  width: 30px;
-  height: 30px;
-  background-color: #c4c4c4;
+.ProfileIcon {
+  max-width: 30px;
+  max-height: 30px;
+  width: 100%;
+  height: auto;
   border-radius: 50%;
   margin-left: 0.6rem;
+}
+
+.profileIconImg {
+  height: 100%;
+  width: 100%;
 }
 
 .profileName {
