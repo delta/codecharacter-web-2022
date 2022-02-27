@@ -13,17 +13,17 @@ const rowData: Array<rowType> = [
     image: image,
     title: 'About',
     description:
-      ' Code Character is an online AI programming competition, where you write C++ code for a real time strategy game. Test your code against yourself, against the computer, against your previous versions and then against everyone else on multiple maps!    Challenge others to improve your rating as you climb up the leaderboard! Integrated code editor and development environment View your AI play with different versions of itself and with existing AI Bots Live leaderboard, challenge anyone. Active discussion forum for any game related questions Extensive tutorials and documentation',
+      ' Code Character is an online AI programming competition, where you write code for a real time strategy game.',
   },
   {
     image: image,
     title: 'Details',
-    description: 'Date and prizes',
+    description: 'Date - 1st March, 2022 \n Prizes Worth - ₹ 20,000',
   },
   {
     image: image,
     title: 'Screenshots',
-    description: 'Build Your Army',
+    description: 'Add your screenshots',
   },
 ];
 
