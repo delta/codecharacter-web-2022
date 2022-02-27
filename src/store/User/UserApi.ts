@@ -88,11 +88,22 @@ export const ChangeUserDetails = (user: {
   userName: string;
   college: string;
   country: string;
+  avatarId: number;
 }): Promise<{
-  user: { userName: string; college: string; country: string };
+  user: {
+    userName: string;
+    college: string;
+    country: string;
+    avatarId: number;
+  };
 }> => {
   return new Promise<{
-    user: { userName: string; college: string; country: string };
+    user: {
+      userName: string;
+      college: string;
+      country: string;
+      avatarId: number;
+    };
   }>((resolve, reject) => {
     const currentUserapi = new CurrentUserApi(apiConfig);
     currentUserapi
@@ -100,6 +111,7 @@ export const ChangeUserDetails = (user: {
         name: user.userName,
         college: user.college,
         country: user.country,
+        avatarId: user.avatarId,
       })
       .then(() => {
         resolve({ user: user });

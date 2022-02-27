@@ -96,7 +96,12 @@ export const getUserDetailsAction = createAsyncThunk(
 export const changeUserDetailsAction = createAsyncThunk(
   'user/changeUserDetails',
   async (
-    details: { userName: string; college: string; country: string },
+    details: {
+      userName: string;
+      college: string;
+      country: string;
+      avatarId: number;
+    },
     { rejectWithValue },
   ) => {
     try {
@@ -203,6 +208,7 @@ export const UserSlice = createSlice({
         state.user.username = action.payload.user.userName;
         state.user.country = action.payload.user.country;
         state.user.college = action.payload.user.college;
+        state.user.avatarId = action.payload.user.avatarId;
       })
       .addCase(changeUserDetailsAction.rejected, state => {
         state.loading = false;

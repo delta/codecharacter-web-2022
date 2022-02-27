@@ -16,6 +16,7 @@ import { apiConfig, ApiError } from '../../api/ApiConfig';
 import Loader from '../Loader/Loader';
 import swordImage from '../../assets/sword.png';
 import trophyImage from '../../assets/trophy.png';
+import Toast from 'react-hot-toast';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -59,7 +60,7 @@ function PaginatedItems() {
         setIsLoaded(true);
       })
       .catch(error => {
-        console.log(error);
+        if (error instanceof ApiError) Toast.error(error.message);
       });
   };
 
@@ -86,7 +87,7 @@ function PaginatedItems() {
 
     const matchAPI = new MatchApi(apiConfig);
     matchAPI.createMatch(matchRequest as CreateMatchRequest).catch(error => {
-      if (error instanceof ApiError) console.log(error);
+      if (error instanceof ApiError) Toast.error(error.message);
     });
     setShow(false);
   }

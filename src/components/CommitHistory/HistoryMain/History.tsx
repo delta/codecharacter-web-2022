@@ -18,6 +18,7 @@ import styles from './History.module.css';
 import CodeView from '../CodeMapViewbox/CodeView';
 import MapView from '../CodeMapViewbox/MapView';
 import { Col, Container, Row } from 'react-bootstrap';
+import Toast from 'react-hot-toast';
 
 export default function History(): JSX.Element {
   const [BigButton, setBigButton] = useState('Code');
@@ -44,7 +45,7 @@ export default function History(): JSX.Element {
       })
       .catch(codeError => {
         if (codeError instanceof ApiError) {
-          console.log(codeError);
+          Toast.error(codeError.message);
         }
       });
 
@@ -56,7 +57,7 @@ export default function History(): JSX.Element {
       })
       .catch(mapError => {
         if (mapError instanceof ApiError) {
-          console.log(mapError);
+          Toast.error(mapError.message);
         }
       });
   }, []);

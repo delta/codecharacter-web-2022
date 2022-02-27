@@ -22,7 +22,6 @@ const NavBar: React.FunctionComponent = () => {
       localStorage.getItem('token') == null &&
       window.location.hash != '#/register'
     ) {
-      console.log('navbar redirect');
       navigate('/login', { replace: true });
     }
   }, [window.location.hash]);
@@ -70,6 +69,7 @@ const NavBar: React.FunctionComponent = () => {
   const handleClose = () => {
     isOpen(false);
   };
+
   return (
     <div className={styles.navBar}>
       <div className={styles.navBarContainer}>

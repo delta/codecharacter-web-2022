@@ -1,8 +1,8 @@
 import { Match, MatchApi } from '@codecharacter-2022/client';
-import { apiConfig } from '../../api/ApiConfig';
+import { apiConfig, ApiError } from '../../api/ApiConfig';
 import { Action, createSlice, ThunkAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-
+import Toast from 'react-hot-toast';
 export interface BattleTvInterFace {
   loading: boolean;
   hasErrors: boolean;
@@ -64,7 +64,7 @@ export function fetchBattleTv(): ThunkAction<
         useAppDispatch(getBattleTvSuccess(response));
       })
       .catch(error => {
-        console.log(error);
+        if (error instanceof ApiError) Toast.error(error.message);
         useAppDispatch(getBattleTvFailure());
       });
   };
