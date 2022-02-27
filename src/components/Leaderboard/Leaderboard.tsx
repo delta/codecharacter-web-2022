@@ -42,7 +42,7 @@ function PaginatedItems() {
     const endOffset = itemOffset + itemsPerPage;
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+  }, [itemOffset, itemsPerPage, items]);
 
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
@@ -120,11 +120,11 @@ function PaginatedItems() {
               <Table hover className={styles.list}>
                 <thead>
                   <tr className={styles.item}>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th className={styles.score}>Rating</th>
+                    <th className={styles.pos}>Rank</th>
+                    <th>Avatar</th>
+                    <th className={styles.name}>Username</th>
+                    <th className={styles.name}>Attack</th>
+                    <th className={styles.score}>Ratings</th>
                     <th className={styles.score}>Won</th>
                     <th className={styles.score}>Tied</th>
                     <th className={styles.score}>Lost</th>
