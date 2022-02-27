@@ -1511,7 +1511,7 @@ components:
           type: string
           example: Test
         avatarId:
-          type: number
+          type: integer
           example: 1
         isProfileComplete:
           type: boolean
