@@ -24,9 +24,11 @@
   font-size: 64px;
 }
 
-@media screen and (max-width: 700px) {
-
-  .rowContainer {
-    scale: 0.8;
+@media screen and (max-width: 900px) {
+  .imageContainer {
+    scale: 0.6;
+  }
+  .title {
+    font-size: 40px;
   }
 }

@@ -34,3 +34,9 @@
 .heart {
   color: red;
 }
+
+@media screen and (max-width: 1000px) {
+  .jumbotron > div {
+    font-size: 25px;
+  }
+}
