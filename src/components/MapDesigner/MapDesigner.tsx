@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapDesignerComponent } from '@codecharacter-2022/map-designer';
 import { MapApi } from '@codecharacter-2022/client';
 import Toast from 'react-hot-toast';
@@ -15,6 +15,11 @@ const MapDesigner: React.FunctionComponent = () => {
 
   type ButtonType = 'save' | 'submit' | 'commit';
   const mapAPI = new MapApi(apiConfig);
+  useEffect(() => {
+    mapAPI.getLatestMap().then(mp => {
+      setStagedMap(JSON.parse(mp.map));
+    });
+  }, []);
 
   const closeModal = () => setModalShow(false);
   const closeCommitModal = () => {
