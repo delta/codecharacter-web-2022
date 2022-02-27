@@ -79,6 +79,7 @@ const Notifs: React.FunctionComponent = () => {
         onClick={toggleNotifModal}
       >
         <FontAwesomeIcon
+          size="1x"
           className={styles.notifIcon}
           icon={faBell as IconProp}
         />

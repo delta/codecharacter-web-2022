@@ -17,6 +17,7 @@ import { useAppDispatch } from '../../../store/hooks';
 import styles from './History.module.css';
 import CodeView from '../CodeMapViewbox/CodeView';
 import MapView from '../CodeMapViewbox/MapView';
+import { Col, Container, Row } from 'react-bootstrap';
 
 export default function History(): JSX.Element {
   const [BigButton, setBigButton] = useState('Code');
@@ -51,14 +52,7 @@ export default function History(): JSX.Element {
     mapApi
       .getMapRevisions()
       .then(mapResp => {
-        setMapHistory(
-          mapResp.sort((a, b) => {
-            if (a.createdAt < b.createdAt) return -1;
-            else if (a.createdAt > b.createdAt) return 1;
-            else return 0;
-          }),
-        );
-        console.log(completeMapHistory);
+        setMapHistory(mapResp.reverse());
       })
       .catch(mapError => {
         if (mapError instanceof ApiError) {
@@ -90,9 +84,35 @@ export default function History(): JSX.Element {
   };
 
   return (
-    <div>
-      <div className={styles.historyMain}>
-        <div className={styles.timeline}>
+    <Container className={styles.historyMain}>
+      <div className={styles.buttonContainer}>
+        <div className={styles.codeMapButton}>
+          <ButtonGroup>
+            <Button
+              className={
+                BigButton == 'Code' ? styles.largeButton : styles.smallButton
+              }
+              onClick={() => {
+                setBigButton('Code');
+              }}
+            >
+              Code
+            </Button>
+            <Button
+              className={
+                BigButton == 'Map' ? styles.largeButton : styles.smallButton
+              }
+              onClick={() => {
+                setBigButton('Map');
+              }}
+            >
+              Map
+            </Button>
+          </ButtonGroup>
+        </div>
+      </div>
+      <Row className={styles.viewContainer}>
+        <Col md="3">
           <div></div>
           <div className={styles.completeTimeline}>
             {completeMapHistory && completeCodeHistroy ? (
@@ -110,36 +130,8 @@ export default function History(): JSX.Element {
             )}
           </div>
           <div></div>
-        </div>
-        <div className={styles.codeView}>
-          <div className={styles.buttonContainer}>
-            <div className={styles.codeMapButton}>
-              <ButtonGroup>
-                <Button
-                  className={
-                    BigButton == 'Code'
-                      ? styles.largeButton
-                      : styles.smallButton
-                  }
-                  onClick={() => {
-                    setBigButton('Code');
-                  }}
-                >
-                  Code
-                </Button>
-                <Button
-                  className={
-                    BigButton == 'Map' ? styles.largeButton : styles.smallButton
-                  }
-                  onClick={() => {
-                    setBigButton('Map');
-                  }}
-                >
-                  Map
-                </Button>
-              </ButtonGroup>
-            </div>
-          </div>
+        </Col>
+        <Col md="9" className={styles.codeView}>
           <div className={BigButton == 'Code' ? styles.codeBox : styles.mapBox}>
             {BigButton == 'Code' ? (
               <CodeView code={currentCode} codeLang={codeLanguage} />
@@ -157,9 +149,8 @@ export default function History(): JSX.Element {
               Select
             </Button>
           </div>
-        </div>
-        <div className={styles.dummy}></div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }

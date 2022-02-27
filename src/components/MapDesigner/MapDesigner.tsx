@@ -100,10 +100,12 @@ const MapDesigner: React.FunctionComponent = () => {
   };
   return (
     <>
-      <MapDesignerComponent
-        saveMapCallback={saveMapCallback}
-        readonly={false}
-      />
+      <div className={styles.mapDesignerContainer}>
+        <MapDesignerComponent
+          saveMapCallback={saveMapCallback}
+          readonly={false}
+        />
+      </div>
       <Modal
         show={modalShow}
         centered

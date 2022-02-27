@@ -74,7 +74,7 @@ const NavBar: React.FunctionComponent = () => {
         <Profile open={open} handleClose={handleClose} />
         <div className={styles.branding}>
           <Link to="dashboard" className={styles.logoLink}>
-            <h2 className={styles.navLogo}>Code Character</h2>
+            <div className={styles.navLogo}>CodeCharacter</div>
           </Link>
         </div>
         {location.pathname === '/' && (
@@ -102,7 +102,7 @@ const NavBar: React.FunctionComponent = () => {
                 alt="Profile Icon"
               />
             </div>
-            <h3 className={styles.profileName}>{getUser?.userName}</h3>
+            <div className={styles.profileName}>{getUser?.userName}</div>
           </div>
         </div>
       ) : (

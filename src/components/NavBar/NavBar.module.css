@@ -4,8 +4,6 @@
   justify-content: space-between;
   background-color: #262e4b;
   width: 100%;
-  height: 60px;
-  position: fixed;
   z-index: 1000;
 }
 
@@ -32,8 +30,7 @@
   font-family: 'Montserrat';
   color: #ffffff;
   font-size: 24px;
-  margin: 1rem;
-  margin-left: 2rem;
+  margin: 0.5rem 1rem;
 }
 
 .logoLink {
@@ -41,13 +38,12 @@
 }
 
 .branding {
-  /* position: absolute; */
-  left: 0px;
+  position: relative;
 }
 
 .profileIcons {
   color: #9c9c9c;
-  margin: 1rem;
+  margin: 0.5rem;
   display: flex;
   flex-direction: row;
 }
@@ -63,39 +59,26 @@
 }
 
 .ProfileIcon {
-  max-width: 30px;
-  max-height: 30px;
-  width: 100%;
   height: auto;
   border-radius: 50%;
   margin-left: 0.6rem;
 }
 
 .profileIconImg {
-  height: 100%;
-  width: 100%;
+  height: 2rem;
+  width: auto;
 }
 
 .profileName {
   font-family: 'Montserrat';
   color: #ffffff;
-  margin: auto;
-  margin-left: 0.5rem;
-  margin-right: 2rem;
+  margin: 0 0.5rem;
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  align-self: center;
 }
 
 .notifIcon {
   margin: auto;
   position: relative;
-}
-
-@media screen and (max-width: 500px) {
-  .navLogo {
-    font-size: 18px;
-  }
-  .profileName {
-    font-size: 12px;
-  }
 }

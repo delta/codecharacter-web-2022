@@ -119,7 +119,7 @@ function Login(): JSX.Element {
     <div className={styles.mainContainer}>
       <Card className={styles.cardContainer}>
         <div className={styles.titleContainer}>
-          <h1 className={styles.name}>Welcome!! To CodeCharatcer</h1>
+          <h1 className={styles.name}>Welcome To CodeCharatcer!</h1>
           <Container className={styles.subTitle}>
             Log in to access your dashboard and profile 👏️🎊️{' '}
           </Container>
@@ -251,7 +251,7 @@ function Login(): JSX.Element {
           </div>
         </div>
         <div className={styles.linkContainer}>
-          Do not have an account ?{' '}
+          Do not have an account?{' '}
           <span>
             {' '}
             <NavLink

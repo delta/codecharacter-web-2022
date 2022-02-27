@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../../../store/hooks';
 function IncompleteProfile(): JSX.Element {
   const [college, setCollege] = useState('');
-  const [selected, setSelected] = useState('IN');
+  const [country, setCountry] = useState('IN');
   const [collegeError, iscollegeError] = useState(false);
   const [submitThird, isSubmitThird] = useState(false);
   const [userName, setUsername] = useState('');
@@ -22,6 +22,7 @@ function IncompleteProfile(): JSX.Element {
   const [fullName, setfullName] = useState('');
   const [fullNameError, isfullNameError] = useState(false);
   const [loadingStatus, isloadingStatus] = useState(false);
+  const [avatarId, setAvatarId] = useState(0);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleCollege = () => {
@@ -54,9 +55,9 @@ function IncompleteProfile(): JSX.Element {
       .completeUserProfile({
         username: userName,
         name: fullName,
-        country: selected,
+        country: country,
         college: college,
-        avatarId: 0,
+        avatarId: avatarId,
       })
       .then(() => {
         isloadingStatus(false);
@@ -70,7 +71,7 @@ function IncompleteProfile(): JSX.Element {
       });
   };
   const handleFlagSelect = (code: string) => {
-    setSelected(code);
+    setCountry(code);
   };
 
   const handleUsername = () => {
@@ -121,7 +122,7 @@ function IncompleteProfile(): JSX.Element {
         <div style={{ marginTop: '3rem' }}>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicFullName">
-              <Form.Label>Fullname</Form.Label>
+              <Form.Label>Full Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Fullname"
@@ -174,7 +175,7 @@ function IncompleteProfile(): JSX.Element {
         </div>
         <div>
           <OtherDetails
-            selectedCode={selected}
+            selectedCode={country}
             handleFlagSelect={handleFlagSelect}
             formNumber={3}
             handleCollegeChange={handleCollegeChange}
@@ -182,6 +183,7 @@ function IncompleteProfile(): JSX.Element {
             collegeError={collegeError}
             submitThird={submitThird}
             register={false}
+            handleAvatarChange={setAvatarId}
           />
         </div>
         <div className={classnames('d-grid gap-2', styles.submitContainer)}>
