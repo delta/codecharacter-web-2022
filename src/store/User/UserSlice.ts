@@ -135,6 +135,9 @@ export const UserSlice = createSlice({
     switchRegister: state => {
       state.isRegistered = false;
     },
+    loggedIn: state => {
+      state.isloggedIn = true;
+    },
     logout: state => {
       state.user = initialState.user;
       state.isloggedIn = initialState.isloggedIn;
@@ -230,7 +233,9 @@ export const UserSlice = createSlice({
       });
   },
 });
-export const { switchRegister, logout, creditionals } = UserSlice.actions;
+
+export const { switchRegister, logout, creditionals, loggedIn } =
+  UserSlice.actions;
 export const user = (state: RootState): User => state.user.user;
 export const loading = (state: RootState): boolean => state.user.loading;
 export const isRegistered = (state: RootState): boolean =>
