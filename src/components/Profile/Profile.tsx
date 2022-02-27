@@ -26,6 +26,7 @@ import {
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { getAvatarByID } from '../Avatar/Avatar';
 
 interface profile {
   open?: boolean;
@@ -141,10 +142,10 @@ const Profile = (props: profile): JSX.Element => {
       navigate('/login', { replace: true });
     }
   }, [success]);
-  const getUser = useAppSelector(user);
+  const loggedInUser = useAppSelector(user);
   useEffect(() => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
-  }, [getUser]);
+  }, [loggedInUser]);
   const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCollegeName(e.target.value);
     issubmitCollege(true);
@@ -203,9 +204,12 @@ const Profile = (props: profile): JSX.Element => {
   const handleSubmit = () => {
     dispatch(
       changeUserDetailsAction({
-        userName: userName.toString().trim() === '' ? getUser.name : userName,
+        userName:
+          userName.toString().trim() === '' ? loggedInUser.name : userName,
         college:
-          collegeName.toString().trim() === '' ? getUser.college : collegeName,
+          collegeName.toString().trim() === ''
+            ? loggedInUser.college
+            : collegeName,
         country: getCountryName(selected),
       }),
     );
@@ -232,7 +236,7 @@ const Profile = (props: profile): JSX.Element => {
         >
           <Offcanvas.Header className={styles.header}>
             <Offcanvas.Title>
-              <h3>Hey! {getUser.userName}</h3>
+              <h3>Hey! {loggedInUser.userName}</h3>
             </Offcanvas.Title>
             <CloseButton className={styles.close} onClick={props.handleClose} />
           </Offcanvas.Header>
@@ -241,11 +245,14 @@ const Profile = (props: profile): JSX.Element => {
             {formNumber == 1 ? (
               <div className={styles.profileContainer}>
                 <div className={styles.imageContainer}>
-                  <img src="src/assets/user.jpg" alt="image here" />
+                  <img
+                    src={getAvatarByID(loggedInUser.avatarId).url}
+                    alt="User Avatar"
+                  />
                 </div>
                 <div className={styles.profileName}>
                   {' '}
-                  <b>{getUser.name}</b>
+                  <b>{loggedInUser.name}</b>
                 </div>
               </div>
             ) : (
@@ -262,7 +269,7 @@ const Profile = (props: profile): JSX.Element => {
                       <Form.Label>Username</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder={getUser.userName}
+                        placeholder={loggedInUser.userName}
                         value={userName}
                         className={
                           submitUsername
@@ -286,7 +293,7 @@ const Profile = (props: profile): JSX.Element => {
                       <Form.Label>College</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder={getUser.college}
+                        placeholder={loggedInUser.college}
                         value={collegeName}
                         className={
                           submitCollege

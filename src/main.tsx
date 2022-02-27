@@ -8,7 +8,6 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { Counter } from './store/counter/Counter';
 import Loader from './components/Loader/Loader';
 import './websocket/websocket';
 
@@ -65,7 +64,6 @@ ReactDOM.render(
                   <Route path="/history" element={<History />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  <Route path="/counter" element={<Counter />} />
                   <Route path="/leaderboard" element={<Leaderboard />} />
                   <Route path="/battletv" element={<BattleTV />} />
                   <Route path="/activate" element={<Verify />} />
