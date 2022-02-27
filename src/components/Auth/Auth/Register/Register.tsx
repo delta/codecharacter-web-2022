@@ -383,7 +383,7 @@ export default function Register(): JSX.Element {
             )}
           </Form>
           <div className={styles.linkContainer}>
-            Already have an account ?{' '}
+            Already have an account?{' '}
             <span>
               {' '}
               <b>

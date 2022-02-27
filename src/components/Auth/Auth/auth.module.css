@@ -4,8 +4,7 @@
 }
 
 .mainContainer {
-  width: 100vw;
-  min-height: calc(100vh - 60px);
+  min-height: 100%;
   background-color: #242a3c;
   display: flex;
   flex-direction: row;

@@ -1,14 +1,11 @@
 .notifIconContainer {
   position: relative;
-  width: 28px;
-  height: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
-  padding-top: 5px;
   transition: all 0.1s ease-in-out;
 }
 .notifIcon {

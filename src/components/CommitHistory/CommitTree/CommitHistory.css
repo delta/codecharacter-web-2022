@@ -1,17 +1,14 @@
 .vertical-timeline-element--work,
 .vertical-timeline-element {
-  height: 100px;
-  width: 80%;
+  height: 120px;
   padding: 0%;
 }
 
-.vertical-timeline::before {
-  left: 13px;
-}
-
 .vertical-timeline-element-icon {
-  width: 30px;
-  height: 30px;
+  top: 16px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .vertical-timeline-element-content {
@@ -34,8 +31,9 @@
 .vertical-timeline-element-title {
   font-family: Montserrat;
   font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 400;
+  font-size: 1.5rem;
+  padding: 1rem;
   -ms-overflow-style: none;
   overflow-x: auto;
 }
