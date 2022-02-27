@@ -1,4 +1,4 @@
-import { MatchApi } from '@codecharacter-2022/client';
+import { Match, MatchApi } from '@codecharacter-2022/client';
 import { apiConfig } from '../../api/ApiConfig';
 import { Action, createSlice, ThunkAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
@@ -7,7 +7,7 @@ export interface BattleTvInterFace {
   loading: boolean;
   hasErrors: boolean;
   hasbeenFetched: boolean;
-  battletv: never[];
+  battletv: Match[];
 }
 
 export const initialState = {
