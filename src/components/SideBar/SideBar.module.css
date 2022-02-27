@@ -1,9 +1,6 @@
 .sideBar {
-  height: calc(100vh - 60px);
-  width: 65px;
+  height: 100%;
   background-color: #2d3342;
-  position: fixed;
-  top: 60px;
   z-index: 1000;
 
   display: flex;
@@ -15,9 +12,9 @@
 .sideBarIcon {
   margin: auto;
   width: fit-content;
-  margin-bottom: 1rem;
   background-color: transparent;
-  font-size: 30px;
+  font-size: 1.5rem;
+  padding: 10px;
 }
 
 .sideBarIconComponent {
@@ -25,6 +22,9 @@
   cursor: pointer;
 }
 
+.up {
+  flex: 1;
+}
 
 .deltaLogo > img {
   width: 40px;

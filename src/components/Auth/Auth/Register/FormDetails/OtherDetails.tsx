@@ -58,7 +58,7 @@ export default function OtherDetails(props: user): JSX.Element {
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicAvatar">
         <Form.Label>Avatar</Form.Label>
-        <div className={styles.avatarBox}>
+        <div>
           <div className={styles.avatarContainer}>
             {avatars.map((avatar, index: number) => (
               <div

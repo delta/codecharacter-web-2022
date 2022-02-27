@@ -12,15 +12,10 @@
   border-radius: 5px;
 }
 
-.avatarBox {
-  max-width: 30rem;
-}
-
 .avatarContainer {
   display: flex;
   flex-direction: row;
   gap: 20px;
-  vertical-align: middle;
   overflow-x: scroll;
   background-color: whitesmoke;
   border: 1px solid white;

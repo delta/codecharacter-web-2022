@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import './CommitHistory.css';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import styles from '../HistoryMain/History.module.css';
@@ -15,6 +15,7 @@ import {
   mapCommitIDChanged,
   mapCommitNameChanged,
 } from '../../../store/SelfMatchMakeModal/SelfMatchModal';
+import { Button } from 'react-bootstrap';
 
 type PropsType = {
   commitID: (commitID: string) => void;
@@ -128,7 +129,7 @@ export default function CommitHistory(props: PropsType): JSX.Element {
   return (
     <div>
       {props.commitHistoryDetails && props.commitHistoryDetails.length > 0 ? (
-        props.commitHistoryDetails.map((eachCommit, index) => {
+        props.commitHistoryDetails.map(eachCommit => {
           return (
             <VerticalTimelineElement
               key={eachCommit.id.toString()}
@@ -148,25 +149,21 @@ export default function CommitHistory(props: PropsType): JSX.Element {
                 props.commitID(eachCommit.id);
               }}
             >
-              <h3 className="vertical-timeline-element-title">
-                {`Commit - ${index + 1}`}
-              </h3>
-              <h6 className="vertical-timeline-element-subtitle">
+              <h6 className="vertical-timeline-element-title">
                 {eachCommit.message}
               </h6>
               <div
-                className="vertical-timeline-element-subtitle flex d-flex justify-content-start"
+                className="flex d-flex justify-content-start"
                 onClick={e => handleCommitSelect(e)}
               >
-                <button
+                <Button
                   className={styles.selectBtn}
                   data-name={eachCommit.message}
                   data-uuid={eachCommit.id}
                 >
                   {' '}
-                  <FontAwesomeIcon icon={faCheckCircle as IconProp} />{' '}
-                  <b>Select</b>{' '}
-                </button>
+                  <FontAwesomeIcon icon={faPlay as IconProp} /> <b>Simulate</b>{' '}
+                </Button>
               </div>
             </VerticalTimelineElement>
           );

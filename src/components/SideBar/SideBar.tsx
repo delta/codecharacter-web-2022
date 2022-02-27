@@ -63,7 +63,7 @@ const SideBar: React.FunctionComponent = () => {
       pathName != '/reset-password' &&
       pathName != '/incomplete-profile' ? (
         <div className={styles.sideBar}>
-          <div>
+          <div className={styles.up}>
             {icons.map(icon => {
               if (icon.tooltip === 'Editor Settings') {
                 return (
@@ -94,7 +94,7 @@ const SideBar: React.FunctionComponent = () => {
               }
             })}
           </div>
-          {
+          <div>
             <div className={styles.sideBarIcon}>
               <div title="Made with ❤ by Delta">
                 <div className={styles.deltaLogo}>
@@ -102,7 +102,7 @@ const SideBar: React.FunctionComponent = () => {
                 </div>
               </div>
             </div>
-          }
+          </div>
         </div>
       ) : (
         <></>
