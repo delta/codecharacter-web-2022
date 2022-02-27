@@ -1,6 +1,5 @@
-import { Configuration } from '@codecharacter-2022/client';
-import { BASE_PATH, PREFER_DEV_OVERRIDE } from '../config/config';
-
+import { AuthApi, Configuration } from '@codecharacter-2022/client';
+import { BASE_PATH, PREFER_DEV_OVERRIDE, homeUrl } from '../config/config';
 export class ApiError extends Error {
   status: number;
   message: string;
@@ -26,19 +25,35 @@ export const apiConfig = new Configuration({
         return context;
       },
       post: async context => {
-        const status = context.response.status;
-        if (
-          (status == 401 || status == 403) &&
-          (localStorage.getItem('oauth') == 'false' ||
-            localStorage.getItem('oauth') == null)
-        ) {
-          console.log('middleware redirect');
-          window.location.href = 'http://localhost:3000/#/login';
-          localStorage.removeItem('token');
+        const statusCode = context.response.status;
+        if (localStorage.getItem('token') != null) {
+          const authApi = new AuthApi(apiConfig);
+          authApi
+            .getAuthStatus()
+            .then(res => {
+              const { status } = res;
+              if (status === 'PROFILE_INCOMPLETE') {
+                // localStorage.setItem('oauth', 'true');
+                window.location.href = `${homeUrl}/#/incomplete-profile`;
+                window.history.forward();
+              } else if (status === 'AUTHENTICATED') {
+                if (statusCode == 401 || statusCode == 403) {
+                  console.log('middleware redirect');
+                  window.location.href = `${homeUrl}/#/login`;
+                  window.history.forward();
+                  localStorage.removeItem('token');
+                }
+              }
+            })
+            .catch((e: Error) => {
+              if (e instanceof ApiError) {
+                //Toast here
+              }
+            });
         }
-        if (status >= 400) {
+        if (statusCode >= 400) {
           const body = await context.response.json();
-          throw new ApiError(status, body?.message ?? 'Unknown error');
+          throw new ApiError(statusCode, body?.message ?? 'Unknown error');
         }
         return context.response;
       },

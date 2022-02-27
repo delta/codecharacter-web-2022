@@ -6,6 +6,8 @@ import Notifs from '../Notifs/Notifs';
 import { getAvatarByID } from '../Avatar/Avatar';
 import { getUserDetailsAction, user } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { AuthApi } from '@codecharacter-2022/client';
+import { apiConfig, ApiError } from '../../api/ApiConfig';
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -16,7 +18,6 @@ const NavBar: React.FunctionComponent = () => {
       navigate('/register', { replace: true });
     if (
       localStorage.getItem('token') == null &&
-      localStorage.getItem('oauth') == 'false' &&
       window.location.hash != '#/register'
     ) {
       console.log('navbar redirect');
@@ -37,13 +38,27 @@ const NavBar: React.FunctionComponent = () => {
   useEffect(() => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [getUser]);
-
   useEffect(() => {
-    if (localStorage.getItem('token') != null) {
-      navigate('/dashboard', { replace: true });
-    } else {
-      handleClose();
-    }
+    const authApi = new AuthApi(apiConfig);
+    authApi
+      .getAuthStatus()
+      .then(res => {
+        const { status } = res;
+        if (status === 'PROFILE_INCOMPLETE') {
+          navigate('/incomplete-profile', { replace: true });
+        } else if (status === 'AUTHENTICATED') {
+          if (localStorage.getItem('token') != null) {
+            navigate('/dashboard', { replace: true });
+          } else {
+            handleClose();
+          }
+        }
+      })
+      .catch((e: Error) => {
+        if (e instanceof ApiError) {
+          //Toast here
+        }
+      });
   }, [getUser]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
