@@ -1,3 +1,16 @@
+.overlayBackground {
+  margin: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  background-color: #242a3c;
+}
+
 .container {
   margin: auto;
   position: absolute;
