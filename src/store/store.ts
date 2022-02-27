@@ -4,7 +4,6 @@ import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 
-import counterReducer from './counter/counterSlice';
 import UserReducer from './User/UserSlice';
 import battleTvReducer from '../components/BattleTV/BattleTvSlice';
 import notifReducer from './Notifs/notifSlice';
@@ -28,7 +27,6 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     user: UserReducer,
     battletv: battleTvReducer,
     notifs: notifReducer,
