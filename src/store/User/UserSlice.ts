@@ -9,8 +9,8 @@ import {
   ChangeUserCreditionals,
 } from './UserApi';
 
-export interface user {
-  userName: string;
+export interface User {
+  username: string;
   name: string;
   email: string;
   password: string;
@@ -21,7 +21,7 @@ export interface user {
 }
 
 interface register {
-  user: user;
+  user: User;
   loading: boolean;
   isRegistered: boolean;
   isloggedIn: boolean;
@@ -36,7 +36,7 @@ interface register {
 
 const initialState: register = {
   user: {
-    userName: '',
+    username: '',
     name: '',
     email: '',
     password: '',
@@ -59,7 +59,7 @@ const initialState: register = {
 
 export const registerAction = createAsyncThunk(
   'user/registerAction',
-  async (user: user, { rejectWithValue }) => {
+  async (user: User, { rejectWithValue }) => {
     try {
       const res = await startRegister(user);
       return res.user;
@@ -184,7 +184,7 @@ export const UserSlice = createSlice({
         state.loading = false;
         state.isSuccess = true;
         state.user.name = action.payload.fullName;
-        state.user.userName = action.payload.userName;
+        state.user.username = action.payload.userName;
         state.user.country = action.payload.country;
         state.user.college = action.payload.college;
       })
@@ -199,7 +199,7 @@ export const UserSlice = createSlice({
       .addCase(changeUserDetailsAction.fulfilled, (state, action) => {
         state.loading = false;
         state.isSuccessUser = true;
-        state.user.userName = action.payload.user.userName;
+        state.user.username = action.payload.user.userName;
         state.user.country = action.payload.user.country;
         state.user.college = action.payload.user.college;
       })
@@ -224,7 +224,7 @@ export const UserSlice = createSlice({
   },
 });
 export const { switchRegister, logout, creditionals } = UserSlice.actions;
-export const user = (state: RootState): user => state.user.user;
+export const user = (state: RootState): User => state.user.user;
 export const loading = (state: RootState): boolean => state.user.loading;
 export const isRegistered = (state: RootState): boolean =>
   state.user.isRegistered;

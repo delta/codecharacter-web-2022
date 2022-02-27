@@ -6,36 +6,49 @@ import styles from './BattleTV.module.css';
 import { battleTvSelector, fetchBattleTv } from './BattleTvSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { getAvatarByID } from '../Avatar/Avatar';
+import { Match, Verdict } from '@codecharacter-2022/client';
+import { User, user } from '../../store/User/UserSlice';
 
-export interface rowInterface {
-  id: string;
-  games: [
-    {
-      gameVerdict: 'PLAYER1' | 'PLAYER2' | 'TIE';
-      coinsUsed: number;
-      destruction: number;
-    },
-  ];
-  user1: {
-    avatarId: number;
-    name: string;
-  };
-  user2: {
-    avatarId: number;
-    name: string;
-  };
+function getIcon(loggedInUser: User, match: Match) {
+  if (loggedInUser.username === match.user1.username) {
+    // user is PLAYER1
+    if (match.matchVerdict === Verdict.Player1) {
+      return styles.battlecardwin;
+    } else if (match.matchVerdict == Verdict.Player2) {
+      return styles.battlecardlose;
+    }
+  } else {
+    // user is PLAYER2
+    if (match.matchVerdict === Verdict.Player1) {
+      return styles.battlecardlose;
+    } else if (match.matchVerdict == Verdict.Player2) {
+      return styles.battlecardwin;
+    }
+  }
+  return styles.battlecardtie;
+}
+
+function getUsersGame(loggedInUser: User, match: Match) {
+  const games = [...match.games.values()];
+  if (loggedInUser.username == match.user1.username) {
+    return games[0];
+  } else {
+    return games[games.length - 1];
+  }
 }
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [currentItems, setCurrentItems] = useState([]);
+  const [currentItems, setCurrentItems] = useState<Match[]>([]);
   const navigate = useNavigate();
 
   const itemsPerPage = 4;
 
   const { battletv, loading, hasbeenFetched, hasErrors } =
     useAppSelector(battleTvSelector);
+
+  const loggedInUser = useAppSelector(user);
 
   // initialize the redux hook
   const dispatch = useAppDispatch();
@@ -67,51 +80,55 @@ function PaginatedItems() {
         ) : (
           <>
             {currentItems &&
-              currentItems.map((row: rowInterface) => (
-                <div className={styles.item} key={row.id}>
+              currentItems.map((match: Match) => (
+                <div className={styles.item} key={match.id}>
                   <div
                     className={
-                      styles.battlecard +
-                      ' ' +
-                      (row.games[0].gameVerdict === 'PLAYER1'
-                        ? styles.battlecardwin
-                        : row.games[0].gameVerdict === 'TIE'
-                        ? styles.battlecardtie
-                        : styles.battlecardlose)
+                      styles.battlecard + ' ' + getIcon(loggedInUser, match)
                     }
                   >
                     <div className={styles.pic}>
-                      <img src={getAvatarByID(row.user1.avatarId).url}></img>
+                      <img src={getAvatarByID(match.user1.avatarId).url}></img>
                     </div>
                     <div className={[styles.username, styles.left].join(' ')}>
-                      {row.user1.name}
+                      {match.user1.name}
                     </div>
                     <div className={styles.coinused}>
-                      {row.games[0].coinsUsed}
+                      {[...match.games.values()][0].coinsUsed}
                     </div>
                     <div className={styles.destruction}>
-                      {row.games[0].destruction}
+                      {[...match.games.values()][0].destruction}
                     </div>
                     <div
                       className={styles.watchButton}
                       onClick={() => {
-                        dispatch(getLogAction(row.id));
+                        dispatch(
+                          getLogAction(getUsersGame(loggedInUser, match).id),
+                        );
                         navigate('/dashboard');
                       }}
                     >
                       Watch
                     </div>
                     <div className={styles.destruction}>
-                      {row.games[0].destruction}
+                      {
+                        [...match.games.values()][
+                          [...match.games.values()].length === 1 ? 0 : 1
+                        ].destruction
+                      }
                     </div>
                     <div className={styles.coinused}>
-                      {row.games[0].coinsUsed}
+                      {
+                        [...match.games.values()][
+                          [...match.games.values()].length === 1 ? 0 : 1
+                        ].destruction
+                      }
                     </div>
                     <div className={[styles.username, styles.right].join(' ')}>
-                      {row.user2.name}
+                      {match.user2.name}
                     </div>
                     <div className={styles.pic}>
-                      <img src={getAvatarByID(row.user2.avatarId).url}></img>
+                      <img src={getAvatarByID(match.user2.avatarId).url}></img>
                     </div>
                   </div>
                 </div>

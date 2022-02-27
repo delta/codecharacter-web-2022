@@ -1,12 +1,12 @@
 import { UserApi, AuthApi, CurrentUserApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError, authConfig } from '../../api/ApiConfig';
-import { user } from './UserSlice';
-export const startRegister = (user: user): Promise<{ user: user }> => {
-  return new Promise<{ user: user }>((resolve, reject) => {
+import { User } from './UserSlice';
+export const startRegister = (user: User): Promise<{ user: User }> => {
+  return new Promise<{ user: User }>((resolve, reject) => {
     const userApi = new UserApi(authConfig);
     userApi
       .register({
-        username: user.userName,
+        username: user.username,
         name: user.name,
         email: user.email,
         password: user.password,

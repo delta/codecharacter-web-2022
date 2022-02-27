@@ -12,7 +12,7 @@ const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const getUser = useAppSelector(user);
+  const loggedInUser = useAppSelector(user);
   useEffect(() => {
     if (window.location.hash == '#/register')
       navigate('/register', { replace: true });
@@ -37,7 +37,7 @@ const NavBar: React.FunctionComponent = () => {
   }, [document.cookie]);
   useEffect(() => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
-  }, [getUser]);
+  }, [loggedInUser]);
   useEffect(() => {
     const authApi = new AuthApi(apiConfig);
     authApi
@@ -59,7 +59,7 @@ const NavBar: React.FunctionComponent = () => {
           //Toast here
         }
       });
-  }, [getUser]);
+  }, [loggedInUser]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
     isOpen(true);
@@ -98,11 +98,11 @@ const NavBar: React.FunctionComponent = () => {
             <div className={styles.ProfileIcon}>
               <img
                 className={styles.profileIconImg}
-                src={getAvatarByID(getUser.avatarId).url}
+                src={getAvatarByID(loggedInUser.avatarId).url}
                 alt="Profile Icon"
               />
             </div>
-            <div className={styles.profileName}>{getUser?.userName}</div>
+            <h3 className={styles.profileName}>{loggedInUser?.username}</h3>
           </div>
         </div>
       ) : (
