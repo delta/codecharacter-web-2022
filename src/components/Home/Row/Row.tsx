@@ -16,10 +16,8 @@ export default function Row(props: props): JSX.Element {
         <img src={image} />
       </div>
       <div className={styles.descriptionContainer}>
-        <div>
-          <div className={styles.title}>{title}</div>
-          <div className={styles.description}>{description}</div>
-        </div>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.description}>{description}</div>
       </div>
     </div>
   );

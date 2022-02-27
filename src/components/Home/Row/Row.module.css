@@ -1,23 +1,32 @@
 .rowContainer {
-    width: 100%;
-    display: flex;
+  width: 100%;
+  display: flex;
 }
 
 .reverse {
-    flex-direction: row-reverse;
-    background-color: #eee;
+  flex-direction: row-reverse;
+  background-color: #eee;
 }
 
-.rowContainer > div {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.rowContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .descriptionContainer {
-    padding-top: 32px;
+  padding-top: 32px;
 }
 
 .title {
-    font-size: 64px;
+  display: flex;
+  min-width: 200px;
+  font-size: 64px;
+}
+
+@media screen and (max-width: 700px) {
+
+  .rowContainer {
+    scale: 0.8;
+  }
 }
