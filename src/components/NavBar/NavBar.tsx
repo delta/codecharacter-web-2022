@@ -8,6 +8,8 @@ import { getUserDetailsAction, user } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { AuthApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
+import Toast from 'react-hot-toast';
+
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const NavBar: React.FunctionComponent = () => {
       })
       .catch((e: Error) => {
         if (e instanceof ApiError) {
-          //Toast here
+          Toast.error(e.message);
         }
       });
   }, [getUser]);

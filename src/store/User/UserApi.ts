@@ -1,6 +1,8 @@
 import { UserApi, AuthApi, CurrentUserApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError, authConfig } from '../../api/ApiConfig';
 import { user } from './UserSlice';
+import Toast from 'react-hot-toast';
+
 export const startRegister = (user: user): Promise<{ user: user }> => {
   return new Promise<{ user: user }>((resolve, reject) => {
     const userApi = new UserApi(authConfig);
@@ -99,9 +101,11 @@ export const ChangeUserDetails = (user: {
       })
       .then(() => {
         resolve({ user: user });
+        Toast.success('Profile Updated');
       })
       .catch(error => {
         if (error instanceof ApiError) {
+          Toast.error(error.message);
           reject();
         }
       });

@@ -12,6 +12,8 @@ import { CurrentUserApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../../../../api/ApiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../../../store/hooks';
+import Toast from 'react-hot-toast';
+
 function IncompleteProfile(): JSX.Element {
   const [college, setCollege] = useState('');
   const [country, setCountry] = useState('IN');
@@ -62,11 +64,12 @@ function IncompleteProfile(): JSX.Element {
       .then(() => {
         isloadingStatus(false);
         dispatch(getUserDetailsAction());
+        Toast.success('Profile Submitted');
         navigate('/login', { replace: true });
       })
       .catch(error => {
         if (error instanceof ApiError) {
-          //Toast here
+          Toast.error(error.message);
         }
       });
   };
