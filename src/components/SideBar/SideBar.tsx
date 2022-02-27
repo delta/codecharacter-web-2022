@@ -18,6 +18,8 @@ import styles from './SideBar.module.css';
 import { logout } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import deltaLogo from '../../assets/deltaLogo.png';
+
 const icons = [
   { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
   { icon: faGlobeAsia, route: 'mapdesigner', tooltip: 'Map Designer' },
@@ -61,35 +63,46 @@ const SideBar: React.FunctionComponent = () => {
       pathName != '/reset-password' &&
       pathName != '/incomplete-profile' ? (
         <div className={styles.sideBar}>
-          {icons.map(icon => {
-            if (icon.tooltip === 'Editor Settings') {
-              return (
-                <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
-                  <FontAwesomeIcon
-                    className={styles.sideBarIconComponent}
-                    title={icon.tooltip}
-                    icon={icon.icon as IconProp}
-                    onClick={handleOpenSettings}
-                  />
-                </div>
-              );
-            } else {
-              return (
-                <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
-                  <Link to={icon.route} key={icon.route}>
+          <div>
+            {icons.map(icon => {
+              if (icon.tooltip === 'Editor Settings') {
+                return (
+                  <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
                     <FontAwesomeIcon
                       className={styles.sideBarIconComponent}
                       title={icon.tooltip}
-                      onClick={() => {
-                        handleLogout(icon.tooltip);
-                      }}
                       icon={icon.icon as IconProp}
+                      onClick={handleOpenSettings}
                     />
-                  </Link>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={icons.indexOf(icon)} className={styles.sideBarIcon}>
+                    <Link to={icon.route} key={icon.route}>
+                      <FontAwesomeIcon
+                        className={styles.sideBarIconComponent}
+                        title={icon.tooltip}
+                        onClick={() => {
+                          handleLogout(icon.tooltip);
+                        }}
+                        icon={icon.icon as IconProp}
+                      />
+                    </Link>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          {
+            <div className={styles.sideBarIcon}>
+              <div title="Made with ❤ by Delta">
+                <div className={styles.deltaLogo}>
+                  <img src={deltaLogo} alt="delta" />
                 </div>
-              );
-            }
-          })}
+              </div>
+            </div>
+          }
         </div>
       ) : (
         <></>

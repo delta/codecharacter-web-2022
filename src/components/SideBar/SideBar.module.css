@@ -1,21 +1,33 @@
-.sideBar{
-    height: calc(100vh - 60px) ;
-    width: 65px;
-    background-color: #2D3342;
-    position: fixed;
-    top: 60px;
-    z-index: 1000;
+.sideBar {
+  height: calc(100vh - 60px);
+  width: 65px;
+  background-color: #2d3342;
+  position: fixed;
+  top: 60px;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 
-.sideBarIcon{
-    margin: auto;
-    width: fit-content;
-    margin-bottom: 1rem;
-    background-color: transparent;
-    font-size: 30px;
+.sideBarIcon {
+  margin: auto;
+  width: fit-content;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  font-size: 30px;
 }
 
-.sideBarIconComponent{
-    color: #9c9c9c;
-    cursor: pointer;
+.sideBarIconComponent {
+  color: #9c9c9c;
+  cursor: pointer;
+}
+
+
+.deltaLogo > img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
 }
