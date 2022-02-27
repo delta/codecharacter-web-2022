@@ -4,6 +4,7 @@ import AlertMessage from '../../Alert/Alert';
 import styles from './forgetpassword.module.css';
 import { AuthApi } from '@codecharacter-2022/client';
 import { ApiError, authConfig } from '../../../../../api/ApiConfig';
+import Toast from 'react-hot-toast';
 
 interface ForgetPasswordInterface {
   open?: boolean;
@@ -32,7 +33,7 @@ const ForgetPassword = (props: ForgetPasswordInterface): JSX.Element => {
         .then()
         .catch(error => {
           if (error instanceof ApiError) {
-            // Toast will be displayed
+            Toast.success('Forgot password email sent');
           }
         });
     }
