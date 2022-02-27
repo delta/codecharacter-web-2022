@@ -26,30 +26,18 @@ export const apiConfig = new Configuration({
       },
       post: async context => {
         const statusCode = context.response.status;
-        if (localStorage.getItem('token') != null) {
+        if (statusCode === 401) {
+          window.location.href = `${homeUrl}/#/login`;
+          window.history.forward();
+        } else if (statusCode === 403) {
           const authApi = new AuthApi(apiConfig);
-          authApi
-            .getAuthStatus()
-            .then(res => {
-              const { status } = res;
-              if (status === 'PROFILE_INCOMPLETE') {
-                // localStorage.setItem('oauth', 'true');
-                window.location.href = `${homeUrl}/#/incomplete-profile`;
-                window.history.forward();
-              } else if (status === 'AUTHENTICATED') {
-                if (statusCode == 401 || statusCode == 403) {
-                  console.log('middleware redirect');
-                  window.location.href = `${homeUrl}/#/login`;
-                  window.history.forward();
-                  localStorage.removeItem('token');
-                }
-              }
-            })
-            .catch((e: Error) => {
-              if (e instanceof ApiError) {
-                //Toast here
-              }
-            });
+          authApi.getAuthStatus().then(res => {
+            const { status } = res;
+            if (status === 'PROFILE_INCOMPLETE') {
+              window.location.href = `${homeUrl}/#/incomplete-profile`;
+              window.history.forward();
+            }
+          });
         }
         if (statusCode >= 400) {
           const body = await context.response.json();
