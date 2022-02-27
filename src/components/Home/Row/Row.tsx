@@ -1,14 +1,14 @@
 import styles from './Row.module.css';
 
 interface props {
-  reverse?: Boolean;
-  image?: any;
-  title: String;
-  description?: String;
+  reverse?: boolean;
+  image?: string;
+  title: string;
+  description?: string;
 }
 
 export default function Row(props: props): JSX.Element {
-  let { reverse, image, title, description } = props;
+  const { reverse, image, title, description } = props;
 
   return (
     <div className={`${styles.rowContainer} ${reverse ? styles.reverse : ''}`}>
