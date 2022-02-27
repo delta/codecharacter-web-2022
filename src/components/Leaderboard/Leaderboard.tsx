@@ -14,6 +14,8 @@ import {
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import Loader from '../Loader/Loader';
+import swordImage from '../../assets/sword.png';
+import trophyImage from '../../assets/trophy.png';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -152,7 +154,7 @@ function PaginatedItems() {
                         >
                           <img
                             className={styles.attackImg}
-                            src={'src/assets/sword.png'}
+                            src={swordImage}
                           ></img>
                         </td>
                         <td className={styles.score}>{row.stats.rating}</td>
@@ -203,7 +205,7 @@ export default function Leaderboard(): JSX.Element {
   return (
     <div className={styles.body}>
       <div className={styles.header}>
-        <img className={styles.header__icon} src="src/assets/trophy.png" />
+        <img className={styles.header__icon} src={trophyImage} />
         <h1 className={styles.header__title}>
           <span>Leaderboard</span>
         </h1>

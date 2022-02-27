@@ -236,7 +236,7 @@ const Profile = (props: profile): JSX.Element => {
         >
           <Offcanvas.Header className={styles.header}>
             <Offcanvas.Title>
-              <h3>Hey! {loggedInUser.userName}</h3>
+              <h3>Hey {loggedInUser.userName}!</h3>
             </Offcanvas.Title>
             <CloseButton className={styles.close} onClick={props.handleClose} />
           </Offcanvas.Header>
