@@ -1,6 +1,6 @@
-import Ansi from 'ansi-to-react';
 import { useState } from 'react';
 import { RendererUtils } from '@codecharacter-2022/renderer';
+import ReactAnsi from 'react-ansi';
 
 export default function Terminal(): JSX.Element {
   const [log, setLog] = useState('');
@@ -10,14 +10,16 @@ export default function Terminal(): JSX.Element {
   });
 
   return (
-    <div
+    <ReactAnsi
       style={{
-        width: '100%',
         height: '100%',
-        backgroundColor: '#000',
+        width: '100%',
       }}
-    >
-      <Ansi>{log}</Ansi>
-    </div>
+      log={log}
+      bodyStyle={{ height: '100%' }}
+      logStyle={{ height: '100%' }}
+      autoScroll={true}
+      virtual
+    />
   );
 }
