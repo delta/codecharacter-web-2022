@@ -42,7 +42,7 @@ function PaginatedItems() {
     const endOffset = itemOffset + itemsPerPage;
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, items]);
+  }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
@@ -98,11 +98,7 @@ function PaginatedItems() {
         ) : (
           <>
             <div className={styles.list}>
-              <Modal
-                show={show}
-                onHide={handleClose}
-                className={styles.editorSettingsModal}
-              >
+              <Modal show={show} onHide={handleClose}>
                 <Modal.Header className={styles.matchHeader} closeButton>
                   <Modal.Title>Start a new match</Modal.Title>
                 </Modal.Header>

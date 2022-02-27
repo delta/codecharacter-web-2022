@@ -95,7 +95,6 @@ const selfMatchModal = (): JSX.Element => {
     <Modal
       show={IsSelfMatchModalOpen}
       centered
-      className={styles.selfMatchModal}
       onHide={() => dispatch(isSelfMatchModalOpened(false))}
     >
       <Modal.Header className={styles.selfMatchModalHeader} closeButton>

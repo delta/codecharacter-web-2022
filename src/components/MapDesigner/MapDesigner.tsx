@@ -106,12 +106,7 @@ const MapDesigner: React.FunctionComponent = () => {
           readonly={false}
         />
       </div>
-      <Modal
-        show={modalShow}
-        centered
-        className={styles.mapSubmitModal}
-        onHide={closeModal}
-      >
+      <Modal show={modalShow} centered onHide={closeModal}>
         <Modal.Header className={styles.modalHeader} closeButton>
           <Modal.Title className="fw-bold fs-3">Save Map?</Modal.Title>
         </Modal.Header>
@@ -158,12 +153,7 @@ const MapDesigner: React.FunctionComponent = () => {
           </Container>
         </Modal.Body>
       </Modal>
-      <Modal
-        show={commitModalShow}
-        centered
-        className={styles.mapSubmitModal}
-        onHide={closeCommitModal}
-      >
+      <Modal show={commitModalShow} centered onHide={closeCommitModal}>
         <Modal.Header className={styles.modalHeader} closeButton>
           <Modal.Title className="fw-bold fs-2">Commit Name</Modal.Title>
         </Modal.Header>

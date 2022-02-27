@@ -74,7 +74,6 @@ const EditorSettings = (): JSX.Element => {
     <Modal
       show={isSettingsOpen}
       centered
-      className={styles.editorSettingsModal}
       onHide={() => dispatch(isSettingsOpened(false))}
     >
       <Modal.Header className={styles.editorSettingsHeader} closeButton>
