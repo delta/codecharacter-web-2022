@@ -12,12 +12,15 @@ import { CurrentUserApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../../../../api/ApiConfig';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../../../store/hooks';
+import Toast from 'react-hot-toast';
+
 function IncompleteProfile(): JSX.Element {
   const [college, setCollege] = useState('');
   const [selected, setSelected] = useState('IN');
   const [collegeError, iscollegeError] = useState(false);
   const [submitThird, isSubmitThird] = useState(false);
   const [userName, setUsername] = useState('');
+  const [avatar, setAvatar] = useState(0);
   const [userNameError, isuserNameError] = useState(false);
   const [fullName, setfullName] = useState('');
   const [fullNameError, isfullNameError] = useState(false);
@@ -56,7 +59,7 @@ function IncompleteProfile(): JSX.Element {
         name: fullName,
         country: selected,
         college: college,
-        avatarId: 0,
+        avatarId: avatar,
       })
       .then(() => {
         isloadingStatus(false);
@@ -65,7 +68,7 @@ function IncompleteProfile(): JSX.Element {
       })
       .catch(error => {
         if (error instanceof ApiError) {
-          //Toast here
+          Toast.error(error.message);
         }
       });
   };
@@ -108,6 +111,10 @@ function IncompleteProfile(): JSX.Element {
         isfullNameError(false);
       }
     }
+  };
+
+  const handleAvatarChange = (id: number) => {
+    setAvatar(id);
   };
   return (
     <div className={styles.mainContainer}>
@@ -178,6 +185,7 @@ function IncompleteProfile(): JSX.Element {
             handleFlagSelect={handleFlagSelect}
             formNumber={3}
             handleCollegeChange={handleCollegeChange}
+            handleAvatarChange={handleAvatarChange}
             college={college}
             collegeError={collegeError}
             submitThird={submitThird}
