@@ -187,6 +187,7 @@ export const UserSlice = createSlice({
         state.user.username = action.payload.userName;
         state.user.country = action.payload.country;
         state.user.college = action.payload.college;
+        state.user.avatarId = action.payload.avatarId;
       })
       .addCase(getUserDetailsAction.rejected, state => {
         state.loading = false;

@@ -15,7 +15,7 @@ export const startRegister = (user: User): Promise<{ user: User }> => {
         passwordConfirmation: user.confirmPassword,
         country: user.country,
         college: user.college,
-        avatarId: 0,
+        avatarId: user.avatarId,
       })
       .then(() => {
         resolve({ user: user });
@@ -59,6 +59,7 @@ export const getUserDetails = (): Promise<{
   admin: boolean;
   college: string;
   country: string;
+  avatarId: number;
 }> => {
   return new Promise((resolve, reject) => {
     const currentUserapi = new CurrentUserApi(apiConfig);
@@ -72,6 +73,7 @@ export const getUserDetails = (): Promise<{
           admin: res.isProfileComplete,
           college: res.college,
           country: res.country,
+          avatarId: res.avatarId,
         });
       })
       .catch(error => {
