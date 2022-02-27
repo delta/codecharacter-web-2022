@@ -527,6 +527,7 @@ paths:
                     email: user@example.com
                     country: IN
                     college: NITT
+                    avatarId: 1
                     isProfileComplete: true
         '401':
           description: Unauthorized
@@ -1509,6 +1510,9 @@ components:
         college:
           type: string
           example: Test
+        avatarId:
+          type: integer
+          example: 1
         isProfileComplete:
           type: boolean
           default: false
@@ -1519,6 +1523,7 @@ components:
         - email
         - country
         - college
+        - avatarId
         - isProfileComplete
     UpdateCurrentUserProfile:
       title: UpdateCurrentUserProfile
