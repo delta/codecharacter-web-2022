@@ -263,6 +263,12 @@ export interface CurrentUserProfile {
   college: string;
   /**
    *
+   * @type {number}
+   * @memberof CurrentUserProfile
+   */
+  avatarId: number;
+  /**
+   *
    * @type {boolean}
    * @memberof CurrentUserProfile
    */
