@@ -49,7 +49,7 @@ const Notifs: React.FunctionComponent = () => {
       notifModalRef.current?.classList.contains(styles.notifModalShow) &&
       unreadNotifs > 0
     ) {
-      hookDispatch(markNotifAction(notifs[0].id));
+      hookDispatch(markNotifAction());
     }
     notifModalRef.current?.classList.toggle(styles.notifModalShow);
     notifIconRef.current?.classList.toggle(styles.notifIconShow);
