@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
@@ -43,28 +43,27 @@ const NavBar: React.FunctionComponent = () => {
   };
   return (
     <div className={styles.navBar}>
-      <div>
+      <div className={styles.navBarContainer}>
         <Profile open={open} handleClose={handleClose} />
         <div className={styles.branding}>
           <Link to="dashboard" className={styles.logoLink}>
             <h2 className={styles.navLogo}>Code Character</h2>
           </Link>
         </div>
+        {location.pathname === '/' && (
+          <div className={styles.navContainer}>
+            <NavLink to="/login" className={`${styles.navLink}`}>
+              Login
+            </NavLink>
+            <NavLink to="/register" className={`${styles.navLink}`}>
+              Register
+            </NavLink>
+          </div>
+        )}
       </div>
       {localStorage.getItem('token') != null &&
       location.pathname != '/incomplete-profile' ? (
         <div className={styles.profileIcons}>
-          {/* <button
-          className="toastTest"
-          onClick={() => {
-            toast.success('Toast Rendered!', {
-              position: 'bottom-right',
-              duration: 3000,
-            });
-          }}
-        >
-          Toast
-        </button> */}
           <div className={styles.notifIcon}>
             <Notifs />
           </div>
