@@ -311,12 +311,6 @@ export interface Game {
    * @memberof Game
    */
   status: GameStatus;
-  /**
-   *
-   * @type {Verdict}
-   * @memberof Game
-   */
-  gameVerdict: Verdict;
 }
 /**
  * GameMap model

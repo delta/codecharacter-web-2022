@@ -46,7 +46,7 @@ const ForgetPassword = (props: ForgetPasswordInterface): JSX.Element => {
         centered
       >
         <Modal.Header closeButton className={styles.modalHeader}>
-          <Modal.Title>Forget Password</Modal.Title>
+          <Modal.Title>Forgot Password</Modal.Title>
         </Modal.Header>
 
         <Modal.Body className={styles.modalContainer}>

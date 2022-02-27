@@ -5,15 +5,15 @@
 }
 
 .mainWindow {
-  height: 100%;
+  height: 0;
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 }
 
 .gameArea {
-  width: calc(100% - 60px);
-  margin-top: 60px;
-  margin-left: 60px;
+  width: 0;
+  flex-grow: 1;
 }
 
 body {

@@ -14,33 +14,14 @@ import {
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import Loader from '../Loader/Loader';
-
-export interface rowInterface {
-  user: {
-    username: string;
-    avatarId: number;
-    name: string;
-  };
-  stats: {
-    rating: number;
-    wins: number;
-    losses: number;
-    ties: number;
-  };
-}
-
-export interface mapRequestInterface {
-  mode: string;
-  opponentId: string;
-  mapRevisionId: string | undefined;
-  codeRevisionId: string | undefined;
-}
+import swordImage from '../../assets/sword.png';
+import trophyImage from '../../assets/trophy.png';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [items, setItems] = useState<LeaderboardEntry[]>([]);
-  const [currentItems, setCurrentItems] = useState<Array<rowInterface>>([]);
+  const [currentItems, setCurrentItems] = useState<LeaderboardEntry[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [show, setShow] = useState(false);
   let currentOpponentId: string;
@@ -143,11 +124,11 @@ function PaginatedItems() {
               <Table hover className={styles.list}>
                 <thead>
                   <tr className={styles.item}>
-                    <th className={styles.pos}>Rank</th>
-                    <th>Avatar</th>
-                    <th className={styles.name}>Username</th>
-                    <th className={styles.name}>Attack</th>
-                    <th className={styles.score}>Ratings</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th className={styles.score}>Rating</th>
                     <th className={styles.score}>Won</th>
                     <th className={styles.score}>Tied</th>
                     <th className={styles.score}>Lost</th>
@@ -155,7 +136,7 @@ function PaginatedItems() {
                 </thead>
                 <tbody>
                   {currentItems &&
-                    currentItems.map((row: rowInterface) => (
+                    currentItems.map((row: LeaderboardEntry) => (
                       <tr className={styles.item} key={row.user.username}>
                         <td className={styles.pos}>
                           {itemOffset + 1 + currentItems.indexOf(row)}
@@ -173,7 +154,7 @@ function PaginatedItems() {
                         >
                           <img
                             className={styles.attackImg}
-                            src={'src/assets/sword.png'}
+                            src={swordImage}
                           ></img>
                         </td>
                         <td className={styles.score}>{row.stats.rating}</td>
@@ -224,7 +205,7 @@ export default function Leaderboard(): JSX.Element {
   return (
     <div className={styles.body}>
       <div className={styles.header}>
-        <img className={styles.header__icon} src="src/assets/trophy.png" />
+        <img className={styles.header__icon} src={trophyImage} />
         <h1 className={styles.header__title}>
           <span>Leaderboard</span>
         </h1>

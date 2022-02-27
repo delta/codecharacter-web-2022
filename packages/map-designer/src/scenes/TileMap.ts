@@ -275,7 +275,7 @@ export class TileMap extends Phaser.Scene {
           const tileIndex = TowerConfig.towers.findIndex(
             tower => tower.tileId === towerType.tileId,
           );
-          row.push(tileIndex ?? 0);
+          row.push(tileIndex + 1 ?? 0);
           coins += towerType?.price ?? 0;
         } else {
           row.push(0);

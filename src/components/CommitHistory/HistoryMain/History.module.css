@@ -1,37 +1,32 @@
 .historyMain {
   overflow: hidden;
-  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-columns: 30% 60% 10%;
+}
+
+.viewContainer {
+  flex-grow: 1;
 }
 
 .codeView {
-  background-color: #242a3c;
-  display: grid;
-  height: 100vh;
-  grid-template-rows: 13% 72% 15%;
+  display: flex;
+  flex-direction: column;
 }
 
 .buttonContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 2rem;
-}
-
-.codeMapButton {
-  background-color: #242a3c;
+  margin: 1rem;
 }
 
 .largeButton {
   align-content: right;
   color: #ffffff;
-  width: 241px;
-  height: 48px;
   font-weight: 600;
   font-family: Montserrat;
-  font-size: 24px;
   font-style: normal;
   background-color: #3894b1;
   border: 0px;
@@ -42,50 +37,49 @@
 .smallButton {
   align-content: right;
   color: #ffffff;
-  width: 80px;
-  height: 48px;
   background: #1a3051;
   font-family: Montserrat;
   font-weight: 600;
-  font-size: 24px;
   font-style: normal;
   border: 0px;
   border-radius: 2px;
   transition: 0.5s;
+  box-shadow: none !important;
 }
 
-.largeButton:hover,
-.smallButton:hover {
-  opacity: 0.7;
-  transform: scale(1.03);
-  transition: 0.5s ease-in-out !important;
-  cursor: pointer;
+.largeButton:active,
+.smallButton:active {
+  box-shadow: none;
 }
 
 .codeBox {
+  flex-grow: 1;
   font-family: Montserrat;
   font-style: normal;
-  background: rgb(29, 31, 33);
+}
+
+.codeBox > * {
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0;
 }
 
 .mapBox {
+  flex-grow: 1;
   font-family: Montserrat;
   font-style: normal;
   background: black;
 }
 
 .timeline {
-  background-color: #242a3c;
-  height: 100vh;
   display: grid;
   grid-template-rows: 12% 70% 18%;
 }
 
 .select {
   text-align: right;
-  background-color: #242a3c;
   color: #ffffff;
-  padding-top: 12px;
 }
 
 .selectButton {
@@ -93,6 +87,8 @@
   color: #ffffff;
   width: 158px;
   height: 45px;
+  margin: 10px;
+  padding: 0 50px;
   font-weight: 600;
   font-size: 22px;
   font-style: normal;
@@ -107,12 +103,8 @@
   cursor: pointer;
 }
 
-.dummy {
-  background-color: #242a3c;
-}
-
 .completeTimeline {
-  padding: 2rem 10px 2rem 6rem;
+  padding: 1rem;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-x: hidden;
@@ -142,6 +134,8 @@
 
 .selectBtn{
   background: #4595CF;
-  margin-top: 5%;
-  width: 100px;
+  border-radius: 0;
+  margin: 5px;
+  padding: 5px;
+  /* width: 100px; */
 }

@@ -58,6 +58,12 @@ html {
   );
   box-shadow: 0 0 4rem 0 rgba(0, 0, 0, 0.1),
     0 1rem 2rem -1rem rgba(0, 0, 0, 0.3);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.item {
+  border: 0;
 }
 
 .list .item .pos {
@@ -94,6 +100,7 @@ html {
 
 .attackButton {
   background-color: transparent;
+  cursor: pointer;
 }
 
 .attackImg:hover {
