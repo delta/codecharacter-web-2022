@@ -97,7 +97,7 @@ function PaginatedItems() {
                       {[...match.games.values()][0].coinsUsed}
                     </div>
                     <div className={styles.destruction}>
-                      {[...match.games.values()][0].destruction}
+                      {[...match.games.values()][0].destruction.toFixed(2)}
                     </div>
                     <div
                       className={styles.watchButton}
@@ -111,11 +111,9 @@ function PaginatedItems() {
                       Watch
                     </div>
                     <div className={styles.destruction}>
-                      {
-                        [...match.games.values()][
-                          [...match.games.values()].length === 1 ? 0 : 1
-                        ].destruction
-                      }
+                      {[...match.games.values()][
+                        [...match.games.values()].length === 1 ? 0 : 1
+                      ].destruction.toFixed(2)}
                     </div>
                     <div className={styles.coinused}>
                       {
