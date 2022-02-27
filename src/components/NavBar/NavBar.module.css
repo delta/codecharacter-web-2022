@@ -9,6 +9,25 @@
   z-index: 1000;
 }
 
+.navBarContainer {
+  display: flex;
+}
+
+.navContainer {
+  display: flex;
+}
+
+.navLink {
+  margin: auto 10px;
+  text-decoration: none;
+  color: gray;
+  font-weight: bold;
+}
+
+.navLink:hover {
+  color: white;
+}
+
 .navLogo {
   font-family: 'Montserrat';
   color: #ffffff;
@@ -22,7 +41,7 @@
 }
 
 .branding {
-  position: absolute;
+  /* position: absolute; */
   left: 0px;
 }
 

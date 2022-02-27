@@ -13,7 +13,7 @@ import Loader from './components/Loader/Loader';
 import './websocket/websocket';
 
 const persistor = persistStore(store);
-const Home = lazy(() => import('./pages/Home'));
+const Home = lazy(() => import('./pages/Home/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const NavBar = lazy(() => import('./components/NavBar/NavBar'));
 const MapDesigner = lazy(() => import('./components/MapDesigner/MapDesigner'));

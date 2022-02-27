@@ -54,7 +54,8 @@ const SideBar: React.FunctionComponent = () => {
   };
   return (
     <div>
-      {pathName != '/register' &&
+      {pathName != '/' &&
+      pathName != '/register' &&
       pathName != '/login' &&
       pathName != '/activate' &&
       pathName != '/reset-password' &&
