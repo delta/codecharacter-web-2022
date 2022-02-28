@@ -1,23 +1,46 @@
-.rowContainer {
-    width: 100%;
-    display: flex;
+.title {
+  /* min-width: 200px; */
+  font-size: 64px;
+  font-weight: bold;
 }
 
-.reverse {
-    flex-direction: row-reverse;
-    background-color: #eee;
+.description {
+  margin-top: 10px;
 }
 
-.rowContainer > div {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.about {
+  background-color: #ccc;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.details {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.details {
+  text-align: center;
 }
 
 .descriptionContainer {
-    padding-top: 32px;
+  vertical-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
-.title {
-    font-size: 64px;
+.descriptionContainer > div :nth-child(2) > div {
+  margin-bottom: 10px;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  max-width: 100%;
 }
