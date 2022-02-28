@@ -8,9 +8,19 @@
   margin-top: 10px;
 }
 
+.about {
+  background-color: #ccc;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.details {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
 .details {
   text-align: center;
-  background-color: #eeeeee;
 }
 
 .descriptionContainer {
@@ -19,6 +29,16 @@
   justify-content: center;
   flex-direction: column;
   margin-bottom: 20px;
+}
+
+.descriptionContainer > div :nth-child(2) > div {
+  margin-bottom: 10px;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 img {

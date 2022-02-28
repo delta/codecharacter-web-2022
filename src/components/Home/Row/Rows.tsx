@@ -1,4 +1,4 @@
-import image from '../../../assets/discord.svg';
+import renderer from '../../../assets/renderer.png';
 import trophy from '../../../assets/home-trophy.png';
 import styles from './Row.module.css';
 
@@ -9,7 +9,7 @@ export default function Rows(): JSX.Element {
         <div className="container">
           <div className="row">
             <div className={`col-lg-6 col-sm-12 ${styles.imageContainer}`}>
-              <img src={image} />
+              <img src={renderer} />
             </div>
             <div
               className={`col-lg-6 col-sm-12 ${styles.descriptionContainer}`}
