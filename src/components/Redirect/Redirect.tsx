@@ -8,7 +8,7 @@ export default function Redirect(): null {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let to = isLoggedIn ? '/dashboard' : '/';
+    const to = isLoggedIn ? '/dashboard' : '/';
     navigate(to, { replace: true });
   }, []);
 
