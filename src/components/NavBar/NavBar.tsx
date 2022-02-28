@@ -76,7 +76,7 @@ const NavBar: React.FunctionComponent = () => {
       <div className={styles.navBarContainer}>
         <Profile open={open} handleClose={handleClose} />
         <div className={styles.branding}>
-          <Link to="dashboard" className={styles.logoLink}>
+          <Link to="/" className={styles.logoLink}>
             <div className={styles.navLogo}>CodeCharacter</div>
           </Link>
         </div>
