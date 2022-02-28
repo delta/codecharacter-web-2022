@@ -103,9 +103,14 @@ function PaginatedItems() {
                       className={styles.watchButton}
                       onClick={() => {
                         dispatch(
-                          getLogAction(getUsersGame(loggedInUser, match).id),
+                          getLogAction({
+                            id: getUsersGame(loggedInUser, match).id,
+                            callback: () => {
+                              console.log('success');
+                              navigate('/dashboard');
+                            },
+                          }),
                         );
-                        navigate('/dashboard');
                       }}
                     >
                       Watch
@@ -175,7 +180,7 @@ export default function BattleTV(): JSX.Element {
           <div className={styles.destruction}>Destruction %</div>
           <div className={styles.vs}>VS</div>
           <div className={styles.destruction}>Destruction %</div>
-          <div className={styles.coinused}>Coinused</div>
+          <div className={styles.coinused}>Coins Used</div>
           <div className={styles.username}></div>
           <div className={styles.pic}></div>
         </div>

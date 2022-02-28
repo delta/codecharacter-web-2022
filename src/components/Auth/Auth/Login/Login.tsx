@@ -119,9 +119,9 @@ function Login(): JSX.Element {
     <div className={styles.mainContainer}>
       <Card className={styles.cardContainer}>
         <div className={styles.titleContainer}>
-          <h1 className={styles.name}>Welcome To CodeCharatcer!</h1>
+          <h1 className={styles.name}>Welcome To CodeCharacter!</h1>
           <Container className={styles.subTitle}>
-            Log in to access your dashboard and profile 👏️🎊️{' '}
+            Log in to access your dashboard and profile{' '}
           </Container>
         </div>
         <form className={styles.formContainer}>
@@ -144,7 +144,7 @@ function Login(): JSX.Element {
               {emailError && login ? (
                 <AlertMessage
                   err={emailError}
-                  content={'Please ! Enter a valid Email ID'}
+                  content={'Please enter a valid Email ID'}
                 />
               ) : (
                 <></>
