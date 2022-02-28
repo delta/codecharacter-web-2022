@@ -6,7 +6,7 @@ import styles from './BattleTV.module.css';
 import { battleTvSelector, fetchBattleTv } from './BattleTvSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { getAvatarByID } from '../Avatar/Avatar';
-import { GameStatus, Match, Verdict } from '@codecharacter-2022/client';
+import { Match, Verdict } from '@codecharacter-2022/client';
 import { User, user } from '../../store/User/UserSlice';
 
 function getIcon(loggedInUser: User, match: Match) {
