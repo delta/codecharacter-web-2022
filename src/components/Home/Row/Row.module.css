@@ -1,23 +1,43 @@
 .rowContainer {
-    width: 100%;
-    display: flex;
+  width: 100%;
+  display: flex;
 }
 
 .reverse {
-    flex-direction: row-reverse;
-    background-color: #eee;
+  flex-direction: row-reverse;
+  background-color: #eee;
 }
 
-.rowContainer > div {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.rowContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .descriptionContainer {
-    padding-top: 32px;
+  padding-top: 42px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .title {
-    font-size: 64px;
+  min-width: 200px;
+  font-size: 64px;
+}
+
+.screenshot {
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 900px) {
+  .imageContainer {
+    scale: 0.8;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .description {
+    font-size: 0.5rem;
+  }
 }
