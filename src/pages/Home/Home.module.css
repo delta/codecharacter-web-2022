@@ -1,6 +1,7 @@
 .mainContainer {
-  margin-left: -60px;
   background-color: white;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .jumbotron {

@@ -1,24 +1,37 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.textContainer {
+  position: relative;
+}
+
 .glitchtext {
   text-align: center;
   color: #fff;
-  font-size: 2em;
+  font-size: 90px;
   letter-spacing: 4px;
   font-weight: 800;
-  /*Create overlap*/
-
-  margin: 0;
-  line-height: 0;
-  /*Animation*/
-
+  font-family: 'Montserrat';
   animation: glitch1 2.5s infinite;
+  width: max-content;
+  max-width: 90vw;
+  margin: auto;
 }
 
 .glitchtext:nth-child(2) {
+  position: absolute;
+  top: 0;
+  left: 0;
   color: #2ee2c1;
   animation: glitch2 2.5s infinite;
 }
 
 .glitchtext:nth-child(3) {
+  position: absolute;
+  top: 0;
+  left: 0;
   color: #46e068;
   animation: glitch3 2.5s infinite;
 }
@@ -186,5 +199,17 @@
   100% {
     transform: none;
     opacity: 0.25;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .glitchtext {
+    font-size: 70px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .glitchtext {
+    font-size: 50px;
   }
 }
