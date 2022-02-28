@@ -120,7 +120,7 @@ function ResetpasswordVerification(): JSX.Element {
         </div>
         <form className={styles.formContainer}>
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>New Password</Form.Label>
             <div className={styles.eyeContainer}>
               <Form.Control
                 type={passwordType}

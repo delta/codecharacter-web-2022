@@ -278,6 +278,7 @@ export default function Register(): JSX.Element {
 
     dispatch(
       registerAction({
+        id: '',
         username: userName,
         name: fullName,
         email: email,

@@ -110,7 +110,7 @@ export default function Dashboard(): JSX.Element {
           dispatch(initializeEditorStates(response));
         })
         .catch(err => {
-          if (err instanceof ApiError) console.log(err.message);
+          if (err instanceof ApiError) Toast.error(err.message);
         })
         .finally(() => localStorage.setItem('firstTime', 'false'));
     }
@@ -277,10 +277,10 @@ export default function Dashboard(): JSX.Element {
                 rootClose
                 overlay={
                   <Popover>
-                    <Popover.Header as="h3">
+                    <Popover.Header as="h3" className={styles.popOverHeader}>
                       Enter commit message
                     </Popover.Header>
-                    <Popover.Body>
+                    <Popover.Body className={styles.popOverBody}>
                       <Form.Control
                         onChange={handleCommitNameInput}
                         type="text"

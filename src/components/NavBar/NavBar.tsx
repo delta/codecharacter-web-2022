@@ -8,6 +8,8 @@ import { getUserDetailsAction, user } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { AuthApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
+import Toast from 'react-hot-toast';
+
 const NavBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,7 +22,6 @@ const NavBar: React.FunctionComponent = () => {
       localStorage.getItem('token') == null &&
       window.location.hash != '#/register'
     ) {
-      console.log('navbar redirect');
       navigate('/login', { replace: true });
     }
   }, [window.location.hash]);
@@ -56,7 +57,7 @@ const NavBar: React.FunctionComponent = () => {
       })
       .catch((e: Error) => {
         if (e instanceof ApiError) {
-          //Toast here
+          Toast.error(e.message);
         }
       });
   }, [loggedInUser]);
@@ -68,6 +69,7 @@ const NavBar: React.FunctionComponent = () => {
   const handleClose = () => {
     isOpen(false);
   };
+
   return (
     <div className={styles.navBar}>
       <div className={styles.navBarContainer}>
