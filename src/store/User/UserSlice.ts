@@ -10,6 +10,7 @@ import {
 } from './UserApi';
 
 export interface User {
+  id: string;
   username: string;
   name: string;
   email: string;
@@ -36,6 +37,7 @@ interface register {
 
 const initialState: register = {
   user: {
+    id: '',
     username: '',
     name: '',
     email: '',

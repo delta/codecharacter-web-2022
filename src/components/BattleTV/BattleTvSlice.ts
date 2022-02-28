@@ -63,8 +63,7 @@ export function fetchBattleTv(): ThunkAction<
       .then(response => {
         useAppDispatch(getBattleTvSuccess(response));
       })
-      .catch(error => {
-        console.log(error);
+      .catch(() => {
         useAppDispatch(getBattleTvFailure());
       });
   };

@@ -112,7 +112,7 @@ export default function History(): JSX.Element {
         </div>
       </div>
       <Row className={styles.viewContainer}>
-        <Col md="3">
+        <Col lg="3">
           <div></div>
           <div className={styles.completeTimeline}>
             {completeMapHistory && completeCodeHistroy ? (
@@ -131,7 +131,7 @@ export default function History(): JSX.Element {
           </div>
           <div></div>
         </Col>
-        <Col md="9" className={styles.codeView}>
+        <Col lg="9" className={styles.codeView}>
           <div className={BigButton == 'Code' ? styles.codeBox : styles.mapBox}>
             {BigButton == 'Code' ? (
               <CodeView code={currentCode} codeLang={codeLanguage} />

@@ -1,5 +1,5 @@
 import { CodeApi, Language } from '@codecharacter-2022/client';
-import { RendererComponent, RendererUtils } from '@codecharacter-2022/renderer';
+import { RendererComponent } from '@codecharacter-2022/renderer';
 import Toast from 'react-hot-toast';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -31,7 +31,6 @@ import {
   UserCode,
   UserLanguage,
 } from '../../store/editor/code';
-import { logs } from '../../store/rendererLogs/logSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import styles from './Dashboard.module.css';
 import './Dashboard.css';
@@ -87,12 +86,7 @@ export default function Dashboard(): JSX.Element {
 
   const userLanguage = useAppSelector(UserLanguage);
   const userCode = useAppSelector(UserCode);
-  const rendererLogs = useAppSelector(logs);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    RendererUtils.loadLog(rendererLogs);
-  }, [rendererLogs]);
 
   const codeAPI = new CodeApi(apiConfig);
   useEffect(() => {
