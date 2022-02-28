@@ -91,7 +91,8 @@ const NavBar: React.FunctionComponent = () => {
         )}
       </div>
       {localStorage.getItem('token') != null &&
-      location.pathname != '/incomplete-profile' ? (
+      location.pathname != '/incomplete-profile' &&
+      location.pathname != '/' ? (
         <div className={styles.profileIcons}>
           <div className={styles.notifIcon}>
             <Notifs />
