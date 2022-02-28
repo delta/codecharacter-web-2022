@@ -15,17 +15,17 @@ const NavBar: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const loggedInUser = useAppSelector(user);
-  useEffect(() => {
-    if (window.location.hash == '#/register')
-      navigate('/register', { replace: true });
-    if (
-      localStorage.getItem('token') == null &&
-      window.location.hash != '#/register'
-    ) {
-      console.log('navbar redirect');
-      navigate('/login', { replace: true });
-    }
-  }, [window.location.hash]);
+  // useEffect(() => {
+  //   if (window.location.hash == '#/register')
+  //     navigate('/register', { replace: true });
+  //   if (
+  //     localStorage.getItem('token') == null &&
+  //     window.location.hash != '#/register'
+  //   ) {
+  //     console.log('navbar redirect');
+  //     navigate('/login', { replace: true });
+  //   }
+  // }, [window.location.hash]);
   useEffect(() => {
     const cookieValue = document.cookie;
     const bearerToken = cookieValue.split(';');
