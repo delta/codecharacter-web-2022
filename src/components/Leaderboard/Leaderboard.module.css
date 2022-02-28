@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:400,900&display=swap');
 
-body,
-html {
-  height: 100%;
-  width: 100%;
-  background: #242a3c;
-  color: #333;
-}
-
 .header {
   max-width: 1000px;
   margin: 50px auto;
