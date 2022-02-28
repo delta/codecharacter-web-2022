@@ -18,9 +18,9 @@ const rowData: Array<rowType> = [
     image: image,
     title: 'About',
     description: [
-      ' Code Character is a turn based AI strategy game. Think it as clash of clans but with a slight coding twist.',
-      'Each player is provided with his army of bots to attack other player at the same time trying to defend his base by putting robust defences.',
-      'Bots are controlled by the code which you write. You can write code in C++, Java as well as in Python.',
+      'Code Character is a strategy based programming game where you control troops in a turn-based game with the code you write in one of the multiple programming languages (C++, Python, Java) available in the game. ',
+      "The objective is to destroy and vanquish the opponent's territory by writing code and creating defenses via the in-game map.",
+      'With progress and implementation of new competitive strategies, fight your way through, and dominate the top of the leaderboard.',
       'What are you waiting for, jump in to this world controlled by AI and get chances to win exciting prizes.',
     ],
   },
