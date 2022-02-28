@@ -26,7 +26,7 @@ export const Websocket: React.FunctionComponent = () => {
           const game = JSON.parse(message.body) as Game;
           switch (game.status) {
             case GameStatus.Executing:
-              Toast.loading('Executing now...');
+              Toast.success('Executing now...');
               break;
             case GameStatus.Executed:
               Toast.success('Executed successfully!');
