@@ -89,6 +89,7 @@ html {
 }
 
 .list .item .score {
+  font-family: monospace;
   margin-right: 1.5rem;
   opacity: 1;
 }

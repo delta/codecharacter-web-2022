@@ -307,7 +307,7 @@ const Profile = (props: profile): JSX.Element => {
                       {collegeError ? (
                         <AlertMessage
                           err={collegeError}
-                          content={'Please Enter a valid College name'}
+                          content={'Please enter a valid College name'}
                         />
                       ) : (
                         <></>
@@ -478,7 +478,7 @@ const Profile = (props: profile): JSX.Element => {
                       {confirmpasswordError ? (
                         <AlertMessage
                           err={confirmpasswordError}
-                          content={'Please! check your password'}
+                          content={'Please check your password'}
                         />
                       ) : (
                         <></>
@@ -523,7 +523,7 @@ const Profile = (props: profile): JSX.Element => {
                     }}
                     className={styles.linkButton}
                   >
-                    Want to Change Credentials
+                    Want to Change Credentials?
                   </Button>
                 ) : (
                   <Button

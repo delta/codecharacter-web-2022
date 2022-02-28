@@ -1,5 +1,6 @@
 .vertical-timeline-element--work,
 .vertical-timeline-element {
+  width: 90%;
   height: 120px;
   padding: 0%;
 }

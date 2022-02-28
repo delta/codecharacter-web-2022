@@ -49,7 +49,7 @@ export default function UserCreditionals(props: creditionals): JSX.Element {
   };
   return (
     <div>
-      <div className={styles.levelTitle}>User Creditionals</div>
+      <div className={styles.levelTitle}>User Credentials</div>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>
           Password{' '}

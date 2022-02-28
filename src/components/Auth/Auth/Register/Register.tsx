@@ -298,7 +298,7 @@ export default function Register(): JSX.Element {
         <div className={styles.titleContainer}>
           <h1> Register to CodeCharacter</h1>
           <Container className={styles.subTitle}>
-            <p> Register now and code your way through 👨‍💻️!! </p>
+            <p> Register now and code your way through! </p>
           </Container>
         </div>
         <ProgressBar
