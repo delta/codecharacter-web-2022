@@ -15,20 +15,29 @@
 }
 
 .descriptionContainer {
-  padding-top: 32px;
+  padding-top: 42px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .title {
-  display: flex;
   min-width: 200px;
   font-size: 64px;
 }
 
-@media screen and (max-width: 900px) {
+.screenshot {
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 900px) {
   .imageContainer {
-    scale: 0.6;
+    scale: 0.8;
   }
   .title {
-    font-size: 40px;
+    font-size: 30px;
+  }
+  .description {
+    font-size: 0.5rem;
   }
 }
