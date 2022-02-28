@@ -23,6 +23,7 @@ import {
   MatchApi,
   MatchMode,
 } from '@codecharacter-2022/client';
+import Toast from 'react-hot-toast';
 
 const selfMatchModal = (): JSX.Element => {
   const IsSelfMatchModalOpen = useAppSelector(isSelfMatchModalOpen);
@@ -39,16 +40,16 @@ const selfMatchModal = (): JSX.Element => {
     codeApi
       .getCodeRevisions()
       .then(codeResp => setCodeHistory(codeResp))
-      .catch(codeError => {
-        if (codeError instanceof ApiError) console.log(codeError);
+      .catch(error => {
+        if (error instanceof ApiError) Toast.error(error.message);
       });
 
     const mapApi = new MapApi(apiConfig);
     mapApi
       .getMapRevisions()
       .then(mapResp => setMapHistory(mapResp))
-      .catch(mapError => {
-        if (mapError instanceof ApiError) console.log(mapError);
+      .catch(error => {
+        if (error instanceof ApiError) Toast.error(error.message);
       });
   }, []);
 
@@ -86,8 +87,8 @@ const selfMatchModal = (): JSX.Element => {
         codeRevisionId: CodeCommitID,
         mapRevisionId: MapCommitID,
       })
-      .catch(mapError => {
-        if (mapError instanceof ApiError) console.log(mapError);
+      .catch(error => {
+        if (error instanceof ApiError) Toast.error(error.message);
       });
   }
 

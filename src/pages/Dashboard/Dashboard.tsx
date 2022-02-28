@@ -110,7 +110,7 @@ export default function Dashboard(): JSX.Element {
           dispatch(initializeEditorStates(response));
         })
         .catch(err => {
-          if (err instanceof ApiError) console.log(err.message);
+          if (err instanceof ApiError) Toast.error(err.message);
         })
         .finally(() => localStorage.setItem('firstTime', 'false'));
     }

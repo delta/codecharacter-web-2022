@@ -8,13 +8,12 @@
 }
 
 .header {
-    background-color: #242a3c;
+    background-color: #2b3760;
     color: white;
 }
 
 .close {
     background-color: white;
-    border-radius: 50%;
 }
 
 .divider {
@@ -24,7 +23,7 @@
 }
 
 .body {
-    background-color: #242a3c;
+    background-color: #1c1c1c;
     color: white;
 }
 
@@ -105,4 +104,52 @@
 
 .linkButton {
     text-decoration: none;
+}
+
+.avatarContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: scroll;
+    background-color: whitesmoke;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+.avatarContainer::-webkit-scrollbar {
+    height: 5px;
+    border-radius: 4px;
+}
+
+.avatarContainer::-webkit-scrollbar-track {
+    background-color: lightblue;
+    border-radius: 4px;
+}
+
+.avatarContainer::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 4px;
+}
+
+.avatar {
+    min-width: 60px;
+    height: 60px;
+    text-align: center;
+    background-color: #262e4b;
+    border-radius: 5%;
+    margin: 2px;
+}
+
+.avatar:hover {
+    background-color: #4595cf;
+    cursor: pointer;
+}
+
+.avatarSelected {
+    background-color: #4595cf;
+}
+
+.avatarImg {
+    width: 100%;
+    height: 100%;
 }

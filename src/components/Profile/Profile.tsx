@@ -26,7 +26,7 @@ import {
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import PasswordAlertMessage from '../Auth/Auth/Alert/PassworAlert';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { getAvatarByID } from '../Avatar/Avatar';
+import { getAvatarByID, getAllAvatars } from '../Avatar/Avatar';
 
 interface profile {
   open?: boolean;
@@ -34,6 +34,8 @@ interface profile {
 }
 const Profile = (props: profile): JSX.Element => {
   const navigate = useNavigate();
+  const avatars = getAllAvatars();
+
   const [selected, setSelected] = useState('IN');
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmpassword] = useState('');
@@ -51,6 +53,7 @@ const Profile = (props: profile): JSX.Element => {
   const [passwordError, ispasswordError] = useState(false);
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
   const [oldpasswordError, isoldpasswordError] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(0);
   const [passwordType, setPasswordType] = useState<{
     oldpassword: string;
     password: string;
@@ -144,6 +147,9 @@ const Profile = (props: profile): JSX.Element => {
   }, [success]);
   const loggedInUser = useAppSelector(user);
   useEffect(() => {
+    setSelectedAvatar(loggedInUser.avatarId);
+  }, [loggedInUser]);
+  useEffect(() => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [loggedInUser]);
   const handleCollegeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,6 +217,7 @@ const Profile = (props: profile): JSX.Element => {
             ? loggedInUser.college
             : collegeName,
         country: getCountryName(selected),
+        avatarId: selectedAvatar,
       }),
     );
   };
@@ -224,6 +231,9 @@ const Profile = (props: profile): JSX.Element => {
         confirmPassword: confirmPassword,
       }),
     );
+  };
+  const handleAvatarChange = (id: number) => {
+    setSelectedAvatar(id);
   };
   return (
     <div>
@@ -266,10 +276,10 @@ const Profile = (props: profile): JSX.Element => {
                       className={classnames('mb-3', styles.formField)}
                       controlId="formBasicUserName"
                     >
-                      <Form.Label>FullName</Form.Label>
+                      <Form.Label>Full Name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder={loggedInUser.username}
+                        placeholder={loggedInUser.name}
                         value={userName}
                         className={
                           submitUsername
@@ -330,6 +340,33 @@ const Profile = (props: profile): JSX.Element => {
                         />
                       </div>{' '}
                     </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicAvatar">
+                      <Form.Label>Avatar</Form.Label>
+                      <div>
+                        <div className={styles.avatarContainer}>
+                          {avatars.map((avatar, index: number) => (
+                            <div
+                              key={index}
+                              className={`${styles.avatar} ${
+                                selectedAvatar === avatar.id
+                                  ? styles.avatarSelected
+                                  : ''
+                              }`}
+                              onClick={() => {
+                                setSelectedAvatar(avatar.id);
+                                handleAvatarChange(avatar.id);
+                              }}
+                            >
+                              <img
+                                className={styles.avatarImg}
+                                src={avatar.url}
+                                alt="avatar"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </Form.Group>
                     <div
                       className={classnames(
                         'd-grid gap-2',
@@ -340,7 +377,9 @@ const Profile = (props: profile): JSX.Element => {
                         variant="light"
                         onClick={handleSubmit}
                         disabled={
-                          userName.length < 5 && collegeName.length == 0
+                          userName.length < 5 &&
+                          collegeName.length == 0 &&
+                          selectedAvatar === loggedInUser.avatarId
                         }
                       >
                         Save Changes{' '}

@@ -70,6 +70,7 @@ const NavBar: React.FunctionComponent = () => {
   const handleClose = () => {
     isOpen(false);
   };
+
   return (
     <div className={styles.navBar}>
       <div className={styles.navBarContainer}>

@@ -14,6 +14,7 @@ import { apiConfig, ApiError } from '../../api/ApiConfig';
 import Loader from '../Loader/Loader';
 import swordImage from '../../assets/sword.png';
 import trophyImage from '../../assets/trophy.png';
+import Toast from 'react-hot-toast';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -57,7 +58,7 @@ function PaginatedItems() {
         setIsLoaded(true);
       })
       .catch(error => {
-        console.log(error);
+        if (error instanceof ApiError) Toast.error(error.message);
       });
   };
 
@@ -87,7 +88,7 @@ function PaginatedItems() {
                 <Modal.Header className={styles.matchHeader} closeButton>
                   <Modal.Title>Start a new match</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className={styles.editorSettingsBody}>
+                <Modal.Body className={styles.matchBody}>
                   Do you want to start a match against {currentOpponentUsername}
                   ?
                 </Modal.Body>
