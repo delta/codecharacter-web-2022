@@ -4,7 +4,7 @@ interface props {
   reverse?: boolean;
   image?: string;
   title: string;
-  description?: string;
+  description?: Array<string>;
 }
 
 export default function Row(props: props): JSX.Element {
@@ -17,7 +17,12 @@ export default function Row(props: props): JSX.Element {
       </div>
       <div className={styles.descriptionContainer}>
         <div className={styles.title}>{title}</div>
-        <div className={styles.description}>{description}</div>
+        {description &&
+          description.map((item: string) => (
+            <div key={item} className={styles.description}>
+              {item}
+            </div>
+          ))}
       </div>
     </div>
   );
