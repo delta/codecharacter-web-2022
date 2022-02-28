@@ -276,10 +276,10 @@ const Profile = (props: profile): JSX.Element => {
                       className={classnames('mb-3', styles.formField)}
                       controlId="formBasicUserName"
                     >
-                      <Form.Label>FullName</Form.Label>
+                      <Form.Label>Full Name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder={loggedInUser.username}
+                        placeholder={loggedInUser.name}
                         value={userName}
                         className={
                           submitUsername
@@ -317,7 +317,7 @@ const Profile = (props: profile): JSX.Element => {
                       {collegeError ? (
                         <AlertMessage
                           err={collegeError}
-                          content={'Please Enter a valid College name'}
+                          content={'Please enter a valid College name'}
                         />
                       ) : (
                         <></>
@@ -517,7 +517,7 @@ const Profile = (props: profile): JSX.Element => {
                       {confirmpasswordError ? (
                         <AlertMessage
                           err={confirmpasswordError}
-                          content={'Please! check your password'}
+                          content={'Please check your password'}
                         />
                       ) : (
                         <></>

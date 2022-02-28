@@ -53,6 +53,7 @@ export function startLogin(
 }
 
 export const getUserDetails = (): Promise<{
+  id: string;
   fullName: string;
   userName: string;
   email: string;
@@ -67,6 +68,7 @@ export const getUserDetails = (): Promise<{
       .getCurrentUser()
       .then(res => {
         resolve({
+          id: res.id,
           fullName: res.name,
           userName: res.username,
           email: res.email,

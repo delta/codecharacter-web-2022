@@ -7,10 +7,8 @@ import { getAvatarByID } from '../Avatar/Avatar';
 import {
   LeaderboardApi,
   MatchApi,
-  CodeApi,
-  MapApi,
-  CreateMatchRequest,
   LeaderboardEntry,
+  MatchMode,
 } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import Loader from '../Loader/Loader';
@@ -25,11 +23,11 @@ function PaginatedItems() {
   const [currentItems, setCurrentItems] = useState<LeaderboardEntry[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [show, setShow] = useState(false);
-  let currentOpponentId: string;
+  const [currentOpponentUsername, setCurrentOpponentUsername] = useState('');
 
   const handleClose = () => setShow(false);
-  const handleShow = (opponentId: string) => {
-    currentOpponentId = opponentId;
+  const handleShow = (username: string) => {
+    setCurrentOpponentUsername(username);
     setShow(true);
   };
 
@@ -65,30 +63,17 @@ function PaginatedItems() {
   };
 
   async function handleMatchStart() {
-    enum MatchMode {
-      Self = 'SELF',
-      Manual = 'MANUAL',
-      Auto = 'AUTO',
-    }
-    const codeAPI = new CodeApi(apiConfig);
-    const mapAPI = new MapApi(apiConfig);
-    const codeRevisionId = await codeAPI.getCodeRevisions().then(response => {
-      response[response.length - 1].parentRevision;
-    });
-    const mapRevisionId = await mapAPI.getMapRevisions().then(response => {
-      response[response.length - 1].parentRevision;
-    });
-    const matchRequest = {
-      mode: MatchMode.Self,
-      opponentId: currentOpponentId,
-      codeRevisionId: codeRevisionId,
-      mapRevisionId: mapRevisionId,
-    };
-
     const matchAPI = new MatchApi(apiConfig);
-    matchAPI.createMatch(matchRequest as CreateMatchRequest).catch(error => {
-      if (error instanceof ApiError) Toast.error(error.message);
-    });
+    matchAPI
+      .createMatch({
+        mode: MatchMode.Manual,
+        opponentUsername: currentOpponentUsername,
+        codeRevisionId: undefined,
+        mapRevisionId: undefined,
+      })
+      .catch(error => {
+        if (error instanceof ApiError) console.log(error);
+      });
     setShow(false);
   }
   return (
@@ -104,7 +89,8 @@ function PaginatedItems() {
                   <Modal.Title>Start a new match</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className={styles.matchBody}>
-                  Do you want to start a match ?
+                  Do you want to start a match against {currentOpponentUsername}
+                  ?
                 </Modal.Body>
                 <Modal.Footer className={styles.matchFooter}>
                   <Button variant="secondary" onClick={handleClose}>
@@ -112,7 +98,7 @@ function PaginatedItems() {
                   </Button>
                   <Button
                     className={styles.matchButton}
-                    onClick={handleMatchStart}
+                    onClick={() => handleMatchStart()}
                   >
                     Start match
                   </Button>
@@ -121,11 +107,11 @@ function PaginatedItems() {
               <Table hover className={styles.list}>
                 <thead>
                   <tr className={styles.item}>
-                    <th className={styles.pos}>Rank</th>
-                    <th>Avatar</th>
-                    <th className={styles.name}>Username</th>
-                    <th className={styles.name}>Attack</th>
-                    <th className={styles.score}>Ratings</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th className={styles.score}>Rating</th>
                     <th className={styles.score}>Won</th>
                     <th className={styles.score}>Tied</th>
                     <th className={styles.score}>Lost</th>
@@ -154,7 +140,9 @@ function PaginatedItems() {
                             src={swordImage}
                           ></img>
                         </td>
-                        <td className={styles.score}>{row.stats.rating}</td>
+                        <td className={styles.score}>
+                          {row.stats.rating.toFixed(3)}
+                        </td>
                         <td className={styles.score}>{row.stats.wins}</td>
                         <td className={styles.score}>{row.stats.ties}</td>
                         <td className={styles.score}>{row.stats.losses}</td>

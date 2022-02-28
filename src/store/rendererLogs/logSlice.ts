@@ -9,13 +9,15 @@ const initialState = {
 
 export const getLogAction = createAsyncThunk(
   'logs/getLogs',
-  async (id: string) => {
+  async (idWithCallback: { id: string; callback: () => void }) => {
     try {
-      const logs = await getLogs(id);
-      setTimeout(() => {
-        RendererUtils.loadLog(logs);
-      }, 2000);
-      return logs;
+      getLogs(idWithCallback.id).then(logs => {
+        idWithCallback.callback();
+        setTimeout(() => {
+          RendererUtils.loadLog(logs);
+        }, 1000);
+      });
+      return '';
     } catch (error) {
       throw error;
     }
