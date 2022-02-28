@@ -1,6 +1,7 @@
 import { lazy, useEffect } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
+import Redirect from './components/Redirect/Redirect';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { isloggedIn, loggedIn } from './store/User/UserSlice';
 
@@ -48,6 +49,7 @@ export default function AllRoutes(): JSX.Element {
       <Route path="/battletv" element={<BattleTV />} />
       <Route path="/activate" element={<Verify />} />
       <Route path="/incomplete-profile" element={<IncompleteProfile />} />
+      <Route path="*" element={<Redirect />} />
     </Routes>
   ) : (
     <Routes>
@@ -56,6 +58,7 @@ export default function AllRoutes(): JSX.Element {
       <Route path="/register" element={<Register />} />
       <Route path="/activate" element={<Verify />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="*" element={<Redirect />} />
     </Routes>
   );
 }
