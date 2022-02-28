@@ -17,6 +17,7 @@ export const getLogAction = createAsyncThunk(
           RendererUtils.loadLog(logs);
         }, 1000);
       });
+      return '';
     } catch (error) {
       throw error;
     }
