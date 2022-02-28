@@ -15,16 +15,17 @@ const NavBar: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const loggedInUser = useAppSelector(user);
-  useEffect(() => {
-    if (window.location.hash == '#/register')
-      navigate('/register', { replace: true });
-    if (
-      localStorage.getItem('token') == null &&
-      window.location.hash != '#/register'
-    ) {
-      navigate('/login', { replace: true });
-    }
-  }, [window.location.hash]);
+  // useEffect(() => {
+  //   if (window.location.hash == '#/register')
+  //     navigate('/register', { replace: true });
+  //   if (
+  //     localStorage.getItem('token') == null &&
+  //     window.location.hash != '#/register'
+  //   ) {
+  //     console.log('navbar redirect');
+  //     navigate('/login', { replace: true });
+  //   }
+  // }, [window.location.hash]);
   useEffect(() => {
     const cookieValue = document.cookie;
     const bearerToken = cookieValue.split(';');
@@ -75,7 +76,7 @@ const NavBar: React.FunctionComponent = () => {
       <div className={styles.navBarContainer}>
         <Profile open={open} handleClose={handleClose} />
         <div className={styles.branding}>
-          <Link to="dashboard" className={styles.logoLink}>
+          <Link to="/" className={styles.logoLink}>
             <div className={styles.navLogo}>CodeCharacter</div>
           </Link>
         </div>
@@ -91,7 +92,8 @@ const NavBar: React.FunctionComponent = () => {
         )}
       </div>
       {localStorage.getItem('token') != null &&
-      location.pathname != '/incomplete-profile' ? (
+      location.pathname != '/incomplete-profile' &&
+      location.pathname != '/' ? (
         <div className={styles.profileIcons}>
           <div className={styles.notifIcon}>
             <Notifs />
