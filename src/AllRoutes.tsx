@@ -52,7 +52,6 @@ export default function AllRoutes(): JSX.Element {
       <Route path="/register" element={<Register />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/" element={<Home />} />
-      <Route path="*" element={<Redirect />} />
     </Routes>
   );
 
