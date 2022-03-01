@@ -1,0 +1,3 @@
+[submodule "src/assets/codes"]
+	path = src/assets/codes
+	url = https://github.com/delta/codecharacter-default-codes-2022

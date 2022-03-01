@@ -1,6 +1,9 @@
 import { Code } from '@codecharacter-2022/client';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import defaultCppCode from '../../assets/codes/cpp/run.cpp?raw';
+import defaultPythonCode from '../../assets/codes/python/run.py?raw';
+import defaultJavaCode from '../../assets/codes/java/Run.java?raw';
 
 const languagesAvailable = ['c_cpp', 'python', 'java'];
 
@@ -12,7 +15,7 @@ export interface editorStateType {
 }
 
 const initialState: editorStateType = {
-  allLanguagesCode: ['', '', ''],
+  allLanguagesCode: [defaultCppCode, defaultPythonCode, defaultJavaCode],
   userCode: '',
   language: '',
   lastSavedAt: new Date(),
