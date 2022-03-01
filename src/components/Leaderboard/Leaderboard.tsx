@@ -104,13 +104,13 @@ function PaginatedItems() {
                   </Button>
                 </Modal.Footer>
               </Modal>
-              <Table hover className={styles.list}>
+              <Table hover className={styles.list} responsive>
                 <thead>
                   <tr className={styles.item}>
-                    <th className={styles.pos}>Rank</th>
-                    <th>Avatar</th>
-                    <th className={styles.name}>Username</th>
-                    <th className={styles.name}>Attack</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th className={styles.score}>Ratings</th>
                     <th className={styles.score}>Won</th>
                     <th className={styles.score}>Tied</th>
