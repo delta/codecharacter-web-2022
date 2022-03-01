@@ -106,7 +106,6 @@ function PaginatedItems() {
                           getLogAction({
                             id: getUsersGame(loggedInUser, match).id,
                             callback: () => {
-                              console.log('success');
                               navigate('/dashboard');
                             },
                           }),

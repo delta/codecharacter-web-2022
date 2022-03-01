@@ -378,6 +378,9 @@ export class TileMap extends Phaser.Scene {
         } else if (instruction instanceof Instructions.Print) {
           DebugLog.log += `${instruction.message}\n`;
           DebugLog.updateLogCallback(DebugLog.log);
+        } else if (instruction instanceof Instructions.Errors) {
+          DebugLog.log += `${instruction.errorInfo}\n`;
+          DebugLog.updateLogCallback(DebugLog.log);
         } else if (instruction instanceof Instructions.End) {
           return;
         }
