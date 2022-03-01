@@ -20,6 +20,7 @@ import { logout } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import deltaLogo from '../../assets/deltaLogo.png';
+import { cookieDomain } from '../../config/config.example';
 
 const icons = [
   { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
@@ -46,18 +47,17 @@ const SideBar: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  function delete_cookie(name: string) {
+  function deleteCookie(name: string) {
     document.cookie =
-      name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      name +
+      `=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=${cookieDomain};`;
   }
 
   const handleLogout = (icon: string) => {
     if (icon == 'Logout') {
       dispatch(logout());
       localStorage.removeItem('token');
-      // document.cookie =
-      //   'bearer-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      delete_cookie('bearer-token');
+      deleteCookie('bearer-token');
 
       navigate('/login', { replace: true });
     }
