@@ -11,6 +11,7 @@ import {
   faTv,
   faSignOutAlt,
   faTools,
+  faBook,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -95,6 +96,17 @@ const SideBar: React.FunctionComponent = () => {
             })}
           </div>
           <div>
+            <div className={styles.sideBarIcon}>
+              <div title="View Documentation">
+                <a href="https://code.pragyan.org/docs">
+                  <FontAwesomeIcon
+                    className={styles.sideBarIconComponent}
+                    title="View Documentation"
+                    icon={faBook as IconProp}
+                  />
+                </a>
+              </div>
+            </div>
             <div className={styles.sideBarIcon}>
               <div title="Made with ❤ by Delta">
                 <div className={styles.deltaLogo}>

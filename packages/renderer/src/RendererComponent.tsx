@@ -61,11 +61,11 @@ const StatsText = () => {
         padding: '1rem',
       }}
     >
-      Turn : {String(turns).padStart(6, '\xa0')}
+      Turn : {String(turns).padStart(8, '\xa0')}
       <br />
-      Coins : {String(coins).padStart(6, '\xa0')}
+      Coins : {String(coins).padStart(8, '\xa0')}
       <br />
-      Destruction : {String(destruction).padStart(4, '\xa0')} %
+      Destruction : {String(destruction.toFixed(2)).padStart(6, '\xa0')} %
     </p>
   );
 };
