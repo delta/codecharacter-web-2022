@@ -91,7 +91,7 @@ function PaginatedItems() {
                       <img src={getAvatarByID(match.user1.avatarId).url}></img>
                     </div>
                     <div className={[styles.username, styles.left].join(' ')}>
-                      {match.user1.name}
+                      {match.user1.username}
                     </div>
                     <div className={styles.coinused}>
                       {[...match.games.values()][0].coinsUsed}
@@ -123,11 +123,11 @@ function PaginatedItems() {
                       {
                         [...match.games.values()][
                           [...match.games.values()].length === 1 ? 0 : 1
-                        ].destruction
+                        ].coinsUsed
                       }
                     </div>
                     <div className={[styles.username, styles.right].join(' ')}>
-                      {match.user2.name}
+                      {match.user2.username}
                     </div>
                     <div className={styles.pic}>
                       <img src={getAvatarByID(match.user2.avatarId).url}></img>
