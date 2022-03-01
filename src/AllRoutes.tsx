@@ -1,8 +1,6 @@
-import { AuthApi } from '@codecharacter-2022/client';
 import { lazy, useEffect } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
-import { apiConfig } from './api/ApiConfig';
 import Redirect from './components/Redirect/Redirect';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { isloggedIn, loggedIn } from './store/User/UserSlice';
