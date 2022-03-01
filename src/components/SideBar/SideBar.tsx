@@ -45,12 +45,19 @@ const SideBar: React.FunctionComponent = () => {
   }, [location]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  function delete_cookie(name: string) {
+    document.cookie =
+      name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
   const handleLogout = (icon: string) => {
     if (icon == 'Logout') {
       dispatch(logout());
       localStorage.removeItem('token');
-      document.cookie =
-        'bearer-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      // document.cookie =
+      //   'bearer-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      delete_cookie('bearer-token');
 
       navigate('/login', { replace: true });
     }
