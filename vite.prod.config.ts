@@ -35,7 +35,7 @@ export default defineConfig({
       globIgnores: ['polyfills/*.js', 'nomodule-*.js'],
       swDest: path.join('dist', 'sw.js'),
       globDirectory: path.join('dist'),
-      globPatterns: ['**/*.{html,js,css,webmanifest}'],
+      globPatterns: ['**/*.{html,js,css,webp,png,webmanifest}'],
       skipWaiting: true,
       clientsClaim: true,
       sourcemap: false,
