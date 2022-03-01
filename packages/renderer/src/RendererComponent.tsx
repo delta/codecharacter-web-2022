@@ -65,7 +65,7 @@ const StatsText = () => {
       <br />
       Coins : {String(coins).padStart(6, '\xa0')}
       <br />
-      Destruction : {String(destruction).padStart(4, '\xa0')} %
+      Destruction : {String(destruction.toFixed(2)).padStart(4, '\xa0')} %
     </p>
   );
 };
