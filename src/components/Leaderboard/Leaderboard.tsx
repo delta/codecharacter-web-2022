@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Modal, Button, Table } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
-
+import { useAppSelector } from '../../store/hooks';
 import styles from './Leaderboard.module.css';
 import { getAvatarByID } from '../Avatar/Avatar';
 import {
@@ -15,6 +15,7 @@ import Loader from '../Loader/Loader';
 import swordImage from '../../assets/sword.png';
 import trophyImage from '../../assets/trophy.png';
 import Toast from 'react-hot-toast';
+import { user } from '../../store/User/UserSlice';
 
 function PaginatedItems() {
   const [pageCount, setPageCount] = useState(0);
@@ -32,6 +33,7 @@ function PaginatedItems() {
   };
 
   const itemsPerPage = 8;
+  const currentUserName = useAppSelector(user).username;
 
   useEffect(() => {
     fetchLeaderboard();
@@ -120,7 +122,16 @@ function PaginatedItems() {
                 <tbody>
                   {currentItems &&
                     currentItems.map((row: LeaderboardEntry) => (
-                      <tr className={styles.item} key={row.user.username}>
+                      <tr
+                        className={
+                          styles.item +
+                          ' ' +
+                          (currentUserName === row.user.username
+                            ? styles.currentUserItem
+                            : '')
+                        }
+                        key={row.user.username}
+                      >
                         <td className={styles.pos}>
                           {itemOffset + 1 + currentItems.indexOf(row)}
                         </td>
@@ -131,15 +142,19 @@ function PaginatedItems() {
                           ></img>
                         </td>
                         <td className={styles.name}>{row.user.username}</td>
-                        <td
-                          className={styles.attackButton}
-                          onClick={() => handleShow(row.user.username)}
-                        >
-                          <img
-                            className={styles.attackImg}
-                            src={swordImage}
-                          ></img>
-                        </td>
+                        {currentUserName === row.user.username ? (
+                          <td>---</td>
+                        ) : (
+                          <td
+                            className={styles.attackButton}
+                            onClick={() => handleShow(row.user.username)}
+                          >
+                            <img
+                              className={styles.attackImg}
+                              src={swordImage}
+                            ></img>
+                          </td>
+                        )}
                         <td className={styles.score}>
                           {row.stats.rating.toFixed(3)}
                         </td>
