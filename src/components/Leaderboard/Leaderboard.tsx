@@ -54,7 +54,7 @@ function PaginatedItems() {
     setIsLoaded(false);
     const leaderboardAPI = new LeaderboardApi(apiConfig);
     leaderboardAPI
-      .getLeaderboard()
+      .getLeaderboard(0, 10000) // The pagination system is so messed up, I can't be bother to fix it, so this hack
       .then(response => {
         setItems(response);
         setIsLoaded(true);

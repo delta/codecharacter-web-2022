@@ -20,6 +20,7 @@ import { logout } from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import deltaLogo from '../../assets/deltaLogo.png';
+import { cookieDomain } from '../../config/config.example';
 
 const icons = [
   { icon: faCode, route: 'dashboard', tooltip: 'Code Editor' },
@@ -45,12 +46,18 @@ const SideBar: React.FunctionComponent = () => {
   }, [location]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  function deleteCookie(name: string) {
+    document.cookie =
+      name +
+      `=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=${cookieDomain};`;
+  }
+
   const handleLogout = (icon: string) => {
     if (icon == 'Logout') {
       dispatch(logout());
       localStorage.removeItem('token');
-      document.cookie =
-        'bearer-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      deleteCookie('bearer-token');
 
       navigate('/login', { replace: true });
     }
@@ -98,7 +105,10 @@ const SideBar: React.FunctionComponent = () => {
           <div>
             <div className={styles.sideBarIcon}>
               <div title="View Documentation">
-                <a href="https://code.pragyan.org/docs">
+                <a
+                  href="https://codecharacter-docs-2022.vercel.app/"
+                  rel="noreferrer noopener"
+                >
                   <FontAwesomeIcon
                     className={styles.sideBarIconComponent}
                     title="View Documentation"
