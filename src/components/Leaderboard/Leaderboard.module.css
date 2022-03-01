@@ -62,6 +62,10 @@ html {
   border: 0;
 }
 
+.currentUserItem {
+  background: rgb(7, 126, 116);
+}
+
 .list .item .pos {
   text-align: center;
 }

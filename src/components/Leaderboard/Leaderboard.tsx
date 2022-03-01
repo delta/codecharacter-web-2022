@@ -122,7 +122,16 @@ function PaginatedItems() {
                 <tbody>
                   {currentItems &&
                     currentItems.map((row: LeaderboardEntry) => (
-                      <tr className={styles.item} key={row.user.username}>
+                      <tr
+                        className={
+                          styles.item +
+                          ' ' +
+                          (currentUserName === row.user.username
+                            ? styles.currentUserItem
+                            : '')
+                        }
+                        key={row.user.username}
+                      >
                         <td className={styles.pos}>
                           {itemOffset + 1 + currentItems.indexOf(row)}
                         </td>
