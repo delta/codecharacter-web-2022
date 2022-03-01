@@ -1,6 +1,8 @@
+import { AuthApi } from '@codecharacter-2022/client';
 import { lazy, useEffect } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
+import { apiConfig } from './api/ApiConfig';
 import Redirect from './components/Redirect/Redirect';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { isloggedIn, loggedIn } from './store/User/UserSlice';
@@ -38,6 +40,23 @@ export default function AllRoutes(): JSX.Element {
       dispatch(loggedIn());
     }
   }, []);
+
+  return (
+    <Routes>
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/mapdesigner" element={<MapDesigner />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/leaderboard" element={<Leaderboard />} />
+      <Route path="/battletv" element={<BattleTV />} />
+      <Route path="/activate" element={<Verify />} />
+      <Route path="/incomplete-profile" element={<IncompleteProfile />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<Redirect />} />
+    </Routes>
+  );
 
   return logIn ? (
     <Routes>
