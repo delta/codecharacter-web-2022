@@ -39,6 +39,22 @@ export default function AllRoutes(): JSX.Element {
     }
   }, []);
 
+  return (
+    <Routes>
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/mapdesigner" element={<MapDesigner />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/leaderboard" element={<Leaderboard />} />
+      <Route path="/battletv" element={<BattleTV />} />
+      <Route path="/activate" element={<Verify />} />
+      <Route path="/incomplete-profile" element={<IncompleteProfile />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/" element={<Home />} />
+    </Routes>
+  );
+
   return logIn ? (
     <Routes>
       <Route path="/" element={<Home />} />

@@ -25,9 +25,13 @@ export default function Footer(): JSX.Element {
               </NavLink>
             </div>
             <div>
-              <NavLink className={styles.links} to="/docs">
+              <a
+                className={styles.links}
+                href="https://codecharacter-docs-2022.vercel.app/"
+                rel="noreferrer noopener"
+              >
                 Documentation
-              </NavLink>
+              </a>
             </div>
             <div>
               <a

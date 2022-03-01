@@ -98,7 +98,10 @@ const SideBar: React.FunctionComponent = () => {
           <div>
             <div className={styles.sideBarIcon}>
               <div title="View Documentation">
-                <a href="https://code.pragyan.org/docs">
+                <a
+                  href="https://codecharacter-docs-2022.vercel.app/"
+                  rel="noreferrer noopener"
+                >
                   <FontAwesomeIcon
                     className={styles.sideBarIconComponent}
                     title="View Documentation"
