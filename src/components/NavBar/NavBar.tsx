@@ -4,7 +4,12 @@ import styles from './NavBar.module.css';
 import Profile from '../Profile/Profile';
 import Notifs from '../Notifs/Notifs';
 import { getAvatarByID } from '../Avatar/Avatar';
-import { getUserDetailsAction, user } from '../../store/User/UserSlice';
+import {
+  getUserDetailsAction,
+  isloggedIn,
+  loggedIn,
+  user,
+} from '../../store/User/UserSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { AuthApi } from '@codecharacter-2022/client';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
@@ -15,6 +20,7 @@ const NavBar: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const loggedInUser = useAppSelector(user);
+  const isLogged = useAppSelector(isloggedIn);
   // useEffect(() => {
   //   if (window.location.hash == '#/register')
   //     navigate('/register', { replace: true });
@@ -34,6 +40,7 @@ const NavBar: React.FunctionComponent = () => {
         const index = cookie.indexOf('=') + 1;
         const token = cookie.slice(index);
         localStorage.setItem('token', token);
+        dispatch(loggedIn());
       }
     });
   }, [document.cookie]);
@@ -41,27 +48,29 @@ const NavBar: React.FunctionComponent = () => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [loggedInUser]);
   useEffect(() => {
-    const authApi = new AuthApi(apiConfig);
-    authApi
-      .getAuthStatus()
-      .then(res => {
-        const { status } = res;
-        if (status === 'PROFILE_INCOMPLETE') {
-          navigate('/incomplete-profile', { replace: true });
-        } else if (status === 'AUTHENTICATED') {
-          if (localStorage.getItem('token') != null) {
-            navigate('/dashboard', { replace: true });
-          } else {
-            handleClose();
+    if (localStorage.getItem('token') != null) {
+      const authApi = new AuthApi(apiConfig);
+      authApi
+        .getAuthStatus()
+        .then(res => {
+          const { status } = res;
+          if (status === 'PROFILE_INCOMPLETE') {
+            navigate('/incomplete-profile', { replace: true });
+          } else if (status === 'AUTHENTICATED') {
+            if (localStorage.getItem('token') != null) {
+              navigate('/dashboard', { replace: true });
+            } else {
+              handleClose();
+            }
           }
-        }
-      })
-      .catch((e: Error) => {
-        if (e instanceof ApiError) {
-          Toast.error(e.message);
-        }
-      });
-  }, [loggedInUser]);
+        })
+        .catch((e: Error) => {
+          if (e instanceof ApiError) {
+            Toast.error(e.message);
+          }
+        });
+    }
+  }, [isLogged]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
     isOpen(true);

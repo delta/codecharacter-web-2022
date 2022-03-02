@@ -56,6 +56,11 @@
   flex-grow: 1;
   font-family: Montserrat;
   font-style: normal;
+  max-height: 80vh;
+}
+
+.codeBox > *::-webkit-scrollbar {
+  display: none;
 }
 
 .codeBox > * {
@@ -109,6 +114,7 @@
   scrollbar-width: none;
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 77vh;
 }
 
 .completeTimeline::-webkit-scrollbar {
@@ -125,6 +131,7 @@
   scrollbar-width: none;
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 80vh;
 }
 
 .mapBox::-webkit-scrollbar,

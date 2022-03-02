@@ -16,6 +16,7 @@ import {
 } from '../../store/SelfMatchMakeModal/SelfMatchModal';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
+  AuthApi,
   CodeApi,
   CodeRevision,
   GameMapRevision,
@@ -24,6 +25,7 @@ import {
   MatchMode,
 } from '@codecharacter-2022/client';
 import Toast from 'react-hot-toast';
+import { isloggedIn } from '../../store/User/UserSlice';
 
 const selfMatchModal = (): JSX.Element => {
   const IsSelfMatchModalOpen = useAppSelector(isSelfMatchModalOpen);
@@ -34,24 +36,42 @@ const selfMatchModal = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [completeCodeHistory, setCodeHistory] = useState<CodeRevision[]>([]);
   const [completeMapHistory, setMapHistory] = useState<GameMapRevision[]>([]);
+  const isLogged = useAppSelector(isloggedIn);
 
   useEffect(() => {
-    const codeApi = new CodeApi(apiConfig);
-    codeApi
-      .getCodeRevisions()
-      .then(codeResp => setCodeHistory(codeResp))
-      .catch(error => {
-        if (error instanceof ApiError) Toast.error(error.message);
-      });
+    if (localStorage.getItem('token') !== null) {
+      const authApi = new AuthApi(apiConfig);
+      authApi
+        .getAuthStatus()
+        .then(res => {
+          const { status } = res;
+          if (status === 'AUTHENTICATED') {
+            if (localStorage.getItem('token') != null) {
+              const codeApi = new CodeApi(apiConfig);
+              codeApi
+                .getCodeRevisions()
+                .then(codeResp => setCodeHistory(codeResp))
+                .catch(error => {
+                  if (error instanceof ApiError) Toast.error(error.message);
+                });
 
-    const mapApi = new MapApi(apiConfig);
-    mapApi
-      .getMapRevisions()
-      .then(mapResp => setMapHistory(mapResp))
-      .catch(error => {
-        if (error instanceof ApiError) Toast.error(error.message);
-      });
-  }, []);
+              const mapApi = new MapApi(apiConfig);
+              mapApi
+                .getMapRevisions()
+                .then(mapResp => setMapHistory(mapResp))
+                .catch(error => {
+                  if (error instanceof ApiError) Toast.error(error.message);
+                });
+            }
+          }
+        })
+        .catch((e: Error) => {
+          if (e instanceof ApiError) {
+            Toast.error(e.message);
+          }
+        });
+    }
+  }, [isLogged]);
 
   function handleCodeCommitChange(selectedValue: string) {
     if (selectedValue === 'Current Code') {

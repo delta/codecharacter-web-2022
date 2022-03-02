@@ -16,7 +16,7 @@ export default function MapView(props: MapViewBoxProps): JSX.Element {
     return (
       <MapDesignerComponent
         saveMapCallback={saveMapCallback}
-        {...MapDesignerUtils.loadMap(props.mapCoordinates)}
+        {...MapDesignerUtils.preloadMap(props.mapCoordinates)}
         readonly={true}
       ></MapDesignerComponent>
     );
