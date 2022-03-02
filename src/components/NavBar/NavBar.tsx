@@ -41,26 +41,28 @@ const NavBar: React.FunctionComponent = () => {
     if (localStorage.getItem('token') != null) dispatch(getUserDetailsAction());
   }, [loggedInUser]);
   useEffect(() => {
-    const authApi = new AuthApi(apiConfig);
-    authApi
-      .getAuthStatus()
-      .then(res => {
-        const { status } = res;
-        if (status === 'PROFILE_INCOMPLETE') {
-          navigate('/incomplete-profile', { replace: true });
-        } else if (status === 'AUTHENTICATED') {
-          if (localStorage.getItem('token') != null) {
-            navigate('/dashboard', { replace: true });
-          } else {
-            handleClose();
+    if (localStorage.getItem('token') != null) {
+      const authApi = new AuthApi(apiConfig);
+      authApi
+        .getAuthStatus()
+        .then(res => {
+          const { status } = res;
+          if (status === 'PROFILE_INCOMPLETE') {
+            navigate('/incomplete-profile', { replace: true });
+          } else if (status === 'AUTHENTICATED') {
+            if (localStorage.getItem('token') != null) {
+              navigate('/dashboard', { replace: true });
+            } else {
+              handleClose();
+            }
           }
-        }
-      })
-      .catch((e: Error) => {
-        if (e instanceof ApiError) {
-          Toast.error(e.message);
-        }
-      });
+        })
+        .catch((e: Error) => {
+          if (e instanceof ApiError) {
+            Toast.error(e.message);
+          }
+        });
+    }
   }, [loggedInUser]);
   const [open, isOpen] = useState(false);
   const handleOpen = () => {
