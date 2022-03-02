@@ -16,55 +16,57 @@ export const Websocket: React.FunctionComponent = () => {
   const currentUserapi = new CurrentUserApi(apiConfig);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    currentUserapi.getCurrentUser().then(user => {
-      const baseUrl = BASE_PATH.replace('http', 'ws');
-      const url = `${baseUrl}/ws`;
-      const wsClient = Stomp.over(() => new WebSocket(url));
-      wsClient.brokerURL = url;
-      const handleConnect = () => {
-        wsClient.subscribe(`/updates/${user.id}`, message => {
-          const game = JSON.parse(message.body) as Game;
-          switch (game.status) {
-            case GameStatus.Executing:
-              Toast.success('Executing now...');
-              break;
-            case GameStatus.Executed:
-              Toast.success('Executed successfully!');
-              // TODO: find non-hacky way to do this
-              dispatch(
-                getLogAction({
-                  id: game.id,
-                  callback: () => (window.location.href = './#/dashboard'),
-                }),
-              );
-              break;
-            case GameStatus.ExecuteError:
-              Toast.error('Execution error!');
-              dispatch(
-                getLogAction({
-                  id: game.id,
-                  callback: () => (window.location.href = './#/dashboard'),
-                }),
-              );
-              break;
-          }
-          message.ack();
-        });
-        wsClient.subscribe(`/notifications/${user.id}`, message => {
-          const notification = JSON.parse(message.body) as Notification;
-          Toast(() => (
-            <div>
-              <h3>{notification.title}</h3>
-              {notification.content}
-            </div>
-          ));
-          message.ack();
-        });
-      };
+    if (localStorage.getItem('token') !== null) {
+      currentUserapi.getCurrentUser().then(user => {
+        const baseUrl = BASE_PATH.replace('http', 'ws');
+        const url = `${baseUrl}/ws`;
+        const wsClient = Stomp.over(() => new WebSocket(url));
+        wsClient.brokerURL = url;
+        const handleConnect = () => {
+          wsClient.subscribe(`/updates/${user.id}`, message => {
+            const game = JSON.parse(message.body) as Game;
+            switch (game.status) {
+              case GameStatus.Executing:
+                Toast.success('Executing now...');
+                break;
+              case GameStatus.Executed:
+                Toast.success('Executed successfully!');
+                // TODO: find non-hacky way to do this
+                dispatch(
+                  getLogAction({
+                    id: game.id,
+                    callback: () => (window.location.href = './#/dashboard'),
+                  }),
+                );
+                break;
+              case GameStatus.ExecuteError:
+                Toast.error('Execution error!');
+                dispatch(
+                  getLogAction({
+                    id: game.id,
+                    callback: () => (window.location.href = './#/dashboard'),
+                  }),
+                );
+                break;
+            }
+            message.ack();
+          });
+          wsClient.subscribe(`/notifications/${user.id}`, message => {
+            const notification = JSON.parse(message.body) as Notification;
+            Toast(() => (
+              <div>
+                <h3>{notification.title}</h3>
+                {notification.content}
+              </div>
+            ));
+            message.ack();
+          });
+        };
 
-      wsClient.onConnect = handleConnect;
-      wsClient.activate();
-    });
+        wsClient.onConnect = handleConnect;
+        wsClient.activate();
+      });
+    }
   }, []);
   return <div></div>;
 };

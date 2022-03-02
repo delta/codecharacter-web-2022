@@ -36,21 +36,23 @@ const selfMatchModal = (): JSX.Element => {
   const [completeMapHistory, setMapHistory] = useState<GameMapRevision[]>([]);
 
   useEffect(() => {
-    const codeApi = new CodeApi(apiConfig);
-    codeApi
-      .getCodeRevisions()
-      .then(codeResp => setCodeHistory(codeResp))
-      .catch(error => {
-        if (error instanceof ApiError) Toast.error(error.message);
-      });
+    if (localStorage.getItem('token') !== null) {
+      const codeApi = new CodeApi(apiConfig);
+      codeApi
+        .getCodeRevisions()
+        .then(codeResp => setCodeHistory(codeResp))
+        .catch(error => {
+          if (error instanceof ApiError) Toast.error(error.message);
+        });
 
-    const mapApi = new MapApi(apiConfig);
-    mapApi
-      .getMapRevisions()
-      .then(mapResp => setMapHistory(mapResp))
-      .catch(error => {
-        if (error instanceof ApiError) Toast.error(error.message);
-      });
+      const mapApi = new MapApi(apiConfig);
+      mapApi
+        .getMapRevisions()
+        .then(mapResp => setMapHistory(mapResp))
+        .catch(error => {
+          if (error instanceof ApiError) Toast.error(error.message);
+        });
+    }
   }, []);
 
   function handleCodeCommitChange(selectedValue: string) {
