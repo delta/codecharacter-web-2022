@@ -41,6 +41,7 @@ import {
   mapCommitIDChanged,
   mapCommitNameChanged,
 } from '../../store/SelfMatchMakeModal/SelfMatchModal';
+import { loggedIn } from '../../store/User/UserSlice';
 
 type SplitPaneState = {
   horizontalPercent: string;
@@ -98,6 +99,7 @@ export default function Dashboard(): JSX.Element {
         const index = cookie.indexOf('=') + 1;
         const token = cookie.slice(index);
         localStorage.setItem('token', token);
+        dispatch(loggedIn());
       }
     });
   }, []);
