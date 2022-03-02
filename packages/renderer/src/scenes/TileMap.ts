@@ -382,6 +382,8 @@ export class TileMap extends Phaser.Scene {
           DebugLog.log += `${instruction.errorInfo}\n`;
           DebugLog.updateLogCallback(DebugLog.log);
         } else if (instruction instanceof Instructions.End) {
+          DebugLog.log += 'Match ended!\n';
+          DebugLog.updateLogCallback(DebugLog.log);
           return;
         }
       }
