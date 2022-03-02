@@ -14,6 +14,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ApiError, authConfig } from '../../../../../api/ApiConfig';
 import { AuthApi } from '@codecharacter-2022/client';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Toast from 'react-hot-toast';
 
 function ResetpasswordVerification(): JSX.Element {
   const [confirmpasswordError, isconfirmpasswordError] = useState(false);
@@ -72,10 +73,12 @@ function ResetpasswordVerification(): JSX.Element {
         .then(() => {
           isLoading(false);
           setError('NIL');
+          Toast.success('Password Reset done successfully');
           navigate('/login', { replace: true });
         })
         .catch(error => {
           if (error instanceof ApiError) {
+            Toast.error(error.message);
             setError(error.message);
           }
         });

@@ -34,26 +34,26 @@ export default function AllRoutes(): JSX.Element {
   const logIn = useAppSelector(isloggedIn);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token') != null) {
       dispatch(loggedIn());
     }
   }, []);
 
-  return (
-    <Routes>
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/mapdesigner" element={<MapDesigner />} />
-      <Route path="/history" element={<History />} />
-      <Route path="/leaderboard" element={<Leaderboard />} />
-      <Route path="/battletv" element={<BattleTV />} />
-      <Route path="/activate" element={<Verify />} />
-      <Route path="/incomplete-profile" element={<IncompleteProfile />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/" element={<Home />} />
-    </Routes>
-  );
+  // return (
+  //   <Routes>
+  //     <Route path="/dashboard" element={<Dashboard />} />
+  //     <Route path="/mapdesigner" element={<MapDesigner />} />
+  //     <Route path="/history" element={<History />} />
+  //     <Route path="/leaderboard" element={<Leaderboard />} />
+  //     <Route path="/battletv" element={<BattleTV />} />
+  //     <Route path="/activate" element={<Verify />} />
+  //     <Route path="/incomplete-profile" element={<IncompleteProfile />} />
+  //     <Route path="/login" element={<Login />} />
+  //     <Route path="/register" element={<Register />} />
+  //     <Route path="/reset-password" element={<ResetPassword />} />
+  //     <Route path="/" element={<Home />} />
+  //   </Routes>
+  // );
 
   return logIn ? (
     <Routes>
@@ -73,6 +73,7 @@ export default function AllRoutes(): JSX.Element {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/activate" element={<Verify />} />
+      <Route path="/incomplete-profile" element={<IncompleteProfile />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="*" element={<Redirect />} />
     </Routes>
