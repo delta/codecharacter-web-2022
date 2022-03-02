@@ -1,44 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { RendererUtils } from '@codecharacter-2022/renderer';
-import ReactAnsi from 'react-ansi';
+import { LazyLog, ScrollFollow } from 'react-lazylog';
 
 export default function Terminal(): JSX.Element {
-  const [log, setLog] = useState('');
-  const ref = useRef<HTMLDivElement>(null);
+  const [log, setLog] = useState(
+    'No log available. Please run a game to see the log.',
+  );
 
   RendererUtils.setUpdateLogCallback((log: string) => {
-    setLog(log);
+    setLog(log.replace(/\u001b\[K/g, ''));
   });
 
-  useEffect(() => {
-    const element = document.querySelector('#log > div:nth-child(1) > div');
-    if (
-      element &&
-      element?.scrollTop + element?.clientHeight + 50 > element?.scrollHeight
-    ) {
-      element?.scrollTo(0, element.scrollHeight);
-    }
-  }, [log]);
-
   return (
-    <div
-      ref={ref}
-      style={{
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <ReactAnsi
-        style={{
-          height: '100%',
-          width: '100%',
-        }}
-        log={log}
-        bodyStyle={{ height: '100%', overflowY: 'auto' }}
-        logStyle={{ height: '100%' }}
-        autoScroll={true}
-        virtual
-      />
-    </div>
+    <ScrollFollow
+      startFollowing={true}
+      render={({ follow, onScroll }) => (
+        <LazyLog
+          text={log}
+          selectableLines
+          follow={follow}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          onScroll={onScroll}
+          style={{
+            backgroundColor: '#002b36',
+          }}
+          stream
+        />
+      )}
+    />
   );
 }
