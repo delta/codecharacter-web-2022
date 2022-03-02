@@ -16,6 +16,7 @@ import {
 } from '../../store/SelfMatchMakeModal/SelfMatchModal';
 import { apiConfig, ApiError } from '../../api/ApiConfig';
 import {
+  AuthApi,
   CodeApi,
   CodeRevision,
   GameMapRevision,
@@ -39,20 +40,35 @@ const selfMatchModal = (): JSX.Element => {
 
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      const codeApi = new CodeApi(apiConfig);
-      codeApi
-        .getCodeRevisions()
-        .then(codeResp => setCodeHistory(codeResp))
-        .catch(error => {
-          if (error instanceof ApiError) Toast.error(error.message);
-        });
+      const authApi = new AuthApi(apiConfig);
+      authApi
+        .getAuthStatus()
+        .then(res => {
+          const { status } = res;
+          if (status === 'AUTHENTICATED') {
+            if (localStorage.getItem('token') != null) {
+              const codeApi = new CodeApi(apiConfig);
+              codeApi
+                .getCodeRevisions()
+                .then(codeResp => setCodeHistory(codeResp))
+                .catch(error => {
+                  if (error instanceof ApiError) Toast.error(error.message);
+                });
 
-      const mapApi = new MapApi(apiConfig);
-      mapApi
-        .getMapRevisions()
-        .then(mapResp => setMapHistory(mapResp))
-        .catch(error => {
-          if (error instanceof ApiError) Toast.error(error.message);
+              const mapApi = new MapApi(apiConfig);
+              mapApi
+                .getMapRevisions()
+                .then(mapResp => setMapHistory(mapResp))
+                .catch(error => {
+                  if (error instanceof ApiError) Toast.error(error.message);
+                });
+            }
+          }
+        })
+        .catch((e: Error) => {
+          if (e instanceof ApiError) {
+            Toast.error(e.message);
+          }
         });
     }
   }, [isLogged]);
