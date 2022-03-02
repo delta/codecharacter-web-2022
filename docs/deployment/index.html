@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/codechar_favicon.2dcc0475.png" />
+  <title>CodeCharacter</title>
+  <script type="module" crossorigin src="assets/index.04970f6d.js"></script>
+  <link rel="modulepreload" href="assets/vendor.81f97c66.js">
+  <link rel="stylesheet" href="assets/index.215c70bf.css">
+</head>
+
+<body>
+  
+  <div id="root"></div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').then(function (registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+  
+</body>
+
+</html>

@@ -1,0 +1,1841 @@
+openapi: 3.0.0
+info:
+  title: CodeCharacter API
+  version: 2022.0.1
+  contact:
+    name: CodeCharacter Authors
+    url: 'https://delta.nitt.edu'
+    email: delta@nitt.edu
+  license:
+    name: MIT
+  description: Specification of the CodeCharacter API
+servers:
+  - url: 'http://localhost:8080'
+    description: Local Development Server
+paths:
+  /auth/login/password:
+    post:
+      summary: Password Login
+      operationId: passwordLogin
+      tags:
+        - auth
+      description: Login with email and password and get bearer token for authentication
+      parameters: []
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordLoginRequest'
+            examples: {}
+        description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordLoginResponse'
+              examples:
+                Example:
+                  value:
+                    token: example-token
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+    parameters: []
+  /auth/reset-password:
+    parameters: []
+    post:
+      summary: Reset password
+      operationId: resetPassword
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      tags:
+        - auth
+      security: []
+      description: Reset password using the token from password reset email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+  /auth/status:
+    get:
+      summary: Get authentication status
+      tags:
+        - auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthStatusResponse'
+              examples:
+                Example:
+                  value:
+                    status: AUTHENTICATED
+      operationId: getAuthStatus
+      description: >-
+        Get authentication status: fully authenticated, activation pending and
+        incomplete profile
+  /auth/forgot-password:
+    post:
+      summary: Forgot password
+      operationId: forgotPassword
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      tags:
+        - auth
+      security: []
+      description: Request password reset email to be sent when user forgot their password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+            examples:
+              Example:
+                value:
+                  email: user@example.com
+  /leaderboard:
+    get:
+      summary: Get leaderboard
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeaderboardEntry'
+              examples:
+                Example:
+                  value:
+                    - user:
+                        username: testUser
+                        name: >-
+                          Test User1
+                          asdfdsfasdfasdfadsfasdfadsdfasdfasdfasfasdfsfsdfsfadsfasfa
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 500
+                        wins: 6
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser2
+                        name: >-
+                          Test User2
+                          asdfdsfasdfasdfadsfasdfadsdfasdfasdfasfasdfsfsdfsfadsfasfa
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 1
+                      stats:
+                        rating: 50
+                        wins: 3
+                        losses: 3
+                        ties: 2
+                    - user:
+                        username: testUser3
+                        name: >-
+                          Test User3
+                          asdfdsfasdfasdfadsfasdfadsdfasdfasdfasfasdfsfsdfsfadsfasfa
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 80
+                        wins: 1
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser4
+                        name: Test User4
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 230
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser5
+                        name: Test User5 Test Test
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 850
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser6
+                        name: >-
+                          Test User6
+                          asdfdsfasdfasdfadsfasdfadsdfasdfasdfasfasdfsfsdfsfadsfasfa
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 600
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser7
+                        name: >-
+                          Test User7
+                          asdfdsfasdfasdfadsfasdfadsdfasdfasdfasfasdfsfsdfsfadsfasfa
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 57
+                        wins: 20
+                        losses: 70
+                        ties: 0
+                    - user:
+                        username: testUser8
+                        name: Test User8
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 850
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser9
+                        name: Test User9
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 78
+                        wins: 0
+                        losses: 0
+                        ties: 0
+                    - user:
+                        username: testUser10
+                        name: Test User10
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      stats:
+                        rating: 10
+                        wins: 0
+                        losses: 0
+                        ties: 0
+        '401':
+          description: Unauthorized
+      operationId: getLeaderboard
+      tags:
+        - leaderboard
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: page
+          description: Index of the page
+        - schema:
+            type: integer
+          in: query
+          name: size
+          description: Size of the page
+      description: Get leaderboard
+    parameters: []
+  /top-matches:
+    get:
+      summary: Get top matches
+      tags:
+        - match
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+              examples:
+                Example:
+                  value:
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f09
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f07
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f06
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f05
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f04
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f03
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f02
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+        '401':
+          description: Unauthorized
+      operationId: getTopMatches
+      description: Get top matches
+    parameters: []
+  '/games/{gameId}/logs':
+    parameters:
+      - $ref: '#/components/parameters/gameId'
+    get:
+      summary: Get game logs by game ID
+      tags:
+        - game
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+              examples:
+                Example:
+                  value: aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ==
+      operationId: getGameLogsByGameId
+      description: Get game logs by game ID
+  /user:
+    parameters: []
+    get:
+      summary: Get current user profile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserProfile'
+              examples:
+                Example:
+                  value:
+                    id: 123e4567-e89b-12d3-a456-426614174001
+                    username: testUser
+                    name: Test User
+                    email: user@example.com
+                    country: IN
+                    college: NITT
+                    avatarId: 1
+                    isProfileComplete: true
+        '401':
+          description: Unauthorized
+      operationId: getCurrentUser
+      description: Get current user profile
+      tags:
+        - current-user
+    patch:
+      summary: Update current user
+      operationId: updateCurrentUser
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+      description: Update current user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCurrentUserProfile'
+            examples:
+              Example:
+                value:
+                  name: Test User Mofified
+                  country: IN
+                  college: NIT Trichy
+      tags:
+        - current-user
+  /user/complete-profile:
+    post:
+      summary: Complete user profile
+      operationId: completeUserProfile
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+      description: Complete the user profile for users who registered using OAuth
+      tags:
+        - current-user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteProfileRequest'
+            examples:
+              Example:
+                value:
+                  username: TestUser
+                  name: Test User
+                  country: IN
+                  college: Test
+                  avatarId: 1
+  /user/password:
+    parameters: []
+    post:
+      summary: Update password
+      operationId: updatePassword
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+        - current-user
+      description: Update password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePasswordRequest'
+            examples:
+              Example:
+                value:
+                  oldPassword: Pa$$w0rd
+                  password: Pa$$w0rd1
+                  passwordConfirmation: Pa$$w0rd1
+  /user/code/latest:
+    get:
+      summary: Get latest code
+      tags:
+        - code
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Code'
+              examples:
+                Example:
+                  value:
+                    code: '#include<iostream.h>'
+                    language: C
+                    lastSavedAt: '2019-08-24T14:15:22Z'
+        '401':
+          description: Unauthorized
+      operationId: getLatestCode
+      description: Get latest code
+    post:
+      summary: Update latest code
+      operationId: updateLatestCode
+      description: Update latest code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLatestCodeRequest'
+            examples:
+              Example:
+                value:
+                  code: '#include<iostream.h>'
+                  language: C
+                  lock: false
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      tags:
+        - code
+    parameters: []
+  /user/code/revisions:
+    get:
+      summary: Get code revisions
+      tags:
+        - code
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeRevision'
+              examples:
+                Example:
+                  value:
+                    - id: 123e4567-e89b-12d3-a456-426614174000
+                      code: '#include<iostream.h>'
+                      message: revision1
+                      language: C
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174111
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174001
+                      code: print('Hello World!')
+                      message: revision2
+                      language: PYTHON
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174112
+                      createdAt: '2020-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174002
+                      code: import sys
+                      message: revision3
+                      language: PYTHON
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174113
+                      createdAt: '2021-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174003
+                      code: '#include<conio.h>'
+                      message: revision4
+                      language: C
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174114
+                      createdAt: '2021-12-24T14:15:22Z'
+        '401':
+          description: Unauthorized
+      operationId: getCodeRevisions
+      description: Get list of all code revision IDs
+    post:
+      summary: Create code revision
+      operationId: createCodeRevision
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      description: Create code revision
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCodeRevisionRequest'
+            examples:
+              Example:
+                value:
+                  code: '#include<iostream>'
+                  message: revision1
+                  language: C
+      tags:
+        - code
+    parameters: []
+  /user/map/latest:
+    get:
+      summary: Get latest map
+      tags:
+        - map
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameMap'
+              examples:
+                Example:
+                  value:
+                    map: 0000\n0010\n0100\n1000\n
+                    lastSavedAt: '2019-08-24T14:15:22Z'
+        '401':
+          description: Unauthorized
+      operationId: getLatestMap
+      description: Get latest map
+    post:
+      summary: Update latest map
+      operationId: updateLatestMap
+      description: Update latest map
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLatestMapRequest'
+            examples:
+              Example:
+                value:
+                  map: 0000\n0010\n0100\n1000\n
+                  lock: false
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      tags:
+        - map
+    parameters: []
+  /user/map/revisions:
+    get:
+      summary: Get map revisions
+      tags:
+        - map
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameMapRevision'
+              examples:
+                Example:
+                  value:
+                    - id: 123e4567-e89b-12d3-a456-426614174001
+                      map: >-
+                        [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,1,1,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,1,1,1,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,1,1,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,0,0,0,1,1,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,0,2,2,2,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2,2,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+                      message: revision2
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174112
+                      createdAt: '2019-08-24T14:15:22Z'
+                    - id: 123e4567-e89b-12d3-a456-426614174003
+                      map: >-
+                        [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+                      message: revision4
+                      parentRevision: 123e4567-e89b-12d3-a456-426614174114
+                      createdAt: '2019-08-24T14:15:22Z'
+        '401':
+          description: Unauthorized
+      operationId: getMapRevisions
+      description: Get list of all map revision IDs
+    post:
+      summary: Create map revision
+      operationId: createMapRevision
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      description: Create map revision
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMapRevisionRequest'
+            examples:
+              Example:
+                value:
+                  map: 0000\n0010\n0100\n1000\n
+                  message: revision1
+      tags:
+        - map
+    parameters: []
+  /user/matches:
+    get:
+      summary: Get user matches
+      tags:
+        - match
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+              examples:
+                Example:
+                  value:
+                    - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                      games:
+                        - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                          coinsUsed: 100
+                          destruction: 45
+                          status: IDLE
+                      matchMode: SELF
+                      matchVerdict: PLAYER1
+                      createdAt: '2019-08-24T14:15:22Z'
+                      user1:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+                      user2:
+                        username: testUser
+                        name: Test User
+                        country: IN
+                        college: NIT Trichy
+                        avatarId: 0
+        '401':
+          description: Unauthorized
+      operationId: getUserMatches
+      description: Get matches played by authenticated user
+    parameters: []
+    post:
+      summary: Create match
+      operationId: createMatch
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some field missing
+        '401':
+          description: Unauthorized
+      description: Initiate a match by current user
+      tags:
+        - match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMatchRequest'
+            examples:
+              Example:
+                value:
+                  mode: SELF
+                  opponentId: 0a4b34b0-6057-4b82-ae27-a59c36eab667
+                  mapRevisionId: f52ddf9e-e933-471a-9250-41078cc39f80
+                  codeRevisionId: d9eb9923-651b-4ec4-b6f1-b7625b2a9392
+  /user/notifications:
+    get:
+      summary: Get all notifications
+      tags:
+        - notification
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+              examples:
+                Example:
+                  value:
+                    - id: 123e4567-e89b-12d3-a456-426614174000
+                      title: Sample Notification
+                      content: Sample Notification
+                      createdAt: '2019-08-24T14:15:22Z'
+                      read: true
+                    - id: 123e4567-e89b-12d3-a456-426614174005
+                      title: Sample Notification 2
+                      content: Sample Notification
+                      createdAt: '2019-08-25T14:15:22Z'
+                      read: false
+      operationId: getAllNotifications
+      description: Get all notifications
+    parameters: []
+  '/user/notifications/{notificationId}/read':
+    parameters:
+      - $ref: '#/components/parameters/notificationId'
+    put:
+      summary: Save notification read status
+      operationId: saveNotificationReadStatus
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+      tags:
+        - notification
+      description: Save notification read status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: boolean
+            examples:
+              Example:
+                value: true
+  /users:
+    post:
+      summary: Register user
+      operationId: register
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+      tags:
+        - user
+      description: Register user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserRequest'
+            examples:
+              Example:
+                value:
+                  username: testUser
+                  name: Test User
+                  email: user@example.com
+                  password: Pa$$w0rd
+                  passwordConfirmation: Pa$$w0rd
+                  country: IN
+                  college: NITT
+                  avatarId: 0
+        description: ''
+      security: []
+  '/users/{userId}/activate':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+    post:
+      summary: Activate user
+      operationId: activateUser
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericError'
+              examples:
+                Example:
+                  value:
+                    message: Some specific error message
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateUserRequest'
+            examples:
+              Example:
+                value:
+                  token: example-token
+        description: ''
+      description: Activate user by using the token sent via email
+      security: []
+  '/users/{userId}/ratingHistory':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+    get:
+      summary: Get user rating history
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RatingHistory'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      operationId: getRatingHistory
+      description: Get user rating history
+components:
+  schemas:
+    PasswordLoginRequest:
+      title: PasswordLoginRequest
+      type: object
+      description: Password Login request
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
+          example: test@test.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 32
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+      required:
+        - email
+        - password
+    PasswordLoginResponse:
+      title: LoginResponse
+      type: object
+      description: Login response with user token
+      properties:
+        token:
+          type: string
+          description: Bearer token
+          example: test-token
+      required:
+        - token
+    ResetPasswordRequest:
+      title: ResetPasswordRequest
+      type: object
+      description: Reset password request
+      properties:
+        token:
+          type: string
+          example: test-token
+        password:
+          type: string
+          format: password
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          minLength: 8
+          maxLength: 32
+        passwordConfirmation:
+          type: string
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          format: password
+          minLength: 8
+          maxLength: 32
+      required:
+        - token
+        - password
+        - passwordConfirmation
+    ForgotPasswordRequest:
+      title: ForgotPasswordRequest
+      type: object
+      description: Forgot password request
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
+          example: test@test.com
+      required:
+        - email
+    RatingHistory:
+      description: Rating history model
+      type: object
+      title: RatingHistory
+      properties:
+        rating:
+          type: number
+          example: 1000
+        ratingDeviation:
+          type: number
+          example: 5
+        validFrom:
+          type: string
+          format: date-time
+          example: '2021-01-01T00:00:00Z'
+      required:
+        - rating
+        - ratingDeviation
+        - validFrom
+    PublicUser:
+      title: PublicUser
+      type: object
+      description: Public user model
+      properties:
+        username:
+          type: string
+          example: test
+        name:
+          type: string
+          example: Test User
+        country:
+          type: string
+          example: IN
+        college:
+          type: string
+          example: Test
+        avatarId:
+          type: integer
+          example: 1
+      required:
+        - username
+        - name
+        - country
+        - college
+        - avatarId
+    UserStats:
+      title: UserStats
+      type: object
+      description: User stats model
+      properties:
+        rating:
+          type: number
+          example: 1000
+        wins:
+          type: integer
+          default: 0
+          example: 1
+        losses:
+          type: integer
+          example: 1
+        ties:
+          type: integer
+          example: 1
+      required:
+        - rating
+        - wins
+        - losses
+        - ties
+    Code:
+      title: Code
+      type: object
+      description: Code model
+      properties:
+        code:
+          type: string
+          example: '#include <iostream>'
+        lastSavedAt:
+          type: string
+          format: date-time
+          example: '2021-01-01T00:00:00Z'
+        language:
+          $ref: '#/components/schemas/Language'
+      required:
+        - code
+        - lastSavedAt
+        - language
+      x-examples:
+        example-1:
+          code: '#include <iostream>'
+          lastSavedAt: '2021-01-01T00:00:00Z'
+          language: C
+    UpdateLatestCodeRequest:
+      title: UpdateLatestCodeRequest
+      type: object
+      description: Update latest code request
+      properties:
+        code:
+          type: string
+          example: '#include <iostream>'
+        lock:
+          type: boolean
+          default: false
+        language:
+          $ref: '#/components/schemas/Language'
+      required:
+        - code
+        - language
+    CodeRevision:
+      title: CodeRevision
+      type: object
+      description: Code revision model
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        code:
+          type: string
+          example: '#include <iostream>'
+        message:
+          type: string
+          example: message
+        parentRevision:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174111
+        language:
+          $ref: '#/components/schemas/Language'
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - code
+        - message
+        - language
+        - createdAt
+    CreateCodeRevisionRequest:
+      title: CreateCodeRevisionRequest
+      type: object
+      description: Create code revision request
+      properties:
+        code:
+          type: string
+          example: '#include <iostream>'
+        message:
+          type: string
+          example: message
+        language:
+          $ref: '#/components/schemas/Language'
+      required:
+        - code
+        - message
+        - language
+    GameMap:
+      title: GameMap
+      type: object
+      description: GameMap model
+      properties:
+        map:
+          type: string
+          example: 0000\n0010\n0100\n1000\n
+        lastSavedAt:
+          type: string
+          format: date-time
+          example: '2021-01-01T00:00:00Z'
+      required:
+        - map
+        - lastSavedAt
+    UpdateLatestMapRequest:
+      title: UpdateLatestMapRequest
+      type: object
+      description: Update latest map request
+      properties:
+        map:
+          type: string
+          example: 0000\n0010\n0100\n1000\n
+        lock:
+          type: boolean
+          default: false
+      required:
+        - map
+    GameMapRevision:
+      title: GameMapRevision
+      type: object
+      description: GameMap revision model
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        map:
+          type: string
+          example: 0000\n0010\n0100\n1000\n
+        parentRevision:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174111
+        createdAt:
+          type: string
+          format: date-time
+        message:
+          type: string
+          example: message
+      required:
+        - id
+        - map
+        - createdAt
+        - message
+    CreateMapRevisionRequest:
+      title: CreateMapRevisionRequest
+      type: object
+      description: Create map revision request
+      properties:
+        map:
+          type: string
+          example: 0000\n0010\n0100\n1000\n
+        message:
+          type: string
+          example: message
+      required:
+        - map
+        - message
+    ActivateUserRequest:
+      title: ActivateUserRequest
+      type: object
+      description: Activate user request
+      properties:
+        token:
+          type: string
+          example: example-token
+      required:
+        - token
+    UpdatePasswordRequest:
+      title: UpdatePasswordRequest
+      type: object
+      properties:
+        oldPassword:
+          type: string
+          format: password
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          minLength: 8
+          maxLength: 32
+        password:
+          type: string
+          format: password
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          minLength: 8
+          maxLength: 32
+        passwordConfirmation:
+          type: string
+          format: password
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          minLength: 8
+          maxLength: 32
+      required:
+        - oldPassword
+        - password
+        - passwordConfirmation
+      description: Update password request
+    Notification:
+      title: Notification
+      type: object
+      description: Notification model
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        title:
+          type: string
+          example: Test notification
+        content:
+          type: string
+          example: Test
+        createdAt:
+          type: string
+          format: date-time
+          example: '2021-01-01T00:00:00Z'
+        read:
+          type: boolean
+          default: false
+      required:
+        - id
+        - title
+        - content
+        - createdAt
+        - read
+    CurrentUserProfile:
+      title: CurrentUserProfile
+      type: object
+      description: Current user profile model
+      properties:
+        id:
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174003
+          format: uuid
+        username:
+          type: string
+          example: test
+        name:
+          type: string
+          example: Test
+        email:
+          type: string
+          format: email
+          pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
+          example: test@test.com
+        country:
+          type: string
+          example: IN
+        college:
+          type: string
+          example: Test
+        avatarId:
+          type: integer
+          example: 1
+        isProfileComplete:
+          type: boolean
+          default: false
+      required:
+        - id
+        - username
+        - name
+        - email
+        - country
+        - college
+        - avatarId
+        - isProfileComplete
+    UpdateCurrentUserProfile:
+      title: UpdateCurrentUserProfile
+      type: object
+      description: Update current user profile request
+      properties:
+        name:
+          type: string
+          example: Test
+          nullable: true
+        country:
+          type: string
+          example: IN
+          nullable: true
+        college:
+          type: string
+          example: Test
+          nullable: true
+        avatarId:
+          type: integer
+          example: 1
+          nullable: true
+    CompleteProfileRequest:
+      title: CompleteProfileRequest
+      type: object
+      description: Model for complete profile request
+      properties:
+        username:
+          type: string
+          example: TestUser
+        name:
+          type: string
+          example: Test User
+        country:
+          type: string
+          example: IN
+        college:
+          type: string
+          example: Test
+        avatarId:
+          type: integer
+          example: 1
+      required:
+        - username
+        - name
+        - country
+        - college
+        - avatarId
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      type: object
+      description: Register user request
+      properties:
+        username:
+          type: string
+          example: test
+        name:
+          type: string
+          example: Test
+        email:
+          type: string
+          format: email
+          pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}'
+          example: test@test.com
+        password:
+          type: string
+          format: password
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          minLength: 8
+          maxLength: 32
+        passwordConfirmation:
+          type: string
+          format: password
+          pattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,32}$'
+          minLength: 8
+          maxLength: 32
+        country:
+          type: string
+          example: IN
+        college:
+          type: string
+          example: Test
+        avatarId:
+          type: integer
+          example: 1
+      required:
+        - username
+        - name
+        - email
+        - password
+        - passwordConfirmation
+        - country
+        - college
+        - avatarId
+    Match:
+      description: Match model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        games:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Game'
+        matchMode:
+          $ref: '#/components/schemas/MatchMode'
+        matchVerdict:
+          $ref: '#/components/schemas/Verdict'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2021-01-01T00:00:00Z'
+        user1:
+          $ref: '#/components/schemas/PublicUser'
+        user2:
+          $ref: '#/components/schemas/PublicUser'
+      required:
+        - id
+        - games
+        - matchMode
+        - matchVerdict
+        - createdAt
+        - user1
+        - user2
+    CreateMatchRequest:
+      title: CreateMatchRequest
+      type: object
+      description: >-
+        Create match request
+
+
+        If mode is SELF: either/both of mapRevisionId and codeRevisionId have to
+        be provided, or else latest code will be used to initiate the match
+
+        If mode is MANUAL: only opponentUsername should be provided
+      properties:
+        mode:
+          $ref: '#/components/schemas/MatchMode'
+        opponentUsername:
+          type: string
+          description: Username of the opponent
+          nullable: true
+        mapRevisionId:
+          type: string
+          format: uuid
+          description: Revision ID of the map
+          nullable: true
+        codeRevisionId:
+          type: string
+          format: uuid
+          description: Revision of the code
+          nullable: true
+      required:
+        - mode
+    Game:
+      title: Game
+      type: object
+      description: Game model
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        destruction:
+          type: number
+          example: 100
+        coinsUsed:
+          type: integer
+        status:
+          $ref: '#/components/schemas/GameStatus'
+      required:
+        - id
+        - destruction
+        - coinsUsed
+        - status
+    GameLog:
+      type: string
+      description: Game log model
+      example: aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ==
+    LeaderboardEntry:
+      title: LeaderboardEntry
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/PublicUser'
+        stats:
+          $ref: '#/components/schemas/UserStats'
+      required:
+        - user
+        - stats
+      description: Leaderboard entry model
+    GenericError:
+      title: GenericError
+      type: object
+      properties:
+        message:
+          type: string
+      description: Model for Generic Error
+      x-examples:
+        Example:
+          message: Error XYZ
+    Language:
+      type: string
+      title: Language
+      enum:
+        - C
+        - CPP
+        - JAVA
+        - PYTHON
+      description: Language of source files
+    MatchMode:
+      title: MatchMode
+      type: string
+      enum:
+        - SELF
+        - MANUAL
+        - AUTO
+      description: Match Mode
+    Verdict:
+      type: string
+      title: Verdict
+      enum:
+        - PLAYER1
+        - PLAYER2
+        - TIE
+      description: Match/Game verdict
+    GameStatus:
+      title: GameStatus
+      type: string
+      enum:
+        - IDLE
+        - EXECUTING
+        - EXECUTED
+        - EXECUTE_ERROR
+    AuthStatusResponse:
+      title: AuthStatusResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - AUTHENTICATED
+            - PROFILE_INCOMPLETE
+            - ACTIVATION_PENDING
+  securitySchemes:
+    oauth2-google:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://accounts.google.com/o/oauth2/v2/auth'
+          tokenUrl: 'https://oauth2.googleapis.com/token'
+          scopes:
+            'https://www.googleapis.com/auth/userinfo.email': User email
+            'https://www.googleapis.com/auth/userinfo.profile': User profile
+          refreshUrl: 'https://oauth2.googleapis.com/token'
+      description: ''
+    oauth2-github:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://github.com/login/oauth/authorize'
+          tokenUrl: 'https://github.com/login/oauth/access_token'
+          scopes:
+            'read:user': User profile
+            'user:email': User email
+          refreshUrl: 'https://github.com/login/oauth/access_token'
+    http-bearer:
+      type: http
+      scheme: bearer
+  parameters:
+    notificationId:
+      name: notificationId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+        minimum: 0
+      description: ID of the notification
+    userId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174002
+      description: ID of the user
+    gameId:
+      name: gameId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 123e4567-e89b-12d3-a456-426614174000
+      description: UUID of the game
+  responses: {}
+  examples: {}
+security:
+  - http-bearer: []
+tags:
+  - name: auth
+  - name: code
+  - name: current-user
+  - name: game
+  - name: leaderboard
+  - name: map
+  - name: match
+  - name: notification
+  - name: user
