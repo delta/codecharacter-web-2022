@@ -30,10 +30,12 @@ const ForgetPassword = (props: ForgetPasswordInterface): JSX.Element => {
       const authApi = new AuthApi(authConfig);
       authApi
         .forgotPassword({ email: email })
-        .then()
+        .then(() => {
+          Toast.success('Forget password email sent');
+        })
         .catch(error => {
           if (error instanceof ApiError) {
-            Toast.success('Forgot password email sent');
+            Toast.error(error.message);
           }
         });
     }
