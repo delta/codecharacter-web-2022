@@ -69,7 +69,7 @@ function PaginatedItems() {
   };
 
   function calculateScore(coinsUsed: number, destruction: number) {
-    return coinsUsed / 15 + 2 * destruction;
+    return (1500 - coinsUsed) / 15 + 2 * destruction;
   }
 
   return (
