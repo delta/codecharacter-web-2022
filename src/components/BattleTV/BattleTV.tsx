@@ -68,6 +68,10 @@ function PaginatedItems() {
     setItemOffset(newOffset);
   };
 
+  function calculateScore(coinsUsed: number, destruction: number) {
+    return (1500 - coinsUsed) / 15 + 2 * destruction;
+  }
+
   return (
     <>
       <>
@@ -99,6 +103,12 @@ function PaginatedItems() {
                     <div className={styles.destruction}>
                       {[...match.games.values()][0].destruction.toFixed(2)}
                     </div>
+                    <div className={styles.score}>
+                      {calculateScore(
+                        [...match.games.values()][0].coinsUsed,
+                        [...match.games.values()][0].destruction,
+                      )}
+                    </div>
                     <div
                       className={styles.watchButton}
                       onClick={() => {
@@ -113,6 +123,16 @@ function PaginatedItems() {
                       }}
                     >
                       Watch
+                    </div>
+                    <div className={styles.score}>
+                      {calculateScore(
+                        [...match.games.values()][
+                          [...match.games.values()].length === 1 ? 0 : 1
+                        ].coinsUsed,
+                        [...match.games.values()][
+                          [...match.games.values()].length === 1 ? 0 : 1
+                        ].destruction,
+                      )}
                     </div>
                     <div className={styles.destruction}>
                       {[...match.games.values()][
@@ -177,7 +197,9 @@ export default function BattleTV(): JSX.Element {
           <div className={styles.username}></div>
           <div className={styles.coinused}>Coins Used</div>
           <div className={styles.destruction}>Destruction %</div>
+          <div className={styles.score}>Score</div>
           <div className={styles.vs}>VS</div>
+          <div className={styles.score}>Score</div>
           <div className={styles.destruction}>Destruction %</div>
           <div className={styles.coinused}>Coins Used</div>
           <div className={styles.username}></div>
