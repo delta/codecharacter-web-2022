@@ -94,6 +94,12 @@ html {
   text-align: right;
 }
 
+.score {
+  width: 12%;
+  text-align: center;
+  font-size: 2vw;
+  line-height: 22px;
+}
 .coinused {
   width: 7%;
   text-align: center;
@@ -101,10 +107,10 @@ html {
   line-height: 22px;
 }
 .destruction {
-  width: 12%;
+  width: 7%;
   text-align: center;
-  font-size: 2vw;
-  line-height: 25px;
+  font-size: 1vw;
+  line-height: 22px;
 }
 .vs {
   text-align: center;
