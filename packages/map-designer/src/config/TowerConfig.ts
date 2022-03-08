@@ -8,14 +8,14 @@ export default class TowerConfig {
       'tower1',
       'tower_round.png',
       'tower_round_thumbnail.png',
-      100,
+      25,
     ),
     new TowerType(
       3,
       'tower2',
       'tower_square.png',
       'tower_square_thumbnail.png',
-      200,
+      50,
     ),
   ];
 }

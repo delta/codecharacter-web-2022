@@ -19,7 +19,7 @@ export class Parameters {
 
   static mapTileOffsetY = 256;
 
-  static totalCoins = 10000;
+  static totalCoins = 5000;
 
   static mapLocalStorageKey = 'cc-map-designer-map';
 }

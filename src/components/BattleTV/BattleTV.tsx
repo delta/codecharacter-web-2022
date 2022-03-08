@@ -45,17 +45,17 @@ function PaginatedItems() {
 
   const itemsPerPage = 4;
 
-  const { battletv, loading, hasbeenFetched, hasErrors } =
-    useAppSelector(battleTvSelector);
+  const { battletv, loading, hasErrors } = useAppSelector(battleTvSelector);
 
   const loggedInUser = useAppSelector(user);
 
   // initialize the redux hook
   const dispatch = useAppDispatch();
 
-  if (!hasbeenFetched) {
-    dispatch(fetchBattleTv());
-  }
+  useEffect(() => dispatch(fetchBattleTv()), []);
+  // if (!hasbeenFetched) {
+  //   dispatch(fetchBattleTv());
+  // }
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
